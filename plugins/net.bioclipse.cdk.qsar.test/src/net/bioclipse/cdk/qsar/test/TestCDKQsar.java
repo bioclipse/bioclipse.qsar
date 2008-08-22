@@ -15,6 +15,7 @@ import net.bioclipse.qsar.business.QsarManager;
 import net.bioclipse.qsar.descriptor.IDescriptorResult;
 import net.bioclipse.qsar.descriptor.model.Descriptor;
 import net.bioclipse.qsar.descriptor.model.DescriptorCategory;
+import net.bioclipse.qsar.descriptor.model.DescriptorParameter;
 import net.bioclipse.qsar.descriptor.model.DescriptorProvider;
 
 import org.junit.Test;
@@ -103,6 +104,8 @@ public class TestCDKQsar {
 		assertFalse(desc.isRequires3D());
 		assertEquals(categoryID, desc.getCategory().getId());
 		assertEquals(cdkProviderID, desc.getProvider().getId());
+		assertNotNull(desc.getDescription());
+		assertNotNull(desc.getDefinition());
 	}
 
 	@Test
@@ -114,16 +117,27 @@ public class TestCDKQsar {
 		Descriptor desc=qsar.getDescriptor(xlogpID);
 		assertNotNull(desc);
 		assertNotNull(desc.getParameters());
+		assertNotNull(desc.getDescription());
+		assertNotNull(desc.getDefinition());
 
-		for (String key: desc.getParameters().keySet()){
-			System.out.println("Param: " + key + " = " + desc.getParameters().get(key));
+		List<String> paramKeys=new ArrayList<String>();
+		List<String> paramVals=new ArrayList<String>();
+		List<String> paramDesc=new ArrayList<String>();
+		for (DescriptorParameter param: desc.getParameters()){
+			System.out.println("Param: " + param.getKey() + " = " + param.getDefaultvalue() + " ; " + param.getDescription());
+			paramKeys.add(param.getKey());
+			paramVals.add(param.getDefaultvalue());
+			paramDesc.add(param.getDescription());
 		}
-
-		assertTrue(desc.getParameters().keySet().contains("checkAromaticity"));
-		assertTrue(desc.getParameters().keySet().contains("salicylFlag"));
 		
-		assertEquals("true", desc.getParameters().get("checkAromaticity"));
-		assertEquals("true", desc.getParameters().get("salicylFlag"));
+		assertEquals(paramKeys.get(0), "checkAromaticity");
+		assertEquals(paramKeys.get(1), "salicylFlag");
+		
+		assertEquals(paramVals.get(0), "false");
+		assertEquals(paramVals.get(1), "true");
+
+		assertNotNull(paramDesc.get(0));
+		assertNotNull(paramDesc.get(1));
 
 	}
 	
