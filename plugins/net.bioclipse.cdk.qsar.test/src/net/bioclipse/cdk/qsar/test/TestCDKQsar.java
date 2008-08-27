@@ -24,7 +24,6 @@ public class TestCDKQsar {
 
 	IQsarManager qsar;
 	private String cdkProviderID="net.bioclipse.cdk.descriptorprovider";
-	String categoryID="net.bioclipse.qsar.cdk.molecular";
 	
 	public TestCDKQsar() {
 		
@@ -34,24 +33,6 @@ public class TestCDKQsar {
 	
 	
 
-	@Test
-	public void testGetCategories(){
-		
-		//Get category IDs
-		List<String> lst = qsar.getCategories();
-		assertNotNull(lst);
-		
-		assertTrue(lst.contains(categoryID));
-		
-		DescriptorCategory cat=qsar.getCategoryByID(categoryID);
-		assertNotNull(cat);
-		assertEquals(categoryID, cat.getId());
-		
-		List<DescriptorCategory> lstFull = qsar.getFullCategories();
-		assertNotNull(lstFull);
-		assertTrue(lstFull.contains(cat));
-
-	}
 
 	@Test
 	public void testGetProviders(){
@@ -79,13 +60,11 @@ public class TestCDKQsar {
 		assertNotNull(provider);
 
 		List<String> descIDs=qsar.getDescriptorImplsByProvider(cdkProviderID);
-		List<String> descIDsInCat=qsar.getDescriptorImpls(cdkProviderID, categoryID);
+		
 		List<DescriptorImpl> descs=qsar.getFullDescriptorImpls(provider);
 		
 		//Check list of IDs and list of classes equal size
 		assertEquals(descIDs.size(), descs.size());
-		assertEquals(descIDsInCat.size(), descs.size());
-		assertEquals(descIDsInCat.size(), descIDs.size());
 		
 		assertTrue(descIDs.contains(xlogpID));
 		assertTrue(descIDs.contains(bpolID));
@@ -98,11 +77,10 @@ public class TestCDKQsar {
 		String bpolID="org.openscience.cdk.qsar.descriptors.molecular.BPolDescriptor";
 
 		//Get decriptor by hardcoded id
-		DescriptorImpl desc=qsar.getDescriptorImpl(bpolID);
+		DescriptorImpl desc=qsar.getDescriptorImplByID(bpolID);
 		assertNotNull(desc);
 		assertNull(desc.getParameters());
 		assertFalse(desc.isRequires3D());
-		assertEquals(categoryID, desc.getCategory().getId());
 		assertEquals(cdkProviderID, desc.getProvider().getId());
 		assertNotNull(desc.getDescription());
 		assertNotNull(desc.getDefinition());
@@ -114,7 +92,7 @@ public class TestCDKQsar {
      	String xlogpID="org.openscience.cdk.qsar.descriptors.molecular.XLogPDescriptor";
 
 		//Get decriptor by hardcoded id with parameters
-		DescriptorImpl desc=qsar.getDescriptorImpl(xlogpID);
+		DescriptorImpl desc=qsar.getDescriptorImplByID(xlogpID);
 		assertNotNull(desc);
 		assertNotNull(desc.getParameters());
 		assertNotNull(desc.getDescription());
@@ -141,6 +119,29 @@ public class TestCDKQsar {
 
 	}
 	
+	
+	@Test
+	public void testGetDescriptorImplNotInOntology(){
+
+		System.out.println("=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.");
+		System.out.println("Impl not in onology:");
+		System.out.println("=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.");
+		for (DescriptorImpl impl : qsar.getFullDescriptorImpls()){
+			if (qsar.getDescriptors().contains(impl.getDefinition())){
+				//All is well
+			}
+			else{
+				System.out.println("Descriptor impl: " + impl.getName() + " with def: " + impl.getDefinition());
+				
+			}
+			
+		}
+		System.out.println("=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.");
+		
+		
+	}
+
+
 	
 	
 	@Test
