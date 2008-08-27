@@ -13,7 +13,7 @@ import net.bioclipse.core.domain.SmilesMolecule;
 import net.bioclipse.qsar.business.IQsarManager;
 import net.bioclipse.qsar.business.QsarManager;
 import net.bioclipse.qsar.descriptor.IDescriptorResult;
-import net.bioclipse.qsar.descriptor.model.Descriptor;
+import net.bioclipse.qsar.descriptor.model.DescriptorImpl;
 import net.bioclipse.qsar.descriptor.model.DescriptorCategory;
 import net.bioclipse.qsar.descriptor.model.DescriptorParameter;
 import net.bioclipse.qsar.descriptor.model.DescriptorProvider;
@@ -78,9 +78,9 @@ public class TestCDKQsar {
 		DescriptorProvider provider=qsar.getProviderByID(cdkProviderID);
 		assertNotNull(provider);
 
-		List<String> descIDs=qsar.getDescriptors(cdkProviderID);
-		List<String> descIDsInCat=qsar.getDescriptors(cdkProviderID, categoryID);
-		List<Descriptor> descs=qsar.getDescriptors(provider);
+		List<String> descIDs=qsar.getDescriptorImplsByProvider(cdkProviderID);
+		List<String> descIDsInCat=qsar.getDescriptorImpls(cdkProviderID, categoryID);
+		List<DescriptorImpl> descs=qsar.getFullDescriptorImpls(provider);
 		
 		//Check list of IDs and list of classes equal size
 		assertEquals(descIDs.size(), descs.size());
@@ -98,7 +98,7 @@ public class TestCDKQsar {
 		String bpolID="org.openscience.cdk.qsar.descriptors.molecular.BPolDescriptor";
 
 		//Get decriptor by hardcoded id
-		Descriptor desc=qsar.getDescriptor(bpolID);
+		DescriptorImpl desc=qsar.getDescriptorImpl(bpolID);
 		assertNotNull(desc);
 		assertNull(desc.getParameters());
 		assertFalse(desc.isRequires3D());
@@ -114,7 +114,7 @@ public class TestCDKQsar {
      	String xlogpID="org.openscience.cdk.qsar.descriptors.molecular.XLogPDescriptor";
 
 		//Get decriptor by hardcoded id with parameters
-		Descriptor desc=qsar.getDescriptor(xlogpID);
+		DescriptorImpl desc=qsar.getDescriptorImpl(xlogpID);
 		assertNotNull(desc);
 		assertNotNull(desc.getParameters());
 		assertNotNull(desc.getDescription());
