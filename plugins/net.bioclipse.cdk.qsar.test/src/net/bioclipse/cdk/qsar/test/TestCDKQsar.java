@@ -2,30 +2,32 @@ package net.bioclipse.cdk.qsar.test;
 
 import static org.junit.Assert.*;
 
-import java.io.ObjectInputStream.GetField;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import net.bioclipse.core.business.BioclipseException;
 import net.bioclipse.core.domain.IMolecule;
 import net.bioclipse.core.domain.SmilesMolecule;
+import net.bioclipse.qsar.QSARConstants;
 import net.bioclipse.qsar.business.IQsarManager;
 import net.bioclipse.qsar.business.QsarManager;
 import net.bioclipse.qsar.descriptor.IDescriptorResult;
 import net.bioclipse.qsar.descriptor.model.DescriptorImpl;
-import net.bioclipse.qsar.descriptor.model.DescriptorCategory;
 import net.bioclipse.qsar.descriptor.model.DescriptorInstance;
 import net.bioclipse.qsar.descriptor.model.DescriptorParameter;
 import net.bioclipse.qsar.descriptor.model.DescriptorProvider;
+import net.bioclipse.qsar.init.Activator;
 
+import org.eclipse.core.runtime.preferences.DefaultScope;
+import org.eclipse.core.runtime.preferences.IEclipsePreferences;
 import org.junit.Test;
 
 public class TestCDKQsar {
 
 	IQsarManager qsar;
 	private String cdkProviderID="net.bioclipse.cdk.descriptorprovider";
+	private String cdkProviderName="Chemistry Development Kit (CDK)";
 	
 	public TestCDKQsar() {
 		
@@ -144,7 +146,26 @@ public class TestCDKQsar {
 	}
 
 
-	
+	@Test
+	public void testGetPrefferedImplByDescriptorID(){
+
+		String descriptorID="http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#chiChain";
+
+		IEclipsePreferences prefs = new DefaultScope().getNode(Activator.PLUGIN_ID);
+		assertNotNull(prefs);
+		String prefsString=prefs.get(QSARConstants.QSAR_PROVIDERS_ORDER_PREFERENCE, null);
+		assertNotNull(prefsString);
+
+		System.out.println("Got prefs string: " + prefsString);
+		assertTrue(prefsString.contains(cdkProviderName));
+		
+		DescriptorImpl impl=qsar.getPreferredImpl(descriptorID);
+		assertNotNull(impl);
+		System.out.println("pref impl: " + impl.getId());
+//		assertEquals("net.bioclipse.qsar.test.descriptor2", impl.getId());
+		System.out.println("wee");
+
+	}
 	
 	@Test
 	public void testCalculateBpolFromSmiles() throws BioclipseException{
