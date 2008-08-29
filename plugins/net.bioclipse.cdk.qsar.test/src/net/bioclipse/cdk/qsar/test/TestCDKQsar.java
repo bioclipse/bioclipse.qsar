@@ -4,6 +4,7 @@ import static org.junit.Assert.*;
 
 import java.io.ObjectInputStream.GetField;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -15,6 +16,7 @@ import net.bioclipse.qsar.business.QsarManager;
 import net.bioclipse.qsar.descriptor.IDescriptorResult;
 import net.bioclipse.qsar.descriptor.model.DescriptorImpl;
 import net.bioclipse.qsar.descriptor.model.DescriptorCategory;
+import net.bioclipse.qsar.descriptor.model.DescriptorInstance;
 import net.bioclipse.qsar.descriptor.model.DescriptorParameter;
 import net.bioclipse.qsar.descriptor.model.DescriptorProvider;
 
@@ -150,24 +152,22 @@ public class TestCDKQsar {
 		IMolecule mol=new SmilesMolecule("C1CNCCC1CC(COC)CCNC");
 		String bpolID="org.openscience.cdk.qsar.descriptors.molecular.BPolDescriptor";
 		
-		List<IDescriptorResult> resList = qsar.calculate(mol, bpolID);
+		IDescriptorResult dres = qsar.calculate(mol, bpolID);
 
 		//We know only one result as we only asked for one descriptor
-		assertEquals(1, resList.size());
-		IDescriptorResult dres1=resList.get(0);
-		assertNotNull(dres1);
-		assertNull(dres1.getErrorMessage());
-		assertEquals(bpolID, dres1.getDescriptorId());
+		assertNotNull(dres);
+		assertNull(dres.getErrorMessage());
+		assertEquals(bpolID, dres.getDescriptorId());
 
 		System.out.println("Mol: " + mol.getSmiles() + 
-				" ; Desc: " + dres1.getDescriptorId() +": ");
-		for (int i=0; i<dres1.getValues().length;i++){
-			System.out.println("    " + dres1.getLabels()[i] 
-			                                     + "=" + dres1.getValues()[i] ); 
+				" ; Desc: " + dres.getDescriptorId() +": ");
+		for (int i=0; i<dres.getValues().length;i++){
+			System.out.println("    " + dres.getLabels()[i] 
+			                                     + "=" + dres.getValues()[i] ); 
 		}
 		
-		assertEquals("bpol", dres1.getLabels()[0]);
-		assertEquals(4.556, dres1.getValues()[0]);
+		assertEquals("bpol", dres.getLabels()[0]);
+		assertEquals(4.556, dres.getValues()[0]);
 		
 		
 	}
@@ -178,11 +178,7 @@ public class TestCDKQsar {
 		IMolecule mol=new SmilesMolecule("C1CNCCC1CC(COC)CCNC");
      	String xlogpID="org.openscience.cdk.qsar.descriptors.molecular.XLogPDescriptor";
 		
-		List<IDescriptorResult> resList = qsar.calculate(mol, xlogpID);
-
-		//We know only one result as we only asked for one descriptor
-		assertEquals(1, resList.size());
-		IDescriptorResult dres1=resList.get(0);
+		IDescriptorResult dres1=qsar.calculate(mol, xlogpID);
 		assertNotNull(dres1);
 		assertNull(dres1.getErrorMessage());
 		assertEquals(xlogpID, dres1.getDescriptorId());
@@ -206,11 +202,7 @@ public class TestCDKQsar {
 		IMolecule mol=new SmilesMolecule("C1CNCCC1CC(COC)CCNC");
      	String bcutID="org.openscience.cdk.qsar.descriptors.molecular.BCUTDescriptor";
 		
-		List<IDescriptorResult> resList = qsar.calculate(mol, bcutID);
-
-		//We know only one result as we only asked for one descriptor
-		assertEquals(1, resList.size());
-		IDescriptorResult dres1=resList.get(0);
+		IDescriptorResult dres1=qsar.calculate(mol, bcutID);
 		assertNotNull(dres1);
 		assertNull(dres1.getErrorMessage());
 		assertEquals(bcutID, dres1.getDescriptorId());
@@ -257,7 +249,7 @@ public class TestCDKQsar {
 		descs.add(bpolID);
 		descs.add(xlogpID);
 		
-		Map<IMolecule, List<IDescriptorResult>> res = qsar.calculate(mols, descs);
+		Map<IMolecule, List<IDescriptorResult>> res = qsar.calculateNoParams(mols, descs);
 		assertNotNull(res);
 		
 		List<IDescriptorResult> res1=res.get(mol1);
@@ -315,5 +307,96 @@ public class TestCDKQsar {
 		assertEquals(0.04, dres22.getValues()[0]);
 		
 	}
+
+	
+	
+	@Test
+	public void testCalculateAtomCountWithDefaultParams() throws BioclipseException{
+
+		//Calculate C and N from this SMILES mol
+		IMolecule mol=new SmilesMolecule("C1CNCCC1CC(COC)CCNC");
+
+		String descrImplID="org.openscience.cdk.qsar.descriptors.molecular.AtomCountDescriptor";
+		
+		IDescriptorResult dres1=qsar.calculate(mol, descrImplID);
+		assertNotNull(dres1);
+		assertNull(dres1.getErrorMessage());
+		assertEquals(descrImplID, dres1.getDescriptorId());
+		
+		assertEquals(1, dres1.getValues().length);
+		
+		System.out.println("Mol with default param C: " + mol.getSmiles() + 
+				" ; Desc: " + dres1.getDescriptorId() +": " + dres1.getValues()[0] );
+
+		
+	}
+
+	@Test
+	public void testCalculateAtomCOuntWithParams() throws BioclipseException{
+
+		//Calculate C and N from this SMILES mol
+		IMolecule mol=new SmilesMolecule("C1CNCCC1CC(COC)CCNCCN");
+
+		String descrImplID="org.openscience.cdk.qsar.descriptors.molecular.AtomCountDescriptor";
+
+		DescriptorImpl impl=qsar.getDescriptorImplByID(descrImplID);
+		assertEquals(1, impl.getParameters().size());
+
+		//Work on a new instance
+		DescriptorParameter newParam=impl.getParameters().get(0).clone();
+		newParam.setValue("N");
+
+		DescriptorParameter newParam2=impl.getParameters().get(0).clone();
+		newParam2.setValue("C");
+
+		
+		List<DescriptorParameter> params=new ArrayList<DescriptorParameter>();
+		params.add(newParam);
+
+		List<DescriptorParameter> params2=new ArrayList<DescriptorParameter>();
+		params2.add(newParam2);
+
+
+		List<DescriptorInstance> descriptorInstances=new ArrayList<DescriptorInstance>();
+
+		DescriptorInstance descInst1=new DescriptorInstance(impl,params);
+		DescriptorInstance descInst2=new DescriptorInstance(impl,params2);
+		
+		descriptorInstances.add(descInst1);
+		descriptorInstances.add(descInst2);
+		
+		List<IDescriptorResult> resList = qsar.calculate(mol, descriptorInstances);
+
+		//We know only one result as we only asked for one descriptor
+		assertEquals(2, resList.size());
+
+		IDescriptorResult dres1=resList.get(0);
+		assertNotNull(dres1);
+		assertNull(dres1.getErrorMessage());
+		assertEquals(descrImplID, dres1.getDescriptorId());
+		assertEquals(1, dres1.getValues().length);
+		
+		System.out.println("Mol with param N: " + mol.getSmiles() + 
+				" ; Desc: " + dres1.getDescriptorId() +": " + dres1.getValues()[0] );
+
+		IDescriptorResult dres2=resList.get(1);
+		assertNotNull(dres2);
+		assertNull(dres2.getErrorMessage());
+		assertEquals(descrImplID, dres2.getDescriptorId());
+		assertEquals(1, dres2.getValues().length);
+		
+		System.out.println("Mol with param C: " + mol.getSmiles() + 
+				" ; Desc: " + dres2.getDescriptorId() +": " + dres2.getValues()[0] );
+
+		assertEquals(3, dres1.getValues()[0]);
+
+		assertEquals(13, dres2.getValues()[0]);
+		
+
+		
+	}
+	
+	
+	
 
 }
