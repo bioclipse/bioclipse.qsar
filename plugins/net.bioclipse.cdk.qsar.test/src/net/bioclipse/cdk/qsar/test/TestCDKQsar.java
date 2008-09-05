@@ -44,6 +44,13 @@ public class TestCDKQsar {
 		//Get provider by ID
 		DescriptorProvider provider=qsar.getProviderByID(cdkProviderID);
 		assertNotNull(provider);
+		
+		assertEquals(cdkProviderID, provider.getId());
+		assertEquals("Chemistry Development Kit", provider.getVendor());
+		assertEquals("Chemistry Development Kit", provider.getName());
+		assertEquals("http://cdk.sourceforge.net", provider.getNamespace());
+		assertEquals("cdk", provider.getShortName());
+		assertEquals("1.1.0.20080808", provider.getVersion());
 
 		//Get provider classes
 		List<DescriptorProvider> lstFull = qsar.getFullProviders();
