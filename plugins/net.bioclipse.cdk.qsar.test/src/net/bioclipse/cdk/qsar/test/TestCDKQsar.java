@@ -13,6 +13,7 @@ import net.bioclipse.qsar.QSARConstants;
 import net.bioclipse.qsar.business.IQsarManager;
 import net.bioclipse.qsar.business.QsarManager;
 import net.bioclipse.qsar.descriptor.IDescriptorResult;
+import net.bioclipse.qsar.descriptor.model.Descriptor;
 import net.bioclipse.qsar.descriptor.model.DescriptorImpl;
 import net.bioclipse.qsar.descriptor.model.DescriptorInstance;
 import net.bioclipse.qsar.descriptor.model.DescriptorParameter;
@@ -27,7 +28,7 @@ public class TestCDKQsar {
 
 	IQsarManager qsar;
 	private String cdkProviderID="net.bioclipse.cdk.descriptorprovider";
-	private String cdkProviderName="Chemistry Development Kit (CDK)";
+	private String cdkProviderName="Chemistry Development Kit";
 	
 	public TestCDKQsar() {
 		
@@ -48,9 +49,9 @@ public class TestCDKQsar {
 		assertEquals(cdkProviderID, provider.getId());
 		assertEquals("Chemistry Development Kit", provider.getVendor());
 		assertEquals("Chemistry Development Kit", provider.getName());
-		assertEquals("http://cdk.sourceforge.net", provider.getNamespace());
-		assertEquals("cdk", provider.getShortName());
-		assertEquals("1.1.0.20080808", provider.getVersion());
+		assertEquals("http://cdk.sourceforge.net", provider.getNamesapce());
+		assertEquals("CDK", provider.getShortName());
+		assertEquals("1.1.0.v20080808", provider.getVersion());
 
 		//Get provider classes
 		List<DescriptorProvider> lstFull = qsar.getFullProviders();
@@ -386,9 +387,11 @@ public class TestCDKQsar {
 
 
 		List<DescriptorInstance> descriptorInstances=new ArrayList<DescriptorInstance>();
+		
+		Descriptor descriptor=qsar.getDescriptorByID(impl.getDefinition());
 
-		DescriptorInstance descInst1=new DescriptorInstance(impl,params);
-		DescriptorInstance descInst2=new DescriptorInstance(impl,params2);
+		DescriptorInstance descInst1=new DescriptorInstance(descriptor,impl,params);
+		DescriptorInstance descInst2=new DescriptorInstance(descriptor,impl,params2);
 		
 		descriptorInstances.add(descInst1);
 		descriptorInstances.add(descInst2);
