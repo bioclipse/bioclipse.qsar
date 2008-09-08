@@ -9,13 +9,13 @@ import java.util.Map;
 import net.bioclipse.core.business.BioclipseException;
 import net.bioclipse.core.domain.IMolecule;
 import net.bioclipse.core.domain.SmilesMolecule;
+import net.bioclipse.qsar.DescriptorType;
 import net.bioclipse.qsar.QSARConstants;
 import net.bioclipse.qsar.business.IQsarManager;
 import net.bioclipse.qsar.business.QsarManager;
 import net.bioclipse.qsar.descriptor.IDescriptorResult;
 import net.bioclipse.qsar.descriptor.model.Descriptor;
 import net.bioclipse.qsar.descriptor.model.DescriptorImpl;
-import net.bioclipse.qsar.descriptor.model.DescriptorInstance;
 import net.bioclipse.qsar.descriptor.model.DescriptorParameter;
 import net.bioclipse.qsar.descriptor.model.DescriptorProvider;
 import net.bioclipse.qsar.init.Activator;
@@ -29,6 +29,13 @@ public class TestCDKQsar {
 	IQsarManager qsar;
 	private String cdkProviderID="net.bioclipse.cdk.descriptorprovider";
 	private String cdkProviderName="Chemistry Development Kit";
+	
+	String bpolID="http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#bpol";
+ 	String xlogpID="http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#xlogP";
+	String chiChainID="http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#chiChain";
+ 	String bcutID="http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#BCUT";
+	String atomCountlID="http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#atomCount";
+
 	
 	public TestCDKQsar() {
 		
@@ -64,32 +71,35 @@ public class TestCDKQsar {
 	public void testGetDescriptors(){
 
 		//Matches plugin.xml, just test some classes
-     	String xlogpID="org.openscience.cdk.qsar.descriptors.molecular.XLogPDescriptor";
-		String bpolID="org.openscience.cdk.qsar.descriptors.molecular.BPolDescriptor";
 
 		//Get provider by ID
 		DescriptorProvider provider=qsar.getProviderByID(cdkProviderID);
 		assertNotNull(provider);
 
-		List<String> descIDs=qsar.getDescriptorImplsByProvider(cdkProviderID);
+		List<String> descImplIDs=qsar.getDescriptorImplsByProvider(cdkProviderID);
 		
 		List<DescriptorImpl> descs=qsar.getFullDescriptorImpls(provider);
 		
 		//Check list of IDs and list of classes equal size
-		assertEquals(descIDs.size(), descs.size());
+		assertEquals(descImplIDs.size(), descs.size());
+
+		List<String> descIDs=new ArrayList<String>();
+		for (DescriptorImpl impl : descs){
+			descIDs.add(impl.getDefinition());
+		}
 		
 		assertTrue(descIDs.contains(xlogpID));
 		assertTrue(descIDs.contains(bpolID));
+		
+		int i=0;
 		
 	}
 
 	@Test
 		public void testGetDescriptorsByID(){
-		//Matches plugin.xml
-		String bpolID="org.openscience.cdk.qsar.descriptors.molecular.BPolDescriptor";
 
 		//Get decriptor by hardcoded id
-		DescriptorImpl desc=qsar.getDescriptorImplByID(bpolID);
+		DescriptorImpl desc=qsar.getDescriptorImpl(bpolID, cdkProviderID);
 		assertNotNull(desc);
 		assertNull(desc.getParameters());
 		assertFalse(desc.isRequires3D());
@@ -100,11 +110,9 @@ public class TestCDKQsar {
 
 	@Test
 	public void testGetDescriptorsByIDWithParameters(){
-		//Matches plugin.xml
-     	String xlogpID="org.openscience.cdk.qsar.descriptors.molecular.XLogPDescriptor";
 
 		//Get decriptor by hardcoded id with parameters
-		DescriptorImpl desc=qsar.getDescriptorImplByID(xlogpID);
+		DescriptorImpl desc=qsar.getDescriptorImpl(xlogpID, cdkProviderID);
 		assertNotNull(desc);
 		assertNotNull(desc.getParameters());
 		assertNotNull(desc.getDescription());
@@ -157,7 +165,6 @@ public class TestCDKQsar {
 	@Test
 	public void testGetPrefferedImplByDescriptorID(){
 
-		String descriptorID="http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#chiChain";
 
 		IEclipsePreferences prefs = new DefaultScope().getNode(Activator.PLUGIN_ID);
 		assertNotNull(prefs);
@@ -167,7 +174,7 @@ public class TestCDKQsar {
 		System.out.println("Got prefs string: " + prefsString);
 		assertTrue(prefsString.contains(cdkProviderName));
 		
-		DescriptorImpl impl=qsar.getPreferredImpl(descriptorID);
+		DescriptorImpl impl=qsar.getPreferredImpl(chiChainID);
 		assertNotNull(impl);
 		System.out.println("pref impl: " + impl.getId());
 //		assertEquals("net.bioclipse.qsar.test.descriptor2", impl.getId());
@@ -179,7 +186,6 @@ public class TestCDKQsar {
 	public void testCalculateBpolFromSmiles() throws BioclipseException{
 
 		IMolecule mol=new SmilesMolecule("C1CNCCC1CC(COC)CCNC");
-		String bpolID="org.openscience.cdk.qsar.descriptors.molecular.BPolDescriptor";
 		
 		IDescriptorResult dres = qsar.calculate(mol, bpolID);
 
@@ -205,7 +211,6 @@ public class TestCDKQsar {
 	public void testCalculateXlogPFromSmiles() throws BioclipseException{
 
 		IMolecule mol=new SmilesMolecule("C1CNCCC1CC(COC)CCNC");
-     	String xlogpID="org.openscience.cdk.qsar.descriptors.molecular.XLogPDescriptor";
 		
 		IDescriptorResult dres1=qsar.calculate(mol, xlogpID);
 		assertNotNull(dres1);
@@ -229,7 +234,6 @@ public class TestCDKQsar {
 	public void testCalculateBCUTFromSmiles() throws BioclipseException{
 
 		IMolecule mol=new SmilesMolecule("C1CNCCC1CC(COC)CCNC");
-     	String bcutID="org.openscience.cdk.qsar.descriptors.molecular.BCUTDescriptor";
 		
 		IDescriptorResult dres1=qsar.calculate(mol, bcutID);
 		assertNotNull(dres1);
@@ -267,8 +271,6 @@ public class TestCDKQsar {
 		
 		IMolecule mol1=new SmilesMolecule("C1CNCCC1CC(COC)CCNC");
 		IMolecule mol2=new SmilesMolecule("C1CCCCC1CC(CC)CCCCCOCCCN");
-		String bpolID="org.openscience.cdk.qsar.descriptors.molecular.BPolDescriptor";
-     	String xlogpID="org.openscience.cdk.qsar.descriptors.molecular.XLogPDescriptor";
 		
 		List<IMolecule> mols=new ArrayList<IMolecule>();
 		List<String> descs=new ArrayList<String>();
@@ -345,12 +347,10 @@ public class TestCDKQsar {
 		//Calculate C and N from this SMILES mol
 		IMolecule mol=new SmilesMolecule("C1CNCCC1CC(COC)CCNC");
 
-		String descrImplID="org.openscience.cdk.qsar.descriptors.molecular.AtomCountDescriptor";
-		
-		IDescriptorResult dres1=qsar.calculate(mol, descrImplID);
+		IDescriptorResult dres1=qsar.calculate(mol, atomCountlID);
 		assertNotNull(dres1);
 		assertNull(dres1.getErrorMessage());
-		assertEquals(descrImplID, dres1.getDescriptorId());
+		assertEquals(atomCountlID, dres1.getDescriptorId());
 		
 		assertEquals(1, dres1.getValues().length);
 		
@@ -361,14 +361,13 @@ public class TestCDKQsar {
 	}
 
 	@Test
-	public void testCalculateAtomCOuntWithParams() throws BioclipseException{
+	public void testCalculateAtomCountWithParams() throws BioclipseException{
 
 		//Calculate C and N from this SMILES mol
 		IMolecule mol=new SmilesMolecule("C1CNCCC1CC(COC)CCNCCN");
 
-		String descrImplID="org.openscience.cdk.qsar.descriptors.molecular.AtomCountDescriptor";
 
-		DescriptorImpl impl=qsar.getDescriptorImplByID(descrImplID);
+		DescriptorImpl impl=qsar.getDescriptorImpl(atomCountlID, cdkProviderID);
 		assertEquals(1, impl.getParameters().size());
 
 		//Work on a new instance
@@ -386,15 +385,13 @@ public class TestCDKQsar {
 		params2.add(newParam2);
 
 
-		List<DescriptorInstance> descriptorInstances=new ArrayList<DescriptorInstance>();
-		
 		Descriptor descriptor=qsar.getDescriptorByID(impl.getDefinition());
 
-		DescriptorInstance descInst1=new DescriptorInstance(descriptor,impl,params);
-		DescriptorInstance descInst2=new DescriptorInstance(descriptor,impl,params2);
-		
-		descriptorInstances.add(descInst1);
-		descriptorInstances.add(descInst2);
+		List<DescriptorType> descriptorInstances=new ArrayList<DescriptorType>();
+		DescriptorType descType1=qsar.createDescriptorType(null, null, descriptor, impl, params);
+		DescriptorType descType2=qsar.createDescriptorType(null, null, descriptor, impl, params2);
+		descriptorInstances.add(descType1);
+		descriptorInstances.add(descType2);
 		
 		List<IDescriptorResult> resList = qsar.calculate(mol, descriptorInstances);
 
@@ -404,7 +401,7 @@ public class TestCDKQsar {
 		IDescriptorResult dres1=resList.get(0);
 		assertNotNull(dres1);
 		assertNull(dres1.getErrorMessage());
-		assertEquals(descrImplID, dres1.getDescriptorId());
+		assertEquals(atomCountlID, dres1.getDescriptorId());
 		assertEquals(1, dres1.getValues().length);
 		
 		System.out.println("Mol with param N: " + mol.getSmiles() + 
@@ -413,7 +410,7 @@ public class TestCDKQsar {
 		IDescriptorResult dres2=resList.get(1);
 		assertNotNull(dres2);
 		assertNull(dres2.getErrorMessage());
-		assertEquals(descrImplID, dres2.getDescriptorId());
+		assertEquals(atomCountlID, dres2.getDescriptorId());
 		assertEquals(1, dres2.getValues().length);
 		
 		System.out.println("Mol with param C: " + mol.getSmiles() + 
