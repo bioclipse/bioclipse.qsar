@@ -280,7 +280,7 @@ public class TestCDKQsar {
 		descs.add(bpolID);
 		descs.add(xlogpID);
 		
-		Map<IMolecule, List<IDescriptorResult>> res = qsar.calculateNoParams(mols, descs);
+		Map<? extends IMolecule, List<IDescriptorResult>> res = qsar.calculateNoParams(mols, descs);
 		assertNotNull(res);
 		
 		List<IDescriptorResult> res1=res.get(mol1);
