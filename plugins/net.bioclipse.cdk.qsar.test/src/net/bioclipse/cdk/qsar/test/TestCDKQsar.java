@@ -35,7 +35,7 @@ public class TestCDKQsar {
 	String chiChainID="http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#chiChain";
  	String bcutID="http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#BCUT";
 	String atomCountlID="http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#atomCount";
-
+	String rotBondsCntID="http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#rotatableBondsCount";
 	
 	public TestCDKQsar() {
 		
@@ -202,7 +202,7 @@ public class TestCDKQsar {
 		}
 		
 		assertEquals("bpol", dres.getLabels()[0]);
-		assertEquals(4.556, dres.getValues()[0]);
+		assertEquals(31.659382, dres.getValues()[0]);
 		
 		
 	}
@@ -328,14 +328,14 @@ public class TestCDKQsar {
 		}
 
 		assertEquals("bpol", dres1.getLabels()[0]);
-		assertEquals(4.556, dres1.getValues()[0]);
+		assertEquals(31.659382, dres1.getValues()[0]);
 		assertEquals("XLogP", dres11.getLabels()[0]);
 		assertEquals(0.184, dres11.getValues()[0]);
 
 		assertEquals("bpol", dres2.getLabels()[0]);
-		assertEquals(2.576, dres2.getValues()[0]);
+		assertEquals(41.70466, dres2.getValues()[0]);
 		assertEquals("XLogP", dres22.getLabels()[0]);
-		assertEquals(0.04, dres22.getValues()[0]);
+		assertEquals(6.749, dres22.getValues()[0]);
 		
 	}
 
@@ -361,7 +361,7 @@ public class TestCDKQsar {
 	}
 
 	@Test
-	public void testCalculateAtomCountWithParams() throws BioclipseException{
+	public void testCalculateAtomCountWithStringParams() throws BioclipseException{
 
 		//Calculate C and N from this SMILES mol
 		IMolecule mol=new SmilesMolecule("C1CNCCC1CC(COC)CCNCCN");
@@ -424,6 +424,69 @@ public class TestCDKQsar {
 		
 	}
 	
+	@Test
+	public void testCalculateAtomCountWithBooleanParams() throws BioclipseException{
+
+		//Calculate C and N from this SMILES mol
+		IMolecule mol=new SmilesMolecule("C1CNCCC1CC(COC)CCNCCN");
+
+
+		DescriptorImpl impl=qsar.getDescriptorImpl(rotBondsCntID, cdkProviderID);
+		assertEquals(1, impl.getParameters().size());
+
+		//Work on a new instance
+		DescriptorParameter newParam=impl.getParameters().get(0).clone();
+		newParam.setValue("true");
+
+		DescriptorParameter newParam2=impl.getParameters().get(0).clone();
+		newParam2.setValue("false");
+
+		
+		List<DescriptorParameter> params=new ArrayList<DescriptorParameter>();
+		params.add(newParam);
+
+		List<DescriptorParameter> params2=new ArrayList<DescriptorParameter>();
+		params2.add(newParam2);
+
+
+		Descriptor descriptor=qsar.getDescriptorByID(impl.getDefinition());
+
+		List<DescriptorType> descriptorInstances=new ArrayList<DescriptorType>();
+		DescriptorType descType1=qsar.createDescriptorType(null, null, descriptor, impl, params);
+		DescriptorType descType2=qsar.createDescriptorType(null, null, descriptor, impl, params2);
+		descriptorInstances.add(descType1);
+		descriptorInstances.add(descType2);
+		
+		List<IDescriptorResult> resList = qsar.calculate(mol, descriptorInstances);
+
+		//We know only one result as we only asked for one descriptor
+		assertEquals(2, resList.size());
+
+		IDescriptorResult dres1=resList.get(0);
+		assertNotNull(dres1);
+		assertNull(dres1.getErrorMessage());
+		assertEquals(rotBondsCntID, dres1.getDescriptorId());
+		assertEquals(1, dres1.getValues().length);
+		
+		System.out.println("Mol with param TRUE: " + mol.getSmiles() + 
+				" ; Desc: " + dres1.getDescriptorId() +": " + dres1.getValues()[0] );
+
+		IDescriptorResult dres2=resList.get(1);
+		assertNotNull(dres2);
+		assertNull(dres2.getErrorMessage());
+		assertEquals(rotBondsCntID, dres2.getDescriptorId());
+		assertEquals(1, dres2.getValues().length);
+		
+		System.out.println("Mol with param FALSE: " + mol.getSmiles() + 
+				" ; Desc: " + dres2.getDescriptorId() +": " + dres2.getValues()[0] );
+
+		assertEquals(40, dres1.getValues()[0]);
+
+		assertEquals(11, dres2.getValues()[0]);
+		
+
+		
+	}
 	
 	
 
