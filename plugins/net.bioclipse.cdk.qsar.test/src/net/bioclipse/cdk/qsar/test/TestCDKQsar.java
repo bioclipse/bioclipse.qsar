@@ -128,14 +128,10 @@ public class TestCDKQsar {
 			paramDesc.add(param.getDescription());
 		}
 		
-		assertEquals(paramKeys.get(0), "checkAromaticity");
-		assertEquals(paramKeys.get(1), "salicylFlag");
-		
-		assertEquals(paramVals.get(0), "false");
-		assertEquals(paramVals.get(1), "true");
+		assertEquals("salicylFlag", paramKeys.get(0));
+		assertEquals("true", paramVals.get(0));
 
 		assertNotNull(paramDesc.get(0));
-		assertNotNull(paramDesc.get(1));
 
 	}
 	
