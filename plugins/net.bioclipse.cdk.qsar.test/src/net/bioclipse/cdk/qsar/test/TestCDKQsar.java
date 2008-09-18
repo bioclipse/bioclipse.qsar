@@ -2,10 +2,17 @@ package net.bioclipse.cdk.qsar.test;
 
 import static org.junit.Assert.*;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import net.bioclipse.cdk.business.ICDKManager;
+import net.bioclipse.cdk.domain.ICDKMolecule;
+import net.bioclipse.core.MockIFile;
 import net.bioclipse.core.business.BioclipseException;
 import net.bioclipse.core.domain.IMolecule;
 import net.bioclipse.core.domain.SmilesMolecule;
@@ -20,9 +27,15 @@ import net.bioclipse.qsar.descriptor.model.DescriptorParameter;
 import net.bioclipse.qsar.descriptor.model.DescriptorProvider;
 import net.bioclipse.qsar.init.Activator;
 
+import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.FileLocator;
+import org.eclipse.core.runtime.Path;
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.preferences.DefaultScope;
 import org.eclipse.core.runtime.preferences.IEclipsePreferences;
 import org.junit.Test;
+import org.osgi.framework.Bundle;
 
 public class TestCDKQsar {
 
@@ -225,6 +238,41 @@ public class TestCDKQsar {
 		
 		
 	}
+	
+	@Test
+	public void testCalculateXlogPFromCML() throws BioclipseException, FileNotFoundException, IOException, CoreException{
+
+		ICDKManager cdk=net.bioclipse.cdk.business.Activator.getDefault().getCDKManager();
+		
+		Bundle bun=Platform.getBundle(net.bioclipse.cdk.qsar.test.Activator.PLUGIN_ID);
+		System.out.println("wee bun: " + bun);
+
+		URL url=FileLocator.find(bun, new Path("src/testFiles/0037.cml"), null);
+		System.out.println("wee url: " + url);
+		
+		String str=FileLocator.toFileURL(url).getFile();
+		System.out.println("wee File: " + str);
+		
+        ICDKMolecule mol = cdk.loadMolecule( new MockIFile(str), null );
+		
+		IDescriptorResult dres1=qsar.calculate(mol, xlogpID);
+		assertNotNull(dres1);
+		assertNull(dres1.getErrorMessage(),dres1.getErrorMessage());
+		assertEquals(xlogpID, dres1.getDescriptorId());
+
+		System.out.println("Mol: " + mol.getSmiles() + 
+				" ; Desc: " + dres1.getDescriptorId() +": ");
+		for (int i=0; i<dres1.getValues().length;i++){
+			System.out.println("    " + dres1.getLabels()[i] 
+			                                     + "=" + dres1.getValues()[i] ); 
+		}
+		
+		assertEquals("XLogP", dres1.getLabels()[0]);
+		assertEquals(0.184, dres1.getValues()[0]);
+		
+		
+	}
+
 
 	@Test
 	public void testCalculateBCUTFromSmiles() throws BioclipseException{
