@@ -15,7 +15,7 @@ import net.bioclipse.cdk.domain.ICDKMolecule;
 import net.bioclipse.core.MockIFile;
 import net.bioclipse.core.business.BioclipseException;
 import net.bioclipse.core.domain.IMolecule;
-import net.bioclipse.core.domain.SmilesMolecule;
+import net.bioclipse.core.domain.SMILESMolecule;
 import net.bioclipse.qsar.DescriptorType;
 import net.bioclipse.qsar.QSARConstants;
 import net.bioclipse.qsar.business.IQsarManager;
@@ -194,7 +194,7 @@ public class TestCDKQsar {
 	@Test
 	public void testCalculateBpolFromSmiles() throws BioclipseException{
 
-		IMolecule mol=new SmilesMolecule("C1CNCCC1CC(COC)CCNC");
+		IMolecule mol=new SMILESMolecule("C1CNCCC1CC(COC)CCNC");
 		
 		IDescriptorResult dres = qsar.calculate(mol, bpolID);
 
@@ -203,7 +203,7 @@ public class TestCDKQsar {
 		assertNull(dres.getErrorMessage());
 		assertEquals(bpolID, dres.getDescriptorId());
 
-		System.out.println("Mol: " + mol.getSmiles() + 
+		System.out.println("Mol: " + mol.getSMILES() + 
 				" ; Desc: " + dres.getDescriptorId() +": ");
 		for (int i=0; i<dres.getValues().length;i++){
 			System.out.println("    " + dres.getLabels()[i] 
@@ -217,16 +217,16 @@ public class TestCDKQsar {
 	}
 
 	@Test
-	public void testCalculateXlogPFromSmiles() throws BioclipseException{
+	public void testCalculateXlogPFromSMILES() throws BioclipseException{
 
-		IMolecule mol=new SmilesMolecule("C1CNCCC1CC(COC)CCNC");
+		IMolecule mol=new SMILESMolecule("C1CNCCC1CC(COC)CCNC");
 		
 		IDescriptorResult dres1=qsar.calculate(mol, xlogpID);
 		assertNotNull(dres1);
 		assertNull(dres1.getErrorMessage());
 		assertEquals(xlogpID, dres1.getDescriptorId());
 
-		System.out.println("Mol: " + mol.getSmiles() + 
+		System.out.println("Mol: " + mol.getSMILES() + 
 				" ; Desc: " + dres1.getDescriptorId() +": ");
 		for (int i=0; i<dres1.getValues().length;i++){
 			System.out.println("    " + dres1.getLabels()[i] 
@@ -260,7 +260,7 @@ public class TestCDKQsar {
 		assertNull(dres1.getErrorMessage(),dres1.getErrorMessage());
 		assertEquals(xlogpID, dres1.getDescriptorId());
 
-		System.out.println("Mol: " + mol.getSmiles() + 
+		System.out.println("Mol: " + mol.getSMILES() + 
 				" ; Desc: " + dres1.getDescriptorId() +": ");
 		for (int i=0; i<dres1.getValues().length;i++){
 			System.out.println("    " + dres1.getLabels()[i] 
@@ -275,16 +275,16 @@ public class TestCDKQsar {
 
 
 	@Test
-	public void testCalculateBCUTFromSmiles() throws BioclipseException{
+	public void testCalculateBCUTFromSMILES() throws BioclipseException{
 
-		IMolecule mol=new SmilesMolecule("C1CNCCC1CC(COC)CCNC");
+		IMolecule mol=new SMILESMolecule("C1CNCCC1CC(COC)CCNC");
 		
 		IDescriptorResult dres1=qsar.calculate(mol, bcutID);
 		assertNotNull(dres1);
 		assertNull(dres1.getErrorMessage());
 		assertEquals(bcutID, dres1.getDescriptorId());
 
-		System.out.println("Mol: " + mol.getSmiles() + 
+		System.out.println("Mol: " + mol.getSMILES() + 
 				" ; Desc: " + dres1.getDescriptorId() +": ");
 		for (int i=0; i<dres1.getValues().length;i++){
 			System.out.println("    " + dres1.getLabels()[i] 
@@ -313,8 +313,8 @@ public class TestCDKQsar {
 	@Test
 	public void testCalculateMultipleMolMultipleDescriptor() throws BioclipseException{
 		
-		IMolecule mol1=new SmilesMolecule("C1CNCCC1CC(COC)CCNC");
-		IMolecule mol2=new SmilesMolecule("C1CCCCC1CC(CC)CCCCCOCCCN");
+		IMolecule mol1=new SMILESMolecule("C1CNCCC1CC(COC)CCNC");
+		IMolecule mol2=new SMILESMolecule("C1CCCCC1CC(CC)CCCCCOCCCN");
 		
 		List<IMolecule> mols=new ArrayList<IMolecule>();
 		List<String> descs=new ArrayList<String>();
@@ -343,28 +343,28 @@ public class TestCDKQsar {
 		assertNull(dres2.getErrorMessage());
 		assertNull(dres22.getErrorMessage());
 
-		System.out.println("Mol: " + mol1.getSmiles() + 
+		System.out.println("Mol: " + mol1.getSMILES() + 
 				" ; Desc: " + dres1.getDescriptorId() +": ");
 		for (int i=0; i<dres1.getValues().length;i++){
 			System.out.println("    " + dres1.getLabels()[i] 
 			                                     + "=" + dres1.getValues()[i] ); 
 		}
 		
-		System.out.println("Mol: " + mol1.getSmiles() + 
+		System.out.println("Mol: " + mol1.getSMILES() + 
 				" ; Desc: " + dres11.getDescriptorId() +": ");
 		for (int i=0; i<dres11.getValues().length;i++){
 			System.out.println("    " + dres11.getLabels()[i] 
 			                                     + "=" + dres11.getValues()[i] ); 
 		}
 
-		System.out.println("Mol: " + mol2.getSmiles() + 
+		System.out.println("Mol: " + mol2.getSMILES() + 
 				" ; Desc: " + dres2.getDescriptorId() +": ");
 		for (int i=0; i<dres2.getValues().length;i++){
 			System.out.println("    " + dres2.getLabels()[i] 
 			                                     + "=" + dres2.getValues()[i] ); 
 		}
 		
-		System.out.println("Mol: " + mol2.getSmiles() + 
+		System.out.println("Mol: " + mol2.getSMILES() + 
 				" ; Desc: " + dres22.getDescriptorId() +": ");
 		for (int i=0; i<dres22.getValues().length;i++){
 			System.out.println("    " + dres22.getLabels()[i] 
@@ -389,7 +389,7 @@ public class TestCDKQsar {
 	public void testCalculateAtomCountWithDefaultParams() throws BioclipseException{
 
 		//Calculate C and N from this SMILES mol
-		IMolecule mol=new SmilesMolecule("C1CNCCC1CC(COC)CCNC");
+		IMolecule mol=new SMILESMolecule("C1CNCCC1CC(COC)CCNC");
 
 		IDescriptorResult dres1=qsar.calculate(mol, atomCountlID);
 		assertNotNull(dres1);
@@ -398,7 +398,7 @@ public class TestCDKQsar {
 		
 		assertEquals(1, dres1.getValues().length);
 		
-		System.out.println("Mol with default param C: " + mol.getSmiles() + 
+		System.out.println("Mol with default param C: " + mol.getSMILES() + 
 				" ; Desc: " + dres1.getDescriptorId() +": " + dres1.getValues()[0] );
 
 		
@@ -408,7 +408,7 @@ public class TestCDKQsar {
 	public void testCalculateAtomCountWithStringParams() throws BioclipseException{
 
 		//Calculate C and N from this SMILES mol
-		IMolecule mol=new SmilesMolecule("C1CNCCC1CC(COC)CCNCCN");
+		IMolecule mol=new SMILESMolecule("C1CNCCC1CC(COC)CCNCCN");
 
 
 		DescriptorImpl impl=qsar.getDescriptorImpl(atomCountlID, cdkProviderID);
@@ -448,7 +448,7 @@ public class TestCDKQsar {
 		assertEquals(atomCountlID, dres1.getDescriptorId());
 		assertEquals(1, dres1.getValues().length);
 		
-		System.out.println("Mol with param N: " + mol.getSmiles() + 
+		System.out.println("Mol with param N: " + mol.getSMILES() + 
 				" ; Desc: " + dres1.getDescriptorId() +": " + dres1.getValues()[0] );
 
 		IDescriptorResult dres2=resList.get(1);
@@ -457,7 +457,7 @@ public class TestCDKQsar {
 		assertEquals(atomCountlID, dres2.getDescriptorId());
 		assertEquals(1, dres2.getValues().length);
 		
-		System.out.println("Mol with param C: " + mol.getSmiles() + 
+		System.out.println("Mol with param C: " + mol.getSMILES() + 
 				" ; Desc: " + dres2.getDescriptorId() +": " + dres2.getValues()[0] );
 
 		assertEquals(3, dres1.getValues()[0]);
@@ -472,7 +472,7 @@ public class TestCDKQsar {
 	public void testCalculateAtomCountWithBooleanParams() throws BioclipseException{
 
 		//Calculate C and N from this SMILES mol
-		IMolecule mol=new SmilesMolecule("C1CNCCC1CC(COC)CCNCCN");
+		IMolecule mol=new SMILESMolecule("C1CNCCC1CC(COC)CCNCCN");
 
 
 		DescriptorImpl impl=qsar.getDescriptorImpl(rotBondsCntID, cdkProviderID);
@@ -512,7 +512,7 @@ public class TestCDKQsar {
 		assertEquals(rotBondsCntID, dres1.getDescriptorId());
 		assertEquals(1, dres1.getValues().length);
 		
-		System.out.println("Mol with param TRUE: " + mol.getSmiles() + 
+		System.out.println("Mol with param TRUE: " + mol.getSMILES() + 
 				" ; Desc: " + dres1.getDescriptorId() +": " + dres1.getValues()[0] );
 
 		IDescriptorResult dres2=resList.get(1);
@@ -521,7 +521,7 @@ public class TestCDKQsar {
 		assertEquals(rotBondsCntID, dres2.getDescriptorId());
 		assertEquals(1, dres2.getValues().length);
 		
-		System.out.println("Mol with param FALSE: " + mol.getSmiles() + 
+		System.out.println("Mol with param FALSE: " + mol.getSMILES() + 
 				" ; Desc: " + dres2.getDescriptorId() +": " + dres2.getValues()[0] );
 
 		assertEquals(40, dres1.getValues()[0]);
