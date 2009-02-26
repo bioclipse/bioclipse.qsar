@@ -4,7 +4,6 @@ import static org.junit.Assert.*;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStream;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -27,7 +26,6 @@ import net.bioclipse.qsar.descriptor.model.DescriptorParameter;
 import net.bioclipse.qsar.descriptor.model.DescriptorProvider;
 import net.bioclipse.qsar.init.Activator;
 
-import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.Path;
@@ -104,8 +102,6 @@ public class TestCDKQsar {
 		assertTrue(descIDs.contains(xlogpID));
 		assertTrue(descIDs.contains(bpolID));
 		
-		int i=0;
-		
 	}
 
 	@Test
@@ -155,18 +151,21 @@ public class TestCDKQsar {
 		System.out.println("=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.");
 		System.out.println("Impl not in onology:");
 		System.out.println("=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.");
+    boolean toFail=false;
 		for (DescriptorImpl impl : qsar.getFullDescriptorImpls()){
-			if (qsar.getDescriptors().contains(impl.getDefinition())){
+			if (qsar.getDescriptorIDs().contains(impl.getDefinition())){
 				//All is well
 			}
 			else{
 				System.out.println("=.= Descriptor impl: " + impl.getName() + " with def: " + impl.getDefinition());
-				
+				toFail=true;
 			}
 			
 		}
 		System.out.println("=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.");
-		
+
+		assertFalse( "Not all CDK impl are present in ontology, see list on stdout"
+		             , toFail );
 		
 	}
 
