@@ -267,7 +267,7 @@ public class TestCDKQsar {
 		}
 		
 		assertEquals("XLogP", dres1.getLabels()[0]);
-		assertEquals(0.184, dres1.getValues()[0]);
+		assertEquals(3.604, dres1.getValues()[0]);
 		
 		
 	}
