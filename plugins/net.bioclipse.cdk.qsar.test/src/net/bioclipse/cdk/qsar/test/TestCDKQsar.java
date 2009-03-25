@@ -1,6 +1,10 @@
 package net.bioclipse.cdk.qsar.test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -204,11 +208,11 @@ public class TestCDKQsar {
         assertNull(dres.getErrorMessage());
         assertEquals(bpolID, dres.getDescriptorId());
 
-        System.out.println("Mol: " + mol.getSMILES() + 
+        System.out.println("Mol: " + mol.getSMILES() +
                            " ; Desc: " + dres.getDescriptorId() +": ");
         for (int i=0; i<dres.getValues().length;i++){
-            System.out.println("    " + dres.getLabels()[i] 
-                                                         + "=" + dres.getValues()[i] ); 
+            System.out.println("    " + dres.getLabels()[i]
+                                                         + "=" + dres.getValues()[i] );
         }
 
         assertEquals("bpol", dres.getLabels()[0]);
@@ -227,11 +231,11 @@ public class TestCDKQsar {
         assertNull(dres1.getErrorMessage());
         assertEquals(xlogpID, dres1.getDescriptorId());
 
-        System.out.println("Mol: " + mol.getSMILES() + 
+        System.out.println("Mol: " + mol.getSMILES() +
                            " ; Desc: " + dres1.getDescriptorId() +": ");
         for (int i=0; i<dres1.getValues().length;i++){
-            System.out.println("    " + dres1.getLabels()[i] 
-                                                          + "=" + dres1.getValues()[i] ); 
+            System.out.println("    " + dres1.getLabels()[i]
+                                                          + "=" + dres1.getValues()[i] );
         }
 
         assertEquals("XLogP", dres1.getLabels()[0]);
@@ -254,18 +258,19 @@ public class TestCDKQsar {
         String str=FileLocator.toFileURL(url).getFile();
         System.out.println("wee File: " + str);
 
-        ICDKMolecule mol = cdk.loadMolecule( new MockIFile(str), null );
+        ICDKMolecule mol = cdk.loadMolecule( new MockIFile(str),
+                                             new NullProgressMonitor()  );
 
         IDescriptorResult dres1=qsar.calculate(mol, xlogpID);
         assertNotNull(dres1);
         assertNull(dres1.getErrorMessage(),dres1.getErrorMessage());
         assertEquals(xlogpID, dres1.getDescriptorId());
 
-        System.out.println("Mol: " + mol.getSMILES() + 
+        System.out.println("Mol: " + mol.getSMILES() +
                            " ; Desc: " + dres1.getDescriptorId() +": ");
         for (int i=0; i<dres1.getValues().length;i++){
-            System.out.println("    " + dres1.getLabels()[i] 
-                                                          + "=" + dres1.getValues()[i] ); 
+            System.out.println("    " + dres1.getLabels()[i]
+                                                          + "=" + dres1.getValues()[i] );
         }
 
         assertEquals("XLogP", dres1.getLabels()[0]);
@@ -285,11 +290,11 @@ public class TestCDKQsar {
         assertNull(dres1.getErrorMessage());
         assertEquals(bcutID, dres1.getDescriptorId());
 
-        System.out.println("Mol: " + mol.getSMILES() + 
+        System.out.println("Mol: " + mol.getSMILES() +
                            " ; Desc: " + dres1.getDescriptorId() +": ");
         for (int i=0; i<dres1.getValues().length;i++){
-            System.out.println("    " + dres1.getLabels()[i] 
-                                                          + "=" + dres1.getValues()[i] ); 
+            System.out.println("    " + dres1.getLabels()[i]
+                                                          + "=" + dres1.getValues()[i] );
         }
 
         assertEquals(6, dres1.getValues().length);
@@ -344,32 +349,32 @@ public class TestCDKQsar {
         assertNull(dres2.getErrorMessage());
         assertNull(dres22.getErrorMessage());
 
-        System.out.println("Mol: " + mol1.getSMILES() + 
+        System.out.println("Mol: " + mol1.getSMILES() +
                            " ; Desc: " + dres1.getDescriptorId() +": ");
         for (int i=0; i<dres1.getValues().length;i++){
-            System.out.println("    " + dres1.getLabels()[i] 
-                                                          + "=" + dres1.getValues()[i] ); 
+            System.out.println("    " + dres1.getLabels()[i]
+                                                          + "=" + dres1.getValues()[i] );
         }
 
-        System.out.println("Mol: " + mol1.getSMILES() + 
+        System.out.println("Mol: " + mol1.getSMILES() +
                            " ; Desc: " + dres11.getDescriptorId() +": ");
         for (int i=0; i<dres11.getValues().length;i++){
-            System.out.println("    " + dres11.getLabels()[i] 
-                                                           + "=" + dres11.getValues()[i] ); 
+            System.out.println("    " + dres11.getLabels()[i]
+                                                           + "=" + dres11.getValues()[i] );
         }
 
-        System.out.println("Mol: " + mol2.getSMILES() + 
+        System.out.println("Mol: " + mol2.getSMILES() +
                            " ; Desc: " + dres2.getDescriptorId() +": ");
         for (int i=0; i<dres2.getValues().length;i++){
-            System.out.println("    " + dres2.getLabels()[i] 
-                                                          + "=" + dres2.getValues()[i] ); 
+            System.out.println("    " + dres2.getLabels()[i]
+                                                          + "=" + dres2.getValues()[i] );
         }
 
-        System.out.println("Mol: " + mol2.getSMILES() + 
+        System.out.println("Mol: " + mol2.getSMILES() +
                            " ; Desc: " + dres22.getDescriptorId() +": ");
         for (int i=0; i<dres22.getValues().length;i++){
-            System.out.println("    " + dres22.getLabels()[i] 
-                                                           + "=" + dres22.getValues()[i] ); 
+            System.out.println("    " + dres22.getLabels()[i]
+                                                           + "=" + dres22.getValues()[i] );
         }
 
         assertEquals("bpol", dres1.getLabels()[0]);
@@ -399,7 +404,7 @@ public class TestCDKQsar {
 
         assertEquals(1, dres1.getValues().length);
 
-        System.out.println("Mol with default param C: " + mol.getSMILES() + 
+        System.out.println("Mol with default param C: " + mol.getSMILES() +
                            " ; Desc: " + dres1.getDescriptorId() +": " + dres1.getValues()[0] );
 
 
@@ -449,7 +454,7 @@ public class TestCDKQsar {
         assertEquals(atomCountlID, dres1.getDescriptorId());
         assertEquals(1, dres1.getValues().length);
 
-        System.out.println("Mol with param N: " + mol.getSMILES() + 
+        System.out.println("Mol with param N: " + mol.getSMILES() +
                            " ; Desc: " + dres1.getDescriptorId() +": " + dres1.getValues()[0] );
 
         IDescriptorResult dres2=resList.get(1);
@@ -458,7 +463,7 @@ public class TestCDKQsar {
         assertEquals(atomCountlID, dres2.getDescriptorId());
         assertEquals(1, dres2.getValues().length);
 
-        System.out.println("Mol with param C: " + mol.getSMILES() + 
+        System.out.println("Mol with param C: " + mol.getSMILES() +
                            " ; Desc: " + dres2.getDescriptorId() +": " + dres2.getValues()[0] );
 
         assertEquals(3, dres1.getValues()[0]);
@@ -513,7 +518,7 @@ public class TestCDKQsar {
         assertEquals(rotBondsCntID, dres1.getDescriptorId());
         assertEquals(1, dres1.getValues().length);
 
-        System.out.println("Mol with param TRUE: " + mol.getSMILES() + 
+        System.out.println("Mol with param TRUE: " + mol.getSMILES() +
                            " ; Desc: " + dres1.getDescriptorId() +": " + dres1.getValues()[0] );
 
         IDescriptorResult dres2=resList.get(1);
@@ -522,7 +527,7 @@ public class TestCDKQsar {
         assertEquals(rotBondsCntID, dres2.getDescriptorId());
         assertEquals(1, dres2.getValues().length);
 
-        System.out.println("Mol with param FALSE: " + mol.getSMILES() + 
+        System.out.println("Mol with param FALSE: " + mol.getSMILES() +
                            " ; Desc: " + dres2.getDescriptorId() +": " + dres2.getValues()[0] );
 
         assertEquals(9.0, dres2.getValues()[0]);
@@ -577,25 +582,25 @@ public class TestCDKQsar {
         assertNull(dres11.getErrorMessage());
         assertNull(dres2.getErrorMessage());
 
-        System.out.println("Mol: " + mol1.getSMILES() + 
+        System.out.println("Mol: " + mol1.getSMILES() +
                            " ; Desc: " + dres1.getDescriptorId() +": ");
         for (int i=0; i<dres1.getValues().length;i++){
-            System.out.println("    " + dres1.getLabels()[i] 
-                                                          + "=" + dres1.getValues()[i] ); 
+            System.out.println("    " + dres1.getLabels()[i]
+                                                          + "=" + dres1.getValues()[i] );
         }
 
-        System.out.println("Mol: " + mol1.getSMILES() + 
+        System.out.println("Mol: " + mol1.getSMILES() +
                            " ; Desc: " + dres11.getDescriptorId() +": ");
         for (int i=0; i<dres11.getValues().length;i++){
-            System.out.println("    " + dres11.getLabels()[i] 
-                                                           + "=" + dres11.getValues()[i] ); 
+            System.out.println("    " + dres11.getLabels()[i]
+                                                           + "=" + dres11.getValues()[i] );
         }
 
-        System.out.println("Mol: " + mol2.getSMILES() + 
+        System.out.println("Mol: " + mol2.getSMILES() +
                            " ; Desc: " + dres2.getDescriptorId() +": ");
         for (int i=0; i<dres2.getValues().length;i++){
-            System.out.println("    " + dres2.getLabels()[i] 
-                                                          + "=" + dres2.getValues()[i] ); 
+            System.out.println("    " + dres2.getLabels()[i]
+                                                          + "=" + dres2.getValues()[i] );
         }
 
 
