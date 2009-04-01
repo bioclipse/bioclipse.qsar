@@ -249,7 +249,7 @@ public class TestCDKQsar {
         URL url=FileLocator.find(bun, new Path("src/testFiles/0037.cml"), null);
         String str=FileLocator.toFileURL(url).getFile();
 
-        ICDKMolecule mol = cdk.loadMolecule( str);
+        ICDKMolecule mol = cdk.loadMolecule( new MockIFile(str), new NullProgressMonitor());
 
         IDescriptorResult dres1=qsar.calculate(mol, xlogpID);
         assertNotNull(dres1);
