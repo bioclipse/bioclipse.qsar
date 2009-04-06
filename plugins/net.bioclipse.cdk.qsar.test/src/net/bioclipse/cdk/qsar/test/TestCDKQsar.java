@@ -202,10 +202,10 @@ public class TestCDKQsar {
         //We know only one result as we only asked for one descriptor
         assertNotNull(dres);
         assertNull(dres.getErrorMessage());
-        assertEquals(bpolID, dres.getDescriptorId());
+        assertEquals(bpolID, dres.getDescriptor().getOntologyid());
 
         System.out.println("Mol: " + mol.getSMILES() + 
-                           " ; Desc: " + dres.getDescriptorId() +": ");
+                           " ; Desc: " + dres.getDescriptor().getOntologyid() +": ");
         for (int i=0; i<dres.getValues().length;i++){
             System.out.println("    " + dres.getLabels()[i] 
                                                          + "=" + dres.getValues()[i] ); 
@@ -225,10 +225,10 @@ public class TestCDKQsar {
         IDescriptorResult dres1=qsar.calculate(mol, xlogpID);
         assertNotNull(dres1);
         assertNull(dres1.getErrorMessage());
-        assertEquals(xlogpID, dres1.getDescriptorId());
+        assertEquals(xlogpID, dres1.getDescriptor().getOntologyid());
 
         System.out.println("Mol: " + mol.getSMILES() + 
-                           " ; Desc: " + dres1.getDescriptorId() +": ");
+                           " ; Desc: " + dres1.getDescriptor().getOntologyid() +": ");
         for (int i=0; i<dres1.getValues().length;i++){
             System.out.println("    " + dres1.getLabels()[i] 
                                                           + "=" + dres1.getValues()[i] ); 
@@ -254,10 +254,10 @@ public class TestCDKQsar {
         IDescriptorResult dres1=qsar.calculate(mol, xlogpID);
         assertNotNull(dres1);
         assertNull(dres1.getErrorMessage(),dres1.getErrorMessage());
-        assertEquals(xlogpID, dres1.getDescriptorId());
+        assertEquals(xlogpID, dres1.getDescriptor().getOntologyid());
 
         System.out.println("Mol: " + mol.getSMILES() + 
-                           " ; Desc: " + dres1.getDescriptorId() +": ");
+                           " ; Desc: " + dres1.getDescriptor().getOntologyid() +": ");
         for (int i=0; i<dres1.getValues().length;i++){
             System.out.println("    " + dres1.getLabels()[i] 
                                                           + "=" + dres1.getValues()[i] ); 
@@ -278,10 +278,10 @@ public class TestCDKQsar {
         IDescriptorResult dres1=qsar.calculate(mol, bcutID);
         assertNotNull(dres1);
         assertNull(dres1.getErrorMessage());
-        assertEquals(bcutID, dres1.getDescriptorId());
+        assertEquals(bcutID, dres1.getDescriptor().getOntologyid());
 
         System.out.println("Mol: " + mol.getSMILES() + 
-                           " ; Desc: " + dres1.getDescriptorId() +": ");
+                           " ; Desc: " + dres1.getDescriptor().getOntologyid() +": ");
         for (int i=0; i<dres1.getValues().length;i++){
             System.out.println("    " + dres1.getLabels()[i] 
                                                           + "=" + dres1.getValues()[i] ); 
@@ -340,28 +340,28 @@ public class TestCDKQsar {
         assertNull(dres22.getErrorMessage());
 
         System.out.println("Mol: " + mol1.getSMILES() + 
-                           " ; Desc: " + dres1.getDescriptorId() +": ");
+                           " ; Desc: " + dres1.getDescriptor().getOntologyid() +": ");
         for (int i=0; i<dres1.getValues().length;i++){
             System.out.println("    " + dres1.getLabels()[i] 
                                                           + "=" + dres1.getValues()[i] ); 
         }
 
         System.out.println("Mol: " + mol1.getSMILES() + 
-                           " ; Desc: " + dres11.getDescriptorId() +": ");
+                           " ; Desc: " + dres11.getDescriptor().getOntologyid() +": ");
         for (int i=0; i<dres11.getValues().length;i++){
             System.out.println("    " + dres11.getLabels()[i] 
                                                            + "=" + dres11.getValues()[i] ); 
         }
 
         System.out.println("Mol: " + mol2.getSMILES() + 
-                           " ; Desc: " + dres2.getDescriptorId() +": ");
+                           " ; Desc: " + dres2.getDescriptor().getOntologyid() +": ");
         for (int i=0; i<dres2.getValues().length;i++){
             System.out.println("    " + dres2.getLabels()[i] 
                                                           + "=" + dres2.getValues()[i] ); 
         }
 
         System.out.println("Mol: " + mol2.getSMILES() + 
-                           " ; Desc: " + dres22.getDescriptorId() +": ");
+                           " ; Desc: " + dres22.getDescriptor().getOntologyid() +": ");
         for (int i=0; i<dres22.getValues().length;i++){
             System.out.println("    " + dres22.getLabels()[i] 
                                                            + "=" + dres22.getValues()[i] ); 
@@ -390,12 +390,12 @@ public class TestCDKQsar {
         IDescriptorResult dres1=qsar.calculate(mol, atomCountlID);
         assertNotNull(dres1);
         assertNull(dres1.getErrorMessage());
-        assertEquals(atomCountlID, dres1.getDescriptorId());
+        assertEquals(atomCountlID, dres1.getDescriptor().getOntologyid());
 
         assertEquals(1, dres1.getValues().length);
 
         System.out.println("Mol with default param C: " + mol.getSMILES() + 
-                           " ; Desc: " + dres1.getDescriptorId() +": " + dres1.getValues()[0] );
+                           " ; Desc: " + dres1.getDescriptor().getOntologyid() +": " + dres1.getValues()[0] );
 
 
     }
@@ -441,20 +441,20 @@ public class TestCDKQsar {
         IDescriptorResult dres1=resList.get(0);
         assertNotNull(dres1);
         assertNull(dres1.getErrorMessage());
-        assertEquals(atomCountlID, dres1.getDescriptorId());
+        assertEquals(atomCountlID, dres1.getDescriptor().getOntologyid());
         assertEquals(1, dres1.getValues().length);
 
         System.out.println("Mol with param N: " + mol.getSMILES() + 
-                           " ; Desc: " + dres1.getDescriptorId() +": " + dres1.getValues()[0] );
+                           " ; Desc: " + dres1.getDescriptor().getOntologyid() +": " + dres1.getValues()[0] );
 
         IDescriptorResult dres2=resList.get(1);
         assertNotNull(dres2);
         assertNull(dres2.getErrorMessage());
-        assertEquals(atomCountlID, dres2.getDescriptorId());
+        assertEquals(atomCountlID, dres2.getDescriptor().getOntologyid());
         assertEquals(1, dres2.getValues().length);
 
         System.out.println("Mol with param C: " + mol.getSMILES() + 
-                           " ; Desc: " + dres2.getDescriptorId() +": " + dres2.getValues()[0] );
+                           " ; Desc: " + dres2.getDescriptor().getOntologyid() +": " + dres2.getValues()[0] );
 
         assertEquals(3, dres1.getValues()[0]);
 
@@ -505,20 +505,20 @@ public class TestCDKQsar {
         IDescriptorResult dres1=resList.get(0);
         assertNotNull(dres1);
         assertNull(dres1.getErrorMessage());
-        assertEquals(rotBondsCntID, dres1.getDescriptorId());
+        assertEquals(rotBondsCntID, dres1.getDescriptor().getOntologyid());
         assertEquals(1, dres1.getValues().length);
 
         System.out.println("Mol with param TRUE: " + mol.getSMILES() + 
-                           " ; Desc: " + dres1.getDescriptorId() +": " + dres1.getValues()[0] );
+                           " ; Desc: " + dres1.getDescriptor().getOntologyid() +": " + dres1.getValues()[0] );
 
         IDescriptorResult dres2=resList.get(1);
         assertNotNull(dres2);
         assertNull(dres2.getErrorMessage());
-        assertEquals(rotBondsCntID, dres2.getDescriptorId());
+        assertEquals(rotBondsCntID, dres2.getDescriptor().getOntologyid());
         assertEquals(1, dres2.getValues().length);
 
         System.out.println("Mol with param FALSE: " + mol.getSMILES() + 
-                           " ; Desc: " + dres2.getDescriptorId() +": " + dres2.getValues()[0] );
+                           " ; Desc: " + dres2.getDescriptor().getOntologyid() +": " + dres2.getValues()[0] );
 
         assertEquals(9.0, dres2.getValues()[0]);
 
@@ -573,21 +573,21 @@ public class TestCDKQsar {
         assertNull(dres2.getErrorMessage());
 
         System.out.println("Mol: " + mol1.getSMILES() + 
-                           " ; Desc: " + dres1.getDescriptorId() +": ");
+                           " ; Desc: " + dres1.getDescriptor().getOntologyid() +": ");
         for (int i=0; i<dres1.getValues().length;i++){
             System.out.println("    " + dres1.getLabels()[i] 
                                                           + "=" + dres1.getValues()[i] ); 
         }
 
         System.out.println("Mol: " + mol1.getSMILES() + 
-                           " ; Desc: " + dres11.getDescriptorId() +": ");
+                           " ; Desc: " + dres11.getDescriptor().getOntologyid() +": ");
         for (int i=0; i<dres11.getValues().length;i++){
             System.out.println("    " + dres11.getLabels()[i] 
                                                            + "=" + dres11.getValues()[i] ); 
         }
 
         System.out.println("Mol: " + mol2.getSMILES() + 
-                           " ; Desc: " + dres2.getDescriptorId() +": ");
+                           " ; Desc: " + dres2.getDescriptor().getOntologyid() +": ");
         for (int i=0; i<dres2.getValues().length;i++){
             System.out.println("    " + dres2.getLabels()[i] 
                                                           + "=" + dres2.getValues()[i] ); 
