@@ -253,7 +253,7 @@ public class TestCDKQsar {
     @Test
     public void testCalculateXlogPFromCML() throws BioclipseException, FileNotFoundException, IOException, CoreException{
 
-        ICDKManager cdk=net.bioclipse.cdk.business.Activator.getDefault().getCDKManager();
+        ICDKManager cdk=net.bioclipse.cdk.business.Activator.getDefault().getJavaCDKManager();
 
         Bundle bun=Platform.getBundle(net.bioclipse.cdk.qsar.test.Activator.PLUGIN_ID);
         URL url=FileLocator.find(bun, new Path("src/testFiles/0037.cml"), null);
