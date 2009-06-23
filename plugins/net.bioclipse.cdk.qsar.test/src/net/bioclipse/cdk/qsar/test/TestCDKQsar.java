@@ -215,7 +215,7 @@ public class TestCDKQsar {
         assertEquals(bpolID, dres.getDescriptor().getOntologyid());
 
         System.out.println("Mol: " +
-        		mol.getSMILES(IMolecule.Property.USE_CACHED_OR_CALCULATED) + 
+        		mol.toSMILES() + 
                            " ; Desc: " + dres.getDescriptor().getOntologyid() +": ");
         for (int i=0; i<dres.getValues().length;i++){
             System.out.println("    " + dres.getLabels()[i] 
@@ -239,7 +239,7 @@ public class TestCDKQsar {
         assertEquals(xlogpID, dres1.getDescriptor().getOntologyid());
 
         System.out.println("Mol: " +
-        		mol.getSMILES(IMolecule.Property.USE_CACHED_OR_CALCULATED) + 
+                           mol.toSMILES() + 
                            " ; Desc: " + dres1.getDescriptor().getOntologyid() +": ");
         for (int i=0; i<dres1.getValues().length;i++){
             System.out.println("    " + dres1.getLabels()[i] 
@@ -269,7 +269,7 @@ public class TestCDKQsar {
         assertEquals(xlogpID, dres1.getDescriptor().getOntologyid());
 
         System.out.println("Mol: " +
-        		mol.getSMILES(IMolecule.Property.USE_CACHED_OR_CALCULATED) + 
+                           mol.toSMILES() + 
                            " ; Desc: " + dres1.getDescriptor().getOntologyid() +": ");
         for (int i=0; i<dres1.getValues().length;i++){
             System.out.println("    " + dres1.getLabels()[i] 
@@ -294,7 +294,7 @@ public class TestCDKQsar {
         assertEquals(bcutID, dres1.getDescriptor().getOntologyid());
 
         System.out.println("Mol: " + 
-        		mol.getSMILES(IMolecule.Property.USE_CACHED_OR_CALCULATED) + 
+                           mol.toSMILES() + 
                            " ; Desc: " + dres1.getDescriptor().getOntologyid() +": ");
         for (int i=0; i<dres1.getValues().length;i++){
             System.out.println("    " + dres1.getLabels()[i] 
@@ -354,7 +354,7 @@ public class TestCDKQsar {
         assertNull(dres22.getErrorMessage());
 
         System.out.println("Mol: " +
-        		mol1.getSMILES(IMolecule.Property.USE_CACHED_OR_CALCULATED) + 
+        		mol1.toSMILES() + 
                            " ; Desc: " + dres1.getDescriptor().getOntologyid() +": ");
         for (int i=0; i<dres1.getValues().length;i++){
             System.out.println("    " + dres1.getLabels()[i] 
@@ -362,7 +362,7 @@ public class TestCDKQsar {
         }
 
         System.out.println("Mol: " +
-        		mol1.getSMILES(IMolecule.Property.USE_CACHED_OR_CALCULATED) + 
+                           mol1.toSMILES() + 
                            " ; Desc: " + dres11.getDescriptor().getOntologyid() +": ");
         for (int i=0; i<dres11.getValues().length;i++){
             System.out.println("    " + dres11.getLabels()[i] 
@@ -370,7 +370,7 @@ public class TestCDKQsar {
         }
 
         System.out.println("Mol: " +
-        		mol2.getSMILES(IMolecule.Property.USE_CACHED_OR_CALCULATED) + 
+                           mol2.toSMILES() + 
                            " ; Desc: " + dres2.getDescriptor().getOntologyid() +": ");
         for (int i=0; i<dres2.getValues().length;i++){
             System.out.println("    " + dres2.getLabels()[i] 
@@ -378,7 +378,7 @@ public class TestCDKQsar {
         }
 
         System.out.println("Mol: " +
-        		mol2.getSMILES(IMolecule.Property.USE_CACHED_OR_CALCULATED) + 
+                           mol2.toSMILES() + 
                            " ; Desc: " + dres22.getDescriptor().getOntologyid() +": ");
         for (int i=0; i<dres22.getValues().length;i++){
             System.out.println("    " + dres22.getLabels()[i] 
@@ -413,7 +413,7 @@ public class TestCDKQsar {
         assertEquals(1, dres1.getValues().length);
 
         System.out.println("Mol with default param C: " +
-        		mol.getSMILES(IMolecule.Property.USE_CACHED_OR_CALCULATED) + 
+                           mol.toSMILES() + 
                            " ; Desc: " + dres1.getDescriptor().getOntologyid() +": " + dres1.getValues()[0] );
 
 
@@ -464,7 +464,7 @@ public class TestCDKQsar {
         assertEquals(1, dres1.getValues().length);
 
         System.out.println("Mol with param N: " +
-        		mol.getSMILES(IMolecule.Property.USE_CACHED_OR_CALCULATED) + 
+                           mol.toSMILES() + 
                            " ; Desc: " + dres1.getDescriptor().getOntologyid() +": " + dres1.getValues()[0] );
 
         IDescriptorResult dres2=resList.get(1);
@@ -474,7 +474,7 @@ public class TestCDKQsar {
         assertEquals(1, dres2.getValues().length);
 
         System.out.println("Mol with param C: " +
-        		mol.getSMILES(IMolecule.Property.USE_CACHED_OR_CALCULATED) + 
+                           mol.toSMILES() + 
                            " ; Desc: " + dres2.getDescriptor().getOntologyid() +": " + dres2.getValues()[0] );
 
         assertEquals(3, dres1.getValues()[0]);
@@ -530,7 +530,7 @@ public class TestCDKQsar {
         assertEquals(1, dres1.getValues().length);
 
         System.out.println("Mol with param TRUE: " +
-        		mol.getSMILES(IMolecule.Property.USE_CACHED_OR_CALCULATED) + 
+                           mol.toSMILES() + 
                            " ; Desc: " + dres1.getDescriptor().getOntologyid() +": " + dres1.getValues()[0] );
 
         IDescriptorResult dres2=resList.get(1);
@@ -540,7 +540,7 @@ public class TestCDKQsar {
         assertEquals(1, dres2.getValues().length);
 
         System.out.println("Mol with param FALSE: " +
-        		mol.getSMILES(IMolecule.Property.USE_CACHED_OR_CALCULATED) + 
+                           mol.toSMILES() + 
                            " ; Desc: " + dres2.getDescriptor().getOntologyid() +": " + dres2.getValues()[0] );
 
         assertEquals(9.0, dres2.getValues()[0]);
@@ -596,7 +596,7 @@ public class TestCDKQsar {
         assertNull(dres2.getErrorMessage());
 
         System.out.println("Mol: " +
-        		mol1.getSMILES(IMolecule.Property.USE_CACHED_OR_CALCULATED) + 
+                           mol1.toSMILES() + 
                            " ; Desc: " + dres1.getDescriptor().getOntologyid() +": ");
         for (int i=0; i<dres1.getValues().length;i++){
             System.out.println("    " + dres1.getLabels()[i] 
@@ -604,7 +604,7 @@ public class TestCDKQsar {
         }
 
         System.out.println("Mol: " +
-        		mol1.getSMILES(IMolecule.Property.USE_CACHED_OR_CALCULATED) + 
+                           mol1.toSMILES() + 
                            " ; Desc: " + dres11.getDescriptor().getOntologyid() +": ");
         for (int i=0; i<dres11.getValues().length;i++){
             System.out.println("    " + dres11.getLabels()[i] 
@@ -612,7 +612,7 @@ public class TestCDKQsar {
         }
 
         System.out.println("Mol: " +
-        		mol2.getSMILES(IMolecule.Property.USE_CACHED_OR_CALCULATED) + 
+                           mol2.toSMILES() + 
                            " ; Desc: " + dres2.getDescriptor().getOntologyid() +": ");
         for (int i=0; i<dres2.getValues().length;i++){
             System.out.println("    " + dres2.getLabels()[i] 
