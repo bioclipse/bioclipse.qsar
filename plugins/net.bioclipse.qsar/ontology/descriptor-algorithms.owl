@@ -4,126 +4,171 @@
         <!ENTITY rdfs "http://www.w3.org/2000/01/rdf-schema#" >
         <!ENTITY xsd  "http://www.w3.org/2001/XMLSchema#" >
         <!ENTITY owl  "http://www.w3.org/2002/07/owl#" >
-        ]>
-<rdf:RDF
-        xmlns="http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#"
+        <!ENTITY me   "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#" >
+        <!ENTITY dc   "http://purl.org/dc/elements/1.1/" >
+        <!ENTITY bib  "http://bibtexml.sf.net/" >
+]>
+<rdf:RDF xmlns="http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#"
+        xml:base="http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/"
         xmlns:owl="&owl;"
-        xml:base="http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#"
         xmlns:rdf="&rdf;"
         xmlns:rdfs="&rdfs;"
-        xmlns:bibtex="http://bibtexml.sf.net/"
-        xmlns:dc="http://dublincore.org/"
+        xmlns:bibtex="&bib;"
+        xmlns:dc="&dc;"
         xmlns:cvs="https://www.cvshome.org/"
         >
 
     <owl:Ontology rdf:about="">
         <rdfs:label>Descriptor Ontology</rdfs:label>
-        <owl:versionInfo>$Id: descriptor-algorithms.owl 11707 2008-07-23 00:58:04Z rajarshi $</owl:versionInfo>
-        <dc:date>$Date: 2008-07-23 02:58:04 +0200 (Wed, 23 Jul 2008) $</dc:date>
-        <cvs:last-changed-by>$Author: rajarshi $</cvs:last-changed-by>
-        <cvs:revision>$Revision: 11707 $</cvs:revision>
-        <rdfs:comment rdf:parseType="Literal">
-            Add some comment here.
-        </rdfs:comment>
+        <owl:versionInfo>210</owl:versionInfo>
+        <dc:date>2009-07-19</dc:date>
     </owl:Ontology>
 
     <!-- classes and properties -->
 
-    <owl:Class rdf:ID="Category"/>
+    <owl:AnnotationProperty rdf:about="&dc;contributor"/>
+    <owl:AnnotationProperty rdf:about="&dc;date"/>
 
-    <owl:Class rdf:ID="Algorithm"/>
+    <owl:Class rdf:about="&me;Category">
+       <rdfs:label>Category</rdfs:label>
+    </owl:Class>
 
-    <owl:Class rdf:ID="Descriptor">
-        <owl:subClassOf rdf:resource="#Algorithm"/>
+    <owl:Class rdf:about="&me;Algorithm">
+       <rdfs:label>Algorithm</rdfs:label>
+    </owl:Class>
+
+    <owl:Class rdf:about="&me;Descriptor">
+        <rdfs:label>Descriptor</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&me;Algorithm"/>
         <rdfs:comment>
-            A descriptor is an algorithm that operates on a chemical
+            A feature (descriptor) is an algorithm that operates on a chemical
             entity (commonly atoms and molecules)
-            and returns a numerical (descriptor) value which described
+            and returns a numerical or nominal (descriptor) value which described
             certain information on that entity.
         </rdfs:comment>
     </owl:Class>
 
-    <owl:Class rdf:ID="Reference"/>
-
-    <owl:Class rdf:ID="Contributor"/>
-
-    <owl:Class rdf:ID="DataFeature"/>
-
-    <owl:Class rdf:ID="DataRepresentation">
-        <owl:subClassOf rdf:resource="#DataFeature"/>
+    <owl:Class rdf:about="&me;AtomicDescriptor">
+        <rdfs:label>Atomic Descriptors</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&me;Descriptor"/>
+        <dc:contributor rdf:resource="&me;elw"/>
+        <dc:date>2005-11-18</dc:date>
     </owl:Class>
 
-    <owl:Class rdf:ID="Implementation"/>
+    <owl:Class rdf:about="&me;BondDescriptor">
+        <rdfs:label>Atomic Descriptors</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&me;Descriptor"/>
+        <dc:contributor rdf:resource="&me;elw"/>
+        <dc:date>2009-07-07</dc:date>
+        <owl:disjointWith rdf:resource="&me;AtomicDescriptor"/>
+        <owl:disjointWith rdf:resource="&me;ProteinDescriptor"/>
+        <owl:disjointWith rdf:resource="&me;MolecularDescriptor"/>
+    </owl:Class>
 
-    <owl:Class rdf:ID="DescriptorValue">
+    <owl:Class rdf:about="&me;MolecularDescriptor">
+        <rdfs:label>Molecular Descriptors</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&me;Descriptor"/>
+        <dc:contributor rdf:resource="&me;elw"/>
+        <dc:date>2005-11-18</dc:date>
+        <owl:disjointWith rdf:resource="&me;AtomicDescriptor"/>
+        <owl:disjointWith rdf:resource="&me;BondDescriptor"/>
+        <owl:disjointWith rdf:resource="&me;ProteinDescriptor"/>
+    </owl:Class>
+
+    <owl:Class rdf:about="&me;ProteinDescriptor">
+        <rdfs:label>Protein Descriptor</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&me;Descriptor"/>
+        <dc:contributor rdf:resource="&me;rg"/>
+        <dc:date>2006-11-02</dc:date>
+        <definition rdf:parseType='Literal'>
+            A descriptor specifically designed for characterizing proteins
+        </definition>
+        <owl:disjointWith rdf:resource="&me;AtomicDescriptor"/>
+        <owl:disjointWith rdf:resource="&me;BondDescriptor"/>
+        <owl:disjointWith rdf:resource="&me;MolecularDescriptor"/>
+    </owl:Class>
+
+    <owl:Class rdf:about="&me;Reference"/>
+
+<owl:Class rdf:about="&me;Contributor">
+  <rdfs:label>Contributor</rdfs:label>
+</owl:Class>
+
+<owl:Class rdf:about="&me;DataFeature">
+  <rdfs:label>Data Feature</rdfs:label>
+</owl:Class>
+
+<owl:Class rdf:about="&me;DataRepresentation">
+  <rdfs:label>Data Representation</rdfs:label>
+  <rdfs:subClassOf rdf:resource="&me;DataFeature"/>
+</owl:Class>
+
+<owl:Class rdf:about="&me;Implementation">
+  <rdfs:label>Implementation</rdfs:label>
+</owl:Class>
+
+    <owl:Class rdf:about="&me;DescriptorValue">
         <rdfs:label>Descriptor Value</rdfs:label>
         <rdfs:comment>One or more output values calculated by an Implementation
             of a certain Algorithm for a certain molecule.
         </rdfs:comment>
     </owl:Class>
 
-    <owl:ObjectProperty rdf:ID="isA">
+    <owl:ObjectProperty rdf:about="&me;isA">
         <rdfs:label>Is A</rdfs:label>
         <rdfs:domain rdf:resource="&owl;Thing"/>
         <rdfs:range rdf:resource="&owl;Thing"/>
     </owl:ObjectProperty>
 
-    <owl:ObjectProperty rdf:ID="instanceOf">
+    <owl:ObjectProperty rdf:about="&me;instanceOf">
         <rdfs:label>Instance Of</rdfs:label>
-        <rdfs:domain rdf:resource="&owl;Implementation"/>
-        <rdfs:range rdf:resource="&owl;Algorithm"/>
+        <rdfs:domain rdf:resource="&me;Implementation"/>
+        <rdfs:range rdf:resource="&me;Algorithm"/>
     </owl:ObjectProperty>
 
-    <owl:ObjectProperty rdf:ID="isClassifiedAs">
+    <owl:ObjectProperty rdf:about="&me;isClassifiedAs">
         <rdfs:label>Is Classified As</rdfs:label>
         <rdfs:domain rdf:resource="&owl;Thing"/>
-        <rdfs:range rdf:resource="#Category"/>
+        <rdfs:range rdf:resource="&me;Category"/>
     </owl:ObjectProperty>
 
-    <owl:ObjectProperty rdf:ID="requires">
+    <owl:ObjectProperty rdf:about="&me;requires">
         <rdfs:label>Requires</rdfs:label>
-        <rdfs:domain rdf:resource="#Algorithm"/>
-        <rdfs:range rdf:resource="#DataFeature"/>
+        <rdfs:domain rdf:resource="&me;Algorithm"/>
+        <rdfs:range rdf:resource="&me;DataFeature"/>
     </owl:ObjectProperty>
 
-    <owl:DataProperty rdf:ID="definition">
-        <rdfs:domain rdf:resource="&owl;Thing"/>
-        <rdfs:range rdf:resource="rdfs:XMLLiteral"/>
-    </owl:DataProperty>
-
-    <owl:DataProperty rdf:ID="description">
-        <rdfs:domain rdf:resource="&owl;Thing"/>
-        <rdfs:range rdf:resource="rdfs:XMLLiteral"/>
-    </owl:DataProperty>
+    <owl:AnnotationProperty rdf:about="&me;definition"/>
+    <owl:AnnotationProperty rdf:about="&me;description"/>
+    <owl:AnnotationProperty rdf:about="&bib;entry"/>
 
     <!-- the facts: Data Features -->
 
-    <DataFeature rdf:ID="has2DCoordinates">
+    <DataFeature rdf:about="&me;has2DCoordinates">
         <rdfs:label>has 2D Coordinates</rdfs:label>
     </DataFeature>
 
-    <DataFeature rdf:ID="has3DCoordinates">
+    <DataFeature rdf:about="&me;has3DCoordinates">
         <rdfs:label>has 3D Coordinates</rdfs:label>
     </DataFeature>
 
-    <DataFeature rdf:ID="hasFractionalUnitCellCoordinatesCoordinates">
+    <DataFeature rdf:about="&me;hasFractionalUnitCellCoordinatesCoordinates">
         <rdfs:label>has Fractional Unit Cell Coordinates Coordinates</rdfs:label>
-        <isClassifiedAs rdf:resource="#crystallography"/>
     </DataFeature>
 
-    <DataFeature rdf:ID="hasPartialAtomicCharges">
+    <DataFeature rdf:about="&me;hasPartialAtomicCharges">
         <rdfs:label>has Partial Atomic Charges</rdfs:label>
     </DataFeature>
 
-    <DataRepresentation rdf:ID="DietzRepresentation">
+    <DataRepresentation rdf:about="&me;DietzRepresentation">
         <rdfs:label>Dietz Representation</rdfs:label>
-        <owl:equivalentClass rdfs:resource="#GraphRepresentation"/>
+        <owl:differentFrom rdf:resource="&me;GraphRepresentation"/>
         <!-- FIXME: add description and reference to Dietz' article in JCICS -->
     </DataRepresentation>
 
-    <DataRepresentation rdf:ID="GraphRepresentation">
+    <DataRepresentation rdf:about="&me;GraphRepresentation">
         <rdfs:label>Graph Representation</rdfs:label>
-        <owl:equivalentClass rdfs:resource="#DietzRepresentation"/>
+        <owl:differentFrom rdf:resource="&me;DietzRepresentation"/>
         <description rdf:parseType='Literal'>
             Representation in which atoms are represented by graph nodes and
             bonds by graph edges. Consequently, bonds are always localized
@@ -133,135 +178,115 @@
 
     <!-- the facts: Contributors -->
 
-    <Contributor rdf:ID="elw">
+    <Contributor rdf:about="&me;jkw">
+        <rdfs:label>Joerg Kurt Wegner</rdfs:label>
+    </Contributor>
+
+    <Contributor rdf:about="&me;elw">
         <rdfs:label>Egon Willighagen</rdfs:label>
     </Contributor>
 
-    <Contributor rdf:ID="pmr">
+    <Contributor rdf:about="&me;pmr">
         <rdfs:label>Peter Murray-Rust</rdfs:label>
     </Contributor>
 
-    <Contributor rdf:ID="chhoppe">
+    <Contributor rdf:about="&me;chhoppe">
         <rdfs:label>Christian Hoppe</rdfs:label>
     </Contributor>
 
-    <Contributor rdf:ID="rguha">
+    <Contributor rdf:about="&me;rguha">
         <rdfs:label>Rajarshi Guha</rdfs:label>
     </Contributor>
 
-    <Contributor rdf:ID="tm">
+    <Contributor rdf:about="&me;tm">
         <rdfs:label>Todd Martin</rdfs:label>
     </Contributor>
 
-    <Contributor rdf:ID="mf">
+    <Contributor rdf:about="&me;mf">
         <rdfs:label>Matteo Floris</rdfs:label>
     </Contributor>
 
-    <Contributor rdf:ID="mrc">
+    <Contributor rdf:about="&me;mrc">
         <rdfs:label>Miguel Rojas</rdfs:label>
     </Contributor>
 
-    <Contributor rdf:ID="fm">
+    <Contributor rdf:about="&me;fm">
         <rdfs:label>Federico Marighetti</rdfs:label>
     </Contributor>
 
     <!-- the facts: Categories -->
 
-    <Category rdf:ID="descriptorCategories">
+    <Category rdf:about="&me;descriptorCategories">
         <rdfs:label>DescriptorCategories</rdfs:label>
-        <dc:contributor rdf:resource="#elw"/>
+        <dc:contributor rdf:resource="&me;elw"/>
         <dc:date>2005-11-18</dc:date>
     </Category>
 
-    <Category rdf:ID="atomicDescriptor">
-        <rdfs:label>Atomic Descriptors</rdfs:label>
-        <dc:contributor rdf:resource="#elw"/>
-        <dc:date>2005-11-18</dc:date>
-        <isClassifiedAs rdf:resource="#descriptorCategories"/>
-    </Category>
-
-    <Category rdf:ID="molecularDescriptor">
-        <rdfs:label>Molecular Descriptors</rdfs:label>
-        <dc:contributor rdf:resource="#elw"/>
-        <dc:date>2005-11-18</dc:date>
-        <isClassifiedAs rdf:resource="#descriptorCategories"/>
-    </Category>
-
-    <Category rdf:ID="electronicDescriptor">
+    <Category rdf:about="&me;electronicDescriptor">
         <rdfs:label>Electronic Descriptors</rdfs:label>
-        <dc:contributor rdf:resource="#elw"/>
+        <dc:contributor rdf:resource="&me;elw"/>
         <dc:date>2005-02-07</dc:date>
         <definition rdf:parseType='Literal'>
             Descriptor relating to the electronic distribution in a molecule.
         </definition>
-        <isClassifiedAs rdf:resource="#descriptorCategories"/>
+        <isClassifiedAs rdf:resource="&me;descriptorCategories"/>
     </Category>
 
-    <Category rdf:ID="proteinDescriptor">
-        <rdfs:label>Protein Descriptor</rdfs:label>
-        <dc:contributor rdf:resource="#rg"/>
-        <dc:date>2006-11-02</dc:date>
-        <definition rdf:parseType='Literal'>
-            A descriptor specifically designed for characterizing proteins
-        </definition>
-        <isClassifiedAs rdf:resource="#descriptorCategories"/>
-    </Category>
-
-    <Category rdf:ID="constitutionalDescriptor">
+    <Category rdf:about="&me;constitutionalDescriptor">
         <rdfs:label>Constitutional Descriptor</rdfs:label>
-        <dc:contributor rdf:resource="#elw"/>
+        <dc:contributor rdf:resource="&me;elw"/>
         <dc:date>2005-02-07</dc:date>
         <definition rdf:parseType='Literal'>
             Descriptor reflecting the molecular composition of a compound without
             connectivity and geometry information.
         </definition>
-        <isClassifiedAs rdf:resource="#descriptorCategories"/>
+        <isClassifiedAs rdf:resource="&me;descriptorCategories"/>
     </Category>
 
-    <Category rdf:ID="geometricalDescriptor">
+    <Category rdf:about="&me;geometricalDescriptor">
         <rdfs:label>Geometrical Descriptor</rdfs:label>
-        <dc:contributor rdf:resource="#elw"/>
+        <dc:contributor rdf:resource="&me;elw"/>
         <dc:date>2005-02-07</dc:date>
         <definition rdf:parseType='Literal'>
             Any descriptor derived from the three-dimensional structure of the molecule.
         </definition>
-        <isClassifiedAs rdf:resource="#descriptorCategories"/>
+        <isClassifiedAs rdf:resource="&me;descriptorCategories"/>
     </Category>
 
-    <Category rdf:ID="topologicalDescriptor">
+    <Category rdf:about="&me;hybridDescriptor">
+        <rdfs:label>Hybrid Descriptor</rdfs:label>
+        <dc:contributor rdf:resource="&me;rg"/>
+        <isClassifiedAs rdf:resource="&me;descriptorCategories"/>
+    </Category>
+
+    <Category rdf:about="&me;topologicalDescriptor">
         <rdfs:label>Topological Descriptor</rdfs:label>
-        <dc:contributor rdf:resource="#elw"/>
+        <dc:contributor rdf:resource="&me;elw"/>
         <dc:date>2005-02-07</dc:date>
         <definition rdf:parseType='Literal'>
             Descriptor reflecting the molecular connectivity without geometry information.
         </definition>
-        <isClassifiedAs rdf:resource="#descriptorCategories"/>
+        <isClassifiedAs rdf:resource="&me;descriptorCategories"/>
     </Category>
 
     <!-- the facts: Algorithms -->
 
-    <Descriptor rdf:ID="aminoAcidsCount">
+    <ProteinDescriptor rdf:about="&me;aminoAcidsCount">
         <rdfs:label>Amino Acid Count</rdfs:label>
-        <annotation>
-            <documentation>
-                <dc:contributor rdf:resource="#elw"/>
+                <dc:contributor rdf:resource="&me;elw"/>
                 <dc:date>2006-01-15</dc:date>
-            </documentation>
-        </annotation>
         <definition rdf:parseType='Literal'>
             Returns the number of amino acids found in the system
         </definition>
         <description rdf:parseType='Literal'>
         </description>
-        <isClassifiedAs rdf:resource="#molecularDescriptor"/>
-        <isClassifiedAs rdf:resource="#proteinDescriptor"/>
-        <isClassifiedAs rdf:resource="#constitutionalDescriptor"/>
-    </Descriptor>
+        <isClassifiedAs rdf:resource="&me;constitutionalDescriptor"/>
+    </ProteinDescriptor>
 
-    <Descriptor rdf:ID="apol">
+    <MolecularDescriptor rdf:about="&me;apol">
         <rdfs:label>Atomic Polarizabilities</rdfs:label>
-        <dc:contributor rdf:resource="#mf"/>
-        <dc:contributor rdf:resource="#elw"/>
+        <dc:contributor rdf:resource="&me;mf"/>
+        <dc:contributor rdf:resource="&me;elw"/>
         <dc:date>2004-11-26</dc:date>
         <definition rdf:parseType='Literal'>
             Descriptor that calculates the sum of the atomic polarizabilities (including implicit hydrogens).
@@ -269,44 +294,42 @@
         <description rdf:parseType='Literal'>
             Polarizabilities derive from periodic tables.
         </description>
-        <isClassifiedAs rdf:resource="#electronicDescriptor"/>
-        <isClassifiedAs rdf:resource="#molecularDescriptor"/>
-        <requires rdf:resource="GraphRepresentation"/>
-    </Descriptor>
+        <isClassifiedAs rdf:resource="&me;electronicDescriptor"/>
+        <requires rdf:resource="&me;GraphRepresentation"/>
+    </MolecularDescriptor>
 
-    <Descriptor rdf:ID="atomCount">
+    <MolecularDescriptor rdf:about="&me;atomCount">
         <rdfs:label>Element Count</rdfs:label>
-        <dc:contributor rdf:resource="#mf"/>
+        <dc:contributor rdf:resource="&me;mf"/>
         <dc:date>2004-11-26</dc:date>
         <definition rdf:parseType='Literal'>
             Descriptor based on the number of atoms of a certain element type.
         </definition>
-        <isClassifiedAs rdf:resource="#constitutionalDescriptor"/>
-    </Descriptor>
+        <isClassifiedAs rdf:resource="&me;constitutionalDescriptor"/>
+    </MolecularDescriptor>
 
-    <Descriptor rdf:ID="atomDegree">
+    <AtomicDescriptor rdf:about="&me;atomDegree">
         <rdfs:label>Atomic Degree</rdfs:label>
-        <dc:contributor rdf:resource="#mf"/>
+        <dc:contributor rdf:resource="&me;mf"/>
         <dc:date>2004-11-26</dc:date>
         <definition rdf:parseType='Literal'>
             Descriptor that calculates the number of not-Hs substituents of an atom.
         </definition>
-        <isClassifiedAs rdf:resource="#topologicalDescriptor"/>
-    </Descriptor>
+        <isClassifiedAs rdf:resource="&me;topologicalDescriptor"/>
+    </AtomicDescriptor>
 
-    <Descriptor rdf:ID="atomHybridization">
+    <AtomicDescriptor rdf:about="&me;atomHybridization">
         <rdfs:label>Atomic Hybridization</rdfs:label>
-        <dc:contributor rdf:resource="#mf"/>
+        <dc:contributor rdf:resource="&me;mf"/>
         <dc:date>2004-11-26</dc:date>
         <definition rdf:parseType='Literal'>
             Descriptor that returns the hybridization state of an atom.
         </definition>
-        <isClassifiedAs rdf:resource="#molecularDescriptor"/>
-    </Descriptor>
+    </AtomicDescriptor>
 
-    <Descriptor rdf:ID="atomHybridizationVSEPR">
+    <AtomicDescriptor rdf:about="&me;atomHybridizationVSEPR">
         <rdfs:label>Atomic Hybridization VSEPR</rdfs:label>
-        <dc:contributor rdf:resource="#mrc"/>
+        <dc:contributor rdf:resource="&me;mrc"/>
         <dc:date>2006-05-08</dc:date>
         <definition rdf:parseType='Literal'>
             Descriptor that returns the hybridization state of an atom.
@@ -317,50 +340,43 @@
             VSEPR model and at the same time its hybridization of atoms
             in a molecule.
         </description>
-        <isClassifiedAs rdf:resource="#molecularDescriptor"/>
-    </Descriptor>
+    </AtomicDescriptor>
 
-    <Descriptor rdf:ID="atomValence">
+    <AtomicDescriptor rdf:about="&me;atomValence">
         <rdfs:label>Atomic Valence</rdfs:label>
-        <dc:contributor rdf:resource="#mf"/>
+        <dc:contributor rdf:resource="&me;mf"/>
         <dc:date>2004-11-26</dc:date>
         <definition rdf:parseType='Literal'>
             Descriptor that calculates the valence of an atom.
         </definition>
-        <isClassifiedAs rdf:resource="#electronicDescriptor"/>
-    </Descriptor>
+        <isClassifiedAs rdf:resource="&me;electronicDescriptor"/>
+    </AtomicDescriptor>
 
-    <Descriptor rdf:ID="aromaticAtomsCount">
+    <MolecularDescriptor rdf:about="&me;aromaticAtomsCount">
         <rdfs:label>Aromatic Atoms Count</rdfs:label>
-        <dc:contributor rdf:resource="#mf"/>
+        <dc:contributor rdf:resource="&me;mf"/>
         <dc:date>2004-11-26</dc:date>
         <definition rdf:parseType='Literal'>
             Descriptor based on the number of aromatic atoms of a molecule.
         </definition>
-        <isClassifiedAs rdf:resource="#constitutionalDescriptor"/>
-        <isClassifiedAs rdf:resource="#molecularDescriptor"/>
-    </Descriptor>
+        <isClassifiedAs rdf:resource="&me;constitutionalDescriptor"/>
+    </MolecularDescriptor>
 
-    <Descriptor rdf:ID="aromaticBondsCount">
+    <MolecularDescriptor rdf:about="&me;aromaticBondsCount">
         <rdfs:label>Aromatic Bonds Count</rdfs:label>
-        <dc:contributor rdf:resource="#mf"/>
-        <dc:contributor rdf:resource="#elw"/>
+        <dc:contributor rdf:resource="&me;mf"/>
+        <dc:contributor rdf:resource="&me;elw"/>
         <dc:date>2004-11-26</dc:date>
         <definition rdf:parseType='Literal'>
             Descriptor based on the number of aromatic bonds of a molecule.
         </definition>
-        <isClassifiedAs rdf:resource="#constitutionalDescriptor"/>
-        <isClassifiedAs rdf:resource="#molecularDescriptor"/>
-    </Descriptor>
+        <isClassifiedAs rdf:resource="&me;constitutionalDescriptor"/>
+    </MolecularDescriptor>
 
-    <Descriptor rdf:ID="atomicHardness">
+    <AtomicDescriptor rdf:about="&me;atomicHardness">
         <rdfs:label>Inductive atomic hardness</rdfs:label>
-        <annotation>
-            <documentation>
-                <dc:contributor rdf:resource="#mf"/>
+                <dc:contributor rdf:resource="&me;mf"/>
                 <dc:date>2005-04-21</dc:date>
-            </documentation>
-        </annotation>
         <definition rdf:parseType='Literal'>
             This class calculates the atomic hardness of a given atom.
         </definition>
@@ -371,17 +387,13 @@
             <bibtex:cite ref="CHER2003"/>
             .
         </description>
-        <isClassifiedAs rdf:resource="#electronicDescriptor"/>
-    </Descriptor>
+        <isClassifiedAs rdf:resource="&me;electronicDescriptor"/>
+    </AtomicDescriptor>
 
-    <Descriptor rdf:ID="atomicSoftness">
+    <AtomicDescriptor rdf:about="&me;atomicSoftness">
         <rdfs:label>Inductive atomic softness</rdfs:label>
-        <annotation>
-            <documentation>
-                <dc:contributor rdf:resource="#mf"/>
+                <dc:contributor rdf:resource="&me;mf"/>
                 <dc:date>2005-04-21</dc:date>
-            </documentation>
-        </annotation>
         <definition rdf:parseType='Literal'>
             This class calculates the atomic softness of a given atom.
         </definition>
@@ -392,13 +404,13 @@
             <bibtex:cite ref="CHER2003"/>
             .
         </description>
-        <isClassifiedAs rdf:resource="#electronicDescriptor"/>
-    </Descriptor>
+        <isClassifiedAs rdf:resource="&me;electronicDescriptor"/>
+    </AtomicDescriptor>
 
-    <Descriptor rdf:ID="BCUT">
+    <MolecularDescriptor rdf:about="&me;BCUT">
         <rdfs:label>BCUT</rdfs:label>
-        <dc:contributor rdf:resource="#rguha"/>
-        <dc:contributor rdf:resource="#elw"/>
+        <dc:contributor rdf:resource="&me;rguha"/>
+        <dc:contributor rdf:resource="&me;elw"/>
         <dc:date>2005-01-27</dc:date>
         <definition rdf:parseType='Literal'>
             Eigenvalue based descriptor noted for its utility in chemical diversity
@@ -406,42 +418,36 @@
             <bibtex:cite ref="PEA99"/>
             .
         </definition>
-        <isClassifiedAs rdf:resource="#molecularDescriptor"/>
-        <isClassifiedAs rdf:resource="#hybridDescriptor"/>
-    </Descriptor>
+        <isClassifiedAs rdf:resource="&me;hybridDescriptor"/>
+    </MolecularDescriptor>
     
 
-    <Descriptor rdf:ID="bondCount">
+    <MolecularDescriptor rdf:about="&me;bondCount">
         <rdfs:label>Bond Count</rdfs:label>
-        <dc:contributor rdf:resource="#mf"/>
-        <dc:contributor rdf:resource="#elw"/>
+        <dc:contributor rdf:resource="&me;mf"/>
+        <dc:contributor rdf:resource="&me;elw"/>
         <dc:date>2004-11-26</dc:date>
         <definition rdf:parseType='Literal'>
             Descriptor based on the number of bonds of a certain bond order.
         </definition>
-        <isClassifiedAs rdf:resource="#constitutionalDescriptor"/>
-    </Descriptor>
+        <isClassifiedAs rdf:resource="&me;constitutionalDescriptor"/>
+    </MolecularDescriptor>
 
-    <Descriptor rdf:ID="bondsToAtom">
+    <Descriptor rdf:about="&me;bondsToAtom">
         <rdfs:label>Bonds to Atom</rdfs:label>
-        <dc:contributor rdf:resource="#mf"/>
+        <dc:contributor rdf:resource="&me;mf"/>
         <dc:date>2004-11-26</dc:date>
         <definition rdf:parseType='Literal'>
             Descriptor based on the number of bonds on the shortest path between two atoms.
         </definition>
-        <isClassifiedAs rdf:resource="#topologicalDescriptor"/>
-        <isClassifiedAs rdf:resource="#atomicDescriptor"/>
+        <isClassifiedAs rdf:resource="&me;topologicalDescriptor"/>
     </Descriptor>
 
-    <Descriptor rdf:ID="bpol">
+    <MolecularDescriptor rdf:about="&me;bpol">
         <rdfs:label>Bond Polarizabilities</rdfs:label>
-        <annotation>
-            <documentation>
-                <dc:contributor rdf:resource="#mf"/>
-                <dc:contributor rdf:resource="#elw"/>
+                <dc:contributor rdf:resource="&me;mf"/>
+                <dc:contributor rdf:resource="&me;elw"/>
                 <dc:date>2004-11-26</dc:date>
-            </documentation>
-        </annotation>
         <definition rdf:parseType='Literal'>
             Descriptor that calculates the sum of the absolute value of the difference between atomic
             polarizabilities of all bonded atoms in the molecule (including implicit hydrogens).
@@ -449,13 +455,12 @@
         <description rdf:parseType='Literal'>
             Polarizabilities derive from periodic tables.
         </description>
-        <isClassifiedAs rdf:resource="#electronicDescriptor"/>
-        <isClassifiedAs rdf:resource="#molecularDescriptor"/>
-    </Descriptor>
+        <isClassifiedAs rdf:resource="&me;electronicDescriptor"/>
+    </MolecularDescriptor>
 
-    <Descriptor rdf:ID="chi1v">
+    <MolecularDescriptor rdf:about="&me;chi1v">
         <rdfs:label>Valence connectivity index (order 1)</rdfs:label>
-        <dc:contributor rdf:resource="#mf"/>
+        <dc:contributor rdf:resource="&me;mf"/>
         <dc:date>2004-11-26</dc:date>
         <definition rdf:parseType='Literal'>
             Descriptor that calculates atomic valence connectivity index (order 1).
@@ -563,14 +568,13 @@
             </mrow>
             over all bonds between heavy atoms i and j.
         </description>
-        <isClassifiedAs rdf:resource="#topologicalDescriptor"/>
-        <isClassifiedAs rdf:resource="#molecularDescriptor"/>
-    </Descriptor>
+        <isClassifiedAs rdf:resource="&me;topologicalDescriptor"/>
+    </MolecularDescriptor>
 
 
-    <Descriptor rdf:ID="chi1vC">
+    <MolecularDescriptor rdf:about="&me;chi1vC">
         <rdfs:label>Valence carbon connectivity index (order 1)</rdfs:label>
-        <dc:contributor rdf:resource="#mf"/>
+        <dc:contributor rdf:resource="&me;mf"/>
         <dc:date>2004-11-26</dc:date>
         <definition rdf:parseType='Literal'>
             Descriptor that calculates carbon valence connectivity index (order 1).
@@ -679,13 +683,12 @@
             over all bonds between heavy atoms i and j, the carbon valence
             connectivity index takes into account only bonds between carbon atoms.
         </description>
-        <isClassifiedAs rdf:resource="#topologicalDescriptor"/>
-        <isClassifiedAs rdf:resource="#molecularDescriptor"/>
-    </Descriptor>
+        <isClassifiedAs rdf:resource="&me;topologicalDescriptor"/>
+    </MolecularDescriptor>
 
-    <Descriptor rdf:ID="chi0v">
+    <MolecularDescriptor rdf:about="&me;chi0v">
         <rdfs:label>Valence connectivity index (order 0)</rdfs:label>
-        <dc:contributor rdf:resource="#mf"/>
+        <dc:contributor rdf:resource="&me;mf"/>
         <dc:date>2004-11-26</dc:date>
         <definition rdf:parseType='Literal'>
             Descriptor that calculates atomic valence connectivity index (order 0).
@@ -794,13 +797,12 @@
             </mrow>
             greather than 0.
         </description>
-        <isClassifiedAs rdf:resource="#topologicalDescriptor"/>
-        <isClassifiedAs rdf:resource="#molecularDescriptor"/>
-    </Descriptor>
+        <isClassifiedAs rdf:resource="&me;topologicalDescriptor"/>
+    </MolecularDescriptor>
 
-    <Descriptor rdf:ID="chi0vC">
+    <MolecularDescriptor rdf:about="&me;chi0vC">
         <rdfs:label>Valence carbon connectivity index (order 0)</rdfs:label>
-        <dc:contributor rdf:resource="#mf"/>
+        <dc:contributor rdf:resource="&me;mf"/>
         <dc:date>2004-11-26</dc:date>
         <definition rdf:parseType='Literal'>
             Descriptor that calculates carbon valence connectivity index (order 0).
@@ -917,18 +919,13 @@
             </mrow>
             greather than 0.
         </description>
-        <isClassifiedAs rdf:resource="#topologicalDescriptor"/>
-        <isClassifiedAs rdf:resource="#molecularDescriptor"/>
-    </Descriptor>
+        <isClassifiedAs rdf:resource="&me;topologicalDescriptor"/>
+    </MolecularDescriptor>
 
-    <Descriptor rdf:ID="chi0C">
+    <MolecularDescriptor rdf:about="&me;chi0C">
         <rdfs:label>Carbon connectivity index (order 0)</rdfs:label>
-        <annotation>
-            <documentation>
-                <dc:contributor rdf:resource="#mf"/>
+                <dc:contributor rdf:resource="&me;mf"/>
                 <dc:date>2004-11-26</dc:date>
-            </documentation>
-        </annotation>
         <definition rdf:parseType='Literal'>
             Descriptor that calculates the carbon connectivity index (order 0).
         </definition>
@@ -952,19 +949,14 @@
             takes into account only carbon atoms with degree greather than zero.
         </description>
         <!-- relatedEntry type="qsar-descriptors-metadata:isAModificationOf" href="chi0"/ -->
-        <isClassifiedAs rdf:resource="#topologicalDescriptor"/>
-        <isClassifiedAs rdf:resource="#molecularDescriptor"/>
-    </Descriptor>
+        <isClassifiedAs rdf:resource="&me;topologicalDescriptor"/>
+    </MolecularDescriptor>
 
 
-    <Descriptor rdf:ID="chi1C">
+    <MolecularDescriptor rdf:about="&me;chi1C">
         <rdfs:label>Carbon connectivity index (order 1)</rdfs:label>
-        <annotation>
-            <documentation>
-                <dc:contributor rdf:resource="#mf"/>
+                <dc:contributor rdf:resource="&me;mf"/>
                 <dc:date>2004-11-26</dc:date>
-            </documentation>
-        </annotation>
         <definition rdf:parseType='Literal'>
             Descriptor that calculates carbon connectivity index (order 1).
         </definition>
@@ -1000,51 +992,38 @@
             takes into account only bonds between carbon atoms.
         </description>
         <!-- relatedEntry type="qsar-descriptors-metadata:isAModificationOf" href="chi1"/ -->
-        <isClassifiedAs rdf:resource="#topologicalDescriptor"/>
-        <isClassifiedAs rdf:resource="#molecularDescriptor"/>
-    </Descriptor>
+        <isClassifiedAs rdf:resource="&me;topologicalDescriptor"/>
+    </MolecularDescriptor>
 
-    <Descriptor rdf:ID="distanceToAtom">
+    <Descriptor rdf:about="&me;distanceToAtom">
         <rdfs:label>Distance to Atom</rdfs:label>
-        <annotation>
-            <documentation>
-                <dc:contributor rdf:resource="#mf"/>
+                <dc:contributor rdf:resource="&me;mf"/>
                 <dc:date>2004-11-26</dc:date>
-            </documentation>
-        </annotation>
         <definition rdf:parseType='Literal'>
             Descriptor that calculates the 3D distance between two atoms.
         </definition>
-        <isClassifiedAs rdf:resource="#geometricalDescriptor"/>
+        <isClassifiedAs rdf:resource="&me;geometricalDescriptor"/>
     </Descriptor>
 
-    <Descriptor rdf:ID="effectivePolarizability">
+    <AtomicDescriptor rdf:about="&me;effectivePolarizability">
         <rdfs:label>Effective Polarizability</rdfs:label>
-        <annotation>
-            <documentation>
-                <dc:contributor rdf:resource="#mf"/>
-                <dc:contributor rdf:resource="#elw"/>
+                <dc:contributor rdf:resource="&me;mf"/>
+                <dc:contributor rdf:resource="&me;elw"/>
                 <dc:date>2004-11-26</dc:date>
-            </documentation>
-        </annotation>
         <definition rdf:parseType='Literal'>
             Descriptor that calculates the effective polarizability of a given heavy atom.
         </definition>
         <description rdf:parseType='Literal'>
             Polarizabilities are assigned to the heavy atom by Polarizability class.
         </description>
-        <isClassifiedAs rdf:resource="#electronicDescriptor"/>
-    </Descriptor>
+        <isClassifiedAs rdf:resource="&me;electronicDescriptor"/>
+    </AtomicDescriptor>
 
-    <Descriptor rdf:ID="gravitationalIndex">
+    <MolecularDescriptor rdf:about="&me;gravitationalIndex">
         <rdfs:label>Gravitational Index</rdfs:label>
-        <annotation>
-            <documentation>
-                <dc:contributor rdf:resource="#rguha"/>
-                <dc:contributor rdf:resource="#elw"/>
+                <dc:contributor rdf:resource="&me;rguha"/>
+                <dc:contributor rdf:resource="&me;elw"/>
                 <dc:date>2004-11-24</dc:date>
-            </documentation>
-        </annotation>
         <definition rdf:parseType='Literal'>
             Descriptor characterizing the mass distribution of the molecule.
         </definition>
@@ -1054,20 +1033,14 @@
             .
         </description>
         <!-- relatedEntry type="qsar-descriptors-metadata:isModificatedAs" href="gravitationalIndex_SquareAndCubeRoots"/ -->
-        <isClassifiedAs rdf:resource="#geometricalDescriptor"/>
-        <isClassifiedAs rdf:resource="#molecularDescriptor"/>
+        <isClassifiedAs rdf:resource="&me;geometricalDescriptor"/>
+    </MolecularDescriptor>
 
-    </Descriptor>
-
-    <Descriptor rdf:ID="gravitationalIndex_SquareAndCubeRoots">
+    <MolecularDescriptor rdf:about="&me;gravitationalIndex_SquareAndCubeRoots">
         <rdfs:label>Gravitational Index (Square and Cube Roots)</rdfs:label>
-        <annotation>
-            <documentation>
-                <dc:contributor rdf:resource="#rguha"/>
-                <dc:contributor rdf:resource="#elw"/>
+                <dc:contributor rdf:resource="&me;rguha"/>
+                <dc:contributor rdf:resource="&me;elw"/>
                 <dc:date>2004-11-25</dc:date>
-            </documentation>
-        </annotation>
         <definition rdf:parseType='Literal'>
             Descriptor characterizing the mass distribution of the molecule as the square
             or cube root of the gravitational index.
@@ -1078,92 +1051,124 @@
             .
         </description>
         <!-- relatedEntry type="qsar-descriptors-metadata:isAModificationOf" href="gravitationalIndex" / -->
-    </Descriptor>
+    </MolecularDescriptor>
 
-    <Descriptor rdf:ID="hBondacceptors">
+    <MolecularDescriptor rdf:about="&me;hBondacceptors">
         <rdfs:label>Hydrogen Bond Acceptors</rdfs:label>
-        <annotation>
-            <documentation>
-                <dc:contributor rdf:resource="#mf"/>
-                <dc:contributor rdf:resource="#elw"/>
+                <dc:contributor rdf:resource="&me;mf"/>
+                <dc:contributor rdf:resource="&me;elw"/>
                 <dc:date>2004-11-26</dc:date>
-            </documentation>
-        </annotation>
         <definition rdf:parseType='Literal'>
             Descriptor that calculates the number of hydrogen bond acceptors.
         </definition>
-        <description rdf:parseType='Literal'>
-            As defined by Daylight website,
-            <bibtex:cite ref="DAY01"/>
-            , a H-bond acceptor is a heteroatom with no positive charge, note that negatively
-            charged oxygen or sulphur are included. Excluded are halogens, including F,
-            heteroaromatic oxygen, sulphur and pyrrole N. Higher oxidation levels of N,P,S are excluded.
-            Note P(III) is currently included. Zeneca's work would imply that (O=S=O) shoud also be excluded.
-        </description>
-        <isClassifiedAs rdf:resource="#electronicDescriptor"/>
-        <isClassifiedAs rdf:resource="#molecularDescriptor"/>
-    </Descriptor>
+        <isClassifiedAs rdf:resource="&me;electronicDescriptor"/>
+    </MolecularDescriptor>
 
-    <Descriptor rdf:ID="hBondDonors">
+    <MolecularDescriptor rdf:about="&me;hBondDonors">
         <rdfs:label>Hydrogen Bond Donors</rdfs:label>
-        <annotation>
-            <documentation>
-                <dc:contributor rdf:resource="#mf"/>
+                <dc:contributor rdf:resource="&me;mf"/>
                 <dc:date>2004-11-26</dc:date>
-            </documentation>
-        </annotation>
         <definition rdf:parseType='Literal'>
             Descriptor that calculates the number of hydrogen bond donors.
         </definition>
-        <description rdf:parseType='Literal'>
-            As defined by Daylight website,
-            <bibtex:cite ref="DAY01"/>
-            , a H-bond acceptor
-            must have an N-H bond, an O-H bond, or a F-H bond
-        </description>
-        <isClassifiedAs rdf:resource="#electronicDescriptor"/>
-        <isClassifiedAs rdf:resource="#molecularDescriptor"/>
-    </Descriptor>
+        <isClassifiedAs rdf:resource="&me;electronicDescriptor"/>
+    </MolecularDescriptor>
 
-    <Descriptor rdf:ID="isProtonInAromaticSystem">
+<MolecularDescriptor rdf:about="&me;hBondacceptorsDaylight">
+    <rdfs:label>Hydrogen Bond Acceptors (Daylight)</rdfs:label>
+        <dc:contributor rdf:resource="&me;mf"/>
+        <dc:contributor rdf:resource="&me;elw"/>
+        <dc:date>2004-11-26</dc:date>
+    <definition>
+        Descriptor that calculates the number of hydrogen bond acceptors.
+    </definition>
+    <description rdf:parseType='Literal'>
+        As defined by Daylight website, <bibtex:cite ref="DAY01"/>, a H-bond acceptor is a heteroatom with no positive charge, note that negatively 
+        charged oxygen or sulphur are included. Excluded are halogens, including F, 
+        heteroaromatic oxygen, sulphur and pyrrole N. Higher oxidation levels of N,P,S are excluded.
+        Note P(III) is currently included. Zeneca's work would imply that (O=S=O) shoud also be excluded.
+    </description>
+      <isClassifiedAs rdf:resource="&me;electronicDescriptor"/>
+</MolecularDescriptor>
+
+<MolecularDescriptor rdf:about="&me;hBondDonorsDaylight"><rdfs:label>Hydrogen Bond Donors (Daylight)</rdfs:label>
+        <dc:contributor rdf:resource="&me;mf"/>
+        <dc:date>2004-11-26</dc:date>
+    <definition>
+        Descriptor that calculates the number of hydrogen bond donors.
+    </definition>
+    <description rdf:parseType='Literal'>
+        As defined by Daylight website, <bibtex:cite ref="DAY01"/>, a H-bond acceptor
+	must have an N-H bond, an O-H bond, or a F-H bond
+    </description>
+      <isClassifiedAs rdf:resource="&me;electronicDescriptor"/>
+</MolecularDescriptor>
+
+<MolecularDescriptor rdf:about="&me;hBondAcceptorsBoehmKlebe"><rdfs:label>Acceptor Field Atoms (Boehm,Klebe)</rdfs:label>
+        <dc:contributor rdf:resource="&me;jkw"/>
+        <dc:date>2006-09-08</dc:date>
+    <definition>
+        Counts the number of acceptor field atoms for a carbonyl oxygen probe.
+    </definition>
+    <description rdf:parseType='Literal'>
+        Force field based definition of hydrogen bond acceptors <bibtex:cite ref="BK02"/>
+        This rule covers nitril, carbonyl, ether, and amin nitrogens.
+    </description>
+      <isClassifiedAs rdf:resource="&me;electronicDescriptor"/>
+</MolecularDescriptor>
+
+<MolecularDescriptor rdf:about="&me;hBondDonorsBoehmKlebe"><rdfs:label>Donor Field Atoms (Boehm,Klebe)</rdfs:label>
+        <dc:contributor rdf:resource="&me;jkw"/>
+        <dc:date>2006-09-08</dc:date>
+    <definition>
+        Counts the number of donor field atoms for an amino hydrogen probe.
+    </definition>
+    <description rdf:parseType='Literal'>
+        Force field based definition of hydrogen bond donors <bibtex:cite ref="BK02"/>.
+        This rule covers amino groups, chloro, bromo and iodo atoms <bibtex:cite ref="PL96"/>.
+    </description>
+      <isClassifiedAs rdf:resource="&me;electronicDescriptor"/>
+</MolecularDescriptor>
+
+<MolecularDescriptor rdf:about="&me;hBondAcceptorsDonorsBoehmKlebe"><rdfs:label>Acceptors or Donors Field Atoms (Boehm,Klebe)</rdfs:label>
+        <dc:contributor rdf:resource="&me;jkw"/>
+        <dc:date>2006-09-08</dc:date>
+    <definition>
+        Counts the number of acceptor/donor field atoms for a carbonyl oxygen or amino hydrogen probe.
+    </definition>
+    <description rdf:parseType='Literal'>
+        Force field based definition of hydrogen bond acceptors or donors <bibtex:cite ref="BK02"/>.
+        This rule covers amino and hydroxy groups.
+    </description>
+      <isClassifiedAs rdf:resource="&me;electronicDescriptor"/>
+</MolecularDescriptor>
+
+    <AtomicDescriptor rdf:about="&me;isProtonInAromaticSystem">
         <rdfs:label>Proton belonging to an aromatic system</rdfs:label>
-        <annotation>
-            <documentation>
-                <dc:contributor rdf:resource="#mf"/>
+                <dc:contributor rdf:resource="&me;mf"/>
                 <dc:date>2005-01-27</dc:date>
-            </documentation>
-        </annotation>
         <definition rdf:parseType='Literal'>
             This Class contains a method that returns 1 if the protons is directly bonded to an aromatic system,
             it returns 2 if the distance between aromatic system and proton is 2 bonds,
             and 0 for other positions.
         </definition>
-        <isClassifiedAs rdf:resource="#constitutionalDescriptor"/>
-        <isClassifiedAs rdf:resource="#atomicDescriptor"/>
-    </Descriptor>
+        <isClassifiedAs rdf:resource="&me;constitutionalDescriptor"/>
+    </AtomicDescriptor>
 
-    <Descriptor rdf:ID="isProtonInConjugatedPiSystem">
+    <AtomicDescriptor rdf:about="&me;isProtonInConjugatedPiSystem">
         <rdfs:label>Proton belonging to a pi-system</rdfs:label>
-        <annotation>
-            <documentation>
-                <dc:contributor rdf:resource="#mf"/>
+                <dc:contributor rdf:resource="&me;mf"/>
                 <dc:date>2005-01-27</dc:date>
-            </documentation>
-        </annotation>
         <definition rdf:parseType='Literal'>
             This Class contains a method that returns true if the protons is directly bonded to a pi system.
         </definition>
-        <isClassifiedAs rdf:resource="#constitutionalDescriptor"/>
-    </Descriptor>
+        <isClassifiedAs rdf:resource="&me;constitutionalDescriptor"/>
+    </AtomicDescriptor>
 
-    <Descriptor rdf:ID="kierValues">
+    <MolecularDescriptor rdf:about="&me;kierValues">
         <rdfs:label>Kier and Hall kappa molecular shape indices</rdfs:label>
-        <annotation>
-            <documentation>
-                <dc:contributor rdf:resource="#mf"/>
+                <dc:contributor rdf:resource="&me;mf"/>
                 <dc:date>2004-11-26</dc:date>
-            </documentation>
-        </annotation>
         <definition rdf:parseType='Literal'>
             Descriptor that calculates Kier and Hall kappa molecular shape indices.
         </definition>
@@ -1306,54 +1311,39 @@
             suppressed graph. Also, let p2 denote the number of paths of length 2 and let p3 denote the number of paths
             of length 3
         </description>
-        <isClassifiedAs rdf:resource="#topologicalDescriptor"/>
-        <isClassifiedAs rdf:resource="#molecularDescriptor"/>
-    </Descriptor>
+        <isClassifiedAs rdf:resource="&me;topologicalDescriptor"/>
+    </MolecularDescriptor>
 
-    <Descriptor rdf:ID="largestChain">
+    <MolecularDescriptor rdf:about="&me;largestChain">
         <rdfs:label>Largest Chain</rdfs:label>
-        <annotation>
-            <documentation>
-                <dc:contributor rdf:resource="#chhoppe"/>
+                <dc:contributor rdf:resource="&me;chhoppe"/>
                 <dc:date>2005-02-07</dc:date>
-            </documentation>
-        </annotation>
         <definition rdf:parseType='Literal'>
             Returns the number of atoms in the largest chain
         </definition>
         <description rdf:parseType='Literal'>
         </description>
-        <isClassifiedAs rdf:resource="#molecularDescriptor"/>
-        <isClassifiedAs rdf:resource="#constitutionalDescriptor"/>
-    </Descriptor>
+        <isClassifiedAs rdf:resource="&me;constitutionalDescriptor"/>
+    </MolecularDescriptor>
 
 
-    <Descriptor rdf:ID="largestPiSystem">
+    <MolecularDescriptor rdf:about="&me;largestPiSystem">
         <rdfs:label>Largest Pi Chain</rdfs:label>
-        <annotation>
-            <documentation>
-                <dc:contributor rdf:resource="#chhoppe"/>
+                <dc:contributor rdf:resource="&me;chhoppe"/>
                 <dc:date>2005-02-07</dc:date>
-            </documentation>
-        </annotation>
         <definition rdf:parseType='Literal'>
             Returns the number of atoms in the largest pi chain
         </definition>
         <description rdf:parseType='Literal'>
         </description>
-        <isClassifiedAs rdf:resource="#molecularDescriptor"/>
-        <isClassifiedAs rdf:resource="#constitutionalDescriptor"/>
-    </Descriptor>
+        <isClassifiedAs rdf:resource="&me;constitutionalDescriptor"/>
+    </MolecularDescriptor>
 
-    <Descriptor rdf:ID="lipinskifailures">
+    <MolecularDescriptor rdf:about="&me;lipinskifailures">
         <rdfs:label>Lipinski's Rule of Five</rdfs:label>
-        <annotation>
-            <documentation>
-                <dc:contributor rdf:resource="#mf"/>
-                <dc:contributor rdf:resource="#elw"/>
+                <dc:contributor rdf:resource="&me;mf"/>
+                <dc:contributor rdf:resource="&me;elw"/>
                 <dc:date>2005-01-27</dc:date>
-            </documentation>
-        </annotation>
         <definition rdf:parseType='Literal'>
             This Class contains a method that returns the number failures of the
             Lipinski's Rule Of Five.
@@ -1369,47 +1359,36 @@
             its molecular weight is over 500.
             its LogP is over 5;
         </description>
-        <isClassifiedAs rdf:resource="#constitutionalDescriptor"/>
-        <isClassifiedAs rdf:resource="#molecularDescriptor"/>
-    </Descriptor>
+        <isClassifiedAs rdf:resource="&me;constitutionalDescriptor"/>
+    </MolecularDescriptor>
 
-    <Descriptor rdf:ID="longestAliphaticChain">
+    <MolecularDescriptor rdf:about="&me;longestAliphaticChain">
         <rdfs:label>Longest Aliphatic Chain</rdfs:label>
-        <annotation>
-            <documentation>
-                <dc:contributor rdf:resource="#chhoppe"/>
+                <dc:contributor rdf:resource="&me;chhoppe"/>
                 <dc:date>2005-02-07</dc:date>
-            </documentation>
-        </annotation>
         <definition rdf:parseType='Literal'>
             Returns the number of atoms in the longest aliphatic chain
         </definition>
         <description rdf:parseType='Literal'>
         </description>
-        <isClassifiedAs rdf:resource="#molecularDescriptor"/>
-        <isClassifiedAs rdf:resource="#constitutionalDescriptor"/>
-    </Descriptor>
+        <isClassifiedAs rdf:resource="&me;constitutionalDescriptor"/>
+    </MolecularDescriptor>
 
-    <Descriptor rdf:ID="momentOfInertia">
+    <MolecularDescriptor rdf:about="&me;momentOfInertia">
         <rdfs:label>Moments of Inertia</rdfs:label>
-        <annotation>
-            <documentation>
-                <dc:contributor rdf:resource="#rguha"/>
-                <dc:contributor rdf:resource="#elw"/>
+                <dc:contributor rdf:resource="&me;rguha"/>
+                <dc:contributor rdf:resource="&me;elw"/>
                 <dc:date>2005-02-07</dc:date>
-            </documentation>
-        </annotation>
         <definition rdf:parseType='Literal'>
             Descriptor that calculates the principal moments of inertia and ratios
             of the principal moments. Als calculates the radius of gyration.
         </definition>
-        <isClassifiedAs rdf:resource="#geometricalDescriptor"/>
-        <isClassifiedAs rdf:resource="#molecularDescriptor"/>
-    </Descriptor>
+        <isClassifiedAs rdf:resource="&me;geometricalDescriptor"/>
+    </MolecularDescriptor>
 
-    <Descriptor rdf:ID="partialPiCharge">
+    <AtomicDescriptor rdf:about="&me;partialPiCharge">
         <rdfs:label>Partial Pi Charge</rdfs:label>
-        <dc:contributor rdf:resource="#mrc"/>
+        <dc:contributor rdf:resource="&me;mrc"/>
         <dc:date>2006-05-08</dc:date>
         <definition rdf:parseType='Literal'>
             Descriptor that calculates pi partial charges in pi-bonded
@@ -1420,13 +1399,12 @@
             <bibtex:cite ref="SALLER"/>
             .
         </description>
-        <isClassifiedAs rdf:resource="#electronicDescriptor"/>
-        <isClassifiedAs rdf:resource="#atomicDescriptor"/>
-    </Descriptor>
+        <isClassifiedAs rdf:resource="&me;electronicDescriptor"/>
+    </AtomicDescriptor>
 
-    <Descriptor rdf:ID="partialSigmaCharge">
+    <MolecularDescriptor rdf:about="&me;partialSigmaCharge">
         <rdfs:label>Partial Pi Charge</rdfs:label>
-        <dc:contributor rdf:resource="#mrc"/>
+        <dc:contributor rdf:resource="&me;mrc"/>
         <dc:date>2006-05-08</dc:date>
         <definition rdf:parseType='Literal'>
             Descriptor that calculates sigma partial charges in
@@ -1437,13 +1415,12 @@
             <bibtex:cite ref="MARSILI"/>
             .
         </description>
-        <isClassifiedAs rdf:resource="#electronicDescriptor"/>
-        <isClassifiedAs rdf:resource="#atomicDescriptor"/>
-    </Descriptor>
+        <isClassifiedAs rdf:resource="&me;electronicDescriptor"/>
+    </MolecularDescriptor>
 
-    <Descriptor rdf:ID="partialTChargeMMFF94">
+    <AtomicDescriptor rdf:about="&me;partialTChargeMMFF94">
         <rdfs:label>Partial Total Charge (MMFF94)</rdfs:label>
-        <dc:contributor rdf:resource="#mrc"/>
+        <dc:contributor rdf:resource="&me;mrc"/>
         <dc:date>2006-05-08</dc:date>
         <definition rdf:parseType='Literal'>
             Descriptor that calculates total partial charges of an heavy
@@ -1452,23 +1429,22 @@
         <description rdf:parseType='Literal'>
             Calculation is based on MMFF94.
         </description>
-        <isClassifiedAs rdf:resource="#electronicDescriptor"/>
-        <isClassifiedAs rdf:resource="#atomicDescriptor"/>
-    </Descriptor>
+        <isClassifiedAs rdf:resource="&me;electronicDescriptor"/>
+    </AtomicDescriptor>
 
-    <Descriptor rdf:ID="period">
+    <AtomicDescriptor rdf:about="&me;period">
         <rdfs:label>Period of an atom</rdfs:label>
-        <dc:contributor rdf:resource="#mf"/>
+        <dc:contributor rdf:resource="&me;mf"/>
         <dc:date>2005-02-07</dc:date>
         <definition rdf:parseType='Literal'>
             Descriptor that returns the period in the periodic table of an atom belonging to an atom container
         </definition>
-        <isClassifiedAs rdf:resource="#constitutionalDescriptor"/>
-    </Descriptor>
+        <isClassifiedAs rdf:resource="&me;constitutionalDescriptor"/>
+    </AtomicDescriptor>
 
-    <Descriptor rdf:ID="petitjeanNumber">
+    <MolecularDescriptor rdf:about="&me;petitjeanNumber">
         <rdfs:label>Petitjean Number</rdfs:label>
-        <dc:contributor rdf:resource="#mf"/>
+        <dc:contributor rdf:resource="&me;mf"/>
         <dc:date>2005-02-07</dc:date>
         <definition rdf:parseType='Literal'>
             Descriptor that calculates the Petitjean Number of a molecule.
@@ -1509,24 +1485,23 @@
             </mrow>
             .
         </description>
-        <isClassifiedAs rdf:resource="#topologicalDescriptor"/>
-        <isClassifiedAs rdf:resource="#molecularDescriptor"/>
-    </Descriptor>
+        <isClassifiedAs rdf:resource="&me;topologicalDescriptor"/>
+    </MolecularDescriptor>
 
-    <Descriptor rdf:ID="piContact">
+    <Descriptor rdf:about="&me;piContact">
         <rdfs:label>Pi-contact of two atoms</rdfs:label>
-        <dc:contributor rdf:resource="#mf"/>
+        <dc:contributor rdf:resource="&me;mf"/>
         <dc:date>2005-02-07</dc:date>
         <definition rdf:parseType='Literal'>
             Descriptor that check if two atoms have pi-contact (this is true when there is one and
             the same conjugated pi-system which contains both atoms, or directly linked neighboors of the atoms).
         </definition>
-        <isClassifiedAs rdf:resource="#constitutionalDescriptor"/>
+        <isClassifiedAs rdf:resource="&me;constitutionalDescriptor"/>
     </Descriptor>
 
-    <Descriptor rdf:ID="piElectronegativity">
+    <AtomicDescriptor rdf:about="&me;piElectronegativity">
         <rdfs:label>Pi Electronegativity</rdfs:label>
-        <dc:contributor rdf:resource="#mrc"/>
+        <dc:contributor rdf:resource="&me;mrc"/>
         <dc:date>2006-05-08</dc:date>
         <definition rdf:parseType='Literal'>
             This algorithm contains a method that returns the pi
@@ -1557,36 +1532,27 @@
             , where a, b and c are Gasteiger Marsili parameters, and q
             is the sigma charge.
         </description>
-        <isClassifiedAs rdf:resource="#electronicDescriptor"/>
-        <isClassifiedAs rdf:resource="#atomicDescriptor"/>
-    </Descriptor>
+        <isClassifiedAs rdf:resource="&me;electronicDescriptor"/>
+    </AtomicDescriptor>
 
-    <Descriptor rdf:ID="protonPartialCharge">
+    <AtomicDescriptor rdf:about="&me;protonPartialCharge">
         <rdfs:label>Proton Total Partial Charge</rdfs:label>
-        <annotation>
-            <documentation>
-                <dc:contributor rdf:resource="#mf"/>
+                <dc:contributor rdf:resource="&me;mf"/>
                 <dc:date>2005-02-07</dc:date>
-            </documentation>
-        </annotation>
         <definition rdf:parseType='Literal'>
             Descriptor that calculates partial charges of an heavy atom and its protons.
         </definition>
         <description rdf:parseType='Literal'>
             Calculation is based on Gasteiger Marsili (PEOE)
         </description>
-        <isClassifiedAs rdf:resource="#electronicDescriptor"/>
-    </Descriptor>
+        <isClassifiedAs rdf:resource="&me;electronicDescriptor"/>
+    </AtomicDescriptor>
 
-    <Descriptor rdf:ID="rdfProtonCalculatedValues">
+    <MolecularDescriptor rdf:about="&me;rdfProtonCalculatedValues">
         <rdfs:label>RDF Proton Descriptor</rdfs:label>
-        <annotation>
-            <documentation>
-                <dc:contributor rdf:resource="#mf"/>
-                <dc:contributor rdf:resource="#elw"/>
+                <dc:contributor rdf:resource="&me;mf"/>
+                <dc:contributor rdf:resource="&me;elw"/>
                 <dc:date>2005-01-27</dc:date>
-            </documentation>
-        </annotation>
         <definition rdf:parseType='Literal'>
             Calculation of RDF proton descriptor based on
             <bibtex:cite ref="GAST2002"/>
@@ -1846,19 +1812,15 @@
             a dihedral angle in radian units.
             Each values is returned as atom property.
         </description>
-        <isClassifiedAs rdf:resource="#topologicalDescriptor"/>
-        <isClassifiedAs rdf:resource="#geometricalDescriptor"/>
-        <isClassifiedAs rdf:resource="#electronicDescriptor"/>
-    </Descriptor>
+        <isClassifiedAs rdf:resource="&me;topologicalDescriptor"/>
+        <isClassifiedAs rdf:resource="&me;geometricalDescriptor"/>
+        <isClassifiedAs rdf:resource="&me;electronicDescriptor"/>
+    </MolecularDescriptor>
 
-    <Descriptor rdf:ID="rotatableBondsCount">
+    <MolecularDescriptor rdf:about="&me;rotatableBondsCount">
         <rdfs:label>Rotatable Bonds Count</rdfs:label>
-        <annotation>
-            <documentation>
-                <dc:contributor rdf:resource="#mf"/>
+                <dc:contributor rdf:resource="&me;mf"/>
                 <dc:date>2005-02-07</dc:date>
-            </documentation>
-        </annotation>
         <definition rdf:parseType='Literal'>
             Descriptor that calculates the number of nonrotatable bonds on a molecule.
         </definition>
@@ -1867,18 +1829,13 @@
             <bibtex:cite ref="DAY01"/>
             .
         </description>
-        <isClassifiedAs rdf:resource="#molecularDescriptor"/>
-        <isClassifiedAs rdf:resource="#constitutionalDescriptor"/>
-    </Descriptor>
+        <isClassifiedAs rdf:resource="&me;constitutionalDescriptor"/>
+    </MolecularDescriptor>
 
-    <Descriptor rdf:ID="sigmaElectronegativity">
+    <AtomicDescriptor rdf:about="&me;sigmaElectronegativity">
         <rdfs:label>Sigma Electronegativity</rdfs:label>
-        <annotation>
-            <documentation>
-                <dc:contributor rdf:resource="#mf"/>
+                <dc:contributor rdf:resource="&me;mf"/>
                 <dc:date>2005-02-07</dc:date>
-            </documentation>
-        </annotation>
         <definition rdf:parseType='Literal'>
             This Class contains a method that returns the sigma electronegativity for a given atom.
         </definition>
@@ -1907,74 +1864,54 @@
             ,
             where a, b and c are Gasteiger Marsili parameters, and q is the sigma charge.
         </description>
-        <isClassifiedAs rdf:resource="#atomicDescriptor"/>
-        <isClassifiedAs rdf:resource="#electronicDescriptor"/>
-    </Descriptor>
+        <isClassifiedAs rdf:resource="&me;electronicDescriptor"/>
+    </AtomicDescriptor>
 
-    <Descriptor rdf:ID="tpsa">
+    <MolecularDescriptor rdf:about="&me;tpsa">
         <rdfs:label>Topological Polar Surface Area</rdfs:label>
-        <annotation>
-            <documentation>
-                <dc:contributor rdf:resource="#mf"/>
-                <dc:contributor rdf:resource="#elw"/>
+                <dc:contributor rdf:resource="&me;mf"/>
+                <dc:contributor rdf:resource="&me;elw"/>
                 <dc:date>2005-01-27</dc:date>
-            </documentation>
-        </annotation>
         <definition rdf:parseType='Literal'>
             Calculation of topological polar surface area based on fragment
             contributions
             <bibtex:cite ref="ERTL2000"/>
             .
         </definition>
-        <isClassifiedAs rdf:resource="#topologicalDescriptor"/>
-        <isClassifiedAs rdf:resource="#electronicDescriptor"/>
-        <isClassifiedAs rdf:resource="#molecularDescriptor"/>
-    </Descriptor>
+        <isClassifiedAs rdf:resource="&me;topologicalDescriptor"/>
+        <isClassifiedAs rdf:resource="&me;electronicDescriptor"/>
+    </MolecularDescriptor>
 
 
-    <Descriptor rdf:ID="weight">
+    <MolecularDescriptor rdf:about="&me;weight">
         <rdfs:label>Molecular Weight</rdfs:label>
-        <annotation>
-            <documentation>
-                <dc:contributor rdf:resource="#mf"/>
-                <dc:contributor rdf:resource="#elw"/>
+                <dc:contributor rdf:resource="&me;mf"/>
+                <dc:contributor rdf:resource="&me;elw"/>
                 <dc:date>2005-01-27</dc:date>
-            </documentation>
-        </annotation>
         <definition rdf:parseType='Literal'>
             Descriptor based on the weight of atoms of a certain element type.
             If no element is specified, the returned value is the Molecular Weight
         </definition>
-        <isClassifiedAs rdf:resource="#molecularDescriptor"/>
-        <isClassifiedAs rdf:resource="#constitutionalDescriptor"/>
-    </Descriptor>
+        <isClassifiedAs rdf:resource="&me;constitutionalDescriptor"/>
+    </MolecularDescriptor>
 
-    <Descriptor rdf:ID="WHIM">
+    <MolecularDescriptor rdf:about="&me;WHIM">
         <rdfs:label>WHIM</rdfs:label>
-        <annotation>
-            <documentation>
-                <dc:contributor rdf:resource="#rguha"/>
-                <dc:contributor rdf:resource="#elw"/>
+                <dc:contributor rdf:resource="&me;rguha"/>
+                <dc:contributor rdf:resource="&me;elw"/>
                 <dc:date>2005-01-27</dc:date>
-            </documentation>
-        </annotation>
         <definition rdf:parseType='Literal'>
             Holistic descriptors described by Todeschini et al
             <bibtex:cite ref="TOD98"/>
             .
         </definition>
-        <isClassifiedAs rdf:resource="#molecularDescriptor"/>
-        <isClassifiedAs rdf:resource="#hybridDescriptor"/>
-    </Descriptor>
+        <isClassifiedAs rdf:resource="&me;hybridDescriptor"/>
+    </MolecularDescriptor>
 
-    <Descriptor rdf:ID="wienerNumbers">
+    <MolecularDescriptor rdf:about="&me;wienerNumbers">
         <rdfs:label>Wiener Numbers</rdfs:label>
-        <annotation>
-            <documentation>
-                <dc:contributor rdf:resource="#mf"/>
+                <dc:contributor rdf:resource="&me;mf"/>
                 <dc:date>2005-01-27</dc:date>
-            </documentation>
-        </annotation>
         <definition rdf:parseType='Literal'>
             This class calculates Wiener path number and Wiener polarity number.
         </definition>
@@ -1982,19 +1919,14 @@
             Wiener path number: half the sum of all the distance matrix entries.
             Wiener polarity number: half the sum of all the distance matrix entries with a value of 3.
         </description>
-        <isClassifiedAs rdf:resource="#topologicalDescriptor"/>
-        <isClassifiedAs rdf:resource="#molecularDescriptor"/>
-    </Descriptor>
+        <isClassifiedAs rdf:resource="&me;topologicalDescriptor"/>
+    </MolecularDescriptor>
 
-    <Descriptor rdf:ID="vAdjMa">
+    <MolecularDescriptor rdf:about="&me;vAdjMa">
         <rdfs:label>Vertex adjacency information magnitude</rdfs:label>
-        <annotation>
-            <documentation>
-                <dc:contributor rdf:resource="#mf"/>
-                <dc:contributor rdf:resource="#elw"/>
+                <dc:contributor rdf:resource="&me;mf"/>
+                <dc:contributor rdf:resource="&me;elw"/>
                 <dc:date>2004-11-26</dc:date>
-            </documentation>
-        </annotation>
         <definition rdf:parseType='Literal'>
             Descriptor that calculates the vertex adjacency information of a molecule.
         </definition>
@@ -2012,24 +1944,22 @@
             where m is the number of heavy-heavy bonds.
             If m is zero, then zero is returned.
         </description>
-        <isClassifiedAs rdf:resource="#topologicalDescriptor"/>
-        <isClassifiedAs rdf:resource="#molecularDescriptor"/>
-    </Descriptor>
+        <isClassifiedAs rdf:resource="&me;topologicalDescriptor"/>
+    </MolecularDescriptor>
 
-    <Descriptor rdf:ID="vdwradius">
+    <AtomicDescriptor rdf:about="&me;vdwradius">
         <rdfs:label>Van der Waals radius</rdfs:label>
-        <dc:contributor rdf:resource="#mf"/>
+        <dc:contributor rdf:resource="&me;mf"/>
         <dc:date>2005-01-27</dc:date>
         <definition rdf:parseType='Literal'>
             Descriptor that returns the VdW radius of a given atom.
         </definition>
-        <isClassifiedAs rdf:resource="#molecularDescriptor"/>
-    </Descriptor>
+    </AtomicDescriptor>
 
-    <Descriptor rdf:ID="xlogP">
+    <MolecularDescriptor rdf:about="&me;xlogP">
         <rdfs:label>XLogP</rdfs:label>
-        <dc:contributor rdf:resource="#mf"/>
-        <dc:contributor rdf:resource="#elw"/>
+        <dc:contributor rdf:resource="&me;mf"/>
+        <dc:contributor rdf:resource="&me;elw"/>
         <dc:date>2005-01-27</dc:date>
         <definition rdf:parseType='Literal'>
             Prediction of logP based on the atom-type method called XLogP.
@@ -2039,52 +1969,45 @@
             <bibtex:cite ref="WANG97"/>
             .
         </description>
-        <isClassifiedAs rdf:resource="#constitutionalDescriptor"/>
-        <isClassifiedAs rdf:resource="#molecularDescriptor"/>
-    </Descriptor>
+        <isClassifiedAs rdf:resource="&me;constitutionalDescriptor"/>
+    </MolecularDescriptor>
 
 
-    <Descriptor rdf:ID="ALOGP">
+    <MolecularDescriptor rdf:about="&me;ALOGP">
         <rdfs:label>ALogP</rdfs:label>
-        <dc:contributor rdf:resource="#tm"/>
+        <dc:contributor rdf:resource="&me;tm"/>
         <dc:date>2005-01-27</dc:date>
         <definition rdf:parseType='Literal'>
             Calculates atom additive logP and molar refractivity values as described by Ghose and Crippen
             <bibtex:cite ref="GHOSE1986" /> and <bibtex:cite ref="GHOSE1987"/>
         </definition>
-        <description rdf:parseType='Literal'>
-
-        </description>
-        <isClassifiedAs rdf:resource="#constitutionalDescriptor"/>
-        <isClassifiedAs rdf:resource="#molecularDescriptor"/>
-    </Descriptor>
+        <isClassifiedAs rdf:resource="&me;constitutionalDescriptor"/>
+    </MolecularDescriptor>
 
 
-    <Descriptor rdf:ID="zagrebIndex">
+    <MolecularDescriptor rdf:about="&me;zagrebIndex">
         <rdfs:label>Zagreb Index</rdfs:label>
-        <dc:contributor rdf:resource="#mf"/>
-        <dc:contributor rdf:resource="#elw"/>
+        <dc:contributor rdf:resource="&me;mf"/>
+        <dc:contributor rdf:resource="&me;elw"/>
         <dc:date>2004-11-26</dc:date>
         <definition rdf:parseType='Literal'>
             The sum of the squared atom degrees of all heavy atoms.
         </definition>
-        <isClassifiedAs rdf:resource="#topologicalDescriptor"/>
-        <isClassifiedAs rdf:resource="#molecularDescriptor"/>
-    </Descriptor>
+        <isClassifiedAs rdf:resource="&me;topologicalDescriptor"/>
+    </MolecularDescriptor>
 
-    <Descriptor rdf:ID="covalentRadius">
+    <AtomicDescriptor rdf:about="&me;covalentRadius">
         <rdfs:label>Covalent Radius</rdfs:label>
-        <dc:contributor rdf:resource="#mrc"/>
+        <dc:contributor rdf:resource="&me;mrc"/>
         <dc:date>2006-05-08</dc:date>
         <definition rdf:parseType='Literal'>
             Descriptor that returns the covalent radius of a given atom.
         </definition>
-        <isClassifiedAs rdf:resource="#molecularDescriptor"/>
-    </Descriptor>
+    </AtomicDescriptor>
 
-    <Descriptor rdf:ID="bondPartialPiCharge">
+    <BondDescriptor rdf:about="&me;bondPartialPiCharge">
         <rdfs:label>Bond Partial Pi Charge</rdfs:label>
-        <dc:contributor rdf:resource="#mrc"/>
+        <dc:contributor rdf:resource="&me;mrc"/>
         <dc:date>2006-05-08</dc:date>
         <definition rdf:parseType='Literal'>
             Descriptor that calculates bond-pi Partial charge of a bond.
@@ -2094,13 +2017,12 @@
             Partial Pi Charge on atoms A and B of a bond. Based in
             Gasteiger Charge.
         </description>
-        <isClassifiedAs rdf:resource="#electronicDescriptor"/>
-        <isClassifiedAs rdf:resource="#bondDescriptor"/>
-    </Descriptor>
+        <isClassifiedAs rdf:resource="&me;electronicDescriptor"/>
+    </BondDescriptor>
 
-    <Descriptor rdf:ID="bondPartialSigmaCharge">
+    <BondDescriptor rdf:about="&me;bondPartialSigmaCharge">
         <rdfs:label>Bond Partial Sigma Charge</rdfs:label>
-        <dc:contributor rdf:resource="#mrc"/>
+        <dc:contributor rdf:resource="&me;mrc"/>
         <dc:date>2006-05-08</dc:date>
         <definition rdf:parseType='Literal'>
             Descriptor that calculates bond-sigma Partial charge of a
@@ -2111,13 +2033,12 @@
             Partial Sigma Charge on atoms A and B of a bond. Based in
             Gasteiger Charge.
         </description>
-        <isClassifiedAs rdf:resource="#electronicDescriptor"/>
-        <isClassifiedAs rdf:resource="#bondDescriptor"/>
-    </Descriptor>
+        <isClassifiedAs rdf:resource="&me;electronicDescriptor"/>
+    </BondDescriptor>
 
-    <Descriptor rdf:ID="bondPartialTCharge">
+    <BondDescriptor rdf:about="&me;bondPartialTCharge">
         <rdfs:label>Bond Partial Total Charge</rdfs:label>
-        <dc:contributor rdf:resource="#mrc"/>
+        <dc:contributor rdf:resource="&me;mrc"/>
         <dc:date>2006-05-08</dc:date>
         <definition rdf:parseType='Literal'>
             Descriptor that calculates bond-total Partial charge of a
@@ -2128,13 +2049,12 @@
             Partial Total Charge on atoms A and B of a bond. Based in
             Gasteiger Charge.
         </description>
-        <isClassifiedAs rdf:resource="#electronicDescriptor"/>
-        <isClassifiedAs rdf:resource="#bondDescriptor"/>
-    </Descriptor>
+        <isClassifiedAs rdf:resource="&me;electronicDescriptor"/>
+    </BondDescriptor>
 
-    <Descriptor rdf:ID="bondSigmaElectronegativity">
+    <BondDescriptor rdf:about="&me;bondSigmaElectronegativity">
         <rdfs:label>Bond Sigma Electronegativity</rdfs:label>
-        <dc:contributor rdf:resource="#mrc"/>
+        <dc:contributor rdf:resource="&me;mrc"/>
         <dc:date>2006-05-08</dc:date>
         <definition rdf:parseType='Literal'>
             Descriptor that calculates of bond-Polarizability of a bond.
@@ -2143,26 +2063,24 @@
             Calculation is calculated determining the difference the
             Sigma electronegativity on atoms A and B of a bond.
         </description>
-        <isClassifiedAs rdf:resource="#electronicDescriptor"/>
-        <isClassifiedAs rdf:resource="#bondDescriptor"/>
-    </Descriptor>
+        <isClassifiedAs rdf:resource="&me;electronicDescriptor"/>
+    </BondDescriptor>
 
-    <Descriptor rdf:ID="petitjeanShapeIndex">
+    <MolecularDescriptor rdf:about="&me;petitjeanShapeIndex">
         <rdfs:label>Petitjean Shape Indices</rdfs:label>
-        <dc:contributor rdf:resource="#rguha"/>
+        <dc:contributor rdf:resource="&me;rguha"/>
         <dc:date>2006-01-15</dc:date>
         <definition rdf:parseType='Literal'>
             The topological and geometric shape indices described Petitjean and Bath et al.
             respectively. Both measure the anisotropy in a molecule.
         </definition>
-        <isClassifiedAs rdf:resource="#geometricalDescriptor"/>
-        <isClassifiedAs rdf:resource="#topologicalDescriptor"/>
-        <isClassifiedAs rdf:resource="#molecularDescriptor"/>
-    </Descriptor>
+        <isClassifiedAs rdf:resource="&me;geometricalDescriptor"/>
+        <isClassifiedAs rdf:resource="&me;topologicalDescriptor"/>
+    </MolecularDescriptor>
 
-    <Descriptor rdf:ID="eccentricConnectivityIndex">
+    <MolecularDescriptor rdf:about="&me;eccentricConnectivityIndex">
         <rdfs:label>Eccentric Connectivity Index</rdfs:label>
-        <dc:contributor rdf:resource="#rguha"/>
+        <dc:contributor rdf:resource="&me;rguha"/>
         <dc:date>2005-03-19</dc:date>
         <definition rdf:parseType='Literal'>
             A topological descriptor combining distance and adjacency information.
@@ -2212,96 +2130,88 @@
             <sup>th</sup>
             atom.
         </description>
-        <isClassifiedAs rdf:resource="#topologicalDescriptor"/>
-        <isClassifiedAs rdf:resource="#molecularDescriptor"/>
-    </Descriptor>
+        <isClassifiedAs rdf:resource="&me;topologicalDescriptor"/>
+    </MolecularDescriptor>
 
-    <Descriptor rdf:ID="CPSA">
+    <MolecularDescriptor rdf:about="&me;CPSA">
         <rdfs:label>Charged Partial Surface Areas</rdfs:label>
-        <dc:contributor rdf:resource="#rguha"/>
+        <dc:contributor rdf:resource="&me;rguha"/>
         <dc:date>2005-05-16</dc:date>
         <definition rdf:parseType='Literal'>
             A variety of descriptors combining surface area and partial charge information
         </definition>
-        <isClassifiedAs rdf:resource="#electronicDescriptor"/>
-        <isClassifiedAs rdf:resource="#geometricalDescriptor"/>
-        <isClassifiedAs rdf:resource="#molecularDescriptor"/>
-    </Descriptor>
+        <isClassifiedAs rdf:resource="&me;electronicDescriptor"/>
+        <isClassifiedAs rdf:resource="&me;geometricalDescriptor"/>
+    </MolecularDescriptor>
 
-    <Descriptor rdf:ID="NilaComplexity">
+    <MolecularDescriptor rdf:about="&me;NilaComplexity">
         <rdfs:label>Fragment Complexity</rdfs:label>
-        <dc:contributor rdf:resource="#chhoppe"/>
+        <dc:contributor rdf:resource="&me;chhoppe"/>
         <dc:date>2006-8-22</dc:date>
         <definition rdf:parseType='Literal'>
             Class that returns the complexity of a system. The complexity is defined as @cdk.cite{Nilakantan06}
         </definition>
-        <isClassifiedAs rdf:resource="#topologicalDescriptor"/>
-        <isClassifiedAs rdf:resource="#molecularDescriptor"/>
-    </Descriptor>
+        <isClassifiedAs rdf:resource="&me;topologicalDescriptor"/>
+    </MolecularDescriptor>
 
-    <Descriptor rdf:ID="weightedPath">
+    <MolecularDescriptor rdf:about="&me;weightedPath">
         <rdfs:label>Weighted path descriptors</rdfs:label>
-        <dc:contributor rdf:resource="#rguha"/>
+        <dc:contributor rdf:resource="&me;rguha"/>
         <dc:date>2006-01-15</dc:date>
         <definition rdf:parseType='Literal'>
             The weighted path (molecular ID) descriptors described by Randic. They characterize molecular branching.
         </definition>
-        <isClassifiedAs rdf:resource="#topologicalDescriptor"/>
-        <isClassifiedAs rdf:resource="#molecularDescriptor"/>
-    </Descriptor>
+        <isClassifiedAs rdf:resource="&me;topologicalDescriptor"/>
+    </MolecularDescriptor>
 
-    <Descriptor rdf:ID="autoCorrelationCharge">
+    <MolecularDescriptor rdf:about="&me;autoCorrelationCharge">
         <rdfs:label>Moreau-Broto Autocorrelation (charge) descriptors</rdfs:label>
-        <dc:contributor rdf:resource="#rguha"/>
-        <dc:contributor rdf:resource="#fm"/>
+        <dc:contributor rdf:resource="&me;rguha"/>
+        <dc:contributor rdf:resource="&me;fm"/>
         <dc:date>2006-01-15</dc:date>
         <definition rdf:parseType='Literal'>
             The Moreau-Broto autocorrelation descriptors using partial charges
         </definition>
-        <isClassifiedAs rdf:resource="#topologicalDescriptor"/>
-        <isClassifiedAs rdf:resource="#molecularDescriptor"/>
-    </Descriptor>
+        <isClassifiedAs rdf:resource="&me;topologicalDescriptor"/>
+    </MolecularDescriptor>
 
-    <Descriptor rdf:ID="autoCorrelationPolarizability">
+    <MolecularDescriptor rdf:about="&me;autoCorrelationPolarizability">
         <rdfs:label>Moreau-Broto Autocorrelation (polarizability) descriptors</rdfs:label>
-        <dc:contributor rdf:resource="#rguha"/>
-        <dc:contributor rdf:resource="#fm"/>
+        <dc:contributor rdf:resource="&me;rguha"/>
+        <dc:contributor rdf:resource="&me;fm"/>
         <dc:date>2006-01-15</dc:date>
         <definition rdf:parseType='Literal'>
             The Moreau-Broto autocorrelation descriptors using polarizability
         </definition>
-        <isClassifiedAs rdf:resource="#topologicalDescriptor"/>
-        <isClassifiedAs rdf:resource="#molecularDescriptor"/>
-    </Descriptor>
+        <isClassifiedAs rdf:resource="&me;topologicalDescriptor"/>
+    </MolecularDescriptor>
 
-    <Descriptor rdf:ID="autoCorrelationMass">
+    <MolecularDescriptor rdf:about="&me;autoCorrelationMass">
         <rdfs:label>Moreau-Broto Autocorrelation (mass) descriptors</rdfs:label>
-        <dc:contributor rdf:resource="#rguha"/>
-        <dc:contributor rdf:resource="#fm"/>
+        <dc:contributor rdf:resource="&me;rguha"/>
+        <dc:contributor rdf:resource="&me;fm"/>
         <dc:date>2006-01-15</dc:date>
         <definition rdf:parseType='Literal'>
             The Moreau-Broto autocorrelation descriptors using atomic weight
         </definition>
-        <isClassifiedAs rdf:resource="#topologicalDescriptor"/>
-        <isClassifiedAs rdf:resource="#molecularDescriptor"/>
-    </Descriptor>
+        <isClassifiedAs rdf:resource="&me;topologicalDescriptor"/>
+    </MolecularDescriptor>
 
-    <Descriptor rdf:ID="taeAminoAcid">
+    <ProteinDescriptor rdf:about="&me;taeAminoAcid">
+        <rdf:type rdf:resource="&me;ProteinDescriptor"/>
         <rdfs:label>TAE RECON descriptors for amino acid sequences</rdfs:label>
-        <dc:contributor rdf:resource="#rguha"/>
+        <dc:contributor rdf:resource="&me;rguha"/>
         <dc:date>2006-08-23</dc:date>
         <definition rdf:parseType='Literal'>
             The TAE RECON descriptors for amino acid sequences. Uses precalculated quantum mechanical
             parameters to generate a set of 147 descriptors for a given sequence
         </definition>
-        <isClassifiedAs rdf:resource="#proteinDescriptor"/>
-        <isClassifiedAs rdf:resource="#electronicDescriptor"/>
-        <isClassifiedAs rdf:resource="#molecularDescriptor"/>
-    </Descriptor>
+        <isClassifiedAs rdf:resource="&me;electronicDescriptor"/>
+    </ProteinDescriptor>
 
-    <Descriptor rdf:ID="mde">
+    <MolecularDescriptor rdf:about="&me;mde">
         <rdfs:label>Molecular Distance Edge</rdfs:label>
-        <dc:contributor rdf:resource="#rguha"/>
+        <dc:contributor rdf:resource="&me;rguha"/>
         <dc:date>2006-09-18</dc:date>
         <definition rdf:parseType='Literal'>
             Evaluate molecular distance edge descriptors for C, N and O
@@ -2311,13 +2221,12 @@
             <bibtex:cite ref="LIU98"/>
             .
         </description>
-        <isClassifiedAs rdf:resource="#topologicalDescriptor"/>
-        <isClassifiedAs rdf:resource="#molecularDescriptor"/>
-    </Descriptor>
+        <isClassifiedAs rdf:resource="&me;topologicalDescriptor"/>
+    </MolecularDescriptor>
 
-    <Descriptor rdf:ID="lengthOverBreadth">
+    <MolecularDescriptor rdf:about="&me;lengthOverBreadth">
         <rdfs:label>Length Over Breadth</rdfs:label>
-        <dc:contributor rdf:resource="#rguha"/>
+        <dc:contributor rdf:resource="&me;rguha"/>
         <dc:date>2006-09-26</dc:date>
         <definition rdf:parseType='Literal'>
             Calculates the ratio of length to breadth.
@@ -2327,13 +2236,12 @@
             indicating the maximum and minimumn value of LoB. Note that this method does not
             perform any orientation.
         </description>
-        <isClassifiedAs rdf:resource="#geometricalDescriptor"/>
-        <isClassifiedAs rdf:resource="#molecularDescriptor"/>
-    </Descriptor>
+        <isClassifiedAs rdf:resource="&me;geometricalDescriptor"/>
+    </MolecularDescriptor>
 
-    <Descriptor rdf:ID="chiChain">
+    <MolecularDescriptor rdf:about="&me;chiChain">
         <rdfs:label>Chi Chain Indices</rdfs:label>
-        <dc:contributor rdf:resource="#rguha"/>
+        <dc:contributor rdf:resource="&me;rguha"/>
         <dc:date>2006-11-12</dc:date>
         <definition rdf:parseType='Literal'>
             Evaluates the Kier &amp; Hall Chi chain indices of orders 3,4,5 and 6
@@ -2341,12 +2249,12 @@
         <description rdf:parseType='Literal'>
             Both the simple and valence versions of this descriptor are evaluated
         </description>
-        <isClassifiedAs rdf:resource="#topologicalDescriptor"/>
-        <isClassifiedAs rdf:resource="#molecularDescriptor"/>
-    </Descriptor>
-    <Descriptor rdf:ID="chiPath">
+        <isClassifiedAs rdf:resource="&me;topologicalDescriptor"/>
+    </MolecularDescriptor>
+
+    <MolecularDescriptor rdf:about="&me;chiPath">
         <rdfs:label>Chi Path Indices</rdfs:label>
-        <dc:contributor rdf:resource="#rguha"/>
+        <dc:contributor rdf:resource="&me;rguha"/>
         <dc:date>2006-11-12</dc:date>
         <definition rdf:parseType='Literal'>
             Evaluates the Kier &amp; Hall Chi path indices of orders 0,1,2,3,4,5,6 and 7
@@ -2354,12 +2262,12 @@
         <description rdf:parseType='Literal'>
             Both the simple and valence versions of this descriptor are evaluated
         </description>
-        <isClassifiedAs rdf:resource="#topologicalDescriptor"/>
-        <isClassifiedAs rdf:resource="#molecularDescriptor"/>
-    </Descriptor>
-    <Descriptor rdf:ID="chiCluster">
+        <isClassifiedAs rdf:resource="&me;topologicalDescriptor"/>
+    </MolecularDescriptor>
+
+    <MolecularDescriptor rdf:about="&me;chiCluster">
         <rdfs:label>Chi Cluster Indices</rdfs:label>
-        <dc:contributor rdf:resource="#rguha"/>
+        <dc:contributor rdf:resource="&me;rguha"/>
         <dc:date>2006-11-13</dc:date>
         <definition rdf:parseType='Literal'>
             Evaluates the Kier &amp; Hall Chi cluster indices of orders 3,4,5,6 and 7
@@ -2367,12 +2275,12 @@
         <description rdf:parseType='Literal'>
             Both the simple and valence versions of this descriptor are evaluated
         </description>
-        <isClassifiedAs rdf:resource="#topologicalDescriptor"/>
-        <isClassifiedAs rdf:resource="#molecularDescriptor"/>
-    </Descriptor>
-    <Descriptor rdf:ID="chiPathCluster">
+        <isClassifiedAs rdf:resource="&me;topologicalDescriptor"/>
+    </MolecularDescriptor>
+
+    <MolecularDescriptor rdf:about="&me;chiPathCluster">
         <rdfs:label>Chi Path-Cluster Indices</rdfs:label>
-        <dc:contributor rdf:resource="#rguha"/>
+        <dc:contributor rdf:resource="&me;rguha"/>
         <dc:date>2006-11-13</dc:date>
         <definition rdf:parseType='Literal'>
             Evaluates the Kier &amp; Hall Chi path cluster indices of orders 4,5 and 6
@@ -2380,14 +2288,13 @@
         <description rdf:parseType='Literal'>
             Both the simple and valence versions of this descriptor are evaluated
         </description>
-        <isClassifiedAs rdf:resource="#topologicalDescriptor"/>
-        <isClassifiedAs rdf:resource="#molecularDescriptor"/>
-    </Descriptor>
+        <isClassifiedAs rdf:resource="&me;topologicalDescriptor"/>
+    </MolecularDescriptor>
 
 
-    <Descriptor rdf:ID="carbonTypes">
+    <MolecularDescriptor rdf:about="&me;carbonTypes">
         <rdfs:label>Carbon Types</rdfs:label>
-        <dc:contributor rdf:resource="#rguha"/>
+        <dc:contributor rdf:resource="&me;rguha"/>
         <dc:date>2006-09-26</dc:date>
         <definition rdf:parseType='Literal'>
             Characterizes the carbon connectivity in terms of hybridization
@@ -2396,14 +2303,13 @@
             This is a port of the ADAPT CTYPES routine and is a count of
             carbon atom in different hybridization states and environments
         </description>
-        <isClassifiedAs rdf:resource="#topologicalDescriptor"/>
-        <isClassifiedAs rdf:resource="#molecularDescriptor"/>
-    </Descriptor>
+        <isClassifiedAs rdf:resource="&me;topologicalDescriptor"/>
+    </MolecularDescriptor>
 
 
-    <Descriptor rdf:ID="kierHallSmarts">
+    <MolecularDescriptor rdf:about="&me;kierHallSmarts">
         <rdfs:label>Kier &amp; Hall SMARTS</rdfs:label>
-        <dc:contributor rdf:resource="#rguha"/>
+        <dc:contributor rdf:resource="&me;rguha"/>
         <dc:date>2006-09-26</dc:date>
         <definition rdf:parseType='Literal'>
             Counts the number of occurrences of the E-state fragments
@@ -2416,14 +2322,13 @@
             as those based on the original E-state indices. This descriptor generates
             counts for 35 fragments. Descriptor names are prefixed with "khs."
         </description>
-        <isClassifiedAs rdf:resource="#topologicalDescriptor"/>
-        <isClassifiedAs rdf:resource="#molecularDescriptor"/>
-    </Descriptor>
+        <isClassifiedAs rdf:resource="&me;topologicalDescriptor"/>
+    </MolecularDescriptor>
 
 
-    <Descriptor rdf:ID="ip">
+    <MolecularDescriptor rdf:about="&me;ip">
         <rdfs:label>Ionization Potential</rdfs:label>
-        <dc:contributor rdf:resource="#mr"/>
+        <dc:contributor rdf:resource="&me;mr"/>
         <dc:date>2006-01-15</dc:date>
         <definition rdf:parseType='Literal'>
             Descriptor that evaluates the ionization potential.
@@ -2432,14 +2337,13 @@
             It should be noted that the descriptor values are obtained using a predictive model
             and are not calculated directly from the structure
         </description>
-        <isClassifiedAs rdf:resource="#electronicDescriptor"/>
-        <isClassifiedAs rdf:resource="#molecularDescriptor"/>
-    </Descriptor>
+        <isClassifiedAs rdf:resource="&me;electronicDescriptor"/>
+    </MolecularDescriptor>
 
     <!-- The Bibliography -->
 
-    <Reference rdf:ID="BAT95">
-        <bibtex:entry>
+    <Reference rdf:about="&me;BAT95">
+        <bibtex:entry rdf:parseType='Literal'>
             <bibtex:article>
                 <bibtex:author>Bath, P.A. and Poirette, A.R. and Willet, P. and Allen, F.H.
                 </bibtex:author>
@@ -2454,8 +2358,21 @@
         </bibtex:entry>
     </Reference>
 
-    <Reference rdf:ID="CHER2003">
-        <bibtex:entry>
+    <Reference rdf:about="&me;BK02">
+        <bibtex:entry rdf:parseType='Literal'>
+            <bibtex:article>
+                <bibtex:author>Böhm, M. and Klebe, G.</bibtex:author>
+                <bibtex:title>Development of New Hydrogen-Bond Descriptors and Their {A}pplication to Comparative Molecular Field Analyses</bibtex:title>
+                <bibtex:journal>J. Med. Chem.</bibtex:journal>
+                <bibtex:year>2002</bibtex:year>
+                <bibtex:volume>45</bibtex:volume>
+                <bibtex:pages>1585-1597</bibtex:pages>
+            </bibtex:article>
+        </bibtex:entry>
+    </Reference>
+
+    <Reference rdf:about="&me;CHER2003">
+        <bibtex:entry rdf:parseType='Literal'>
             <bibtex:article>
                 <bibtex:author>Cherkasov, A.</bibtex:author>
                 <bibtex:title>Inductive Electronegativity Scale. Iterative Calculation of Inductive Partial
@@ -2470,8 +2387,8 @@
         </bibtex:entry>
     </Reference>
 
-    <Reference rdf:ID="DAY01">
-        <bibtex:entry>
+    <Reference rdf:about="&me;DAY01">
+        <bibtex:entry rdf:parseType='Literal'>
             <bibtex:misc>
                 <bibtex:author>Daylight</bibtex:author>
                 <bibtex:title>SMILES on-line tutorial</bibtex:title>
@@ -2480,8 +2397,8 @@
         </bibtex:entry>
     </Reference>
 
-    <Reference rdf:ID="ERTL2000">
-        <bibtex:entry>
+    <Reference rdf:about="&me;ERTL2000">
+        <bibtex:entry rdf:parseType='Literal'>
             <bibtex:article>
                 <bibtex:author>Ertl, P. and Rohde, B. and Selzer, P.</bibtex:author>
                 <bibtex:title>Fast Calculation of Molecular Polar Surface Area as a Sum of
@@ -2498,8 +2415,8 @@
         </bibtex:entry>
     </Reference>
 
-    <Reference rdf:ID="GAST2002">
-        <bibtex:entry>
+    <Reference rdf:about="&me;GAST2002">
+        <bibtex:entry rdf:parseType='Literal'>
             <bibtex:article>
                 <bibtex:author>Aires-de-Sousa, J. and Hemmer, M.C. and Gasteiger, J.</bibtex:author>
                 <bibtex:title>Prediction of 1H NMR Chemical Shifts Using Neural Networks</bibtex:title>
@@ -2513,8 +2430,21 @@
         </bibtex:entry>
     </Reference>
 
-    <Reference rdf:ID="KAT96">
-        <bibtex:entry>
+    <Reference rdf:about="&me;GWB98">
+        <bibtex:entry rdf:parseType='Literal'>
+            <bibtex:article>
+              <bibtex:author>Gillet, J. and Willett, P. and Bradshaw, J.</bibtex:author>
+              <bibtex:title>Identification of Biological Activity Profiles Using Substructural Analysis and Genetic Algorithms</bibtex:title>
+              <bibtex:journal>J. Chem. Inf. Comput. Sci.</bibtex:journal>
+              <bibtex:year>1998</bibtex:year>
+              <bibtex:volume>38</bibtex:volume>
+              <bibtex:pages>165-179</bibtex:pages>
+            </bibtex:article>
+        </bibtex:entry>
+    </Reference>
+
+    <Reference rdf:about="&me;KAT96">
+        <bibtex:entry rdf:parseType='Literal'>
             <bibtex:article>
                 <bibtex:author>Katritzky, A.R. and Mu, L. and Lobanov, V.S. and Karelson, M.</bibtex:author>
                 <bibtex:title>Correlation of Boiling Points With Molecular Structure. 1. A Training Set of 298 Diverse
@@ -2528,8 +2458,8 @@
         </bibtex:entry>
     </Reference>
 
-    <Reference rdf:ID="LIU98">
-        <bibtex:entry>
+    <Reference rdf:about="&me;LIU98">
+        <bibtex:entry rdf:parseType='Literal'>
             <bibtex:article>
                 <bibtex:author>Liu, S. and Cao, C. and Li, Z.
                 </bibtex:author>
@@ -2545,8 +2475,8 @@
         </bibtex:entry>
     </Reference>
 
-    <Reference rdf:ID="MARSILI">
-        <bibtex:entry>
+    <Reference rdf:about="&me;MARSILI">
+        <bibtex:entry rdf:parseType='Literal'>
             <bibtex:article>
                 <bibtex:author>Gasteiger, J.</bibtex:author>
                 <bibtex:author>Marsili, M.</bibtex:author>
@@ -2562,8 +2492,8 @@
         </bibtex:entry>
     </Reference>
 
-    <Reference rdf:ID="PEA99">
-        <bibtex:entry>
+    <Reference rdf:about="&me;PEA99">
+        <bibtex:entry rdf:parseType='Literal'>
             <bibtex:article>
                 <bibtex:author>Pearlman, R.S. and Smith, K.M.</bibtex:author>
                 <bibtex:title>Metric Validation and the Receptor-Relevant Subspace Concept</bibtex:title>
@@ -2576,8 +2506,8 @@
         </bibtex:entry>
     </Reference>
 
-    <Reference rdf:ID="PET92">
-        <bibtex:entry>
+    <Reference rdf:about="&me;PET92">
+        <bibtex:entry rdf:parseType='Literal'>
             <bibtex:article>
                 <bibtex:author>Petitjean, M.
                 </bibtex:author>
@@ -2590,11 +2520,23 @@
                 <bibtex:pages>331-337</bibtex:pages>
             </bibtex:article>
         </bibtex:entry>
-
     </Reference>
 
-    <Reference rdf:ID="RAN84">
-        <bibtex:entry>
+    <Reference rdf:about="&me;PL96">
+        <bibtex:entry rdf:parseType='Literal'>
+            <bibtex:article>
+              <bibtex:author>Patani, G. A. and LaVoie, E. J.</bibtex:author>
+              <bibtex:title>Bioisosterism: A Rational Approach in Drug Design</bibtex:title>
+              <bibtex:journal>Chem. Rev.</bibtex:journal>
+              <bibtex:year>1996</bibtex:year>
+              <bibtex:volume>96</bibtex:volume>
+              <bibtex:pages>3147-3176</bibtex:pages>
+            </bibtex:article>
+        </bibtex:entry>
+    </Reference>
+
+    <Reference rdf:about="&me;RAN84">
+        <bibtex:entry rdf:parseType='Literal'>
             <bibtex:article>
                 <bibtex:author>Randic, M.
                 </bibtex:author>
@@ -2607,8 +2549,8 @@
         </bibtex:entry>
     </Reference>
 
-    <Reference rdf:ID="SALLER">
-        <bibtex:entry>
+    <Reference rdf:about="&me;SALLER">
+        <bibtex:entry rdf:parseType='Literal'>
             <bibtex:article>
                 <bibtex:author>Gasteiger, J.</bibtex:author>
                 <bibtex:author>Saller, H.</bibtex:author>
@@ -2625,8 +2567,19 @@
         </bibtex:entry>
     </Reference>
 
-    <Reference rdf:ID="TOD98">
-        <bibtex:entry>
+    <Reference rdf:about="&me;TC00">
+        <bibtex:entry rdf:parseType='Literal'>
+            <bibtex:article>
+              <bibtex:author>Todeschini, R. and Consonni, V.</bibtex:author>
+              <bibtex:title>Handbook of Molecular Descriptors</bibtex:title>
+              <bibtex:year>2000</bibtex:year>
+              <bibtex:isbn>3-52-29913-0</bibtex:isbn>
+            </bibtex:article>
+        </bibtex:entry>
+    </Reference>
+
+    <Reference rdf:about="&me;TOD98">
+        <bibtex:entry rdf:parseType='Literal'>
             <bibtex:article>
                 <bibtex:author>Todeschini, R. and Gramatica, P.</bibtex:author>
                 <bibtex:title>New 3D Molecular Descriptors: The WHIM theory and QAR Applications</bibtex:title>
@@ -2637,8 +2590,8 @@
         </bibtex:entry>
     </Reference>
 
-    <Reference rdf:ID="TRI92">
-        <bibtex:entry>
+    <Reference rdf:about="&me;TRI92">
+        <bibtex:entry rdf:parseType='Literal'>
             <bibtex:book>
                 <bibtex:author>Trinijastic, N.</bibtex:author>
                 <bibtex:title>Chemical Graph Theory</bibtex:title>
@@ -2649,8 +2602,8 @@
         </bibtex:entry>
     </Reference>
 
-    <Reference rdf:ID="WANG97">
-        <bibtex:entry>
+    <Reference rdf:about="&me;WANG97">
+        <bibtex:entry rdf:parseType='Literal'>
             <bibtex:article>
                 <bibtex:author>Wang, R., Fu, Y., and Lai, L.</bibtex:author>
                 <bibtex:title>A New Atom-Additive Method for Calculating Partition Coefficients</bibtex:title>
@@ -2664,8 +2617,8 @@
         </bibtex:entry>
     </Reference>
 
-    <Reference rdf:ID="WES98">
-        <bibtex:entry>
+    <Reference rdf:about="&me;WES98">
+        <bibtex:entry rdf:parseType='Literal'>
             <bibtex:article>
                 <bibtex:author>Wessel, M.D. and Jurs, P.C. and Tolan, J.W. and Muskal, S.M.
                 </bibtex:author>
