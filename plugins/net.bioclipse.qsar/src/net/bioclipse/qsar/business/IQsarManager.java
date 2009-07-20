@@ -16,6 +16,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
+import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -152,7 +153,7 @@ public interface IQsarManager extends IBioclipseManager{
           Map<IMolecule, List<DescriptorType>> molDescMap,
           IProgressMonitor monitor );
 
-    
+    @Deprecated
     public void addResourcesToQsarModel( QsarType qsarmodel, EditingDomain editingDomain,
                           List<IResource> resourcesToAdd, IProgressMonitor monitor )
                                                            throws IOException,
@@ -175,6 +176,15 @@ public interface IQsarManager extends IBioclipseManager{
     void removeResponseUnitsFromModel( QsarType qsarModel,
                                        EditingDomain editingDomain,
                                        List<ResponseUnit> list );
+
+    void addResourcesAndResponsesToQsarModel(
+                                              QsarType qsarmodel,
+                                              EditingDomain editingDomain,
+                                              Map<IFile, Object> resourcesToAdd,
+                                              IProgressMonitor monitor )
+                                                                        throws IOException,
+                                                                        BioclipseException,
+                                                                        CoreException;
 
 
 

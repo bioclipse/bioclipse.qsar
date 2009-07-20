@@ -407,22 +407,32 @@ public class MoleculesPage extends FormPage implements IEditingDomainProvider, I
 //    protected void addResources(final IResource[] resources, final IProgressMonitor monitor) {
     protected void addResources(final Map<IFile, PropertyEntry> filemap, final IProgressMonitor monitor) {
 
-        List<IResource> resourcesToAdd=new ArrayList<IResource>();
         
+        //Set up input with propertyobject, not wrapper class since that is 
+        //local to this plugin. This is the one we will send to QSARManager 
+        //for adding in the end
+        Map<IFile, Object> molprops=new HashMap<IFile, Object>();
+
+        //Existing model and structures
         QsarType qsarModel = ((QsarEditor)getEditor()).getQsarModel();
         StructurelistType structList = qsarModel.getStructurelist();
         
-        //Copy files to project if needed
+        //Copy files to project if needed, hence we need a new map
+        //Take one file at a time
         for (IFile file: filemap.keySet()){
+
+            //Get property entry and extract AC property object
+            PropertyEntry propEntry = filemap.get( file );
+            Object propobj=propEntry.getPropObject();
 
             boolean skipFile=false;
 
             //Check if this file is already in model
             for (ResourceType existingRes : structList.getResources()){
                 if (existingRes.getName().equals(file.getName())){
-                    throw new UnsupportedOperationException("File: " + 
-                                                            file.getName() + 
-                    " already exists in QSAR analysis.");
+                    throw new UnsupportedOperationException(
+                                           "File: " + file.getName() 
+                                         + " already exists in QSAR analysis.");
                 }
             }
 
@@ -439,7 +449,9 @@ public class MoleculesPage extends FormPage implements IEditingDomainProvider, I
                         molFolderPath = projectPath.append("molecules"),
                         destinationPath=molFolderPath.append(file.getName());
 
+                        
                         final IFile newfile=root.getFile(destinationPath);
+                        
                         if (newfile.exists()){
                             final String filename=file.getName();
 
@@ -475,7 +487,7 @@ public class MoleculesPage extends FormPage implements IEditingDomainProvider, I
 
 
                     if (!skipFile){
-                        resourcesToAdd.add( file );
+                        molprops.put( file,  propobj);
                     }
                 }
             } catch (final Exception e) {
@@ -486,11 +498,13 @@ public class MoleculesPage extends FormPage implements IEditingDomainProvider, I
                 });
             }
         }
-        
-        //Ok, add these resources to QsarModel using manager
 
+        //Ok, add these resources to QsarModel using manager
         try {
-            qsar.addResourcesToQsarModel( qsarModel, editingDomain, resourcesToAdd, monitor );
+//            qsar.addResourcesToQsarModel( qsarModel, editingDomain, resourcesToAdd, monitor );
+            qsar.addResourcesAndResponsesToQsarModel( qsarModel, editingDomain, 
+                                                      molprops, monitor );
+            
         } catch ( IOException e ) {
             logger.error(e.getStackTrace());
             showError( e.getMessage() );
