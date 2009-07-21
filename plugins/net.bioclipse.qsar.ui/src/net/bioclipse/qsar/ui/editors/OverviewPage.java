@@ -15,6 +15,7 @@ import java.net.URL;
 
 import net.bioclipse.cdk.business.Activator;
 import net.bioclipse.cdk.business.ICDKManager;
+import net.bioclipse.qsar.QSARConstants;
 import net.bioclipse.qsar.QsarType;
 import net.bioclipse.qsar.ResourceType;
 import net.bioclipse.qsar.ResponseType;
@@ -198,7 +199,7 @@ public class OverviewPage extends FormPage implements IEditingDomainProvider, IP
             //Count total # missing values
             int numMissing=0;
             for (ResponseType res : qsarModel.getResponselist().getResponse()){
-                if (Float.isNaN( res.getValue()) && res.getArrayValues()==null){
+                if (res.getValue().equals( QSARConstants.MISSING_VALUE_STRING )){
                     numMissing++;
                 }
             }

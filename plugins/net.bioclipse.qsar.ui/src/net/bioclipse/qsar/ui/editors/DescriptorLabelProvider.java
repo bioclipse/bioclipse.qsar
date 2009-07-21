@@ -113,10 +113,7 @@ public class DescriptorLabelProvider implements ITableLabelProvider, ILabelProvi
 				return response.getStructureID() + "-" + response.getStructureID();
 			}
 			if (columnIndex==1){
-				if (response.getArrayValues()!=null)
-					return response.getArrayValues();
-				else
-					return ""+response.getValue();
+					return response.getValue();
 			}
 
 			return "????";

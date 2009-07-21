@@ -25,6 +25,7 @@ import java.util.StringTokenizer;
 import net.bioclipse.cdk.business.Activator;
 import net.bioclipse.cdk.business.ICDKManager;
 import net.bioclipse.cdk.domain.ICDKMolecule;
+import net.bioclipse.qsar.QSARConstants;
 import net.bioclipse.qsar.QsarFactory;
 import net.bioclipse.qsar.QsarPackage;
 import net.bioclipse.qsar.QsarType;
@@ -165,10 +166,7 @@ public class ResponsesPage extends FormPage implements IEditingDomainProvider, I
             @Override
             public String getText(Object element) {
                 ResponseType response = (ResponseType)element;
-                if (response.getArrayValues()!=null && response.getArrayValues().length()>0)
-                    return response.getArrayValues();
-                else
-                    if (Float.isNaN(response.getValue()))
+                    if (response.getValue().equals( QSARConstants.MISSING_VALUE_STRING  ))
                         return "";
                     else
                         return ""+response.getValue();
@@ -192,41 +190,20 @@ public class ResponsesPage extends FormPage implements IEditingDomainProvider, I
             @Override
             protected Object getValue(Object element) {
                 ResponseType response = (ResponseType)element;
-                if (response.getArrayValues()!=null && response.getArrayValues().length()>0)
-                    return response.getArrayValues();
-                else{
-                    if (Float.isNaN(response.getValue()))
+                    if (response.getValue().equals( QSARConstants.MISSING_VALUE_STRING ))
                         return "";
                     else
                         return ""+response.getValue();
-                }
             }
 
             @Override
             protected void setValue(Object element, Object value) {
                 ResponseType response = (ResponseType)element;
-                try{
-                    float f=Float.parseFloat(String.valueOf(value));
-                    CompoundCommand ccmd=new CompoundCommand();
-                    Command cmd=new SetCommand(editingDomain,response,QsarPackage.Literals.RESPONSE_TYPE__VALUE,f);
-                    ccmd.append( cmd );
-                    //also remove any previous ARRAY_VALUES
-//                    response.getArrayValues();
-//                    cmd=new RemoveCommand(editingDomain,response,QsarPackage.Literals.RESPONSE_TYPE__ARRAY_VALUES,"");
-//                    ccmd.append( ccmd );
-                    
-                    editingDomain.getCommandStack().execute(ccmd);
-                }catch (NumberFormatException e){
-                    String str=String.valueOf(value);
-                    CompoundCommand ccmd=new CompoundCommand();
-                    Command cmd=new SetCommand(editingDomain,response,QsarPackage.Literals.RESPONSE_TYPE__ARRAY_VALUES,str);
-                    ccmd.append( cmd );
-                    //Also remove any previous VALUE
-//                    cmd=new RemoveCommand(editingDomain,response,QsarPackage.Literals.RESPONSE_TYPE__VALUE,"");
-//                    ccmd.append( cmd );
-                    
-                    editingDomain.getCommandStack().execute(ccmd);
-                }
+                
+                Command cmd=new SetCommand(editingDomain,response,
+                                           QsarPackage.Literals.RESPONSE_TYPE__VALUE,
+                                           String.valueOf(value));
+                editingDomain.getCommandStack().execute(cmd);
                 responsesViewer.refresh();
             }
 
@@ -314,7 +291,7 @@ public class ResponsesPage extends FormPage implements IEditingDomainProvider, I
                     //Create a new response and add to structure
                     ResponseType newResponse=QsarFactory.eINSTANCE.createResponseType();
                     newResponse.setStructureID( structure.getId());
-                    newResponse.setValue(Float.NaN);
+                    newResponse.setValue(QSARConstants.MISSING_VALUE_STRING);
                     responsesList.getResponse().add(newResponse);
                     //Do not use command, this will fire dirty.
                     //Keep silent, if things do not change we will recreate
