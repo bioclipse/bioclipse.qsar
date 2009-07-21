@@ -297,7 +297,7 @@ public class TestWrite {
 		//=======================
 		ResponseType response1=QsarFactory.eINSTANCE.createResponseType();
 		response1.setStructureID( res1.getId());
-		response1.setValue((float)11.45);
+		response1.setValue("11.45");
 		response1.setUnit( unit1.getId() );
     //Add to responselist
     cmd=AddCommand.create(editingDomain, reslist, QsarPackage.Literals.RESPONSES_LIST_TYPE__RESPONSE, response1);
@@ -305,7 +305,7 @@ public class TestWrite {
 
 		ResponseType response2=QsarFactory.eINSTANCE.createResponseType();
     response2.setStructureID( res2.getId());
-		response2.setValue((float)15.45);
+		response2.setValue("15.45");
     response2.setUnit( unit1.getId() );
     //Add to responselist
 		cmd=AddCommand.create(editingDomain, reslist, QsarPackage.Literals.RESPONSES_LIST_TYPE__RESPONSE, response2);
@@ -313,7 +313,7 @@ public class TestWrite {
 
 		ResponseType response3=QsarFactory.eINSTANCE.createResponseType();
 		response3.setStructureID( res3.getId());
-		response3.setArrayValues("12.56,23.45,34.56");
+		response3.setValue( "12.56,23.45,34.56");
     response3.setUnit( unit1.getId() );
     //Add to responselist
 		cmd=AddCommand.create(editingDomain, reslist, QsarPackage.Literals.RESPONSES_LIST_TYPE__RESPONSE, response3);
