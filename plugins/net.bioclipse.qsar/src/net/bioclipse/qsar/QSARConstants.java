@@ -29,6 +29,9 @@ public interface QSARConstants {
 	 //Matches extension point
   public static final String RESPONSEUNITS_EXTENSION_POINT = 
     "net.bioclipse.qsar.responseUnit";
-  public static final Object RESPONSEUNITS_ELEMENT_NAME = "responseUnit";
+  public static final String RESPONSEUNITS_ELEMENT_NAME = "responseUnit";
+  
+  public static final String MISSING_VALUE_STRING = "NaN";
+
 
 }
