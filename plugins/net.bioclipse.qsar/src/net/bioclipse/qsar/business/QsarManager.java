@@ -37,6 +37,7 @@ import net.bioclipse.qsar.QsarPackage;
 import net.bioclipse.qsar.QsarType;
 import net.bioclipse.qsar.ResourceType;
 import net.bioclipse.qsar.ResponseType;
+import net.bioclipse.qsar.ResponsesListType;
 import net.bioclipse.qsar.ResponseunitType;
 import net.bioclipse.qsar.StructureType;
 import net.bioclipse.qsar.StructurelistType;
@@ -992,24 +993,26 @@ public class QsarManager implements IQsarManager{
      * Add resources to QSAR model, and also add selected property as response
      */
     public void addResourcesAndResponsesToQsarModel(
-                                                 QsarType qsarmodel, 
-                                                 EditingDomain editingDomain, 
-                                                 Map<IFile, Object> resourcesToAdd, 
-                                                 final IProgressMonitor monitor) 
-                                                 throws IOException, 
-                                                 BioclipseException, 
-                                                 CoreException {
+                                         QsarType qsarmodel, 
+                                         EditingDomain editingDomain, 
+                                         Map<IFile, Object> resourcePropertyMap, 
+                                         final IProgressMonitor monitor) 
+                                         throws IOException, 
+                                         BioclipseException, 
+                                         CoreException {
 
-        ICDKManager cdk = net.bioclipse.cdk.business.Activator.getDefault().getJavaCDKManager();
+        ICDKManager cdk = net.bioclipse.cdk.business.Activator.getDefault()
+                                                           .getJavaCDKManager();
 
         StructurelistType structList = qsarmodel.getStructurelist();
+        ResponsesListType responseList = qsarmodel.getResponselist();
         CompoundCommand ccmd=new CompoundCommand();
 
         //Intermediate storage to keep track of what we have added, 
         //in order to get unique structureIds
         List<String> storedStructureIDs=new ArrayList<String>();
 
-        for (IFile file  : resourcesToAdd.keySet()){
+        for (IFile file  : resourcePropertyMap.keySet()){
             
             //========================================================
             // Add resources and extract structures for the QSAR model
@@ -1050,14 +1053,16 @@ public class QsarManager implements IQsarManager{
             res.setNo3d( no3d );
             res.setNoMols( mollist.size() );
             Command cmd=AddCommand.create(editingDomain, structList, 
-                                          QsarPackage.Literals.STRUCTURELIST_TYPE__RESOURCES, res);
+                                          QsarPackage.Literals
+                                          .STRUCTURELIST_TYPE__RESOURCES, res);
             ccmd.append(cmd);
 
             //Add all structures in resource as well as children to resource
             int molindex=0;
             for (ICDKMolecule mol : mollist){
 
-                StructureType structure=QsarFactory.eINSTANCE.createStructureType();
+                StructureType structure=QsarFactory.eINSTANCE
+                                                   .createStructureType();
 
                 if (mol.getName()!=null && mol.getName().length()>0){
                     if (existsStructureIDInModel(qsarmodel, mol.getName())){
@@ -1070,11 +1075,11 @@ public class QsarManager implements IQsarManager{
                         }else{
                             //IDs should not start with _
                             if (mol.getName().startsWith( "_" )){
-                                //Use a generated structureID
-                                structure.setId( getStructureName(file,molindex) );
+                               //Use a generated structureID
+                               structure.setId(getStructureName(file,molindex));
                             }else{
-                                //This id is free and can be used
-                                structure.setId( mol.getName() );
+                               //This id is free and can be used
+                               structure.setId( mol.getName() );
                             }
                         }
                     }
@@ -1085,7 +1090,7 @@ public class QsarManager implements IQsarManager{
 
                 storedStructureIDs.add( structure.getId() );
 
-                //If text-based (currently the only supported method in Bioclipse)
+                //If text-based (currently the only sup. method in Bioclipse)
                 structure.setResourceindex( molindex );
 
                 //FIXME: set structure changed in preferences!
@@ -1094,8 +1099,8 @@ public class QsarManager implements IQsarManager{
                 //Calculate and add inchi to structure
                 try {
                     String inchistr = mol.getInChI(
-                                                   net.bioclipse.core.domain.IMolecule
-                                                   .Property.USE_CALCULATED
+                                             net.bioclipse.core.domain.IMolecule
+                                             .Property.USE_CALCULATED
                     );
                     structure.setInchi( inchistr );
                 } catch ( Exception e ) {
@@ -1104,32 +1109,38 @@ public class QsarManager implements IQsarManager{
                 }
 
                 cmd=AddCommand.create(editingDomain, res, 
-                                      QsarPackage.Literals.RESOURCE_TYPE__STRUCTURE, structure);
+                                      QsarPackage.Literals
+                                      .RESOURCE_TYPE__STRUCTURE, structure);
                 ccmd.append(cmd);
 
 
                 //====================================================
                 // Add responses as well for the molecule, if exists
                 //====================================================
-                if (resourcesToAdd.get( file )!=null){
+                if (resourcePropertyMap.get( file )!=null){
                     
-                    Object property=resourcesToAdd.get( file );
+                    Object property=resourcePropertyMap.get( file );
                     Object acprop=mol.getAtomContainer().getProperty( property);
                     
-                    System.out.println("WOULD LIKE to add response value: " 
-                                       + acprop + " to structure: " + structure);
+//                    System.out.println("WOULD LIKE to add response value: " 
+//                                       + acprop + " to structure: " + structure);
                     
-//                    ResponseType response1=QsarFactory.eINSTANCE.createResponseType();
-//                    response1.setStructureID( structure.getId());
-//                    response1.setValue((String)acprop);
-//                    response1.setUnit( unit1.getId() );
-//                    //Add to responselist
-//                    cmd=AddCommand.create(editingDomain, reslist, QsarPackage.Literals.RESPONSES_LIST_TYPE__RESPONSE, response1);
-//                    cCmd.append(cmd);
+                    //Add to responselist
+                    ResponseType response1=QsarFactory.eINSTANCE
+                                                      .createResponseType();
+                    response1.setStructureID( structure.getId());
+                    response1.setValue((String)acprop);
 
+                    //response1.setUnit( unit1.getId() );
+                    //TODO: implement default unit for project
                     
-                    
-                    //TODO: implement
+                    //Use AddCommand since a new structure is sure to not have 
+                    //a response already
+                    cmd=AddCommand.create(editingDomain, responseList, 
+                                          QsarPackage.Literals
+                                                 .RESPONSES_LIST_TYPE__RESPONSE, 
+                                          response1);
+                    ccmd.append(cmd);
                     
                 }
 

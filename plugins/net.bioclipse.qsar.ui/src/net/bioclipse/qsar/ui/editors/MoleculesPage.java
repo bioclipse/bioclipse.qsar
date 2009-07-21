@@ -423,7 +423,9 @@ public class MoleculesPage extends FormPage implements IEditingDomainProvider, I
 
             //Get property entry and extract AC property object
             PropertyEntry propEntry = filemap.get( file );
-            Object propobj=propEntry.getPropObject();
+            Object propobj=null;
+            if (propEntry!=null)
+                propobj=propEntry.getPropObject();
 
             boolean skipFile=false;
 
