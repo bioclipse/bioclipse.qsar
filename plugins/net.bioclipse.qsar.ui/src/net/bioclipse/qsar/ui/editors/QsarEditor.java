@@ -33,7 +33,6 @@ import org.eclipse.core.resources.IResourceChangeEvent;
 import org.eclipse.core.resources.IResourceChangeListener;
 import org.eclipse.core.resources.IResourceDelta;
 import org.eclipse.core.resources.IResourceDeltaVisitor;
-import org.eclipse.core.resources.IWorkspace;
 import org.eclipse.core.resources.IWorkspaceRunnable;
 import org.eclipse.core.resources.ResourcesPlugin;
 
@@ -43,20 +42,16 @@ import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.OperationCanceledException;
-import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.jobs.Job;
 
 import org.eclipse.jface.action.IMenuListener;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.IStatusLineManager;
 import org.eclipse.jface.action.IToolBarManager;
-import org.eclipse.jface.action.MenuManager;
-import org.eclipse.jface.action.Separator;
 
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.dialogs.ProgressMonitorDialog;
 
-import org.eclipse.jface.viewers.ColumnWeightData;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.ISelectionProvider;
@@ -64,8 +59,6 @@ import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.ListViewer;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.StructuredSelection;
-import org.eclipse.jface.viewers.StructuredViewer;
-import org.eclipse.jface.viewers.TableLayout;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.Viewer;
@@ -74,22 +67,9 @@ import org.eclipse.swt.SWT;
 
 import org.eclipse.swt.custom.CTabFolder;
 
-import org.eclipse.swt.dnd.DND;
-import org.eclipse.swt.dnd.Transfer;
-
-import org.eclipse.swt.events.ControlAdapter;
-import org.eclipse.swt.events.ControlEvent;
-
 import org.eclipse.swt.graphics.Point;
 
-import org.eclipse.swt.layout.FillLayout;
-
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Menu;
-import org.eclipse.swt.widgets.Table;
-import org.eclipse.swt.widgets.TableColumn;
-import org.eclipse.swt.widgets.Tree;
-import org.eclipse.swt.widgets.TreeColumn;
 
 import org.eclipse.ui.IActionBars;
 import org.eclipse.ui.IEditorInput;
@@ -99,7 +79,6 @@ import org.eclipse.ui.IFileEditorInput;
 import org.eclipse.ui.IPartListener;
 import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.PartInitException;
-import org.eclipse.ui.PlatformUI;
 
 import org.eclipse.ui.dialogs.SaveAsDialog;
 import org.eclipse.ui.forms.editor.FormEditor;
@@ -107,7 +86,6 @@ import org.eclipse.ui.forms.editor.FormEditor;
 import org.eclipse.ui.ide.IGotoMarker;
 
 import org.eclipse.ui.part.FileEditorInput;
-import org.eclipse.ui.part.MultiPageEditorPart;
 
 import org.eclipse.ui.views.contentoutline.ContentOutline;
 import org.eclipse.ui.views.contentoutline.ContentOutlinePage;
@@ -130,19 +108,15 @@ import org.eclipse.emf.common.ui.ViewerPane;
 
 import org.eclipse.emf.common.ui.editor.ProblemEditorPart;
 
-import org.eclipse.emf.common.ui.viewer.IViewerProvider;
-
 import org.eclipse.emf.common.util.BasicDiagnostic;
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.databinding.edit.EMFEditObservables;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EValidator;
 
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
-import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 
 import org.eclipse.emf.ecore.util.EContentAdapter;
 import org.eclipse.emf.ecore.util.EcoreUtil;
@@ -159,15 +133,8 @@ import org.eclipse.emf.edit.provider.resource.ResourceItemProviderAdapterFactory
 
 import org.eclipse.emf.edit.ui.action.EditingDomainActionBarContributor;
 
-import org.eclipse.emf.edit.ui.celleditor.AdapterFactoryTreeEditor;
-
-import org.eclipse.emf.edit.ui.dnd.EditingDomainViewerDropAdapter;
-import org.eclipse.emf.edit.ui.dnd.LocalTransfer;
-import org.eclipse.emf.edit.ui.dnd.ViewerDragAdapter;
-
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryContentProvider;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
-import org.eclipse.emf.edit.ui.provider.UnwrappingSelectionProvider;
 
 import org.eclipse.emf.edit.ui.util.EditUIMarkerHelper;
 import org.eclipse.emf.edit.ui.util.EditUIUtil;
@@ -202,23 +169,18 @@ public class QsarEditor extends FormEditor implements IEditingDomainProvider,
 
     private IProject activeProject;
 
-//    private QsarType qsarModel;
-//    private Resource resource;
-
     public int textEditorIndex;
     public int molPageIndex;
     public int descPageIndex;
     public int responsesPageIndex;
     public int overviewPageIndex;
     public int infoPageIndex;
-    public int reportPageIndex;
 
     private MoleculesPage molPage;
     private DescriptorsPage descPage;
     private ResponsesPage responsesPage;
     private OverviewPage overviewPage;
     private InformationPage informationPage;
-    private ReportPage reportPage;
 
 //    private QsarEditorSelectionProvider selectionProvider;
     private XMLEditor xmlEditor;
@@ -1530,7 +1492,7 @@ public class QsarEditor extends FormEditor implements IEditingDomainProvider,
                         break;
                     }
                     case 1: {
-                        String text = new AdapterFactoryItemDelegator(adapterFactory).getText(collection.iterator().next());
+//                        String text = new AdapterFactoryItemDelegator(adapterFactory).getText(collection.iterator().next());
                         statusLineManager.setMessage("_UI_SingleObjectSelected");
                         break;
                     }
@@ -1645,7 +1607,6 @@ public class QsarEditor extends FormEditor implements IEditingDomainProvider,
         responsesPage=new ResponsesPage(this, editingDomain);
         overviewPage=new OverviewPage(this, editingDomain);
         informationPage=new InformationPage(this, editingDomain);
-        reportPage=new ReportPage(this, editingDomain);
         
         try {
             //Overview page comes first with summary
@@ -1667,8 +1628,6 @@ public class QsarEditor extends FormEditor implements IEditingDomainProvider,
             textEditorIndex = addPage(xmlEditor, getEditorInput());
             setPageText(textEditorIndex, "Source");
             
-            reportPageIndex=addPage( reportPage );
-
         } catch (PartInitException e) {
             LogUtils.debugTrace(logger, e);
         }
