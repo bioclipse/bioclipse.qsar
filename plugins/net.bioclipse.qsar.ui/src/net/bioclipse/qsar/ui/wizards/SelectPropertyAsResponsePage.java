@@ -13,6 +13,8 @@ import org.eclipse.jface.action.IMenuListener;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.action.Separator;
+import org.eclipse.jface.viewers.DoubleClickEvent;
+import org.eclipse.jface.viewers.IDoubleClickListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.wizard.WizardPage;
@@ -68,6 +70,13 @@ public class SelectPropertyAsResponsePage extends WizardPage {
         viewer.setContentProvider(new MoleculePropertyContentProvider());
         viewer.setLabelProvider( new MoleculePropertyLabelProvider(selectedProperties));
         viewer.addFilter( new MoleculeContentTypeViewerFilter() );
+        viewer.addDoubleClickListener( new IDoubleClickListener(){
+
+            public void doubleClick( DoubleClickEvent event ) {
+                selectPropertyAction.run();
+            }
+            
+        });
 
         GridData data = new GridData(GridData.FILL_BOTH);
         data.grabExcessHorizontalSpace=true;
