@@ -885,22 +885,13 @@ public interface QsarPackage extends EPackage {
     int RESPONSE_TYPE__VALUE = 0;
 
     /**
-     * The feature id for the '<em><b>Array Values</b></em>' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int RESPONSE_TYPE__ARRAY_VALUES = 1;
-
-    /**
      * The feature id for the '<em><b>Structure ID</b></em>' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int RESPONSE_TYPE__STRUCTURE_ID = 2;
+    int RESPONSE_TYPE__STRUCTURE_ID = 1;
 
     /**
      * The feature id for the '<em><b>Unit</b></em>' attribute.
@@ -909,7 +900,7 @@ public interface QsarPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int RESPONSE_TYPE__UNIT = 3;
+    int RESPONSE_TYPE__UNIT = 2;
 
     /**
      * The number of structural features of the '<em>Response Type</em>' class.
@@ -918,7 +909,7 @@ public interface QsarPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int RESPONSE_TYPE_FEATURE_COUNT = 4;
+    int RESPONSE_TYPE_FEATURE_COUNT = 3;
 
     /**
      * The meta object id for the '{@link net.bioclipse.qsar.impl.ResponseunitTypeImpl <em>Responseunit Type</em>}' class.
@@ -1855,17 +1846,6 @@ public interface QsarPackage extends EPackage {
     EAttribute getResponseType_Value();
 
     /**
-     * Returns the meta object for the attribute '{@link net.bioclipse.qsar.ResponseType#getArrayValues <em>Array Values</em>}'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the meta object for the attribute '<em>Array Values</em>'.
-     * @see net.bioclipse.qsar.ResponseType#getArrayValues()
-     * @see #getResponseType()
-     * @generated
-     */
-    EAttribute getResponseType_ArrayValues();
-
-    /**
      * Returns the meta object for the attribute '{@link net.bioclipse.qsar.ResponseType#getStructureID <em>Structure ID</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -2668,14 +2648,6 @@ public interface QsarPackage extends EPackage {
          * @generated
          */
         EAttribute RESPONSE_TYPE__VALUE = eINSTANCE.getResponseType_Value();
-
-        /**
-         * The meta object literal for the '<em><b>Array Values</b></em>' attribute feature.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @generated
-         */
-        EAttribute RESPONSE_TYPE__ARRAY_VALUES = eINSTANCE.getResponseType_ArrayValues();
 
         /**
          * The meta object literal for the '<em><b>Structure ID</b></em>' attribute feature.

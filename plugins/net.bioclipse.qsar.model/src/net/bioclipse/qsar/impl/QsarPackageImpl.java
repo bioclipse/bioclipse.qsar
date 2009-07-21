@@ -915,7 +915,7 @@ public class QsarPackageImpl extends EPackageImpl implements QsarPackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EAttribute getResponseType_ArrayValues() {
+    public EAttribute getResponseType_StructureID() {
         return (EAttribute)responseTypeEClass.getEStructuralFeatures().get(1);
     }
 
@@ -924,17 +924,8 @@ public class QsarPackageImpl extends EPackageImpl implements QsarPackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EAttribute getResponseType_StructureID() {
-        return (EAttribute)responseTypeEClass.getEStructuralFeatures().get(2);
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
     public EAttribute getResponseType_Unit() {
-        return (EAttribute)responseTypeEClass.getEStructuralFeatures().get(3);
+        return (EAttribute)responseTypeEClass.getEStructuralFeatures().get(2);
     }
 
     /**
@@ -1185,7 +1176,6 @@ public class QsarPackageImpl extends EPackageImpl implements QsarPackage {
 
         responseTypeEClass = createEClass(RESPONSE_TYPE);
         createEAttribute(responseTypeEClass, RESPONSE_TYPE__VALUE);
-        createEAttribute(responseTypeEClass, RESPONSE_TYPE__ARRAY_VALUES);
         createEAttribute(responseTypeEClass, RESPONSE_TYPE__STRUCTURE_ID);
         createEAttribute(responseTypeEClass, RESPONSE_TYPE__UNIT);
 
@@ -1330,8 +1320,7 @@ public class QsarPackageImpl extends EPackageImpl implements QsarPackage {
         initEReference(getResponsesListType_Response(), this.getResponseType(), null, "response", null, 0, -1, ResponsesListType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(responseTypeEClass, ResponseType.class, "ResponseType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-        initEAttribute(getResponseType_Value(), theXMLTypePackage.getFloat(), "value", "NaN", 0, 1, ResponseType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEAttribute(getResponseType_ArrayValues(), theXMLTypePackage.getString(), "arrayValues", null, 0, 1, ResponseType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getResponseType_Value(), theXMLTypePackage.getString(), "value", "NaN", 0, 1, ResponseType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getResponseType_StructureID(), theXMLTypePackage.getString(), "structureID", null, 1, 1, ResponseType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getResponseType_Unit(), theXMLTypePackage.getString(), "unit", null, 0, 1, ResponseType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
@@ -1888,14 +1877,6 @@ public class QsarPackageImpl extends EPackageImpl implements QsarPackage {
            new String[] {
              "kind", "element",
              "name", "value",
-             "namespace", "##targetNamespace"
-           });		
-        addAnnotation
-          (getResponseType_ArrayValues(), 
-           source, 
-           new String[] {
-             "kind", "element",
-             "name", "arrayValues",
              "namespace", "##targetNamespace"
            });		
         addAnnotation

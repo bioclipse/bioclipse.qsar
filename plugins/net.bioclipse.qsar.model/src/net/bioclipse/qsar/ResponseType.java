@@ -21,7 +21,6 @@ import org.eclipse.emf.ecore.EObject;
  * The following features are supported:
  * <ul>
  *   <li>{@link net.bioclipse.qsar.ResponseType#getValue <em>Value</em>}</li>
- *   <li>{@link net.bioclipse.qsar.ResponseType#getArrayValues <em>Array Values</em>}</li>
  *   <li>{@link net.bioclipse.qsar.ResponseType#getStructureID <em>Structure ID</em>}</li>
  *   <li>{@link net.bioclipse.qsar.ResponseType#getUnit <em>Unit</em>}</li>
  * </ul>
@@ -51,13 +50,13 @@ public interface ResponseType extends EObject {
      * @return the value of the '<em>Value</em>' attribute.
      * @see #isSetValue()
      * @see #unsetValue()
-     * @see #setValue(float)
+     * @see #setValue(String)
      * @see net.bioclipse.qsar.QsarPackage#getResponseType_Value()
-     * @model default="NaN" unsettable="true" dataType="org.eclipse.emf.ecore.xml.type.Float"
+     * @model default="NaN" unsettable="true" dataType="org.eclipse.emf.ecore.xml.type.String"
      *        extendedMetaData="kind='element' name='value' namespace='##targetNamespace'"
      * @generated
      */
-    float getValue();
+    String getValue();
 
     /**
      * Sets the value of the '{@link net.bioclipse.qsar.ResponseType#getValue <em>Value</em>}' attribute.
@@ -69,7 +68,7 @@ public interface ResponseType extends EObject {
      * @see #getValue()
      * @generated
      */
-    void setValue(float value);
+    void setValue(String value);
 
     /**
      * Unsets the value of the '{@link net.bioclipse.qsar.ResponseType#getValue <em>Value</em>}' attribute.
@@ -77,7 +76,7 @@ public interface ResponseType extends EObject {
      * <!-- end-user-doc -->
      * @see #isSetValue()
      * @see #getValue()
-     * @see #setValue(float)
+     * @see #setValue(String)
      * @generated
      */
     void unsetValue();
@@ -89,37 +88,10 @@ public interface ResponseType extends EObject {
      * @return whether the value of the '<em>Value</em>' attribute is set.
      * @see #unsetValue()
      * @see #getValue()
-     * @see #setValue(float)
+     * @see #setValue(String)
      * @generated
      */
     boolean isSetValue();
-
-    /**
-     * Returns the value of the '<em><b>Array Values</b></em>' attribute.
-     * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Array Values</em>' attribute isn't clear,
-     * there really should be more of a description here...
-     * </p>
-     * <!-- end-user-doc -->
-     * @return the value of the '<em>Array Values</em>' attribute.
-     * @see #setArrayValues(String)
-     * @see net.bioclipse.qsar.QsarPackage#getResponseType_ArrayValues()
-     * @model dataType="org.eclipse.emf.ecore.xml.type.String"
-     *        extendedMetaData="kind='element' name='arrayValues' namespace='##targetNamespace'"
-     * @generated
-     */
-    String getArrayValues();
-
-    /**
-     * Sets the value of the '{@link net.bioclipse.qsar.ResponseType#getArrayValues <em>Array Values</em>}' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @param value the new value of the '<em>Array Values</em>' attribute.
-     * @see #getArrayValues()
-     * @generated
-     */
-    void setArrayValues(String value);
 
     /**
      * Returns the value of the '<em><b>Structure ID</b></em>' attribute.

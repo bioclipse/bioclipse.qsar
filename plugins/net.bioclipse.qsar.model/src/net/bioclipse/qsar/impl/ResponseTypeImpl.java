@@ -28,7 +28,6 @@ import org.eclipse.emf.ecore.impl.EObjectImpl;
  * The following features are implemented:
  * <ul>
  *   <li>{@link net.bioclipse.qsar.impl.ResponseTypeImpl#getValue <em>Value</em>}</li>
- *   <li>{@link net.bioclipse.qsar.impl.ResponseTypeImpl#getArrayValues <em>Array Values</em>}</li>
  *   <li>{@link net.bioclipse.qsar.impl.ResponseTypeImpl#getStructureID <em>Structure ID</em>}</li>
  *   <li>{@link net.bioclipse.qsar.impl.ResponseTypeImpl#getUnit <em>Unit</em>}</li>
  * </ul>
@@ -52,7 +51,7 @@ public class ResponseTypeImpl extends EObjectImpl implements ResponseType {
      * @generated
      * @ordered
      */
-    protected static final float VALUE_EDEFAULT = Float.NaN;
+    protected static final String VALUE_EDEFAULT = "NaN";
 
     /**
      * The cached value of the '{@link #getValue() <em>Value</em>}' attribute.
@@ -62,7 +61,7 @@ public class ResponseTypeImpl extends EObjectImpl implements ResponseType {
      * @generated
      * @ordered
      */
-    protected float value = VALUE_EDEFAULT;
+    protected String value = VALUE_EDEFAULT;
 
     /**
      * This is true if the Value attribute has been set.
@@ -72,26 +71,6 @@ public class ResponseTypeImpl extends EObjectImpl implements ResponseType {
      * @ordered
      */
     protected boolean valueESet;
-
-    /**
-     * The default value of the '{@link #getArrayValues() <em>Array Values</em>}' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see #getArrayValues()
-     * @generated
-     * @ordered
-     */
-    protected static final String ARRAY_VALUES_EDEFAULT = null;
-
-    /**
-     * The cached value of the '{@link #getArrayValues() <em>Array Values</em>}' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see #getArrayValues()
-     * @generated
-     * @ordered
-     */
-    protected String arrayValues = ARRAY_VALUES_EDEFAULT;
 
     /**
      * The default value of the '{@link #getStructureID() <em>Structure ID</em>}' attribute.
@@ -157,7 +136,7 @@ public class ResponseTypeImpl extends EObjectImpl implements ResponseType {
      * <!-- end-user-doc -->
      * @generated
      */
-    public float getValue() {
+    public String getValue() {
         return value;
     }
 
@@ -166,8 +145,8 @@ public class ResponseTypeImpl extends EObjectImpl implements ResponseType {
      * <!-- end-user-doc -->
      * @generated
      */
-    public void setValue(float newValue) {
-        float oldValue = value;
+    public void setValue(String newValue) {
+        String oldValue = value;
         value = newValue;
         boolean oldValueESet = valueESet;
         valueESet = true;
@@ -181,7 +160,7 @@ public class ResponseTypeImpl extends EObjectImpl implements ResponseType {
      * @generated
      */
     public void unsetValue() {
-        float oldValue = value;
+        String oldValue = value;
         boolean oldValueESet = valueESet;
         value = VALUE_EDEFAULT;
         valueESet = false;
@@ -196,27 +175,6 @@ public class ResponseTypeImpl extends EObjectImpl implements ResponseType {
      */
     public boolean isSetValue() {
         return valueESet;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public String getArrayValues() {
-        return arrayValues;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public void setArrayValues(String newArrayValues) {
-        String oldArrayValues = arrayValues;
-        arrayValues = newArrayValues;
-        if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, QsarPackage.RESPONSE_TYPE__ARRAY_VALUES, oldArrayValues, arrayValues));
     }
 
     /**
@@ -270,9 +228,7 @@ public class ResponseTypeImpl extends EObjectImpl implements ResponseType {
     public Object eGet(int featureID, boolean resolve, boolean coreType) {
         switch (featureID) {
             case QsarPackage.RESPONSE_TYPE__VALUE:
-                return new Float(getValue());
-            case QsarPackage.RESPONSE_TYPE__ARRAY_VALUES:
-                return getArrayValues();
+                return getValue();
             case QsarPackage.RESPONSE_TYPE__STRUCTURE_ID:
                 return getStructureID();
             case QsarPackage.RESPONSE_TYPE__UNIT:
@@ -290,10 +246,7 @@ public class ResponseTypeImpl extends EObjectImpl implements ResponseType {
     public void eSet(int featureID, Object newValue) {
         switch (featureID) {
             case QsarPackage.RESPONSE_TYPE__VALUE:
-                setValue(((Float)newValue).floatValue());
-                return;
-            case QsarPackage.RESPONSE_TYPE__ARRAY_VALUES:
-                setArrayValues((String)newValue);
+                setValue((String)newValue);
                 return;
             case QsarPackage.RESPONSE_TYPE__STRUCTURE_ID:
                 setStructureID((String)newValue);
@@ -316,9 +269,6 @@ public class ResponseTypeImpl extends EObjectImpl implements ResponseType {
             case QsarPackage.RESPONSE_TYPE__VALUE:
                 unsetValue();
                 return;
-            case QsarPackage.RESPONSE_TYPE__ARRAY_VALUES:
-                setArrayValues(ARRAY_VALUES_EDEFAULT);
-                return;
             case QsarPackage.RESPONSE_TYPE__STRUCTURE_ID:
                 setStructureID(STRUCTURE_ID_EDEFAULT);
                 return;
@@ -339,8 +289,6 @@ public class ResponseTypeImpl extends EObjectImpl implements ResponseType {
         switch (featureID) {
             case QsarPackage.RESPONSE_TYPE__VALUE:
                 return isSetValue();
-            case QsarPackage.RESPONSE_TYPE__ARRAY_VALUES:
-                return ARRAY_VALUES_EDEFAULT == null ? arrayValues != null : !ARRAY_VALUES_EDEFAULT.equals(arrayValues);
             case QsarPackage.RESPONSE_TYPE__STRUCTURE_ID:
                 return STRUCTURE_ID_EDEFAULT == null ? structureID != null : !STRUCTURE_ID_EDEFAULT.equals(structureID);
             case QsarPackage.RESPONSE_TYPE__UNIT:
@@ -361,8 +309,6 @@ public class ResponseTypeImpl extends EObjectImpl implements ResponseType {
         StringBuffer result = new StringBuffer(super.toString());
         result.append(" (value: ");
         if (valueESet) result.append(value); else result.append("<unset>");
-        result.append(", arrayValues: ");
-        result.append(arrayValues);
         result.append(", structureID: ");
         result.append(structureID);
         result.append(", unit: ");

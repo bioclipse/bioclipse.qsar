@@ -76,7 +76,6 @@ public class ResponseTypeItemProvider
             super.getPropertyDescriptors(object);
 
             addValuePropertyDescriptor(object);
-            addArrayValuesPropertyDescriptor(object);
             addStructureIDPropertyDescriptor(object);
             addUnitPropertyDescriptor(object);
         }
@@ -97,28 +96,6 @@ public class ResponseTypeItemProvider
                  getString("_UI_ResponseType_value_feature"),
                  getString("_UI_PropertyDescriptor_description", "_UI_ResponseType_value_feature", "_UI_ResponseType_type"),
                  QsarPackage.Literals.RESPONSE_TYPE__VALUE,
-                 true,
-                 false,
-                 false,
-                 ItemPropertyDescriptor.REAL_VALUE_IMAGE,
-                 null,
-                 null));
-    }
-
-    /**
-     * This adds a property descriptor for the Array Values feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    protected void addArrayValuesPropertyDescriptor(Object object) {
-        itemPropertyDescriptors.add
-            (createItemPropertyDescriptor
-                (((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-                 getResourceLocator(),
-                 getString("_UI_ResponseType_arrayValues_feature"),
-                 getString("_UI_PropertyDescriptor_description", "_UI_ResponseType_arrayValues_feature", "_UI_ResponseType_type"),
-                 QsarPackage.Literals.RESPONSE_TYPE__ARRAY_VALUES,
                  true,
                  false,
                  false,
@@ -190,8 +167,10 @@ public class ResponseTypeItemProvider
      */
     @Override
     public String getText(Object object) {
-        ResponseType responseType = (ResponseType)object;
-        return getString("_UI_ResponseType_type") + " " + responseType.getValue();
+        String label = ((ResponseType)object).getValue();
+        return label == null || label.length() == 0 ?
+            getString("_UI_ResponseType_type") :
+            getString("_UI_ResponseType_type") + " " + label;
     }
 
     /**
@@ -207,7 +186,6 @@ public class ResponseTypeItemProvider
 
         switch (notification.getFeatureID(ResponseType.class)) {
             case QsarPackage.RESPONSE_TYPE__VALUE:
-            case QsarPackage.RESPONSE_TYPE__ARRAY_VALUES:
             case QsarPackage.RESPONSE_TYPE__STRUCTURE_ID:
             case QsarPackage.RESPONSE_TYPE__UNIT:
                 fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));

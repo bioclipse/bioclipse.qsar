@@ -132,8 +132,7 @@
 
 	<complexType name="responseType">
 		<choice>
-			<element name="value" type="float" default="NaN"></element>
-			<element name="arrayValues" type="string"></element>
+			<element name="value" type="string" default="NaN"></element>
 		</choice>
 		<attribute name="structureID" type="string" use="required"></attribute>
 		<attribute name="unit" type="string"></attribute>

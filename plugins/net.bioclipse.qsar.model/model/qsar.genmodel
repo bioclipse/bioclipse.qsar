@@ -98,7 +98,6 @@
     </genClasses>
     <genClasses ecoreClass="qsar.ecore#//ResponseType">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute qsar.ecore#//ResponseType/value"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute qsar.ecore#//ResponseType/arrayValues"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute qsar.ecore#//ResponseType/structureID"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute qsar.ecore#//ResponseType/unit"/>
     </genClasses>
