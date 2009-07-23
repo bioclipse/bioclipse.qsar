@@ -118,13 +118,6 @@
       </wizard>
    </extension>
 
-	<extension
-      point="org.eclipse.birt.report.viewer.appcontext">
-      	<appcontext
-            class="net.bioclipse.qsar.ui.birt.QSARAppContext">
-      	</appcontext>
-	 </extension>
-
    <extension
          point="org.eclipse.ui.cheatsheets.cheatSheetContent">
       <cheatsheet

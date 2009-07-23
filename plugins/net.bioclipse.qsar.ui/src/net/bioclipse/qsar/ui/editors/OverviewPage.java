@@ -10,8 +10,6 @@
  *******************************************************************************/
 package net.bioclipse.qsar.ui.editors;
 
-import java.net.MalformedURLException;
-import java.net.URL;
 
 import net.bioclipse.cdk.business.Activator;
 import net.bioclipse.cdk.business.ICDKManager;
@@ -20,10 +18,8 @@ import net.bioclipse.qsar.QsarType;
 import net.bioclipse.qsar.ResourceType;
 import net.bioclipse.qsar.ResponseType;
 import net.bioclipse.qsar.ui.QsarHelper;
-import net.bioclipse.qsar.ui.birt.BirtHelper;
 
 import org.apache.log4j.Logger;
-import org.eclipse.birt.report.viewer.utilities.WebViewer;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IncrementalProjectBuilder;
 import org.eclipse.core.resources.WorkspaceJob;
@@ -41,10 +37,6 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
-import org.eclipse.ui.PartInitException;
-import org.eclipse.ui.PlatformUI;
-import org.eclipse.ui.browser.IWebBrowser;
-import org.eclipse.ui.browser.IWorkbenchBrowserSupport;
 import org.eclipse.ui.forms.IFormColors;
 import org.eclipse.ui.forms.IManagedForm;
 import org.eclipse.ui.forms.editor.FormEditor;
@@ -531,28 +523,6 @@ public class OverviewPage extends FormPage implements IEditingDomainProvider, IP
         GridData gdtxt32=new GridData(GridData.FILL_BOTH);
         lblMolErrorText2.setLayoutData(gdtxt32);
         
-        //Hyperlink to open report
-        Hyperlink linkReport = toolkit.createHyperlink(sectionClient,"Create Report", SWT.WRAP);
-        linkReport.addHyperlinkListener(new HyperlinkAdapter() {
-            public void linkActivated(HyperlinkEvent e) {
-                
-                //Generate and open BIRT report
-                
-                QsarType qsarModel = ((QsarEditor)getEditor()).getQsarModel();
-//                BirtHelper.openReportInBrowser(qsarModel);
-                BirtHelper.openScriptedReportInBrowser2( qsarModel );
-                
-            }
-        });
-        GridData gdReport=new GridData(GridData.FILL_BOTH);
-        linkReport.setLayoutData(gdReport);
-
-        Label lblReport=toolkit.createLabel(sectionClient, "");
-
-        GridData gdReport2=new GridData(GridData.FILL_BOTH);
-        lblReport.setLayoutData(gdReport2);
-
-
     }
 
     private void createInformationSection(final ScrolledForm form, FormToolkit toolkit) {

@@ -35,13 +35,7 @@ Require-Bundle: net.bioclipse.core,
  org.eclipse.emf.databinding,
  org.eclipse.emf.databinding.edit,
  org.eclipse.emf.edit.ui,
- net.bioclipse.chemoinformatics,
- org.eclipse.birt.core;bundle-version="2.3.2",
- org.eclipse.birt.report.engine;bundle-version="2.3.2",
- org.eclipse.birt.report.model;bundle-version="2.3.2",
- org.eclipse.birt.report.runtime;bundle-version="2.3.2",
- org.eclipse.birt.report.viewer;bundle-version="2.3.2",
- org.eclipse.birt.resources;bundle-version="2.3.2"
+ net.bioclipse.chemoinformatics
 Bundle-ActivationPolicy: lazy
 Import-Package: org.apache.log4j
 Export-Package: net.bioclipse.qsar.ui,
