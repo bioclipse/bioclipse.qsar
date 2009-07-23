@@ -1,13 +1,3 @@
-/*******************************************************************************
- * Copyright (c) 2000, 2004 IBM Corporation and others.
- * All rights reserved. This program and the accompanying materials 
- * are made available under the terms of the Common Public License v1.0
- * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/cpl-v10.html
- * 
- * Contributors:
- *     IBM Corporation - initial API and implementation
- *******************************************************************************/
 package net.bioclipse.qsar.ui.editors;
 
 import java.util.ArrayList;
@@ -20,17 +10,15 @@ import net.bioclipse.qsar.descriptor.model.ResponseUnit;
 import net.bioclipse.qsar.init.Activator;
 import net.sf.bibtexml.BibtexmlPackage;
 
+import org.apache.log4j.Logger;
 import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.observable.Realm;
 import org.eclipse.core.databinding.observable.map.IObservableMap;
 import org.eclipse.core.databinding.observable.set.IObservableSet;
 import org.eclipse.core.resources.IProject;
-import org.eclipse.emf.common.command.Command;
-import org.eclipse.emf.common.command.CompoundCommand;
 import org.eclipse.emf.databinding.edit.EMFEditObservables;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.edit.command.AddCommand;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.domain.IEditingDomainProvider;
@@ -55,10 +43,16 @@ import org.eclipse.ui.dialogs.ListDialog;
 import org.eclipse.ui.forms.*;
 import org.eclipse.ui.forms.editor.*;
 import org.eclipse.ui.forms.widgets.*;
+
+
 /**
+ * 
+ * @author ola
  *
  */
 public class InformationPage extends FormPage implements IEditingDomainProvider, IPageChangedListener{
+
+    private static final Logger logger = Logger.getLogger(InformationPage.class);
 
     private CTabFolder tabFolder;
     private AdapterFactoryEditingDomain editingDomain;
@@ -452,7 +446,7 @@ public class InformationPage extends FormPage implements IEditingDomainProvider,
         Object[] objs = dlg.getResult();
         if (objs==null) return;
 
-        System.out.println("Got back: " + objs.length + " selections");
+//        System.out.println("Got back: " + objs.length + " selections");
 
         //Add selected units to model
         QsarType qsarModel = ((QsarEditor)getEditor()).getQsarModel();
@@ -461,7 +455,7 @@ public class InformationPage extends FormPage implements IEditingDomainProvider,
         for (Object u : objs){
             ResponseUnit newUnit =(ResponseUnit) u;
             toAddList.add( newUnit );
-            System.out.println("Added new unit: " + newUnit + " to qsar model");
+            logger.debug("Added new unit: " + newUnit + " to qsar model");
         }
         
         qsar.addResponseUnitToModel( qsarModel, editingDomain, toAddList );

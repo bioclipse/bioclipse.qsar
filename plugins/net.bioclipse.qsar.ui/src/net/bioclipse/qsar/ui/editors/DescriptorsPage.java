@@ -95,7 +95,7 @@ public class DescriptorsPage extends FormPage implements IEditingDomainProvider,
     private TableViewer rightViewer;
     private Table rightTable;
 
-    private static final Logger logger = Logger.getLogger(MoleculesPage.class);
+    private static final Logger logger = Logger.getLogger(DescriptorsPage.class);
     
     ICDKManager cdk;
     DecimalFormat formatter;

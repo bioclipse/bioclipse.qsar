@@ -896,13 +896,13 @@ public class MoleculesPage extends FormPage implements IEditingDomainProvider, I
         //Here we have map of IFile > Property to add
         final Map<IFile, PropertyEntry> selprops = wizard.getSelectedProperties();
 
-        System.out.println("We should add: ");
-        for (IFile file : selprops.keySet()){
-            String str="  + " + file.getName();
-            if (selprops.get( file )!=null)
-                str = str + " -- " + selprops.get( file ).getPropObject();
-            System.out.println(str);
-        }
+//        System.out.println("We should add: ");
+//        for (IFile file : selprops.keySet()){
+//            String str="  + " + file.getName();
+//            if (selprops.get( file )!=null)
+//                str = str + " -- " + selprops.get( file ).getPropObject();
+//            System.out.println(str);
+//        }
 
         //Add the resources in a job since long running operation
         WorkspaceJob job = new WorkspaceJob("Adding resources"){
