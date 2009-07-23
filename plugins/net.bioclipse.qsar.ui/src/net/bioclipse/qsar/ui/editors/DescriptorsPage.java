@@ -19,6 +19,7 @@ import net.bioclipse.cdk.business.Activator;
 import net.bioclipse.cdk.business.ICDKManager;
 import net.bioclipse.qsar.DescriptorType;
 import net.bioclipse.qsar.DescriptorlistType;
+import net.bioclipse.qsar.DescriptorproviderType;
 import net.bioclipse.qsar.ParameterType;
 import net.bioclipse.qsar.QsarFactory;
 import net.bioclipse.qsar.QsarPackage;
@@ -27,15 +28,18 @@ import net.bioclipse.qsar.business.IQsarManager;
 import net.bioclipse.qsar.descriptor.model.Descriptor;
 import net.bioclipse.qsar.descriptor.model.DescriptorImpl;
 import net.bioclipse.qsar.descriptor.model.DescriptorModel;
+import net.bioclipse.qsar.descriptor.model.DescriptorProvider;
 
 import org.apache.log4j.Logger;
 import org.eclipse.core.databinding.observable.Realm;
 import org.eclipse.core.databinding.observable.map.IObservableMap;
 import org.eclipse.core.databinding.observable.set.IObservableSet;
 import org.eclipse.core.resources.IProject;
+import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.common.ui.viewer.IViewerProvider;
 import org.eclipse.emf.databinding.edit.EMFEditObservables;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.edit.command.AddCommand;
 import org.eclipse.emf.edit.command.SetCommand;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.domain.IEditingDomainProvider;
@@ -185,11 +189,14 @@ private Table paramsTable;
         
     }
 
-    
-	private void populateRightViewerFromModel() {
-		
-		// The content provider is responsible to handle add and
-		// remove notification for the Person#address EList
+    private void populateRightViewerFromModel() {
+
+        
+        
+        
+        
+        // The content provider is responsible to handle add and
+        // remove notification for the Person#address EList
 		ObservableListContentProvider provider = new ObservableListContentProvider();
 		rightViewer.setContentProvider(provider);
 
@@ -199,10 +206,11 @@ private Table paramsTable;
 		IObservableSet knownElements = provider.getKnownElements();
 		IObservableMap[] observeMaps = EMFEditObservables.
 			observeMaps(editingDomain, knownElements, new EStructuralFeature[]{
-					QsarPackage.Literals.DESCRIPTOR_TYPE__ONTOLOGYID});
-		ObservableMapLabelProvider labelProvider =
-			new ObservableQSARLabelProvider(observeMaps);
-		rightViewer.setLabelProvider(labelProvider);
+		          QsarPackage.Literals.DESCRIPTOR_TYPE__ONTOLOGYID,
+		          QsarPackage.Literals.DESCRIPTOR_TYPE__PROVIDER});
+//		ObservableMapLabelProvider labelProvider =
+//			new ObservableQSARLabelProvider(observeMaps);
+//		rightViewer.setLabelProvider(labelProvider);
 
 		DescriptorlistType descriptorList = getDescriptorListFromModel();
 
@@ -463,6 +471,166 @@ private Table paramsTable;
     	GridData gd6=new GridData(GridData.FILL_BOTH);
     	gd6.widthHint=100;
     	rightTable.setLayoutData( gd6 );
+    	
+    	rightTable.setHeaderVisible(true);
+    	rightTable.setLinesVisible(true);
+    	
+    	
+        //Add providers columns
+        TableLayout tableLayout = new TableLayout();
+        rightTable.setLayout(tableLayout);
+        
+        TableViewerColumn descCol=new TableViewerColumn(rightViewer, SWT.H_SCROLL | SWT.V_SCROLL);
+        descCol.getColumn().setText("Descriptor");
+        tableLayout.addColumnData(new ColumnPixelData(150));
+        descCol.setLabelProvider(new ColumnLabelProvider(){
+          @Override
+          public String getText(Object element) {
+              DescriptorType desc=(DescriptorType)element;
+              String label=desc.getOntologyid();
+
+              if (element instanceof DescriptorType) {
+                  if (label.indexOf('#')>0){
+                    label=label.substring(label.lastIndexOf('#')+1, label.length());
+                  }
+
+                  String cpstr="";
+                  if (desc.getParameter()!=null && desc.getParameter().size()>0){
+                    for (ParameterType param : desc.getParameter()){
+                      String pstr=param.getKey() + "=" + param.getValue()+", ";
+                      cpstr=cpstr+pstr;
+                    }
+                    cpstr=cpstr.substring(0,cpstr.length()-2);
+                  }
+                  
+                  if (cpstr.length()>1){
+                    label=label + " [" + cpstr + "]";
+                  }
+
+                }
+
+                return label;
+          }
+        });
+
+        
+        
+        TableViewerColumn provCol=new TableViewerColumn(rightViewer, SWT.NONE);
+        provCol.getColumn().setText("Provider");
+        tableLayout.addColumnData(new ColumnPixelData(200));
+        
+        provCol.setLabelProvider(new ColumnLabelProvider(){
+        @Override
+        public String getText(Object element) {
+            DescriptorType desc=(DescriptorType)element;
+            DescriptorImpl impl = qsar.getDescriptorImpl( desc.getOntologyid(), desc.getProvider() );
+            return impl.getProvider().getShortName();
+        }
+      });
+        
+        provCol.setEditingSupport(new EditingSupport(rightViewer){
+          
+        @Override
+        protected boolean canEdit(Object element) {
+          return true;
+        }
+
+        /**
+         * Build the combo with available providers shortname
+         * @param element
+         * @return
+         */
+        @Override
+        protected CellEditor getCellEditor(Object element) {
+            
+            DescriptorType desc=(DescriptorType)element;
+
+            //Find available impls for this descriptor to populate combo
+            //This is the model we look up index in also
+            List<String> availImpls = qsar.getDescriptorImpls( desc.getOntologyid() );
+
+            String[] values=new String[availImpls.size()]; 
+            for (int i = 0; i < availImpls.size();i++){
+                String shortname=qsar.getDescriptorImplByID( availImpls.get( i ) ).getProvider().getShortName();
+                values[i] = shortname;
+            }
+            ComboBoxCellEditor cbo=new ComboBoxCellEditor(rightTable,values);
+            return cbo;
+        }
+
+        /**
+         * Get the value for the current element, here the shortname of the impl.provider
+         * @param element
+         * @return
+         */
+        @Override
+        protected Object getValue(Object element) {
+
+            DescriptorType desc=(DescriptorType)element;
+
+            //This is the model we look up index in also
+            List<String> availImpls = qsar.getDescriptorImpls( desc.getOntologyid() );
+
+            DescriptorImpl impl = qsar.getDescriptorImpl( desc.getOntologyid(), desc.getProvider() );
+            int ix = availImpls.lastIndexOf( impl.getProvider().getShortName() );
+            return new Integer(ix);
+            
+//            return impl.getProvider().getShortName();
+            
+//            //get the index in list from manager (use that as order)
+//            int ix = qsar.getFullProviders().lastIndexOf( impl.getProvider() );
+//            return new Integer(ix);
+//
+        }
+
+        /**
+         * User has selected a new impl.shortname in the combo. Store it in model.
+         * @param element
+         * @param value
+         */
+        @Override
+        protected void setValue(Object element, Object value) {
+
+            //The descriptor
+            DescriptorType desc=(DescriptorType)element;
+
+            //User selected this shortname
+            int ix=(Integer)value;
+            
+            //This is the model we look up index in also
+            List<String> availImpls = qsar.getDescriptorImpls( desc.getOntologyid() );
+
+            String shortname=qsar.getDescriptorImplByID( availImpls.get( ix ) ).getProvider().getShortName();
+            
+            //Identify the provider from the shortname
+            for (DescriptorProvider prov : qsar.getFullProviders()){
+                if (prov.getShortName().equals( shortname )){
+                    //match! prov is the one we are looking for
+                    String newProvID=prov.getId();
+                    
+                    //Set the new provider id in the desctype
+                    Command cmd = SetCommand.create(editingDomain, desc, QsarPackage.Literals.DESCRIPTOR_TYPE__PROVIDER, newProvID);
+                    editingDomain.getCommandStack().execute(cmd);    
+                    
+                    rightViewer.refresh();
+                    return;
+                }
+            }
+
+            logger.error("We could not find the selected provider in combo. This " +
+            "should not happen!");
+        }
+        });
+
+        
+        
+        
+        
+        
+        
+        
+        
+        
 
     	//If focus gained, make this viewer provide selections
         rightTable.addFocusListener(new FocusListener(){
@@ -502,18 +670,20 @@ private Table paramsTable;
 			}
     	});
 
-    	
+
+      //=================
+      //Parameters viewer
+      //=================
+
     	Label lblParams=toolkit.createLabel(client, "Descriptor parameters");
     	lblParams.setEnabled(true);
 
-    	//Parameters viewer
-    	//=================
     	paramsViewer = new TableViewer (client, SWT.BORDER | SWT.MULTI);
     	paramsTable=paramsViewer.getTable();
     	toolkit.adapt(paramsTable, true, true);
     	GridData gd7=new GridData(GridData.FILL_BOTH);
     	gd7.heightHint=40;
-    	gd7.minimumHeight=150;
+    	gd7.minimumHeight=100;
     	paramsTable.setLayoutData( gd7 );
 
     	paramsTable.setHeaderVisible(true);
@@ -521,12 +691,12 @@ private Table paramsTable;
     	
     	
         //Add providers columns
-        TableLayout tableLayout = new TableLayout();
-        paramsTable.setLayout(tableLayout);
+        TableLayout paramTableLayout = new TableLayout();
+        paramsTable.setLayout(paramTableLayout);
         
         TableViewerColumn keyCol=new TableViewerColumn(paramsViewer, SWT.H_SCROLL | SWT.V_SCROLL);
         keyCol.getColumn().setText("Key");
-        tableLayout.addColumnData(new ColumnPixelData(150));
+        paramTableLayout.addColumnData(new ColumnPixelData(150));
         keyCol.setLabelProvider(new ColumnLabelProvider(){
         	@Override
         	public String getText(Object element) {
@@ -537,7 +707,7 @@ private Table paramsTable;
 
         TableViewerColumn valueCol=new TableViewerColumn(paramsViewer, SWT.NONE);
         valueCol.getColumn().setText("Value");
-        tableLayout.addColumnData(new ColumnPixelData(150));
+        paramTableLayout.addColumnData(new ColumnPixelData(150));
         
     	valueCol.setLabelProvider(new ColumnLabelProvider(){
     		@Override
@@ -592,6 +762,7 @@ private Table paramsTable;
 	                		SetCommand cmd=new SetCommand(editingDomain,param,QsarPackage.Literals.PARAMETER_TYPE__VALUE,"true");
 	                		editingDomain.getCommandStack().execute(cmd);
 	                		paramsViewer.refresh();
+	                    rightViewer.refresh();
 						}
 					}
 					if (i==1){
@@ -599,6 +770,7 @@ private Table paramsTable;
 							SetCommand cmd=new SetCommand(editingDomain,param,QsarPackage.Literals.PARAMETER_TYPE__VALUE,"false");
 							editingDomain.getCommandStack().execute(cmd);
 							paramsViewer.refresh();
+              rightViewer.refresh();
 						}
 					}
 				}
@@ -636,9 +808,6 @@ private Table paramsTable;
     	});
     	GridData gd = new GridData(GridData.FILL_BOTH);
     	preSection.setLayoutData(gd);        
-
-    	//Post selections to Eclipse
-    	//getSite().setSelectionProvider(queryViewer);
 
     }
 
