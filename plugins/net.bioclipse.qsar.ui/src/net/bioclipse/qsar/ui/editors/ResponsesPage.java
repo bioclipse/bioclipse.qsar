@@ -395,7 +395,7 @@ public class ResponsesPage extends FormPage implements IEditingDomainProvider, I
      */
     protected void deleteSelectedResponses() {
 
-        System.out.println("Delete responses not implemented");
+        logger.error("Delete responses not implemented");
 
         /*    	
     	IStructuredSelection ssel=(IStructuredSelection) rightViewer.getSelection();

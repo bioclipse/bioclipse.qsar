@@ -506,7 +506,7 @@ public class QsarEditor extends FormEditor implements IEditingDomainProvider,
                                 //See if this is a resource that is linked in QSAR model
                                 for (ResourceType lres : getQsarModel().getStructurelist().getResources()){
                                     if (lres.getFile().equals( delta.getResource().getFullPath().toOSString() )){
-                                        System.out.println("There was a change in a linked file: " + delta.getKind());
+                                        logger.debug("There was a change in a linked file: " + delta.getKind());
                                     }
                                 }
                             }
