@@ -58,6 +58,7 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.OperationCanceledException;
+import org.eclipse.core.runtime.SubProgressMonitor;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
@@ -259,6 +260,12 @@ public class QSARBuilder extends IncrementalProjectBuilder
                       "Building qsar project: " + getProject().getName() );
         logger.debug( "******************************************");
 
+        //We have X phases in the qsar building, each with their respective
+        //subtask
+        monitor.beginTask("Building QSAR project", 5);
+        monitor.subTask( "Preparing build");
+        monitor.worked( 1 );
+
         QsarHelper.setBuildStatus( getProject(), "RUNNING" );
         QsarHelper.setBuildTime( getProject(), "" );
         stopwatch=new Stopwatch();
@@ -292,16 +299,21 @@ public class QSARBuilder extends IncrementalProjectBuilder
         //Figure out which combos need calculations: dirty or no existing responses
         //================================================
         //Mol > List of descriptor IDs
-        Map<IMolecule, List<DescriptorType>> molDescMap=getComboForCalculation(structureMap, allDescriptors, qsarModel);
-        logger.debug("In need of calculation: \n" + debugMolDescMap(molDescMap));
+        Map<IMolecule, List<DescriptorType>> molDescMap = 
+                getComboForCalculation(structureMap, allDescriptors, qsarModel);
+        logger.debug("In need of calculation (" + molDescMap.size() 
+                     + " entries):\n" + debugMolDescMap(molDescMap));
 
         //Calculate descriptors for all such combos
         //================================================
-        IQsarManager qsar = net.bioclipse.qsar.init.Activator.getDefault().getQsarManager();
-        int jobSize=allDescriptors.size() * structureMap.size()+1;
-        monitor.beginTask("Building QSAR project", jobSize);
+        int jobSize_old=allDescriptors.size() * structureMap.size()+1;
+        int jobSize=molDescMap.size() + 1;
+//        monitor.beginTask("Building QSAR project", jobSize);
+//        monitor.subTask("Building QSAR project", jobSize);
+
         //Calculate all changed descriptors
-        Map<IMolecule, List<IDescriptorResult>> resultMap = qsar.calculate(molDescMap, monitor);
+        IQsarManager qsar = net.bioclipse.qsar.init.Activator.getDefault().getQsarManager();
+        Map<IMolecule, List<IDescriptorResult>> resultMap = qsar.calculate(molDescMap, new SubProgressMonitor(monitor, jobSize));
         logger.debug("Calculation results: \n" + debugResultMap(resultMap));
         if (checkCancel(monitor)){
             handleInterruptedBuild();
