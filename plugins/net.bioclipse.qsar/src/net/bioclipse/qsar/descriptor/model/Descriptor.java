@@ -14,6 +14,11 @@ import java.util.List;
 
 import org.eclipse.ui.views.properties.IPropertySource;
 
+/**
+ * Instances of this class are defined in BODO.
+ * @author ola
+ *
+ */
 public class Descriptor extends BaseEPObject{
 
 	private String definition;

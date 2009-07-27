@@ -15,6 +15,11 @@ import java.util.Map;
 
 import org.eclipse.ui.views.properties.IPropertySource;
 
+/**
+ * Instances of this class are defined in manifest of providers plugins
+ * @author ola
+ *
+ */
 public class DescriptorImpl extends BaseEPObject{
 
 	private DescriptorProvider provider;
