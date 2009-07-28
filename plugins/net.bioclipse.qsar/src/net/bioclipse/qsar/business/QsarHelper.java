@@ -182,6 +182,13 @@ public class QsarHelper {
 
                                 String padescr=param.getAttribute("description");
                                 dparam.setDescription(padescr);
+                                
+                                for( IConfigurationElement listedvalue
+                                        : param.getChildren(QSARConstants.PARAMETER_LISTED_VALUES) ) {
+
+                                    String val=listedvalue.getAttribute( "value" );
+                                    dparam.addListedValue(val);
+                                }
 
                                 pparams.add(dparam);
                             }

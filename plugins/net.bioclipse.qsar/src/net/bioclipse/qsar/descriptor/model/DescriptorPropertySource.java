@@ -12,6 +12,7 @@ package net.bioclipse.qsar.descriptor.model;
 
 import java.util.List;
 
+import net.bioclipse.core.business.BioclipseException;
 import net.bioclipse.qsar.business.IQsarManager;
 import net.bioclipse.qsar.init.Activator;
 
@@ -82,19 +83,25 @@ public class DescriptorPropertySource extends BaseEPObjectPropertySource{
         getProperties().add(descriptor5);
 
         //Get value from manager and transform to string
-        List<String> impls = qsar.getDescriptorImpls(desc.getId());
-        String implsStr="";
-        if (impls==null || impls.size()<=0){
-            implsStr="None";
-        }else{
-        	for (String str : impls){
-        		implsStr=implsStr+str+", ";
-        	}
-        	if (implsStr.length()>3)
-        		implsStr=implsStr.substring(0,implsStr.length()-2);
+        List<String> impls;
+        try {
+            impls = qsar.getDescriptorImpls(desc.getId());
+            String implsStr="";
+            if (impls==null || impls.size()<=0){
+                implsStr="None";
+            }else{
+                for (String str : impls){
+                    implsStr=implsStr+str+", ";
+                }
+                if (implsStr.length()>3)
+                    implsStr=implsStr.substring(0,implsStr.length()-2);
+            }
+            //Add impls value to properties
+            getValueMap().put(PROPERTY_IMPLS,implsStr);
+
+        } catch ( BioclipseException e ) {
+            getValueMap().put(PROPERTY_IMPLS,"Error: " + e.getMessage());
         }
-        //Add impls value to properties
-        getValueMap().put(PROPERTY_IMPLS,implsStr);
 
 
 	}

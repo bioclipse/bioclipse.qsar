@@ -25,6 +25,7 @@ public interface QSARConstants {
 	public static final Object PROVIDER_ELEMENT_NAME = "provider";
 	public static final String DESCRIMPL_ELEMENT_NAME = "descriptorImpl";
 	public static final String PARAMETER_ELEMENT_NAME = "parameter";
+  public static final String PARAMETER_LISTED_VALUES = "listedvalue";
 
 	 //Matches extension point
   public static final String RESPONSEUNITS_EXTENSION_POINT = 

@@ -34,6 +34,7 @@ import net.bioclipse.qsar.QsarType;
 import net.bioclipse.qsar.ResourceType;
 import net.bioclipse.qsar.descriptor.IDescriptorResult;
 import net.bioclipse.qsar.descriptor.model.Descriptor;
+import net.bioclipse.qsar.descriptor.model.DescriptorCalculationResult;
 import net.bioclipse.qsar.descriptor.model.DescriptorImpl;
 import net.bioclipse.qsar.descriptor.model.DescriptorCategory;
 import net.bioclipse.qsar.descriptor.model.DescriptorModel;
@@ -81,7 +82,7 @@ public interface IQsarManager extends IBioclipseManager{
 
     @PublishedMethod( methodSummary = "Returns the ID's of available descriptors " +
     "for a provider" )
-    public List<String> getDescriptorImplsByProvider(String providerID);
+    public List<String> getDescriptorImplsByProvider(String providerID) throws BioclipseException;
     public List<DescriptorImpl> getFullDescriptorImpls(DescriptorProvider provider);
 
 
@@ -123,13 +124,13 @@ public interface IQsarManager extends IBioclipseManager{
     @PublishedMethod(params="String descriptorID",
                      methodSummary = "Get a list of descriptor implementations " +
                      		"for a descriptor" )
-    public List<String> getDescriptorImpls(String descriptorID);
+    public List<String> getDescriptorImpls(String descriptorID) throws BioclipseException;
 
     public List<DescriptorImpl> getDescriptorImplsForDescriptor(String descriptorID);
 
     public DescriptorImpl getPreferredImpl(String descriptorID);
 
-    DescriptorImpl getDescriptorImpl(String descriptorID, String providerID);
+    DescriptorImpl getDescriptorImpl(String descriptorID, String providerID) throws BioclipseException;
 
     DescriptorType createDescriptorType(QsarType qsarModel,
                                         EditingDomain editingDomain, Descriptor desc, DescriptorImpl impl,
@@ -149,7 +150,7 @@ public interface IQsarManager extends IBioclipseManager{
     		"IProgressMonitor monitor ",
     		methodSummary = "Calculate for all molecules, the descriptors in associated list." )
     @Recorded
-    public Map<IMolecule, List<IDescriptorResult>> calculate(
+    public Map<IMolecule, List<IDescriptorResult>> doCalculation(
           Map<IMolecule, List<DescriptorType>> molDescMap,
           IProgressMonitor monitor );
 
@@ -182,10 +183,72 @@ public interface IQsarManager extends IBioclipseManager{
                                               EditingDomain editingDomain,
                                               Map<IFile, Object> resourcesToAdd,
                                               IProgressMonitor monitor )
-                                                                        throws IOException,
-                                                                        BioclipseException,
-                                                                        CoreException;
+                                              throws IOException,
+                                              BioclipseException,
+                                              CoreException;
 
+    @PublishedMethod(params="String ontologyID",
+                     methodSummary = "Show all implementations for this " +
+                     		"entry in the ontology." )
+    @Recorded
+    String show( String ontologyID ) throws BioclipseException;
+
+    @PublishedMethod(methodSummary = "Show all available descriptors." )
+    @Recorded
+    String listDescriptors();
+
+    @PublishedMethod(params="boolean hasImpl",
+                     methodSummary = "Show all available descriptors. " +
+                     		"If hasImpl=true, only show entries with an available " +
+                     		"implementation." )
+    @Recorded
+    String listDescriptors( boolean hasImpl );
+
+    @PublishedMethod(params="IMolecule mol, String descriptor",
+                     methodSummary = "Calculate a descriptor for a molecule " +
+                     		"with the default implementation.")
+    @Recorded
+    DescriptorCalculationResult calculate2( IMolecule mol, String ontologyID )
+                                                      throws BioclipseException;
+
+    @PublishedMethod(params="IMolecule mol, String descriptor, String provider",
+                     methodSummary = "Calculate a descriptor for a molecule " +
+                        "using the default provider.")
+    @Recorded
+    DescriptorCalculationResult calculate2( IMolecule mol, String ontologyID,
+                                            String providerID )
+                                                      throws BioclipseException;
+
+    @PublishedMethod(params="List<IMolecule> mols, List<String> descriptors",
+                     methodSummary = "Calculate a list of descriptors for a " +
+                     		"list of molecules " +
+                        "using the default provider.")
+    @Recorded
+    DescriptorCalculationResult calculate2( List<IMolecule> mols,
+                                            List<String> descriptors )
+                                                      throws BioclipseException;
+
+    @PublishedMethod(params="List<IMolecule> mols, List<String> descriptors, " +
+                            "String provider ",
+                     methodSummary = "Calculate a list of descriptors for a " +
+                                     "list of molecules " +
+                                     "using the selected provider.")
+    @Recorded
+    DescriptorCalculationResult calculate2( List<IMolecule> mols,
+                                            List<String> descriptors,
+                                            String provider )
+                                                      throws BioclipseException;
+
+    
+    @PublishedMethod(params="String ontologyID",
+              methodSummary = "Convert a full ontology ID to short ontology ID")
+    @Recorded
+    String toShortOntologyForm( String ontologyID );
+
+    @PublishedMethod(params="String ontologyID",
+                     methodSummary = "Convert a short ontology ID to full ID")
+    @Recorded
+    String getRealOntologyID( String ontologyID ) throws BioclipseException;
 
 
 }

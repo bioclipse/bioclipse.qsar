@@ -10,12 +10,16 @@
  ******************************************************************************/
 package net.bioclipse.qsar.descriptor.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class DescriptorParameter {
 
 	String key;
 	String defaultvalue;
 	String description;
 	String value;
+	private List<String> listedvalues;
 	
 	
 	/**
@@ -63,9 +67,30 @@ public class DescriptorParameter {
 	public DescriptorParameter clone(){
 		DescriptorParameter newParam=new DescriptorParameter(this.key, this.defaultvalue);
 		newParam.setDescription(this.description);
+		newParam.setListedvalues( getListedvalues() );
 		return newParam;
 	}
-	
+
+	/**
+	 *Allowed values for the parameter
+	 */
+	public void addListedValue( String val ) {
+
+	    if (getListedvalues()==null) setListedvalues( new ArrayList<String>() );
+	    getListedvalues().add( val );
+
+	}
+
+    public void setListedvalues( List<String> listedvalues ) {
+
+        this.listedvalues = listedvalues;
+    }
+
+    public List<String> getListedvalues() {
+
+        return listedvalues;
+    }
+
 	
 
 }

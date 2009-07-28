@@ -20,11 +20,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Set;
+import java.util.StringTokenizer;
 
 import net.bioclipse.cdk.business.ICDKManager;
 import net.bioclipse.cdk.domain.ICDKMolecule;
 import net.bioclipse.core.business.BioclipseException;
 import net.bioclipse.core.domain.IMolecule;
+import net.bioclipse.core.util.LogUtils;
 import net.bioclipse.qsar.DescriptorType;
 import net.bioclipse.qsar.DescriptorlistType;
 import net.bioclipse.qsar.DescriptorproviderType;
@@ -43,6 +45,7 @@ import net.bioclipse.qsar.StructurelistType;
 import net.bioclipse.qsar.descriptor.IDescriptorCalculator;
 import net.bioclipse.qsar.descriptor.IDescriptorResult;
 import net.bioclipse.qsar.descriptor.model.Descriptor;
+import net.bioclipse.qsar.descriptor.model.DescriptorCalculationResult;
 import net.bioclipse.qsar.descriptor.model.DescriptorCategory;
 import net.bioclipse.qsar.descriptor.model.DescriptorImpl;
 import net.bioclipse.qsar.descriptor.model.DescriptorModel;
@@ -66,6 +69,7 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.OperationCanceledException;
 import org.eclipse.core.runtime.Platform;
+import org.eclipse.core.runtime.SubProgressMonitor;
 import org.eclipse.core.runtime.preferences.DefaultScope;
 import org.eclipse.core.runtime.preferences.IEclipsePreferences;
 import org.eclipse.emf.common.command.BasicCommandStack;
@@ -319,12 +323,18 @@ public class QsarManager implements IQsarManager{
 
 
     /**
-     * Get all descriptor implementation IDs for a provider.
+     * Get all descriptor implementation IDs for a provider by ID or shortname.
      * @return List of descriptor implementation IDs or empty List.
+     * @throws BioclipseException 
      */
-    public List<String> getDescriptorImplsByProvider(String providerID) {
+    public List<String> getDescriptorImplsByProvider(String providerIDorShortName) throws BioclipseException {
 
-        DescriptorProvider provider = getProviderByID(providerID);
+        DescriptorProvider provider = getProviderByID(providerIDorShortName);
+        if (provider==null)
+            provider=getProviderByShortName( providerIDorShortName );
+        if (provider==null)
+            throw new BioclipseException("No provider could be found with " +
+            		"id/name=" + providerIDorShortName);
         List<String> ret=new ArrayList<String>();
         for (DescriptorImpl desc : provider.getDescriptorImpls()){
             ret.add(desc.getId());
@@ -332,6 +342,20 @@ public class QsarManager implements IQsarManager{
 
         return ret;
     }
+    
+    /**
+     * Get all descriptor implementation IDs for a provider.
+     * @return List of descriptor implementation IDs or empty List.
+     */
+    public DescriptorProvider getProviderByShortName(String providerShortName) {
+
+        for (DescriptorProvider prov : getFullProviders()){
+            if (prov.getShortName().equals( providerShortName ))
+                return prov;
+        }
+        return null;
+    }
+
 
     /**
      * Get all descriptor implementations for a provider.
@@ -357,15 +381,21 @@ public class QsarManager implements IQsarManager{
 
     /**
      * Return list of implIDs for a given a descriptorID
+     * @throws BioclipseException 
      */
-    public List<String> getDescriptorImpls(String descriptorID) {
+    public List<String> getDescriptorImpls(String ontologyID) throws BioclipseException {
+        
+        String realOntologyID = getRealOntologyID(ontologyID);
         List<String> ret= new ArrayList<String>();
         for (DescriptorImpl impl : getFullDescriptorImpls()){
-            if (impl.getDefinition().equals(descriptorID))
+            if (impl.getDefinition().equals(realOntologyID))
                 ret.add(impl.getId());
         }
         return ret;
     }
+
+
+
 
     /**
      * Return list of descriptorImpls for a given a descriptorID
@@ -468,16 +498,18 @@ public class QsarManager implements IQsarManager{
     /**
      * Get descriptor implementation be descriptorID and providerID or null if
      * none matching.
+     * @throws BioclipseException 
      */
-    public DescriptorImpl getDescriptorImpl(String descriptorID, String providerID) {
+    public DescriptorImpl getDescriptorImpl(String ontologyID, String providerID) throws BioclipseException {
 
         for (String descriptorImplID : getDescriptorImplsByProvider(providerID)){
             DescriptorImpl impl = getDescriptorImplByID(descriptorImplID);
-            if (impl.getDefinition().equals(descriptorID))
+            if (impl.getDefinition().equals(getRealOntologyID( ontologyID)))
                 return impl;
         }
 
-        return null;
+        throw new BioclipseException("No implementation for ontololgyID " 
+                                 + ontologyID + " for provider: " + providerID);
     }
 
 
@@ -498,13 +530,9 @@ public class QsarManager implements IQsarManager{
      * ====================================================
      */
 
-
-
     /**
      * Calculate descriptors for N molecules with D descriptors with P params.
-     * @param molecules List<IMolecule> containing the molecules
-     * @param descriptorMap Map from descriptorImplID to List<DescriptorParameter>
-     * @return
+     * 
      */
     public Map<? extends IMolecule, List<IDescriptorResult>> calculate(
                                                                        List<? extends IMolecule> molecules, 
@@ -516,80 +544,17 @@ public class QsarManager implements IQsarManager{
             molDescMap.put( mol, descriptorTypes );
         }
 
-        return calculate( molDescMap, monitor );
+        return doCalculation( molDescMap, monitor );
 
-        //        Map<IMolecule, List<IDescriptorResult>> allResults=
-        //            new HashMap<IMolecule, List<IDescriptorResult>>();
-        //
-        //        //The problem is to collect all descriptor ID's and group by provider
-        //        //Loop over all providers
-        //        for (DescriptorProvider provider : getFullProviders()){
-        //
-        //            //Store descriptors and params to calculate for this provider in list
-        //            List<DescriptorType> descriptorTypesForProvider = new ArrayList<DescriptorType>();
-        //
-        //
-        //
-        //            //Check if this descriptor is here, add if so
-        //            for (DescriptorType descType: descriptorTypes){
-        //                String descImplId = descType.getProvider();
-        //                DescriptorProvider prov = getProviderByID( descImplId );
-        //                if (provider.getId().equals(prov.getId())){
-        //                    descriptorTypesForProvider.add(descType);
-        //                }
-        //            }
-        //
-        //
-        //            //If we have descs to calculate, do so
-        //            if (descriptorTypesForProvider.size()>0){
-        //                IDescriptorCalculator calculator=provider.getCalculator();
-        //                Map<? extends IMolecule, List<IDescriptorResult>> results = 
-        //                    calculator.calculateDescriptor(molecules, 
-        //                                                   descriptorTypesForProvider, monitor);
-        //
-        //                //Add these results to the molecule
-        //                for (IMolecule mol : results.keySet()){
-        //                    if (allResults.get(mol)==null) allResults.put(mol, new ArrayList<IDescriptorResult>());
-        //                    List<IDescriptorResult> reslist=allResults.get(mol);
-        //
-        //                    //Add the computed result to the reslist
-        //                    reslist.addAll(results.get(mol));
-        //                }
-        //
-        //            }
-        //
-        //        }
-        //
-        //        return allResults;
+
     }
-
-
-    //	/**
-    //	 * Convenience method to calculate descriptors without inputting parameters
-    //	 */
-    //	public Map<IMolecule, List<IDescriptorResult>> calculateNoParams(
-    //			List<IMolecule> molecules, List<String> descriptorImplIDs) {
-    //
-    //		List<DescriptorType> insts=new ArrayList<DescriptorType>();
-    //		
-    //		for (String descImplID : descriptorImplIDs){
-    //			DescriptorImpl impl=getDescriptorImplByID(descImplID);
-    //			Descriptor desc=getDescriptorByID(impl.getDefinition());
-    //			DescriptorType descType=createDescriptorType(desc, impl,null);
-    //			
-    //			DescriptorInstance inst=new DescriptorInstance(desc, impl,null);
-    //			insts.add(inst);
-    //		}
-    //		
-    //		return calculate(molecules, insts);
-    //	}
-
 
 
     /**
      * Convenience method to calculate a descriptor for a single mol and 
      * a single descriptorID.
      */
+    @Deprecated
     public IDescriptorResult calculate(IMolecule molecule, String descriptorID) {
 
         List<IMolecule> mollist=new ArrayList<IMolecule>();
@@ -610,11 +575,372 @@ public class QsarManager implements IQsarManager{
 
     }
 
+    /*
+     * BELOW IS NEW IMPLE
+     */
+    
+    /**
+     * Return implementations and their accepted parameters
+     * @throws BioclipseException 
+     */
+    public String show(String ontologyID) throws BioclipseException{
+
+        String ret="";
+        List<String> implIDs = getDescriptorImpls( ontologyID );
+        for (String implid : implIDs){
+            DescriptorImpl impl = getDescriptorImplByID( implid );
+            String descstr="Name='" + impl.getName()
+            +"',  Provider='" + impl.getProvider().getShortName()+"'\n";
+            if (impl.getDescription()!=null)
+                descstr=descstr + "Description: " + impl.getDescription()+"\n";
+            else
+                descstr=descstr + "Description: N/A\n";
+            if (impl.getParameters()!=null && impl.getParameters().size()>0){
+                for (DescriptorParameter p : impl.getParameters()){
+                    descstr=descstr+"  * Parameter: Name='" + p.getKey() 
+                    + "', default value='" + p.getDefaultvalue() 
+                    + "', Description: " + p.getDescription();
+                }
+                descstr=descstr+"\n";
+            }
+            ret= ret + descstr +"----\n";
+        }
+        if (ret.length()<=0)
+            ret="No descriptor implementations found.";
+        
+        if (ret.endsWith( "----\n" )){
+            ret=ret.substring( 0, ret.length()-6 );
+        }
+
+        
+        return ret;
+    }
+
+    /**
+     * Output a list of all entries in the BODO.
+     * @return
+     */
+    public String listDescriptors(){
+        return listDescriptors(false);
+    }
+
+    /**
+     * If input starts with 
+     * http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#
+     * then remove it and return the rightmost part
+     * @param ontologyID
+     * @return the rightmost part or entire string if not starting with http://
+     */
+    public String toShortOntologyForm(String ontologyID){
+        if (ontologyID.startsWith( "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#" )){
+            return ontologyID.substring( ontologyID.indexOf( "#" )+1 );
+        }
+        //Could not remove it, return as is
+        return ontologyID;
+    }
+    
+    /**
+     * Output a list of all entries in the BODO that has an implementation
+     * @return
+     */
+    public String listDescriptors(boolean hasImpl){
+
+        StringBuffer buffer=new StringBuffer();
+        for (Descriptor desc : getFullDescriptors()){
+            
+            String descstr=toShortOntologyForm( desc.getId() + " - " + desc.getName());
+            
+            List<String> implIDs;
+            try {
+                implIDs = getDescriptorImpls( desc.getId() );
+
+                descstr=descstr + " [";
+                for (String implID : implIDs){
+                    DescriptorImpl impl = getDescriptorImplByID( implID ); 
+                    descstr=descstr + impl.getProvider().getShortName() + ", ";
+                }
+                if (descstr.endsWith( ", " )){
+                    descstr=descstr.substring( 0, descstr.length()-2 );
+                }
+                if (hasImpl){
+                    if (implIDs!=null && implIDs.size()>0)
+                        buffer.append( descstr + "]\n" );
+                }
+                else{
+                    buffer.append( descstr + "]\n" );
+                }
+            } catch ( BioclipseException e ) {
+                logger.error(e.getMessage());
+            }
+        }
+        
+        return buffer.toString();
+    }
+
+    
+    /**
+     * Accept full ontology id or just the last part and return a full ontologyID
+     * Also removes parameters section after and including ?
+     * @param ontologyID could be short or long form
+     * @return
+     * @throws BioclipseException 
+     */
+    public String getRealOntologyID( String ontologyID ) throws BioclipseException {
+
+        String fullOntologyID="";
+        
+        //Remove parameters section after and including ?
+        if (ontologyID.indexOf( "?" )>0){
+            ontologyID=ontologyID.substring( 0, ontologyID.indexOf( "?" ) );
+        }
+
+        //If already full form, return it as is
+        if (ontologyID.startsWith( 
+        "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#" ))
+            fullOntologyID=ontologyID;
+        
+        else{
+            //Try to add it and see if it is valid
+            fullOntologyID=
+                "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#"
+                + ontologyID;
+        }
+
+        //Confirm validity or throw exception
+        for (Descriptor desc : getFullDescriptors()){
+            if (desc.getId().equals( fullOntologyID ))
+                    return fullOntologyID;
+        }
+
+        throw new BioclipseException("No descriptor exists with ID: " + ontologyID);
+    }
+
+    
+    /*
+     * BELOW IS NEW CALC2
+     */
+
+    
+    /**
+     * calculate("CCC", "xlogp")  > choose preferred impl
+     * calculate("CCC", "bondcount?order=s")  > use param and preferred impl
+     * Input can be short/full ontology id and optionally a parameter
+     * @throws BioclipseException 
+     * @throws BioclipseException 
+     */
+    public DescriptorCalculationResult calculate2(IMolecule mol, String descriptor) throws BioclipseException{
+        
+        //Create a new instance of a descriptorimpl
+        DescriptorImpl dimpl = getPreferredImpl( 
+                                 getRealOntologyID( descriptor )).newInstance();
+        parseDescriptorParameters(dimpl,descriptor);
+        logger.debug("Chosen provider: " + dimpl.getProvider().getShortName() 
+                     + " for descriptor: " + toShortOntologyForm( descriptor ));
+        return calculate2( mol, dimpl);
+    }
+    
+    /**
+     * calculate({"CCC","CCCN"}, {"bondcount/order=s","bpol"})
+     * No provider specified
+     * 
+     * Input can be short/full ontology ids and optionally with parameters
+     * @throws BioclipseException 
+     * @throws BioclipseException 
+     */
+    public DescriptorCalculationResult calculate2(List<IMolecule> mols, List<String> descriptors) throws BioclipseException{
+
+        //Just propagate with provider as null
+        return calculate2( mols, descriptors, null );
+    }
+    
+    /**
+     * calculate({"CCC","CCCN"}, {"bondcount/order=s","bpol"}, "cdk.rest")
+     * 
+     * Input can be short/full ontology ids and optionally with parameters
+     * @throws BioclipseException 
+     * @throws BioclipseException 
+     */
+    public DescriptorCalculationResult calculate2(List<IMolecule> mols, List<String> descriptors, String provider) throws BioclipseException{
+
+        Map<IMolecule, List<DescriptorImpl>> calculationMap=new HashMap<IMolecule, List<DescriptorImpl>>();
+        
+        //All mols..
+        for (IMolecule mol : mols){
+            
+            List<DescriptorImpl> localDList=new ArrayList<DescriptorImpl>();
+            
+            //All descriptors one by one
+            for (String descriptor : descriptors){
+                
+                DescriptorImpl dimpl;
+                if (provider==null){
+                    dimpl = getPreferredImpl(getRealOntologyID( descriptor )).newInstance();
+                }else{
+                    dimpl=getDescriptorImpl(getRealOntologyID( descriptor ), provider).newInstance();
+                }
+                parseDescriptorParameters(dimpl,descriptor);
+
+                localDList.add( dimpl );
+            }
+
+            calculationMap.put( mol, localDList);
+
+        }
+        
+        return calculate2( calculationMap);
+    }
+    
+    
+
+    /**
+     * Convert MAP to an EMF MAP of DescriptorType to operate on
+     * @param calculationMap
+     * @return
+     */
+    private DescriptorCalculationResult calculate2(
+                                                    Map<IMolecule, List<DescriptorImpl>> calculationMap ) {
+
+        Map<IMolecule, List<DescriptorType>> molDescMap=new HashMap<IMolecule, List<DescriptorType>>();
+
+        logger.debug("=== TO CALCULATE ==");
+        for (IMolecule mol : calculationMap.keySet()){
+            
+            List<DescriptorType> descTypes=new ArrayList<DescriptorType>();
+
+            for (DescriptorImpl impl : calculationMap.get( mol )){
+                logger.debug("Calculate impl: " + impl.getId() + " for mol: " + mol);
+                if (impl.getParameters()!=null){
+                    for (DescriptorParameter param : impl.getParameters()){
+                        logger.debug("   Parameter: key='" + param.getKey() + "', value='" + param.getValue() + "'");
+                    }
+                }
+
+                //Convert to EMF DescriptorType
+                DescriptorType descType=createDescriptorType2(impl);
+                descTypes.add(descType);
+
+            }
+
+            molDescMap.put( mol, descTypes );
+            
+        }
+
+        //Do QSAR calculation
+        Map<IMolecule, List<IDescriptorResult>> res = doCalculation( molDescMap, new NullProgressMonitor() );
+
+        DescriptorCalculationResult dcalres=new DescriptorCalculationResult(res);
+        
+        
+        //Debug out
+        logger.debug("==== RESULTS ====");
+        for (IMolecule mol : res.keySet()){
+            logger.debug("Molecule: " + mol);
+            List<IDescriptorResult> lst = res.get( mol );
+            for (IDescriptorResult dres : lst){
+                logger.debug( "  - " + dres );
+            }
+            
+        }
+
+        return dcalres;
+    }
 
 
 
+    /**
+     * Parse input string and if it contains parameters, set it on the dimpl.
+     * @param dimpl
+     * @param descriptor
+     * @throws BioclipseException
+     */
+    private void parseDescriptorParameters( DescriptorImpl dimpl,
+                                            String descriptor ) throws BioclipseException{
+
+        if (dimpl.getParameters()==null || dimpl.getParameters().size()<=0)
+            return;
+        
+        int paramstart=descriptor.indexOf( "?" );
+        //If no param available, just return
+        if (paramstart<0) return;
+        
+        String paramstring=descriptor.substring( paramstart+1 );
+        StringTokenizer tok=new StringTokenizer(paramstring, ",");
+        if (tok.hasMoreTokens()){
+            String paramstr=tok.nextToken();
+            boolean foundParam = false;
+            if (paramstr.indexOf( "=" )>0){
+                String paramkey=paramstr.substring( 0, 
+                                                    paramstr.indexOf( "=" ) );
+                String paramval=paramstr.substring( 
+                                                   paramstr.indexOf( "=" )+1, paramstr.length() );
+                for (DescriptorParameter p : dimpl.getParameters()){
+                    if (p.getKey().equals( paramkey )){
+                        if (p.getListedvalues()!=null && p.getListedvalues().size()>0){
+                            //We have enum, must be one of defined values
+                            if (!(p.getListedvalues().contains( paramval ))){
+
+                                //Display a nic error
+                                String estr="Parameter value for " + paramkey 
+                                            + " must be one of: ";
+                                for (String aval : p.getListedvalues()){
+                                    estr=estr + aval + ", ";
+                                }
+                                estr=estr.substring( 0, estr.length()-2 );
+                                throw new BioclipseException(estr);
+                            }
+                        }
+
+                        //Accept the value as is
+                        p.setValue( paramval );
+                        foundParam=true;
+                    }
+                }
+            }
+            
+            if (!foundParam){
+                throw new BioclipseException("Could not parse parameter: " 
+                                             + paramstr);
+            }
+            
+        }
+        
+    }
 
 
+
+    /**
+     * calculate("CCC", "xlogp", "cdk.rest")
+     * @throws BioclipseException  
+     */
+    public DescriptorCalculationResult calculate2(IMolecule mol, 
+                                                  String ontologyID, 
+                                                  String providerID)
+                                                  throws BioclipseException {
+        //Look up impl be ontologyID and provider
+        DescriptorImpl dimpl = getDescriptorImpl( ontologyID, providerID );
+        parseDescriptorParameters(dimpl,ontologyID);
+        return calculate2( mol, dimpl);
+    }
+
+    /**
+     * Convenience call to set up calculationMap for one mol and one descimpl
+     */
+    private DescriptorCalculationResult calculate2( IMolecule mol,
+                                                    DescriptorImpl impl ) {
+        
+        Map<IMolecule, List<DescriptorImpl>> calculationMap=
+                                 new HashMap<IMolecule, List<DescriptorImpl>>();
+        List<DescriptorImpl> impls = new ArrayList<DescriptorImpl>();
+        impls.add( impl );
+        calculationMap.put( mol, impls );
+        return calculate2( calculationMap );
+    }
+    
+    
+    
+    /*
+     * BELOW IS OLD IMPLE
+     */
     public List<IDescriptorResult> calculate(IMolecule molecule,
                                              List<DescriptorType> descriptorTypes) {
 
@@ -636,6 +962,7 @@ public class QsarManager implements IQsarManager{
             //Look up descriptor by ID
             Descriptor desc=getDescriptorByID(descriptorID);
             if (desc==null){
+                int a=0;
                 throw new IllegalArgumentException("Could not find descriptor: " + descriptorID);
             }
 
@@ -654,6 +981,29 @@ public class QsarManager implements IQsarManager{
     }
 
 
+    public DescriptorType createDescriptorType2(DescriptorImpl impl) {
+
+
+        DescriptorType modelDescriptor=QsarFactory.eINSTANCE.createDescriptorType();
+        modelDescriptor.setId(generateUniqueDescriptorID(null));
+        modelDescriptor.setOntologyid( impl.getDefinition());
+        modelDescriptor.setProvider( impl.getProvider().getId() );
+        
+        if (impl.getParameters()!=null){
+            for (DescriptorParameter param : impl.getParameters()){
+
+                ParameterType modelParam=QsarFactory.eINSTANCE.createParameterType();
+                modelParam.setKey(param.getKey());
+
+                //Set value from imple (=default)
+                modelParam.setValue(param.getValue());
+                
+                modelDescriptor.getParameter().add( modelParam );
+            }
+        }
+
+        return modelDescriptor;
+    }
 
     /**
      * Add a descriptor with impl and optionally parameters to a QsarModel via 
@@ -781,10 +1131,11 @@ public class QsarManager implements IQsarManager{
 
         //Build arraylist of existing IDs
         List<String> existingIDs=new ArrayList<String>();
-        for (DescriptorType desc : qsarModel.getDescriptorlist().getDescriptors()){
-            existingIDs.add( desc.getId() );
+        if (qsarModel!=null){
+            for (DescriptorType desc : qsarModel.getDescriptorlist().getDescriptors()){
+                existingIDs.add( desc.getId() );
+            }
         }
-
         int cnt=1;
         String prefix="descriptor";
         while(existingIDs.contains( prefix+cnt )){
@@ -795,12 +1146,17 @@ public class QsarManager implements IQsarManager{
     }
 
 
-
-    public Map<IMolecule, List<IDescriptorResult>> calculate(
-                                                             Map<IMolecule, List<DescriptorType>> molDescMap,
-                                                             IProgressMonitor monitor ) {
-
-
+    /**
+     * Collect by provider and invoke calculator ono the molecules.
+     */
+    public Map<IMolecule, List<IDescriptorResult>> doCalculation(
+                                Map<IMolecule, List<DescriptorType>> molDescMap,
+                                IProgressMonitor monitor ) {
+        
+        //We are to calculate the following combinations
+        monitor.beginTask( "Calculating descriptors", molDescMap.size()+1 );
+        monitor.subTask( "Sorting descriptors by provider" );
+        
         Map<IMolecule, List<IDescriptorResult>> allResults=
             new HashMap<IMolecule, List<IDescriptorResult>>();
 
@@ -819,10 +1175,12 @@ public class QsarManager implements IQsarManager{
                 DescriptorProvider provider = getProviderByID( providerID );
                 if (!(moldescByProvider.containsKey( provider ))){
                     //If not exists, create it
-                    moldescByProvider.put( provider, new HashMap<IMolecule, List<DescriptorType>>() );
+                    moldescByProvider.put( provider, new HashMap<IMolecule, 
+                                           List<DescriptorType>>() );
                 }
                 Map<IMolecule, List<DescriptorType>> localMolDesc 
-                = (Map<IMolecule, List<DescriptorType>>) moldescByProvider.get( provider );
+                = (Map<IMolecule, List<DescriptorType>>) moldescByProvider
+                                                         .get( provider );
 
                 if (!(localMolDesc.containsKey( mol ))){
                     localMolDesc.put( mol, new ArrayList<DescriptorType>() );
@@ -839,16 +1197,23 @@ public class QsarManager implements IQsarManager{
         //Process one provider at a time
         for (DescriptorProvider provider : moldescByProvider.keySet()){
 
+            monitor.subTask( "Calculating descriptors for provider: " 
+                             + provider.getName() );
+
             IDescriptorCalculator calculator=provider.getCalculator();
 
-            Map<IMolecule, List<DescriptorType>> moldesc = moldescByProvider.get( provider );
+            Map<IMolecule, List<DescriptorType>> moldesc 
+                                            = moldescByProvider.get( provider );
 
+            //Invoke calculation from providers calculator
             Map<? extends IMolecule, List<IDescriptorResult>> results = 
-                calculator.calculateDescriptor(moldesc, monitor);
+                calculator.calculateDescriptor(moldesc, 
+                               new SubProgressMonitor(monitor, moldesc.size()));
 
             //Add these results to the molecule
             for (IMolecule mol : results.keySet()){
-                if (allResults.get(mol)==null) allResults.put(mol, new ArrayList<IDescriptorResult>());
+                if (allResults.get(mol)==null) allResults.put(mol, 
+                                            new ArrayList<IDescriptorResult>());
                 List<IDescriptorResult> reslist=allResults.get(mol);
 
                 //Add the computed result to the reslist
@@ -1391,6 +1756,7 @@ public class QsarManager implements IQsarManager{
             }
 
             //Check for unused descriptorproviders and remove them too
+            /*
             for (DescriptorproviderType prov : qsarModel.getDescriptorproviders()){
                 boolean remove=true;
                 for (DescriptorType desc : qsarModel.getDescriptorlist().getDescriptors()){
@@ -1405,6 +1771,7 @@ public class QsarManager implements IQsarManager{
                     logger.debug("  No uses of qsar provider " + prov.getId() +" so removed.");
                 }
             }
+            */
 
         }
 

@@ -10,6 +10,7 @@
  ******************************************************************************/
 package net.bioclipse.qsar.descriptor.model;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -76,6 +77,30 @@ public class DescriptorImpl extends BaseEPObject{
 		}
 
 		return super.getAdapter(adapter);
+	}
+	
+	public DescriptorImpl newInstance(){
+	    DescriptorImpl impl=new DescriptorImpl();
+	    impl.setId( getId() );
+	    impl.setName( getName() );
+	    impl.setDefinition( getDefinition() );
+	    impl.setDescription( getDescription() );
+	    impl.setIcon( getIcon() );
+	    impl.setNamesapce( getNamesapce() );
+	    impl.setProvider( getProvider() );
+	    impl.setRequires3D( isRequires3D() );
+	    List<DescriptorParameter> params = new ArrayList<DescriptorParameter>();
+	    if (getParameters()!=null){
+	        for (DescriptorParameter p : getParameters()){
+	            DescriptorParameter np=new DescriptorParameter(p.getKey(),p.getDefaultvalue());
+	            np.setValue( new String(p.getValue()));
+	            np.setListedvalues( p.getListedvalues() );
+	            params.add( np );
+	        }
+	    }
+      impl.setParameters( params );
+	    
+	    return impl;
 	}
 	
 	

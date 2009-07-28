@@ -11,6 +11,9 @@
 package net.bioclipse.qsar.descriptor;
 
 import net.bioclipse.qsar.DescriptorType;
+import net.bioclipse.qsar.ParameterType;
+import net.bioclipse.qsar.business.IQsarManager;
+import net.bioclipse.qsar.init.Activator;
 
 /**
  * Base implementation of a descriptor result.
@@ -61,9 +64,25 @@ public class DescriptorResult implements IDescriptorResult{
 	
 	@Override
     public String toString() {
-	    if (labels==null || labels.length<=0) return "null";
 	    
-	    String ret="DescriptorResult for descriptor=" + descriptor +": ";
+	    if (labels==null || labels.length<=0) return "null";
+	    IQsarManager qsar=Activator.getDefault().getQsarManager();
+	    
+	    String provider=qsar.getProviderByID( descriptor.getProvider() ).getShortName();
+	    String paramstr="";
+	    for (ParameterType param : descriptor.getParameter()){
+	        paramstr=paramstr+param.getKey()+"="+param.getValue() + ", ";
+	    }
+	    if (paramstr.length()>3){
+	        paramstr=paramstr.substring( 0, paramstr.length()-2 );
+	    }
+	    
+	    String ret="Descriptor=" 
+	        + qsar.toShortOntologyForm( descriptor.getOntologyid());
+	    if (paramstr.length()>1){
+	        ret=ret+" [" + paramstr + "]";
+	    }
+	    ret=ret + "; provider=" + provider +"; ";	    
 	    for (int i=0; i< labels.length;i++){
 	        ret=ret+labels[i] + "=" + values[i];
 	    }
