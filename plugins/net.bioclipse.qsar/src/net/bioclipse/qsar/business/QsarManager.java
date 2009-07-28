@@ -15,6 +15,7 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
@@ -61,14 +62,9 @@ import org.apache.log4j.Logger;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.CoreException;
-import org.eclipse.core.runtime.IConfigurationElement;
-import org.eclipse.core.runtime.IExtension;
-import org.eclipse.core.runtime.IExtensionPoint;
-import org.eclipse.core.runtime.IExtensionRegistry;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.OperationCanceledException;
-import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.SubProgressMonitor;
 import org.eclipse.core.runtime.preferences.DefaultScope;
 import org.eclipse.core.runtime.preferences.IEclipsePreferences;
@@ -79,6 +75,11 @@ import org.eclipse.emf.edit.command.AddCommand;
 import org.eclipse.emf.edit.command.RemoveCommand;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.domain.EditingDomain;
+import org.openscience.cdk.atomtype.CDKAtomTypeMatcher;
+import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IAtomType;
 
 public class QsarManager implements IQsarManager{
 
@@ -962,7 +963,6 @@ public class QsarManager implements IQsarManager{
             //Look up descriptor by ID
             Descriptor desc=getDescriptorByID(descriptorID);
             if (desc==null){
-                int a=0;
                 throw new IllegalArgumentException("Could not find descriptor: " + descriptorID);
             }
 
@@ -1233,7 +1233,6 @@ public class QsarManager implements IQsarManager{
     /**
      * Add resources to QSAR model.
      */
-    @Deprecated
     public void addResourcesToQsarModel(QsarType qsarmodel, EditingDomain editingDomain, 
                                         List<IResource> resourcesToAdd, final IProgressMonitor monitor) throws IOException, BioclipseException, CoreException {
 
@@ -1392,7 +1391,7 @@ public class QsarManager implements IQsarManager{
                 }
             }
 
-            //Load molecules into file
+            //Load molecules into list from file
             List<ICDKMolecule> mollist = cdk.loadMolecules(file);
             if (mollist==null || mollist.size()<=0){
                 throw new BioclipseException("No molecules in file");
@@ -1459,6 +1458,34 @@ public class QsarManager implements IQsarManager{
 
                 //FIXME: set structure changed in preferences!
                 //                    structure.setChanged( true );
+                //Is this really needed? first time is always changed...
+                
+                IAtomContainer container = mol.getAtomContainer();
+                CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.getInstance(
+                                                 container.getBuilder() );
+                Iterator<IAtom> atoms = container.atoms().iterator();
+
+                try {
+                    while (atoms.hasNext()) {
+                        IAtom atom = atoms.next();
+                        IAtomType type = matcher.findMatchingAtomType(container, atom);
+                        if (type==null){
+                            logger.error( "Atom typing error: Could not find atom " +
+                            		"type for atom: " + container.getAtomNumber( atom ));
+                            structure.getProblem().add( "Atom typing error: " +
+                            		"Could not find atom type for atom: " 
+                                             + container.getAtomNumber( atom ));
+                        }
+//                        AtomTypeManipulator.configure(atom, type);
+                    }
+                }
+                catch (CDKException e) {
+                    structure.getProblem().add( "Atom typing error: " + e.getMessage());
+                    logger.error("Structure: " + structure.getId() 
+                         + " in resource: " + file 
+                         + " experienced Atom typing error: " + e.getMessage());
+                    LogUtils.debugTrace( logger, e );
+                }
 
                 //Calculate and add inchi to structure
                 try {
@@ -1468,6 +1495,7 @@ public class QsarManager implements IQsarManager{
                     );
                     structure.setInchi( inchistr );
                 } catch ( Exception e ) {
+                    structure.getProblem().add( "Could not generate inchi: " + e.getMessage());
                     logger.error("Could not generate inchi for mol " + 
                                  molindex + " in file " + file.getName());
                 }

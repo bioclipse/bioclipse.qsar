@@ -34,7 +34,9 @@ Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.ui.views,
  org.eclipse.core.resources,
  net.bioclipse.qsar.model;bundle-version="1.0.0",
- org.openscience.cdk.interfaces;bundle-version="1.2.2"
+ org.openscience.cdk.interfaces;bundle-version="1.2.2",
+ org.openscience.cdk.atomtype;bundle-version="1.2.2",
+ org.openscience.cdk.standard;bundle-version="1.2.2"
 Bundle-ActivationPolicy: lazy
 Export-Package: net.bioclipse.qsar,
  net.bioclipse.qsar.business,
