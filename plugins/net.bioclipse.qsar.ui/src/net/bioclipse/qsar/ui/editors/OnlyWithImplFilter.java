@@ -10,6 +10,7 @@
  ******************************************************************************/
 package net.bioclipse.qsar.ui.editors;
 
+import net.bioclipse.core.business.BioclipseException;
 import net.bioclipse.qsar.business.IQsarManager;
 import net.bioclipse.qsar.descriptor.model.Descriptor;
 
@@ -40,8 +41,11 @@ public class OnlyWithImplFilter extends ViewerFilter {
 
 		Descriptor desc = (Descriptor) element;
 		
-		if (qsar.getDescriptorImpls(desc.getId()).size()>0)
-			return true;
+		try {
+            if (qsar.getDescriptorImpls(desc.getId()).size()>0)
+                return true;
+        } catch ( BioclipseException e ) {
+        }
 
 		return false;
 	}
