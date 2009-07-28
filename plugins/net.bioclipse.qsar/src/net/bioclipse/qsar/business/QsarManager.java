@@ -1475,12 +1475,15 @@ public class QsarManager implements IQsarManager{
                             structure.getProblem().add( "Atom typing error: " +
                             		"Could not find atom type for atom: " 
                                              + container.getAtomNumber( atom ));
+                            res.setContainsErrors( true );
+
                         }
 //                        AtomTypeManipulator.configure(atom, type);
                     }
                 }
                 catch (CDKException e) {
                     structure.getProblem().add( "Atom typing error: " + e.getMessage());
+                    res.setContainsErrors( true );
                     logger.error("Structure: " + structure.getId() 
                          + " in resource: " + file 
                          + " experienced Atom typing error: " + e.getMessage());
@@ -1496,6 +1499,7 @@ public class QsarManager implements IQsarManager{
                     structure.setInchi( inchistr );
                 } catch ( Exception e ) {
                     structure.getProblem().add( "Could not generate inchi: " + e.getMessage());
+                    res.setContainsErrors( true );
                     logger.error("Could not generate inchi for mol " + 
                                  molindex + " in file " + file.getName());
                 }
