@@ -11,7 +11,7 @@
             name="CDK REST"
             vendor="Chemistry Development Kit"
             namespace="http://rest.rguha.net"
-            version="1.2.0"
+            version="1.2.2"
             shortName="CDK REST"
             icon="icons/cdklogo.png"
             calculator="net.bioclipse.cdk.qsar.rest.CDKDescriptorCalculator"
@@ -98,6 +98,11 @@
                         defaultvalue=""
                         description="Bond order to count. Possible values: are 's'=single, 'd'=double, 't'=triple, 'q'=quadruple and ''=all"
                         key="order">
+                        <listedvalue value="s" />
+                        <listedvalue value="d" />
+                        <listedvalue value="t" />
+                        <listedvalue value="q" />
+                        <listedvalue value="" />
                   </parameter>
              </descriptorImpl>
              <descriptorImpl
@@ -307,6 +312,11 @@
                         defaultvalue="unity"
                         description="Weighting scheme used. Possible values are: 'unity', 'mass', 'volume', 'eneg', and 'polar'."
                         key="type">
+                        <listedvalue value="unity" />
+                        <listedvalue value="mass" />
+                        <listedvalue value="volume" />
+                        <listedvalue value="eneg" />
+                        <listedvalue value="polar" />
                   </parameter>
             </descriptorImpl>
              <descriptorImpl

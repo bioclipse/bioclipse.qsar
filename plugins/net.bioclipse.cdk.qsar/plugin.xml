@@ -26,7 +26,7 @@
             name="Chemistry Development Kit"
             vendor="Chemistry Development Kit"
             namespace="http://cdk.sourceforge.net"
-            version="1.1.0.v20080808"
+            version="1.2.2"
             shortName="CDK"
             icon="icons/cdklogo.png"
             calculator="net.bioclipse.cdk.qsar.impl.CDKDescriptorCalculator"
@@ -113,6 +113,11 @@
                         defaultvalue=""
                         description="Bond order to count. Possible values: are 's'=single, 'd'=double, 't'=triple, 'q'=quadruple and ''=all"
                         key="order">
+                        <listedvalue value="s" />
+                        <listedvalue value="d" />
+                        <listedvalue value="t" />
+                        <listedvalue value="q" />
+                        <listedvalue value="" />
                   </parameter>
              </descriptorImpl>
              <descriptorImpl
@@ -322,6 +327,11 @@
                         defaultvalue="unity"
                         description="Weighting scheme used. Possible values are: 'unity', 'mass', 'volume', 'eneg', and 'polar'."
                         key="type">
+                        <listedvalue value="unity" />
+                        <listedvalue value="mass" />
+                        <listedvalue value="volume" />
+                        <listedvalue value="eneg" />
+                        <listedvalue value="polar" />
                   </parameter>
             </descriptorImpl>
              <descriptorImpl
