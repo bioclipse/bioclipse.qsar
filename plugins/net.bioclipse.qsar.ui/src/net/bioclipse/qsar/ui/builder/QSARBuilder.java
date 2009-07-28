@@ -27,6 +27,7 @@ import net.bioclipse.cdk.business.ICDKManager;
 import net.bioclipse.cdk.domain.ICDKMolecule;
 import net.bioclipse.core.business.BioclipseException;
 import net.bioclipse.core.domain.IMolecule;
+import net.bioclipse.core.util.LogUtils;
 import net.bioclipse.qsar.DescriptorType;
 import net.bioclipse.qsar.DescriptorresultType;
 import net.bioclipse.qsar.DescriptorresultlistsType;
@@ -360,12 +361,28 @@ public class QSARBuilder extends IncrementalProjectBuilder
         
         //First, give any structures missing a response an NaN
         fillEmptyRespones(qsarModel);
+        
+        //Isolate first structure without problems and count its descriptors
+        String firstOKStructureID="";
+        int numberDescriptorsPerStructure=0;
 
+        //Isolate first structure without error in descriptor calc
+        for (DescriptorresultType descres : qsarModel.getDescriptorresultlist().getDescriptorresult()){
+            if (descres.getErrorString()==null){
+                //No error! Use this as first ok structure until a better way is found
+                firstOKStructureID = descres.getStructureid();
+                numberDescriptorsPerStructure=descres.getDescriptorvalue().size();
+                break;
+            }
+        }
+        
+        logger.debug("First OK structure: " + firstOKStructureID 
+                     + "; # descriptors for this: " + numberDescriptorsPerStructure);
+        
+        
         //Set up rowlabels and fill responseColumn
-        String firstStructureID="";
         for (ResourceType resource : qsarModel.getStructurelist().getResources()){
             for (StructureType structure : resource.getStructure()){
-                firstStructureID=structure.getId();
                 rowLabels.add( structure.getId() );
                 for (ResponseType resp : qsarModel.getResponselist().getResponse()){
                     if (structure.getId().equals( resp.getStructureID())){
@@ -383,8 +400,8 @@ public class QSARBuilder extends IncrementalProjectBuilder
         //Set up columnheaders
         for (DescriptorresultType descres : qsarModel.getDescriptorresultlist().getDescriptorresult()){
 
-            //We only want for one structure so get first one
-            if (descres.getStructureid().equals( firstStructureID )){
+            //We only want for one structure so get first one (and hope it has not failed!)
+            if (descres.getStructureid().equals( firstOKStructureID )){
                 //Get values in order
                 for (int i=0; i<descres.getDescriptorvalue().size();i++){
                     DescriptorvalueType val = descres.getDescriptorvalue().get( i );
@@ -397,8 +414,19 @@ public class QSARBuilder extends IncrementalProjectBuilder
                      + columnLabels.size() + " columns");
         
         //If <2 rows and <2 cols, then do not save csv file
-        if (rowLabels.size()<2 || columnLabels.size()<2){
+        if (rowLabels.size()<2 || columnLabels.size()<1){
             logger.debug( "To few columns or rows to save CSV so skipped." );
+
+            //Remove csv file if exists
+            IFile datasetFile=getProject().getFile("dataset.csv");
+            if (datasetFile.exists()){
+                try {
+                    datasetFile.delete( true, new NullProgressMonitor() );
+                } catch ( CoreException e ) {
+                    LogUtils.debugTrace( logger,e );
+                }
+            }
+
             return;
         }
 
@@ -406,6 +434,8 @@ public class QSARBuilder extends IncrementalProjectBuilder
         //Compute dataset from qsarmodel
         //==============================
         dataset=new float[rowLabels.size()][columnLabels.size()];
+        
+        //Fill with NaN?
 
         //For each row=structureid
         int currentrow=0;
@@ -418,14 +448,33 @@ public class QSARBuilder extends IncrementalProjectBuilder
 
                     //If this is the structure, get values from this descriptorresult
                     if (descres.getStructureid().equals( structure.getId() )){
-                        for (int i=0; i<descres.getDescriptorvalue().size();i++){
-                            DescriptorvalueType val = descres.getDescriptorvalue().get( i );
-                            try{
-                                float pval=Float.parseFloat( val.getValue() );
-                                dataset[currentrow][currentcol]=pval;
-                            }catch (NumberFormatException e){
+
+// Commented out, since use a correct descriptor for number of cols                        
+//                        for (int i=0; i<descres.getDescriptorvalue().size();i++){
+                        for (int i=0; i<numberDescriptorsPerStructure;i++){
+
+                            if (descres.getDescriptorvalue()!=null && 
+                                    descres.getDescriptorvalue().size()>0){
+                                
+                                DescriptorvalueType val = descres.getDescriptorvalue().get( i );
+                                if (val!= null){
+                                    try{
+                                        float pval=Float.parseFloat( val.getValue() );
+                                        dataset[currentrow][currentcol]=pval;
+                                    }catch (NumberFormatException e){
+                                        dataset[currentrow][currentcol]=Float.NaN;
+                                    }
+                                }
+                                else{
+                                    //IF we have no result here, add NaN
+                                    dataset[currentrow][currentcol]=Float.NaN;
+                                }
+                            }
+                            else{
+                                //IF we have no result here, add NaN
                                 dataset[currentrow][currentcol]=Float.NaN;
                             }
+
                             currentcol++;
                         }
                     }
@@ -603,14 +652,29 @@ public class QSARBuilder extends IncrementalProjectBuilder
                     //Remove all values, we have new!
                     dres.getDescriptorvalue().clear();
 
-                    //Add values to the found/created descriptorresult
-                    for (int i=0; i< descres.getLabels().length;i++){
-                        DescriptorvalueType dval=QsarFactory.eINSTANCE.createDescriptorvalueType();
-                        dval.setIndex( i );
-                        dval.setLabel( descres.getLabels()[i] );
-                        dval.setValue( "" + descres.getValues()[i] );
-                        dres.getDescriptorvalue().add( dval );
-                        logger.debug( "   #### added value: " + dval  );
+                    if (descres.getErrorMessage()!=null && 
+                            descres.getErrorMessage().length()>0){
+
+                        logger.error("Descriptor calculation failed for: " 
+                                     + structure + "\n   Failing descriptor: " 
+                                     + descres.getDescriptor() 
+                                     + "\n  Error message: " 
+                                     + descres.getErrorMessage());
+                        dres.setErrorString( descres.getErrorMessage() );
+                    }
+
+                    //Else no error, add result
+                    else{
+
+                        //Add values to the found/created descriptorresult
+                        for (int i=0; i< descres.getLabels().length;i++){
+                            DescriptorvalueType dval=QsarFactory.eINSTANCE.createDescriptorvalueType();
+                            dval.setIndex( i );
+                            dval.setLabel( descres.getLabels()[i] );
+                            dval.setValue( "" + descres.getValues()[i] );
+                            dres.getDescriptorvalue().add( dval );
+                            logger.debug( "   #### added value: " + dval  );
+                        }
                     }
                 }
 
