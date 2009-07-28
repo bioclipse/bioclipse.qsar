@@ -14,6 +14,7 @@ package net.bioclipse.qsar.ui.editors;
 import net.bioclipse.qsar.DescriptorType;
 import net.bioclipse.qsar.ParameterType;
 import net.bioclipse.qsar.ResourceType;
+import net.bioclipse.qsar.StructureType;
 
 import org.eclipse.core.databinding.observable.map.IObservableMap;
 import org.eclipse.jface.databinding.viewers.ObservableMapLabelProvider;
@@ -67,6 +68,22 @@ public class ObservableQSARLabelProvider extends ObservableMapLabelProvider{
 			}
 
 		}
+		
+    if (element instanceof ResourceType) {
+        ResourceType resource=(ResourceType)element;
+
+        int problems=0;
+        //Find all problems
+        for (StructureType structure : resource.getStructure()){
+            for (String problem : structure.getProblem()){
+                problems++;
+            }
+        }
+        
+        if (problems>0 && columnIndex==0)
+            return super.getColumnText( element, columnIndex ) + " [" + problems + " problems]";
+        
+    }
 
 		return label;
 		
