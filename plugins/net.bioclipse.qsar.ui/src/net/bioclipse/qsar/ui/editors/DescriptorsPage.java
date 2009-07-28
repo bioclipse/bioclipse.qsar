@@ -17,6 +17,8 @@ import java.util.List;
 
 import net.bioclipse.cdk.business.Activator;
 import net.bioclipse.cdk.business.ICDKManager;
+import net.bioclipse.core.business.BioclipseException;
+import net.bioclipse.core.util.LogUtils;
 import net.bioclipse.qsar.DescriptorType;
 import net.bioclipse.qsar.DescriptorlistType;
 import net.bioclipse.qsar.DescriptorproviderType;
@@ -29,6 +31,7 @@ import net.bioclipse.qsar.descriptor.model.Descriptor;
 import net.bioclipse.qsar.descriptor.model.DescriptorImpl;
 import net.bioclipse.qsar.descriptor.model.DescriptorModel;
 import net.bioclipse.qsar.descriptor.model.DescriptorProvider;
+import net.bioclipse.qsar.ui.QsarHelper;
 
 import org.apache.log4j.Logger;
 import org.eclipse.core.databinding.observable.Realm;
@@ -523,8 +526,14 @@ private Table paramsTable;
         @Override
         public String getText(Object element) {
             DescriptorType desc=(DescriptorType)element;
-            DescriptorImpl impl = qsar.getDescriptorImpl( desc.getOntologyid(), desc.getProvider() );
-            return impl.getProvider().getShortName();
+            DescriptorImpl impl;
+            try {
+                impl = qsar.getDescriptorImpl( desc.getOntologyid(), desc.getProvider() );
+                return impl.getProvider().getShortName();
+            } catch ( BioclipseException e ) {
+                LogUtils.debugTrace( logger, e );
+                return "ERROR";
+            }
         }
       });
         
@@ -547,15 +556,23 @@ private Table paramsTable;
 
             //Find available impls for this descriptor to populate combo
             //This is the model we look up index in also
-            List<String> availImpls = qsar.getDescriptorImpls( desc.getOntologyid() );
+            List<String> availImpls;
+            try {
+                availImpls = qsar.getDescriptorImpls( desc.getOntologyid() );
 
-            String[] values=new String[availImpls.size()]; 
-            for (int i = 0; i < availImpls.size();i++){
-                String shortname=qsar.getDescriptorImplByID( availImpls.get( i ) ).getProvider().getShortName();
-                values[i] = shortname;
+                String[] values=new String[availImpls.size()]; 
+                for (int i = 0; i < availImpls.size();i++){
+                    String shortname=qsar.getDescriptorImplByID( availImpls.get( i ) ).getProvider().getShortName();
+                    values[i] = shortname;
+                }
+
+                ComboBoxCellEditor cbo=new ComboBoxCellEditor(rightTable,values);
+                return cbo;
+            } catch ( BioclipseException e ) {
+                LogUtils.handleException( e, logger, 
+                                  net.bioclipse.qsar.init.Activator.PLUGIN_ID );
+                return null;
             }
-            ComboBoxCellEditor cbo=new ComboBoxCellEditor(rightTable,values);
-            return cbo;
         }
 
         /**
@@ -569,18 +586,18 @@ private Table paramsTable;
             DescriptorType desc=(DescriptorType)element;
 
             //This is the model we look up index in also
+            try {
             List<String> availImpls = qsar.getDescriptorImpls( desc.getOntologyid() );
 
-            DescriptorImpl impl = qsar.getDescriptorImpl( desc.getOntologyid(), desc.getProvider() );
-            int ix = availImpls.lastIndexOf( impl.getProvider().getShortName() );
-            return new Integer(ix);
+            DescriptorImpl impl = qsar.getDescriptorImpl( desc.getOntologyid(), 
+                                                          desc.getProvider() );
+                int ix = availImpls.lastIndexOf( impl.getId() );
+                return new Integer(ix);
+            } catch ( BioclipseException e ) {
+                LogUtils.debugTrace( logger, e );
+                return new Integer(0);
+            }
             
-//            return impl.getProvider().getShortName();
-            
-//            //get the index in list from manager (use that as order)
-//            int ix = qsar.getFullProviders().lastIndexOf( impl.getProvider() );
-//            return new Integer(ix);
-//
         }
 
         /**
@@ -598,7 +615,9 @@ private Table paramsTable;
             int ix=(Integer)value;
             
             //This is the model we look up index in also
-            List<String> availImpls = qsar.getDescriptorImpls( desc.getOntologyid() );
+            List<String> availImpls;
+            try {
+                availImpls = qsar.getDescriptorImpls( desc.getOntologyid() );
 
             String shortname=qsar.getDescriptorImplByID( availImpls.get( ix ) ).getProvider().getShortName();
             
@@ -611,10 +630,18 @@ private Table paramsTable;
                     //Set the new provider id in the desctype
                     Command cmd = SetCommand.create(editingDomain, desc, QsarPackage.Literals.DESCRIPTOR_TYPE__PROVIDER, newProvID);
                     editingDomain.getCommandStack().execute(cmd);    
+
+                    //Mark desc as changed so it recalculates
+                    IProject project = ((QsarEditor)getEditor()).getActiveProject();
+                    QsarHelper.setChangedInPreference( desc, project, true );
                     
                     rightViewer.refresh();
                     return;
                 }
+            }
+            } catch ( BioclipseException e ) {
+                LogUtils.handleException( e, logger, 
+                                  net.bioclipse.qsar.init.Activator.PLUGIN_ID );
             }
 
             logger.error("We could not find the selected provider in combo. This " +
