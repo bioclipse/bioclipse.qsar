@@ -149,6 +149,9 @@
 
 
 	<complexType name="structureType">
+		<sequence>
+			<element name="problem" type="string" maxOccurs="unbounded" minOccurs="0"></element>
+		</sequence>
 		<attribute name="id" type="string"></attribute>
 		<attribute name="inchi" type="string"></attribute>
 		<attribute name="resourceindex" type="int"></attribute>

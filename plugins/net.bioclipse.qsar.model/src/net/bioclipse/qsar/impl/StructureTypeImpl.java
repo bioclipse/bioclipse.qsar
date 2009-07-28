@@ -10,15 +10,18 @@
  */
 package net.bioclipse.qsar.impl;
 
+import java.util.Collection;
 import net.bioclipse.qsar.QsarPackage;
 import net.bioclipse.qsar.StructureType;
 
 import org.eclipse.emf.common.notify.Notification;
 
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
+import org.eclipse.emf.ecore.util.EDataTypeEList;
 
 /**
  * <!-- begin-user-doc -->
@@ -27,6 +30,7 @@ import org.eclipse.emf.ecore.impl.EObjectImpl;
  * <p>
  * The following features are implemented:
  * <ul>
+ *   <li>{@link net.bioclipse.qsar.impl.StructureTypeImpl#getProblem <em>Problem</em>}</li>
  *   <li>{@link net.bioclipse.qsar.impl.StructureTypeImpl#getId <em>Id</em>}</li>
  *   <li>{@link net.bioclipse.qsar.impl.StructureTypeImpl#getInchi <em>Inchi</em>}</li>
  *   <li>{@link net.bioclipse.qsar.impl.StructureTypeImpl#getResourceid <em>Resourceid</em>}</li>
@@ -43,6 +47,16 @@ public class StructureTypeImpl extends EObjectImpl implements StructureType {
      * @generated
      */
     public static final String copyright = " Copyright (c) 2009 Ola Spjuth\n All rights reserved. This program and the accompanying materials\n are made available under the terms of the Eclipse Public License v1.0\n which accompanies this distribution, and is available at\n http://www.eclipse.org/legal/epl-v10.html\n";
+
+    /**
+     * The cached value of the '{@link #getProblem() <em>Problem</em>}' attribute list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getProblem()
+     * @generated
+     * @ordered
+     */
+    protected EList<String> problem;
 
     /**
      * The default value of the '{@link #getId() <em>Id</em>}' attribute.
@@ -150,6 +164,18 @@ public class StructureTypeImpl extends EObjectImpl implements StructureType {
     @Override
     protected EClass eStaticClass() {
         return QsarPackage.Literals.STRUCTURE_TYPE;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EList<String> getProblem() {
+        if (problem == null) {
+            problem = new EDataTypeEList<String>(String.class, this, QsarPackage.STRUCTURE_TYPE__PROBLEM);
+        }
+        return problem;
     }
 
     /**
@@ -269,6 +295,8 @@ public class StructureTypeImpl extends EObjectImpl implements StructureType {
     @Override
     public Object eGet(int featureID, boolean resolve, boolean coreType) {
         switch (featureID) {
+            case QsarPackage.STRUCTURE_TYPE__PROBLEM:
+                return getProblem();
             case QsarPackage.STRUCTURE_TYPE__ID:
                 return getId();
             case QsarPackage.STRUCTURE_TYPE__INCHI:
@@ -286,9 +314,14 @@ public class StructureTypeImpl extends EObjectImpl implements StructureType {
      * <!-- end-user-doc -->
      * @generated
      */
+    @SuppressWarnings("unchecked")
     @Override
     public void eSet(int featureID, Object newValue) {
         switch (featureID) {
+            case QsarPackage.STRUCTURE_TYPE__PROBLEM:
+                getProblem().clear();
+                getProblem().addAll((Collection<? extends String>)newValue);
+                return;
             case QsarPackage.STRUCTURE_TYPE__ID:
                 setId((String)newValue);
                 return;
@@ -313,6 +346,9 @@ public class StructureTypeImpl extends EObjectImpl implements StructureType {
     @Override
     public void eUnset(int featureID) {
         switch (featureID) {
+            case QsarPackage.STRUCTURE_TYPE__PROBLEM:
+                getProblem().clear();
+                return;
             case QsarPackage.STRUCTURE_TYPE__ID:
                 setId(ID_EDEFAULT);
                 return;
@@ -337,6 +373,8 @@ public class StructureTypeImpl extends EObjectImpl implements StructureType {
     @Override
     public boolean eIsSet(int featureID) {
         switch (featureID) {
+            case QsarPackage.STRUCTURE_TYPE__PROBLEM:
+                return problem != null && !problem.isEmpty();
             case QsarPackage.STRUCTURE_TYPE__ID:
                 return ID_EDEFAULT == null ? id != null : !ID_EDEFAULT.equals(id);
             case QsarPackage.STRUCTURE_TYPE__INCHI:
@@ -359,7 +397,9 @@ public class StructureTypeImpl extends EObjectImpl implements StructureType {
         if (eIsProxy()) return super.toString();
 
         StringBuffer result = new StringBuffer(super.toString());
-        result.append(" (id: ");
+        result.append(" (problem: ");
+        result.append(problem);
+        result.append(", id: ");
         result.append(id);
         result.append(", inchi: ");
         result.append(inchi);

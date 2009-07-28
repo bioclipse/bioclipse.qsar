@@ -1014,13 +1014,22 @@ public interface QsarPackage extends EPackage {
     int STRUCTURE_TYPE = 17;
 
     /**
+     * The feature id for the '<em><b>Problem</b></em>' attribute list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int STRUCTURE_TYPE__PROBLEM = 0;
+
+    /**
      * The feature id for the '<em><b>Id</b></em>' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int STRUCTURE_TYPE__ID = 0;
+    int STRUCTURE_TYPE__ID = 1;
 
     /**
      * The feature id for the '<em><b>Inchi</b></em>' attribute.
@@ -1029,7 +1038,7 @@ public interface QsarPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int STRUCTURE_TYPE__INCHI = 1;
+    int STRUCTURE_TYPE__INCHI = 2;
 
     /**
      * The feature id for the '<em><b>Resourceid</b></em>' attribute.
@@ -1038,7 +1047,7 @@ public interface QsarPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int STRUCTURE_TYPE__RESOURCEID = 2;
+    int STRUCTURE_TYPE__RESOURCEID = 3;
 
     /**
      * The feature id for the '<em><b>Resourceindex</b></em>' attribute.
@@ -1047,7 +1056,7 @@ public interface QsarPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int STRUCTURE_TYPE__RESOURCEINDEX = 3;
+    int STRUCTURE_TYPE__RESOURCEINDEX = 4;
 
     /**
      * The number of structural features of the '<em>Structure Type</em>' class.
@@ -1056,7 +1065,7 @@ public interface QsarPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int STRUCTURE_TYPE_FEATURE_COUNT = 4;
+    int STRUCTURE_TYPE_FEATURE_COUNT = 5;
 
     /**
      * The meta object id for the '{@link net.bioclipse.qsar.TypeType <em>Type Type</em>}' enum.
@@ -1964,6 +1973,17 @@ public interface QsarPackage extends EPackage {
     EClass getStructureType();
 
     /**
+     * Returns the meta object for the attribute list '{@link net.bioclipse.qsar.StructureType#getProblem <em>Problem</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute list '<em>Problem</em>'.
+     * @see net.bioclipse.qsar.StructureType#getProblem()
+     * @see #getStructureType()
+     * @generated
+     */
+    EAttribute getStructureType_Problem();
+
+    /**
      * Returns the meta object for the attribute '{@link net.bioclipse.qsar.StructureType#getId <em>Id</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -2742,6 +2762,14 @@ public interface QsarPackage extends EPackage {
          * @generated
          */
         EClass STRUCTURE_TYPE = eINSTANCE.getStructureType();
+
+        /**
+         * The meta object literal for the '<em><b>Problem</b></em>' attribute list feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute STRUCTURE_TYPE__PROBLEM = eINSTANCE.getStructureType_Problem();
 
         /**
          * The meta object literal for the '<em><b>Id</b></em>' attribute feature.

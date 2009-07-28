@@ -112,6 +112,7 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference qsar.ecore#//StructurelistType/resources"/>
     </genClasses>
     <genClasses ecoreClass="qsar.ecore#//StructureType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute qsar.ecore#//StructureType/problem"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute qsar.ecore#//StructureType/id"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute qsar.ecore#//StructureType/inchi"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute qsar.ecore#//StructureType/resourceid"/>

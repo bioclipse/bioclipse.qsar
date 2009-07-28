@@ -1014,7 +1014,7 @@ public class QsarPackageImpl extends EPackageImpl implements QsarPackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EAttribute getStructureType_Id() {
+    public EAttribute getStructureType_Problem() {
         return (EAttribute)structureTypeEClass.getEStructuralFeatures().get(0);
     }
 
@@ -1023,7 +1023,7 @@ public class QsarPackageImpl extends EPackageImpl implements QsarPackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EAttribute getStructureType_Inchi() {
+    public EAttribute getStructureType_Id() {
         return (EAttribute)structureTypeEClass.getEStructuralFeatures().get(1);
     }
 
@@ -1032,7 +1032,7 @@ public class QsarPackageImpl extends EPackageImpl implements QsarPackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EAttribute getStructureType_Resourceid() {
+    public EAttribute getStructureType_Inchi() {
         return (EAttribute)structureTypeEClass.getEStructuralFeatures().get(2);
     }
 
@@ -1041,8 +1041,17 @@ public class QsarPackageImpl extends EPackageImpl implements QsarPackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EAttribute getStructureType_Resourceindex() {
+    public EAttribute getStructureType_Resourceid() {
         return (EAttribute)structureTypeEClass.getEStructuralFeatures().get(3);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EAttribute getStructureType_Resourceindex() {
+        return (EAttribute)structureTypeEClass.getEStructuralFeatures().get(4);
     }
 
     /**
@@ -1190,6 +1199,7 @@ public class QsarPackageImpl extends EPackageImpl implements QsarPackage {
         createEReference(structurelistTypeEClass, STRUCTURELIST_TYPE__RESOURCES);
 
         structureTypeEClass = createEClass(STRUCTURE_TYPE);
+        createEAttribute(structureTypeEClass, STRUCTURE_TYPE__PROBLEM);
         createEAttribute(structureTypeEClass, STRUCTURE_TYPE__ID);
         createEAttribute(structureTypeEClass, STRUCTURE_TYPE__INCHI);
         createEAttribute(structureTypeEClass, STRUCTURE_TYPE__RESOURCEID);
@@ -1335,6 +1345,7 @@ public class QsarPackageImpl extends EPackageImpl implements QsarPackage {
         initEReference(getStructurelistType_Resources(), this.getResourceType(), null, "resources", null, 0, -1, StructurelistType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(structureTypeEClass, StructureType.class, "StructureType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+        initEAttribute(getStructureType_Problem(), theXMLTypePackage.getString(), "problem", null, 0, -1, StructureType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getStructureType_Id(), theXMLTypePackage.getString(), "id", null, 0, 1, StructureType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getStructureType_Inchi(), theXMLTypePackage.getString(), "inchi", null, 0, 1, StructureType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getStructureType_Resourceid(), theXMLTypePackage.getString(), "resourceid", null, 0, 1, StructureType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -1955,7 +1966,15 @@ public class QsarPackageImpl extends EPackageImpl implements QsarPackage {
            source, 
            new String[] {
              "name", "structureType",
-             "kind", "empty"
+             "kind", "elementOnly"
+           });		
+        addAnnotation
+          (getStructureType_Problem(), 
+           source, 
+           new String[] {
+             "kind", "element",
+             "name", "problem",
+             "namespace", "##targetNamespace"
            });		
         addAnnotation
           (getStructureType_Id(), 
