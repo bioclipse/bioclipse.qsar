@@ -79,6 +79,7 @@ public class DescriptorresultTypeItemProvider
             super.getPropertyDescriptors(object);
 
             addDescriptoridPropertyDescriptor(object);
+            addErrorStringPropertyDescriptor(object);
             addStructureidPropertyDescriptor(object);
         }
         return itemPropertyDescriptors;
@@ -98,6 +99,28 @@ public class DescriptorresultTypeItemProvider
                  getString("_UI_DescriptorresultType_descriptorid_feature"),
                  getString("_UI_PropertyDescriptor_description", "_UI_DescriptorresultType_descriptorid_feature", "_UI_DescriptorresultType_type"),
                  QsarPackage.Literals.DESCRIPTORRESULT_TYPE__DESCRIPTORID,
+                 true,
+                 false,
+                 false,
+                 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+                 null,
+                 null));
+    }
+
+    /**
+     * This adds a property descriptor for the Error String feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    protected void addErrorStringPropertyDescriptor(Object object) {
+        itemPropertyDescriptors.add
+            (createItemPropertyDescriptor
+                (((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+                 getResourceLocator(),
+                 getString("_UI_DescriptorresultType_errorString_feature"),
+                 getString("_UI_PropertyDescriptor_description", "_UI_DescriptorresultType_errorString_feature", "_UI_DescriptorresultType_type"),
+                 QsarPackage.Literals.DESCRIPTORRESULT_TYPE__ERROR_STRING,
                  true,
                  false,
                  false,
@@ -196,6 +219,7 @@ public class DescriptorresultTypeItemProvider
 
         switch (notification.getFeatureID(DescriptorresultType.class)) {
             case QsarPackage.DESCRIPTORRESULT_TYPE__DESCRIPTORID:
+            case QsarPackage.DESCRIPTORRESULT_TYPE__ERROR_STRING:
             case QsarPackage.DESCRIPTORRESULT_TYPE__STRUCTUREID:
                 fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
                 return;

@@ -198,10 +198,14 @@
 
 	<complexType name="descriptorresultType">
 		<sequence>
-			<element name="descriptorvalue" type="tns:descriptorvalueType" maxOccurs="unbounded" minOccurs="0"></element>
+			<element name="descriptorvalue"
+				type="tns:descriptorvalueType" maxOccurs="unbounded"
+				minOccurs="0">
+			</element>
 		</sequence>
 		<attribute name="structureid" type="string"></attribute>
 		<attribute name="descriptorid" type="string"></attribute>
+		<attribute name="errorString" type="string"></attribute>
 	</complexType>
 
 	<complexType name="descriptorvalueType">

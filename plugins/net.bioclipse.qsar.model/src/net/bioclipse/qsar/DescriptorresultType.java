@@ -24,6 +24,7 @@ import org.eclipse.emf.ecore.EObject;
  * <ul>
  *   <li>{@link net.bioclipse.qsar.DescriptorresultType#getDescriptorvalue <em>Descriptorvalue</em>}</li>
  *   <li>{@link net.bioclipse.qsar.DescriptorresultType#getDescriptorid <em>Descriptorid</em>}</li>
+ *   <li>{@link net.bioclipse.qsar.DescriptorresultType#getErrorString <em>Error String</em>}</li>
  *   <li>{@link net.bioclipse.qsar.DescriptorresultType#getStructureid <em>Structureid</em>}</li>
  * </ul>
  * </p>
@@ -83,6 +84,33 @@ public interface DescriptorresultType extends EObject {
      * @generated
      */
     void setDescriptorid(String value);
+
+    /**
+     * Returns the value of the '<em><b>Error String</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of the '<em>Error String</em>' attribute isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>Error String</em>' attribute.
+     * @see #setErrorString(String)
+     * @see net.bioclipse.qsar.QsarPackage#getDescriptorresultType_ErrorString()
+     * @model dataType="org.eclipse.emf.ecore.xml.type.String"
+     *        extendedMetaData="kind='attribute' name='errorString'"
+     * @generated
+     */
+    String getErrorString();
+
+    /**
+     * Sets the value of the '{@link net.bioclipse.qsar.DescriptorresultType#getErrorString <em>Error String</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @param value the new value of the '<em>Error String</em>' attribute.
+     * @see #getErrorString()
+     * @generated
+     */
+    void setErrorString(String value);
 
     /**
      * Returns the value of the '<em><b>Structureid</b></em>' attribute.

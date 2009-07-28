@@ -39,6 +39,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * <ul>
  *   <li>{@link net.bioclipse.qsar.impl.DescriptorresultTypeImpl#getDescriptorvalue <em>Descriptorvalue</em>}</li>
  *   <li>{@link net.bioclipse.qsar.impl.DescriptorresultTypeImpl#getDescriptorid <em>Descriptorid</em>}</li>
+ *   <li>{@link net.bioclipse.qsar.impl.DescriptorresultTypeImpl#getErrorString <em>Error String</em>}</li>
  *   <li>{@link net.bioclipse.qsar.impl.DescriptorresultTypeImpl#getStructureid <em>Structureid</em>}</li>
  * </ul>
  * </p>
@@ -82,6 +83,26 @@ public class DescriptorresultTypeImpl extends EObjectImpl implements Descriptorr
      * @ordered
      */
     protected String descriptorid = DESCRIPTORID_EDEFAULT;
+
+    /**
+     * The default value of the '{@link #getErrorString() <em>Error String</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getErrorString()
+     * @generated
+     * @ordered
+     */
+    protected static final String ERROR_STRING_EDEFAULT = null;
+
+    /**
+     * The cached value of the '{@link #getErrorString() <em>Error String</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getErrorString()
+     * @generated
+     * @ordered
+     */
+    protected String errorString = ERROR_STRING_EDEFAULT;
 
     /**
      * The default value of the '{@link #getStructureid() <em>Structureid</em>}' attribute.
@@ -160,6 +181,27 @@ public class DescriptorresultTypeImpl extends EObjectImpl implements Descriptorr
      * <!-- end-user-doc -->
      * @generated
      */
+    public String getErrorString() {
+        return errorString;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public void setErrorString(String newErrorString) {
+        String oldErrorString = errorString;
+        errorString = newErrorString;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, QsarPackage.DESCRIPTORRESULT_TYPE__ERROR_STRING, oldErrorString, errorString));
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     public String getStructureid() {
         return structureid;
     }
@@ -202,6 +244,8 @@ public class DescriptorresultTypeImpl extends EObjectImpl implements Descriptorr
                 return getDescriptorvalue();
             case QsarPackage.DESCRIPTORRESULT_TYPE__DESCRIPTORID:
                 return getDescriptorid();
+            case QsarPackage.DESCRIPTORRESULT_TYPE__ERROR_STRING:
+                return getErrorString();
             case QsarPackage.DESCRIPTORRESULT_TYPE__STRUCTUREID:
                 return getStructureid();
         }
@@ -224,6 +268,9 @@ public class DescriptorresultTypeImpl extends EObjectImpl implements Descriptorr
             case QsarPackage.DESCRIPTORRESULT_TYPE__DESCRIPTORID:
                 setDescriptorid((String)newValue);
                 return;
+            case QsarPackage.DESCRIPTORRESULT_TYPE__ERROR_STRING:
+                setErrorString((String)newValue);
+                return;
             case QsarPackage.DESCRIPTORRESULT_TYPE__STRUCTUREID:
                 setStructureid((String)newValue);
                 return;
@@ -245,6 +292,9 @@ public class DescriptorresultTypeImpl extends EObjectImpl implements Descriptorr
             case QsarPackage.DESCRIPTORRESULT_TYPE__DESCRIPTORID:
                 setDescriptorid(DESCRIPTORID_EDEFAULT);
                 return;
+            case QsarPackage.DESCRIPTORRESULT_TYPE__ERROR_STRING:
+                setErrorString(ERROR_STRING_EDEFAULT);
+                return;
             case QsarPackage.DESCRIPTORRESULT_TYPE__STRUCTUREID:
                 setStructureid(STRUCTUREID_EDEFAULT);
                 return;
@@ -264,6 +314,8 @@ public class DescriptorresultTypeImpl extends EObjectImpl implements Descriptorr
                 return descriptorvalue != null && !descriptorvalue.isEmpty();
             case QsarPackage.DESCRIPTORRESULT_TYPE__DESCRIPTORID:
                 return DESCRIPTORID_EDEFAULT == null ? descriptorid != null : !DESCRIPTORID_EDEFAULT.equals(descriptorid);
+            case QsarPackage.DESCRIPTORRESULT_TYPE__ERROR_STRING:
+                return ERROR_STRING_EDEFAULT == null ? errorString != null : !ERROR_STRING_EDEFAULT.equals(errorString);
             case QsarPackage.DESCRIPTORRESULT_TYPE__STRUCTUREID:
                 return STRUCTUREID_EDEFAULT == null ? structureid != null : !STRUCTUREID_EDEFAULT.equals(structureid);
         }
@@ -282,6 +334,8 @@ public class DescriptorresultTypeImpl extends EObjectImpl implements Descriptorr
         StringBuffer result = new StringBuffer(super.toString());
         result.append(" (descriptorid: ");
         result.append(descriptorid);
+        result.append(", errorString: ");
+        result.append(errorString);
         result.append(", structureid: ");
         result.append(structureid);
         result.append(')');

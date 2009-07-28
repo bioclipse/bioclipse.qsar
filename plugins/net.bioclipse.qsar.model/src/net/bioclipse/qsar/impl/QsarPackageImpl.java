@@ -393,8 +393,17 @@ public class QsarPackageImpl extends EPackageImpl implements QsarPackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EAttribute getDescriptorresultType_Structureid() {
+    public EAttribute getDescriptorresultType_ErrorString() {
         return (EAttribute)descriptorresultTypeEClass.getEStructuralFeatures().get(2);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EAttribute getDescriptorresultType_Structureid() {
+        return (EAttribute)descriptorresultTypeEClass.getEStructuralFeatures().get(3);
     }
 
     /**
@@ -1116,6 +1125,7 @@ public class QsarPackageImpl extends EPackageImpl implements QsarPackage {
         descriptorresultTypeEClass = createEClass(DESCRIPTORRESULT_TYPE);
         createEReference(descriptorresultTypeEClass, DESCRIPTORRESULT_TYPE__DESCRIPTORVALUE);
         createEAttribute(descriptorresultTypeEClass, DESCRIPTORRESULT_TYPE__DESCRIPTORID);
+        createEAttribute(descriptorresultTypeEClass, DESCRIPTORRESULT_TYPE__ERROR_STRING);
         createEAttribute(descriptorresultTypeEClass, DESCRIPTORRESULT_TYPE__STRUCTUREID);
 
         descriptorTypeEClass = createEClass(DESCRIPTOR_TYPE);
@@ -1262,6 +1272,7 @@ public class QsarPackageImpl extends EPackageImpl implements QsarPackage {
         initEClass(descriptorresultTypeEClass, DescriptorresultType.class, "DescriptorresultType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEReference(getDescriptorresultType_Descriptorvalue(), this.getDescriptorvalueType(), null, "descriptorvalue", null, 0, -1, DescriptorresultType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getDescriptorresultType_Descriptorid(), theXMLTypePackage.getString(), "descriptorid", null, 0, 1, DescriptorresultType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getDescriptorresultType_ErrorString(), theXMLTypePackage.getString(), "errorString", null, 0, 1, DescriptorresultType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getDescriptorresultType_Structureid(), theXMLTypePackage.getString(), "structureid", null, 0, 1, DescriptorresultType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(descriptorTypeEClass, DescriptorType.class, "DescriptorType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -1468,6 +1479,13 @@ public class QsarPackageImpl extends EPackageImpl implements QsarPackage {
            new String[] {
              "kind", "attribute",
              "name", "descriptorid"
+           });		
+        addAnnotation
+          (getDescriptorresultType_ErrorString(), 
+           source, 
+           new String[] {
+             "kind", "attribute",
+             "name", "errorString"
            });		
         addAnnotation
           (getDescriptorresultType_Structureid(), 

@@ -253,13 +253,22 @@ public interface QsarPackage extends EPackage {
     int DESCRIPTORRESULT_TYPE__DESCRIPTORID = 1;
 
     /**
+     * The feature id for the '<em><b>Error String</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int DESCRIPTORRESULT_TYPE__ERROR_STRING = 2;
+
+    /**
      * The feature id for the '<em><b>Structureid</b></em>' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int DESCRIPTORRESULT_TYPE__STRUCTUREID = 2;
+    int DESCRIPTORRESULT_TYPE__STRUCTUREID = 3;
 
     /**
      * The number of structural features of the '<em>Descriptorresult Type</em>' class.
@@ -268,7 +277,7 @@ public interface QsarPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int DESCRIPTORRESULT_TYPE_FEATURE_COUNT = 3;
+    int DESCRIPTORRESULT_TYPE_FEATURE_COUNT = 4;
 
     /**
      * The meta object id for the '{@link net.bioclipse.qsar.impl.DescriptorTypeImpl <em>Descriptor Type</em>}' class.
@@ -1228,6 +1237,17 @@ public interface QsarPackage extends EPackage {
     EAttribute getDescriptorresultType_Descriptorid();
 
     /**
+     * Returns the meta object for the attribute '{@link net.bioclipse.qsar.DescriptorresultType#getErrorString <em>Error String</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Error String</em>'.
+     * @see net.bioclipse.qsar.DescriptorresultType#getErrorString()
+     * @see #getDescriptorresultType()
+     * @generated
+     */
+    EAttribute getDescriptorresultType_ErrorString();
+
+    /**
      * Returns the meta object for the attribute '{@link net.bioclipse.qsar.DescriptorresultType#getStructureid <em>Structureid</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -2182,6 +2202,14 @@ public interface QsarPackage extends EPackage {
          * @generated
          */
         EAttribute DESCRIPTORRESULT_TYPE__DESCRIPTORID = eINSTANCE.getDescriptorresultType_Descriptorid();
+
+        /**
+         * The meta object literal for the '<em><b>Error String</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute DESCRIPTORRESULT_TYPE__ERROR_STRING = eINSTANCE.getDescriptorresultType_ErrorString();
 
         /**
          * The meta object literal for the '<em><b>Structureid</b></em>' attribute feature.

@@ -29,6 +29,7 @@
     <genClasses ecoreClass="qsar.ecore#//DescriptorresultType">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference qsar.ecore#//DescriptorresultType/descriptorvalue"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute qsar.ecore#//DescriptorresultType/descriptorid"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute qsar.ecore#//DescriptorresultType/errorString"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute qsar.ecore#//DescriptorresultType/structureid"/>
     </genClasses>
     <genClasses ecoreClass="qsar.ecore#//DescriptorType">
