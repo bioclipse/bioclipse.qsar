@@ -79,6 +79,7 @@ public class ResourceTypeItemProvider
             super.getPropertyDescriptors(object);
 
             addChecksumPropertyDescriptor(object);
+            addContainsErrorsPropertyDescriptor(object);
             addExcludedPropertyDescriptor(object);
             addFilePropertyDescriptor(object);
             addIdPropertyDescriptor(object);
@@ -110,6 +111,28 @@ public class ResourceTypeItemProvider
                  false,
                  false,
                  ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+                 null,
+                 null));
+    }
+
+    /**
+     * This adds a property descriptor for the Contains Errors feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    protected void addContainsErrorsPropertyDescriptor(Object object) {
+        itemPropertyDescriptors.add
+            (createItemPropertyDescriptor
+                (((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+                 getResourceLocator(),
+                 getString("_UI_ResourceType_containsErrors_feature"),
+                 getString("_UI_PropertyDescriptor_description", "_UI_ResourceType_containsErrors_feature", "_UI_ResourceType_type"),
+                 QsarPackage.Literals.RESOURCE_TYPE__CONTAINS_ERRORS,
+                 true,
+                 false,
+                 false,
+                 ItemPropertyDescriptor.BOOLEAN_VALUE_IMAGE,
                  null,
                  null));
     }
@@ -380,6 +403,7 @@ public class ResourceTypeItemProvider
 
         switch (notification.getFeatureID(ResourceType.class)) {
             case QsarPackage.RESOURCE_TYPE__CHECKSUM:
+            case QsarPackage.RESOURCE_TYPE__CONTAINS_ERRORS:
             case QsarPackage.RESOURCE_TYPE__EXCLUDED:
             case QsarPackage.RESOURCE_TYPE__FILE:
             case QsarPackage.RESOURCE_TYPE__ID:

@@ -757,13 +757,22 @@ public interface QsarPackage extends EPackage {
     int RESOURCE_TYPE__CHECKSUM = 1;
 
     /**
+     * The feature id for the '<em><b>Contains Errors</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int RESOURCE_TYPE__CONTAINS_ERRORS = 2;
+
+    /**
      * The feature id for the '<em><b>Excluded</b></em>' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int RESOURCE_TYPE__EXCLUDED = 2;
+    int RESOURCE_TYPE__EXCLUDED = 3;
 
     /**
      * The feature id for the '<em><b>File</b></em>' attribute.
@@ -772,7 +781,7 @@ public interface QsarPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int RESOURCE_TYPE__FILE = 3;
+    int RESOURCE_TYPE__FILE = 4;
 
     /**
      * The feature id for the '<em><b>Id</b></em>' attribute.
@@ -781,7 +790,7 @@ public interface QsarPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int RESOURCE_TYPE__ID = 4;
+    int RESOURCE_TYPE__ID = 5;
 
     /**
      * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -790,7 +799,7 @@ public interface QsarPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int RESOURCE_TYPE__NAME = 5;
+    int RESOURCE_TYPE__NAME = 6;
 
     /**
      * The feature id for the '<em><b>No2d</b></em>' attribute.
@@ -799,7 +808,7 @@ public interface QsarPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int RESOURCE_TYPE__NO2D = 6;
+    int RESOURCE_TYPE__NO2D = 7;
 
     /**
      * The feature id for the '<em><b>No3d</b></em>' attribute.
@@ -808,7 +817,7 @@ public interface QsarPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int RESOURCE_TYPE__NO3D = 7;
+    int RESOURCE_TYPE__NO3D = 8;
 
     /**
      * The feature id for the '<em><b>No Mols</b></em>' attribute.
@@ -817,7 +826,7 @@ public interface QsarPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int RESOURCE_TYPE__NO_MOLS = 8;
+    int RESOURCE_TYPE__NO_MOLS = 9;
 
     /**
      * The feature id for the '<em><b>Type</b></em>' attribute.
@@ -826,7 +835,7 @@ public interface QsarPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int RESOURCE_TYPE__TYPE = 9;
+    int RESOURCE_TYPE__TYPE = 10;
 
     /**
      * The feature id for the '<em><b>URL</b></em>' attribute.
@@ -835,7 +844,7 @@ public interface QsarPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int RESOURCE_TYPE__URL = 10;
+    int RESOURCE_TYPE__URL = 11;
 
     /**
      * The number of structural features of the '<em>Resource Type</em>' class.
@@ -844,7 +853,7 @@ public interface QsarPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int RESOURCE_TYPE_FEATURE_COUNT = 11;
+    int RESOURCE_TYPE_FEATURE_COUNT = 12;
 
     /**
      * The meta object id for the '{@link net.bioclipse.qsar.impl.ResponsesListTypeImpl <em>Responses List Type</em>}' class.
@@ -1734,6 +1743,17 @@ public interface QsarPackage extends EPackage {
     EAttribute getResourceType_Checksum();
 
     /**
+     * Returns the meta object for the attribute '{@link net.bioclipse.qsar.ResourceType#isContainsErrors <em>Contains Errors</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Contains Errors</em>'.
+     * @see net.bioclipse.qsar.ResourceType#isContainsErrors()
+     * @see #getResourceType()
+     * @generated
+     */
+    EAttribute getResourceType_ContainsErrors();
+
+    /**
      * Returns the meta object for the attribute '{@link net.bioclipse.qsar.ResourceType#isExcluded <em>Excluded</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -2588,6 +2608,14 @@ public interface QsarPackage extends EPackage {
          * @generated
          */
         EAttribute RESOURCE_TYPE__CHECKSUM = eINSTANCE.getResourceType_Checksum();
+
+        /**
+         * The meta object literal for the '<em><b>Contains Errors</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute RESOURCE_TYPE__CONTAINS_ERRORS = eINSTANCE.getResourceType_ContainsErrors();
 
         /**
          * The meta object literal for the '<em><b>Excluded</b></em>' attribute feature.

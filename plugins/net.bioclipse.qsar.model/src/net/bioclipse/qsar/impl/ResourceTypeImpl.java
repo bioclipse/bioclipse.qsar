@@ -40,6 +40,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * <ul>
  *   <li>{@link net.bioclipse.qsar.impl.ResourceTypeImpl#getStructure <em>Structure</em>}</li>
  *   <li>{@link net.bioclipse.qsar.impl.ResourceTypeImpl#getChecksum <em>Checksum</em>}</li>
+ *   <li>{@link net.bioclipse.qsar.impl.ResourceTypeImpl#isContainsErrors <em>Contains Errors</em>}</li>
  *   <li>{@link net.bioclipse.qsar.impl.ResourceTypeImpl#isExcluded <em>Excluded</em>}</li>
  *   <li>{@link net.bioclipse.qsar.impl.ResourceTypeImpl#getFile <em>File</em>}</li>
  *   <li>{@link net.bioclipse.qsar.impl.ResourceTypeImpl#getId <em>Id</em>}</li>
@@ -91,6 +92,35 @@ public class ResourceTypeImpl extends EObjectImpl implements ResourceType {
      * @ordered
      */
     protected String checksum = CHECKSUM_EDEFAULT;
+
+    /**
+     * The default value of the '{@link #isContainsErrors() <em>Contains Errors</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #isContainsErrors()
+     * @generated
+     * @ordered
+     */
+    protected static final boolean CONTAINS_ERRORS_EDEFAULT = false;
+
+    /**
+     * The cached value of the '{@link #isContainsErrors() <em>Contains Errors</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #isContainsErrors()
+     * @generated
+     * @ordered
+     */
+    protected boolean containsErrors = CONTAINS_ERRORS_EDEFAULT;
+
+    /**
+     * This is true if the Contains Errors attribute has been set.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    protected boolean containsErrorsESet;
 
     /**
      * The default value of the '{@link #isExcluded() <em>Excluded</em>}' attribute.
@@ -367,6 +397,52 @@ public class ResourceTypeImpl extends EObjectImpl implements ResourceType {
         checksum = newChecksum;
         if (eNotificationRequired())
             eNotify(new ENotificationImpl(this, Notification.SET, QsarPackage.RESOURCE_TYPE__CHECKSUM, oldChecksum, checksum));
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public boolean isContainsErrors() {
+        return containsErrors;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public void setContainsErrors(boolean newContainsErrors) {
+        boolean oldContainsErrors = containsErrors;
+        containsErrors = newContainsErrors;
+        boolean oldContainsErrorsESet = containsErrorsESet;
+        containsErrorsESet = true;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, QsarPackage.RESOURCE_TYPE__CONTAINS_ERRORS, oldContainsErrors, containsErrors, !oldContainsErrorsESet));
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public void unsetContainsErrors() {
+        boolean oldContainsErrors = containsErrors;
+        boolean oldContainsErrorsESet = containsErrorsESet;
+        containsErrors = CONTAINS_ERRORS_EDEFAULT;
+        containsErrorsESet = false;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.UNSET, QsarPackage.RESOURCE_TYPE__CONTAINS_ERRORS, oldContainsErrors, CONTAINS_ERRORS_EDEFAULT, oldContainsErrorsESet));
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public boolean isSetContainsErrors() {
+        return containsErrorsESet;
     }
 
     /**
@@ -709,6 +785,8 @@ public class ResourceTypeImpl extends EObjectImpl implements ResourceType {
                 return getStructure();
             case QsarPackage.RESOURCE_TYPE__CHECKSUM:
                 return getChecksum();
+            case QsarPackage.RESOURCE_TYPE__CONTAINS_ERRORS:
+                return isContainsErrors() ? Boolean.TRUE : Boolean.FALSE;
             case QsarPackage.RESOURCE_TYPE__EXCLUDED:
                 return isExcluded() ? Boolean.TRUE : Boolean.FALSE;
             case QsarPackage.RESOURCE_TYPE__FILE:
@@ -746,6 +824,9 @@ public class ResourceTypeImpl extends EObjectImpl implements ResourceType {
                 return;
             case QsarPackage.RESOURCE_TYPE__CHECKSUM:
                 setChecksum((String)newValue);
+                return;
+            case QsarPackage.RESOURCE_TYPE__CONTAINS_ERRORS:
+                setContainsErrors(((Boolean)newValue).booleanValue());
                 return;
             case QsarPackage.RESOURCE_TYPE__EXCLUDED:
                 setExcluded(((Boolean)newValue).booleanValue());
@@ -792,6 +873,9 @@ public class ResourceTypeImpl extends EObjectImpl implements ResourceType {
             case QsarPackage.RESOURCE_TYPE__CHECKSUM:
                 setChecksum(CHECKSUM_EDEFAULT);
                 return;
+            case QsarPackage.RESOURCE_TYPE__CONTAINS_ERRORS:
+                unsetContainsErrors();
+                return;
             case QsarPackage.RESOURCE_TYPE__EXCLUDED:
                 unsetExcluded();
                 return;
@@ -835,6 +919,8 @@ public class ResourceTypeImpl extends EObjectImpl implements ResourceType {
                 return structure != null && !structure.isEmpty();
             case QsarPackage.RESOURCE_TYPE__CHECKSUM:
                 return CHECKSUM_EDEFAULT == null ? checksum != null : !CHECKSUM_EDEFAULT.equals(checksum);
+            case QsarPackage.RESOURCE_TYPE__CONTAINS_ERRORS:
+                return isSetContainsErrors();
             case QsarPackage.RESOURCE_TYPE__EXCLUDED:
                 return isSetExcluded();
             case QsarPackage.RESOURCE_TYPE__FILE:
@@ -869,6 +955,8 @@ public class ResourceTypeImpl extends EObjectImpl implements ResourceType {
         StringBuffer result = new StringBuffer(super.toString());
         result.append(" (checksum: ");
         result.append(checksum);
+        result.append(", containsErrors: ");
+        if (containsErrorsESet) result.append(containsErrors); else result.append("<unset>");
         result.append(", excluded: ");
         if (excludedESet) result.append(excluded); else result.append("<unset>");
         result.append(", file: ");

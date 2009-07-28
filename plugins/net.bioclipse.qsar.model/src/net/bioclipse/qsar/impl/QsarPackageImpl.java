@@ -807,7 +807,7 @@ public class QsarPackageImpl extends EPackageImpl implements QsarPackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EAttribute getResourceType_Excluded() {
+    public EAttribute getResourceType_ContainsErrors() {
         return (EAttribute)resourceTypeEClass.getEStructuralFeatures().get(2);
     }
 
@@ -816,7 +816,7 @@ public class QsarPackageImpl extends EPackageImpl implements QsarPackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EAttribute getResourceType_File() {
+    public EAttribute getResourceType_Excluded() {
         return (EAttribute)resourceTypeEClass.getEStructuralFeatures().get(3);
     }
 
@@ -825,7 +825,7 @@ public class QsarPackageImpl extends EPackageImpl implements QsarPackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EAttribute getResourceType_Id() {
+    public EAttribute getResourceType_File() {
         return (EAttribute)resourceTypeEClass.getEStructuralFeatures().get(4);
     }
 
@@ -834,7 +834,7 @@ public class QsarPackageImpl extends EPackageImpl implements QsarPackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EAttribute getResourceType_Name() {
+    public EAttribute getResourceType_Id() {
         return (EAttribute)resourceTypeEClass.getEStructuralFeatures().get(5);
     }
 
@@ -843,7 +843,7 @@ public class QsarPackageImpl extends EPackageImpl implements QsarPackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EAttribute getResourceType_No2d() {
+    public EAttribute getResourceType_Name() {
         return (EAttribute)resourceTypeEClass.getEStructuralFeatures().get(6);
     }
 
@@ -852,7 +852,7 @@ public class QsarPackageImpl extends EPackageImpl implements QsarPackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EAttribute getResourceType_No3d() {
+    public EAttribute getResourceType_No2d() {
         return (EAttribute)resourceTypeEClass.getEStructuralFeatures().get(7);
     }
 
@@ -861,7 +861,7 @@ public class QsarPackageImpl extends EPackageImpl implements QsarPackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EAttribute getResourceType_NoMols() {
+    public EAttribute getResourceType_No3d() {
         return (EAttribute)resourceTypeEClass.getEStructuralFeatures().get(8);
     }
 
@@ -870,7 +870,7 @@ public class QsarPackageImpl extends EPackageImpl implements QsarPackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EAttribute getResourceType_Type() {
+    public EAttribute getResourceType_NoMols() {
         return (EAttribute)resourceTypeEClass.getEStructuralFeatures().get(9);
     }
 
@@ -879,8 +879,17 @@ public class QsarPackageImpl extends EPackageImpl implements QsarPackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EAttribute getResourceType_URL() {
+    public EAttribute getResourceType_Type() {
         return (EAttribute)resourceTypeEClass.getEStructuralFeatures().get(10);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EAttribute getResourceType_URL() {
+        return (EAttribute)resourceTypeEClass.getEStructuralFeatures().get(11);
     }
 
     /**
@@ -1180,6 +1189,7 @@ public class QsarPackageImpl extends EPackageImpl implements QsarPackage {
         resourceTypeEClass = createEClass(RESOURCE_TYPE);
         createEReference(resourceTypeEClass, RESOURCE_TYPE__STRUCTURE);
         createEAttribute(resourceTypeEClass, RESOURCE_TYPE__CHECKSUM);
+        createEAttribute(resourceTypeEClass, RESOURCE_TYPE__CONTAINS_ERRORS);
         createEAttribute(resourceTypeEClass, RESOURCE_TYPE__EXCLUDED);
         createEAttribute(resourceTypeEClass, RESOURCE_TYPE__FILE);
         createEAttribute(resourceTypeEClass, RESOURCE_TYPE__ID);
@@ -1327,6 +1337,7 @@ public class QsarPackageImpl extends EPackageImpl implements QsarPackage {
         initEClass(resourceTypeEClass, ResourceType.class, "ResourceType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEReference(getResourceType_Structure(), this.getStructureType(), null, "structure", null, 1, -1, ResourceType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getResourceType_Checksum(), theXMLTypePackage.getString(), "checksum", null, 0, 1, ResourceType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getResourceType_ContainsErrors(), theXMLTypePackage.getBoolean(), "containsErrors", "false", 0, 1, ResourceType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getResourceType_Excluded(), theXMLTypePackage.getBoolean(), "excluded", null, 0, 1, ResourceType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getResourceType_File(), theXMLTypePackage.getString(), "file", null, 0, 1, ResourceType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getResourceType_Id(), theXMLTypePackage.getString(), "id", null, 1, 1, ResourceType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -1814,6 +1825,13 @@ public class QsarPackageImpl extends EPackageImpl implements QsarPackage {
            new String[] {
              "kind", "attribute",
              "name", "checksum"
+           });		
+        addAnnotation
+          (getResourceType_ContainsErrors(), 
+           source, 
+           new String[] {
+             "kind", "attribute",
+             "name", "containsErrors"
            });		
         addAnnotation
           (getResourceType_Excluded(), 

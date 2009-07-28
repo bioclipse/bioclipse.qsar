@@ -84,6 +84,7 @@
     <genClasses ecoreClass="qsar.ecore#//ResourceType">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference qsar.ecore#//ResourceType/structure"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute qsar.ecore#//ResourceType/checksum"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute qsar.ecore#//ResourceType/containsErrors"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute qsar.ecore#//ResourceType/excluded"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute qsar.ecore#//ResourceType/file"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute qsar.ecore#//ResourceType/id"/>

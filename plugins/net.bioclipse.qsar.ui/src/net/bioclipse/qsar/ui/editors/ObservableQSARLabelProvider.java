@@ -71,14 +71,22 @@ public class ObservableQSARLabelProvider extends ObservableMapLabelProvider{
 		
     if (element instanceof ResourceType) {
         ResourceType resource=(ResourceType)element;
+        
+        if (columnIndex==4){
+            //status
+            if (resource.isContainsErrors())
+                return "Contains errors";
+            else
+                return "OK";
+        }
 
         int problems=0;
         //Find all problems
-        for (StructureType structure : resource.getStructure()){
-            for (String problem : structure.getProblem()){
-                problems++;
-            }
-        }
+//        for (StructureType structure : resource.getStructure()){
+//            for (String problem : structure.getProblem()){
+//                problems++;
+//            }
+//        }
         
         if (problems>0 && columnIndex==0)
             return super.getColumnText( element, columnIndex ) + " [" + problems + " problems]";

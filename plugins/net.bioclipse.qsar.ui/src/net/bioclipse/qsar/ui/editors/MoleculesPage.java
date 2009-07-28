@@ -30,6 +30,7 @@ import net.bioclipse.qsar.QsarFactory;
 import net.bioclipse.qsar.QsarPackage;
 import net.bioclipse.qsar.QsarType;
 import net.bioclipse.qsar.ResourceType;
+import net.bioclipse.qsar.StructureType;
 import net.bioclipse.qsar.StructurelistType;
 import net.bioclipse.qsar.business.IQsarManager;
 import net.bioclipse.qsar.ui.wizards.AddMoleculeFilesWizard;
@@ -59,6 +60,11 @@ import org.eclipse.emf.databinding.edit.EMFEditObservables;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.domain.IEditingDomainProvider;
+import org.eclipse.jface.action.Action;
+import org.eclipse.jface.action.IMenuListener;
+import org.eclipse.jface.action.IMenuManager;
+import org.eclipse.jface.action.MenuManager;
+import org.eclipse.jface.action.Separator;
 import org.eclipse.jface.databinding.viewers.ObservableListContentProvider;
 import org.eclipse.jface.databinding.viewers.ObservableMapLabelProvider;
 import org.eclipse.jface.dialogs.IPageChangedListener;
@@ -90,8 +96,10 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Listener;
+import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.ui.IFileEditorInput;
+import org.eclipse.ui.IWorkbenchActionConstants;
 import org.eclipse.ui.forms.IFormColors;
 import org.eclipse.ui.forms.IManagedForm;
 import org.eclipse.ui.forms.editor.FormEditor;
@@ -125,6 +133,7 @@ public class MoleculesPage extends FormPage implements IEditingDomainProvider, I
     private EditingDomain editingDomain;
 
     private IProject activeProject;
+    private Action viewErrorsAction;
 
 
     public MoleculesPage(FormEditor editor, 
@@ -537,7 +546,8 @@ public class MoleculesPage extends FormPage implements IEditingDomainProvider, I
                 QsarPackage.Literals.RESOURCE_TYPE__NAME,
                 QsarPackage.Literals.RESOURCE_TYPE__NO_MOLS,
                 QsarPackage.Literals.RESOURCE_TYPE__NO2D,
-                QsarPackage.Literals.RESOURCE_TYPE__NO3D});
+                QsarPackage.Literals.RESOURCE_TYPE__NO3D,
+                QsarPackage.Literals.RESOURCE_TYPE__CONTAINS_ERRORS});
         ObservableMapLabelProvider labelProvider =
             new ObservableQSARLabelProvider(observeMaps);
         molViewer.setLabelProvider(labelProvider);
@@ -603,6 +613,11 @@ public class MoleculesPage extends FormPage implements IEditingDomainProvider, I
         TableViewerColumn col3d=new TableViewerColumn(molViewer,SWT.BORDER);
         col3d.getColumn().setText("3D");
         tableLayout.addColumnData(new ColumnPixelData(30));
+
+        //Add 2D column
+        TableViewerColumn status=new TableViewerColumn(molViewer,SWT.BORDER);
+        status.getColumn().setText("Status");
+        tableLayout.addColumnData(new ColumnPixelData(100));
 
 
         molTable.addKeyListener( new KeyListener(){
@@ -673,10 +688,71 @@ public class MoleculesPage extends FormPage implements IEditingDomainProvider, I
         gd = new GridData(GridData.FILL_BOTH);
         molSection.setLayoutData(gd);        		
 
+        makeActions();
+        hookContextMenu();
 
+        getSite().setSelectionProvider( molViewer );
 
     }
 
+    /**
+     * The actions in the viewer
+     */
+    private void makeActions() {
+
+        viewErrorsAction=new Action("View errors", 
+                            net.bioclipse.qsar.ui.Activator.getImageDescriptor( "icons/error_co.gif" )) {
+            @Override
+            public void run() {
+                IStructuredSelection sel=
+                                   (IStructuredSelection) molViewer.getSelection();
+                
+                if ( sel.getFirstElement() instanceof ResourceType ) {
+                    
+                    ResourceType res = (ResourceType)sel.getFirstElement();
+
+                    String str="";
+                    for (StructureType structure : res.getStructure()){
+                        if (structure.getProblem()!=null && structure.getProblem().size()>0){
+                            for (String problem : structure.getProblem()){
+                                str=str+"Resource='" + res.getName() + "', id='" + structure.getId() + "', error: " + structure.getProblem() +"\n";
+                            }
+                        }
+                    }
+
+                    if (str.length()>1)
+                        showError( str );
+                }
+
+            }
+        };
+        
+    }
+
+    /**
+     * A context menu
+     */
+    private void hookContextMenu() {
+        MenuManager menuMgr = new MenuManager("#PopupMenu");
+        menuMgr.setRemoveAllWhenShown(true);
+        menuMgr.addMenuListener(new IMenuListener() {
+            public void menuAboutToShow(IMenuManager manager) {
+                manager.removeAll();
+                
+                //Only show actions if propertyentry selected
+                IStructuredSelection sel=
+                    (IStructuredSelection) molViewer.getSelection();
+
+                if ( sel.getFirstElement() instanceof ResourceType ) {
+                    manager.add(viewErrorsAction);
+                    manager.add(new Separator(IWorkbenchActionConstants.MB_ADDITIONS));
+                }
+            }
+
+        });
+        Menu menu = menuMgr.createContextMenu(molViewer.getControl());
+        molViewer.getControl().setMenu(menu);
+    }
 
     /**
      * Not yet implemented, hence not used

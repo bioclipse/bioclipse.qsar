@@ -68,24 +68,26 @@
 		<attribute name="name" type="string" use="required"></attribute>
 		<attribute name="excluded" type="boolean" use="optional"></attribute>
 		<attribute ecore:transient="true" name="noMols" type="int"
-			default="0"></attribute>
-			<attribute ecore:transient="true" name="no2d" type="int"
-				default="-1">
-			</attribute>
-			<attribute ecore:transient="true" name="no3d" type="int"
-				default="-1">
-			</attribute>
-			<attribute name="checksum" type="string"></attribute>
-			<attribute name="type">
-				<simpleType>
-					<restriction base="string">
-						<enumeration value="xml"></enumeration>
-						<enumeration value="text"></enumeration>
-					</restriction>
-				</simpleType>
-			</attribute>
-			<attribute name="URL" type="string"></attribute>
-			<attribute name="file" type="string"></attribute>
+			default="0">
+		</attribute>
+		<attribute ecore:transient="true" name="no2d" type="int"
+			default="-1">
+		</attribute>
+		<attribute ecore:transient="true" name="no3d" type="int"
+			default="-1">
+		</attribute>
+		<attribute name="checksum" type="string"></attribute>
+		<attribute name="type">
+			<simpleType>
+				<restriction base="string">
+					<enumeration value="xml"></enumeration>
+					<enumeration value="text"></enumeration>
+				</restriction>
+			</simpleType>
+		</attribute>
+		<attribute name="URL" type="string"></attribute>
+		<attribute name="file" type="string"></attribute>
+		<attribute name="containsErrors" type="boolean" default="false"></attribute>
 	</complexType>
 
 	<complexType name="descriptorType">

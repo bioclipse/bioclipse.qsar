@@ -24,6 +24,7 @@ import org.eclipse.emf.ecore.EObject;
  * <ul>
  *   <li>{@link net.bioclipse.qsar.ResourceType#getStructure <em>Structure</em>}</li>
  *   <li>{@link net.bioclipse.qsar.ResourceType#getChecksum <em>Checksum</em>}</li>
+ *   <li>{@link net.bioclipse.qsar.ResourceType#isContainsErrors <em>Contains Errors</em>}</li>
  *   <li>{@link net.bioclipse.qsar.ResourceType#isExcluded <em>Excluded</em>}</li>
  *   <li>{@link net.bioclipse.qsar.ResourceType#getFile <em>File</em>}</li>
  *   <li>{@link net.bioclipse.qsar.ResourceType#getId <em>Id</em>}</li>
@@ -91,6 +92,61 @@ public interface ResourceType extends EObject {
      * @generated
      */
     void setChecksum(String value);
+
+    /**
+     * Returns the value of the '<em><b>Contains Errors</b></em>' attribute.
+     * The default value is <code>"false"</code>.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of the '<em>Contains Errors</em>' attribute isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>Contains Errors</em>' attribute.
+     * @see #isSetContainsErrors()
+     * @see #unsetContainsErrors()
+     * @see #setContainsErrors(boolean)
+     * @see net.bioclipse.qsar.QsarPackage#getResourceType_ContainsErrors()
+     * @model default="false" unsettable="true" dataType="org.eclipse.emf.ecore.xml.type.Boolean"
+     *        extendedMetaData="kind='attribute' name='containsErrors'"
+     * @generated
+     */
+    boolean isContainsErrors();
+
+    /**
+     * Sets the value of the '{@link net.bioclipse.qsar.ResourceType#isContainsErrors <em>Contains Errors</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @param value the new value of the '<em>Contains Errors</em>' attribute.
+     * @see #isSetContainsErrors()
+     * @see #unsetContainsErrors()
+     * @see #isContainsErrors()
+     * @generated
+     */
+    void setContainsErrors(boolean value);
+
+    /**
+     * Unsets the value of the '{@link net.bioclipse.qsar.ResourceType#isContainsErrors <em>Contains Errors</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #isSetContainsErrors()
+     * @see #isContainsErrors()
+     * @see #setContainsErrors(boolean)
+     * @generated
+     */
+    void unsetContainsErrors();
+
+    /**
+     * Returns whether the value of the '{@link net.bioclipse.qsar.ResourceType#isContainsErrors <em>Contains Errors</em>}' attribute is set.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return whether the value of the '<em>Contains Errors</em>' attribute is set.
+     * @see #unsetContainsErrors()
+     * @see #isContainsErrors()
+     * @see #setContainsErrors(boolean)
+     * @generated
+     */
+    boolean isSetContainsErrors();
 
     /**
      * Returns the value of the '<em><b>Excluded</b></em>' attribute.
