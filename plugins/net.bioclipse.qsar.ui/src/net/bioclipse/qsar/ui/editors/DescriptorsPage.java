@@ -84,6 +84,8 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.Tree;
+import org.eclipse.ui.dialogs.FilteredTree;
+import org.eclipse.ui.dialogs.PatternFilter;
 import org.eclipse.ui.forms.IFormColors;
 import org.eclipse.ui.forms.IManagedForm;
 import org.eclipse.ui.forms.editor.FormEditor;
@@ -277,8 +279,15 @@ private Table paramsTable;
           gdBTN.horizontalSpan=2;
           btnOnlyImpl.setLayoutData( gdBTN );
 
+          
+          PatternFilter patternFilter = new PatternFilter();
+          patternFilter.setIncludeLeadingWildcard(true);
+          final FilteredTree filter = new FilteredTree(client, SWT.MULTI
+                  | SWT.H_SCROLL | SWT.V_SCROLL | SWT.BORDER , patternFilter);
+          descViewer = filter.getViewer();
 
-          descViewer = new TreeViewer(client, SWT.BORDER | SWT.MULTI );
+
+//          descViewer = new TreeViewer(client, SWT.BORDER | SWT.MULTI );
           descTree=descViewer.getTree();
           toolkit.adapt(descTree, true, true);
           GridData gd=new GridData(GridData.FILL_BOTH);
