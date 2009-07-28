@@ -224,7 +224,7 @@ public class TestQsarManager {
 	}
 	
 	@Test
-	public void testGetProvidersByDescriptorAndProvider(){
+	public void testGetProvidersByDescriptorAndProvider() throws BioclipseException{
 
 		String providerID="net.bioclipse.qsar.test.descriptorProvider1";
 		String descriptorID="http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#BCUT";
@@ -312,7 +312,7 @@ public class TestQsarManager {
 	}
 
   @Test
-  public void testGetDescriptorImplsByProvider(){
+  public void testGetDescriptorImplsByProvider() throws BioclipseException{
 
     //Matches plugin.xml
     String providerID="net.bioclipse.qsar.test.descriptorProvider1";
@@ -370,7 +370,7 @@ public class TestQsarManager {
 	
 
 	@Test
-	public void testGetDescriptorIDsImplsFromDescriptor(){
+	public void testGetDescriptorIDsImplsFromDescriptor() throws BioclipseException{
 
 		String expectedImpl="net.bioclipse.qsar.test.descriptor3";
         String expectedImpl2="net.bioclipse.qsar.test.descriptor3D";
@@ -658,7 +658,7 @@ public class TestQsarManager {
       list2.add( dtype2 );
       moldescmap.put( mol2, list2 );
 
-      Map<? extends IMolecule, List<IDescriptorResult>> res = qsar.calculate( moldescmap, new NullProgressMonitor() );
+      Map<? extends IMolecule, List<IDescriptorResult>> res = qsar.doCalculation( moldescmap, new NullProgressMonitor() );
 	    assertNotNull("QSAR calculation returned NULL", res);
 	    
 	    List<IDescriptorResult> res1=res.get(mol1);

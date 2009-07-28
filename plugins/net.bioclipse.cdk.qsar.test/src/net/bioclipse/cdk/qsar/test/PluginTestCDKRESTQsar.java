@@ -65,7 +65,7 @@ public class PluginTestCDKRESTQsar {
 
 
     @Test
-    public void testGetDescriptors(){
+    public void testGetDescriptors() throws BioclipseException{
 
         //Matches plugin.xml, just test some classes
 
@@ -91,7 +91,7 @@ public class PluginTestCDKRESTQsar {
     }
 
     @Test
-    public void testGetDescriptorsByID(){
+    public void testGetDescriptorsByID() throws BioclipseException{
 
         //Get decriptor by hardcoded id
         DescriptorImpl desc=qsar.getDescriptorImpl(bpolID, cdkRestProviderID);
@@ -104,7 +104,7 @@ public class PluginTestCDKRESTQsar {
     }
 
     @Test
-    public void testGetDescriptorsByIDWithParameters(){
+    public void testGetDescriptorsByIDWithParameters() throws BioclipseException{
 
         //Get decriptor by hardcoded id with parameters
         DescriptorImpl desc=qsar.getDescriptorImpl(xlogpID, cdkRestProviderID);
@@ -550,7 +550,7 @@ public class PluginTestCDKRESTQsar {
         list2.add( dtype2 );
         moldescmap.put( mol2, list2 );
 
-        Map<? extends IMolecule, List<IDescriptorResult>> res = qsar.calculate( moldescmap, new NullProgressMonitor() );
+        Map<? extends IMolecule, List<IDescriptorResult>> res = qsar.doCalculation( moldescmap, new NullProgressMonitor() );
         assertNotNull("QSAR calculation returned NULL", res);
 
         assertNotNull(res);
