@@ -1,7 +1,7 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: CDK REST QSAR
-Bundle-SymbolicName: net.bioclipse.cdk.qsar.rest.old;singleton:=true
+Bundle-SymbolicName: net.bioclipse.cdk.qsar.rest;singleton:=true
 Bundle-Version: 1.0.0
 Bundle-Activator: net.bioclipse.cdk.qsar.rest.Activator
 Bundle-Vendor: The Bioclipse Team
