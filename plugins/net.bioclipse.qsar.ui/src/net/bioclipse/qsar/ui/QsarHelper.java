@@ -175,4 +175,26 @@ public class QsarHelper {
         
     }
 
+    public static void setAllDirty( QsarType qsarModel, IProject project ) {
+
+        IEclipsePreferences node = new InstanceScope().getNode(net.bioclipse.qsar.ui.Activator.PLUGIN_ID);
+
+        //Set all structures to dirty
+        for (ResourceType res : qsarModel.getStructurelist().getResources()){
+            for (StructureType structure : res.getStructure()){
+                node.putBoolean( project.getName()+"_"+structure.getId(), true);
+            }
+        }
+        
+        for (DescriptorType desc : qsarModel.getDescriptorlist().getDescriptors()){
+            node.putBoolean( project.getName()+"_" + desc.getId(), true);
+        }
+        
+        try {
+            node.flush();
+        } catch ( BackingStoreException e ) {
+            e.printStackTrace();
+        }
+    }
+
 }
