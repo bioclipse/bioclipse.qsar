@@ -18,6 +18,8 @@ import net.bioclipse.qsar.QsarType;
 import net.bioclipse.qsar.ResourceType;
 import net.bioclipse.qsar.ResponseType;
 import net.bioclipse.qsar.ui.QsarHelper;
+import net.bioclipse.qsar.ui.wizards.AddMoleculeFilesWizard;
+import net.bioclipse.qsar.ui.wizards.ExportQsarWizard;
 
 import org.apache.log4j.Logger;
 import org.eclipse.core.resources.IProject;
@@ -32,9 +34,16 @@ import org.eclipse.emf.edit.domain.IEditingDomainProvider;
 import org.eclipse.jface.dialogs.IPageChangedListener;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.dialogs.PageChangedEvent;
+import org.eclipse.jface.viewers.StructuredSelection;
+import org.eclipse.jface.window.Window;
+import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.PaintEvent;
+import org.eclipse.swt.events.PaintListener;
+import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Canvas;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.ui.forms.IFormColors;
@@ -70,8 +79,6 @@ public class OverviewPage extends FormPage implements IEditingDomainProvider, IP
     private Label lblNumDescriptors;
     private Label lblNumResponses;
     private Label lblNumMissingResponses;
-    private Label lblDatasetRows;
-    private Label lblDatasetColumns;
 
     private Label lblCalculationTime;
 
@@ -111,7 +118,7 @@ public class OverviewPage extends FormPage implements IEditingDomainProvider, IP
         toolkit.decorateFormHeading(form.getForm());
 
         project=((QsarEditor)getEditor()).getActiveProject();
-        ToolbarHelper.setupToolbar(form, project);
+        ToolbarHelper.setupToolbar(form, project, (QsarEditor)getEditor());
 
         TableWrapLayout layout=new TableWrapLayout();
         layout.numColumns=2;
@@ -206,9 +213,6 @@ public class OverviewPage extends FormPage implements IEditingDomainProvider, IP
         lblCalculationStatus.setText(QsarHelper.getBuildStatus( project ));
         lblCalculationTime.setText(QsarHelper.getBuildTime( project ));
 
-        lblDatasetRows.setText("N/A");
-        lblDatasetColumns.setText("N/A");
-
     }
 
 
@@ -238,11 +242,25 @@ public class OverviewPage extends FormPage implements IEditingDomainProvider, IP
         molSection.setDescription("The molecules that are added to this QSAR analysis");
 
         Composite sectionClient = toolkit.createComposite(molSection);
-        sectionClient.setLayout(new GridLayout(2,false));
+        sectionClient.setLayout(new GridLayout(3,false));
         molSection.setClient(sectionClient);
-
+        
+        final Image consensusImage=net.bioclipse.qsar.ui.Activator
+                        .getImageDescriptor( "icons48/chemstruct.png" ).createImage();
+        Canvas consensusCanvas = new Canvas(sectionClient,SWT.NO_REDRAW_RESIZE);
+        consensusCanvas.addPaintListener(new PaintListener() {
+            public void paintControl(PaintEvent e) {
+             e.gc.drawImage(consensusImage,0,1);
+            }
+        });
+        GridData gdIm=new GridData(GridData.FILL_VERTICAL);
+        gdIm.verticalSpan=3;
+        gdIm.widthHint=60;
+        consensusCanvas.setLayoutData(gdIm);
+        
         Label lblMoltext=toolkit.createLabel(sectionClient, "Files in analysis:");
-        GridData gdtxt=new GridData(GridData.FILL_BOTH);
+        GridData gdtxt=new GridData(GridData.FILL_VERTICAL);
+        gdtxt.widthHint=100;
         lblMoltext.setLayoutData(gdtxt);
 
         lblNumFiles=toolkit.createLabel(sectionClient, "N/A");
@@ -250,7 +268,7 @@ public class OverviewPage extends FormPage implements IEditingDomainProvider, IP
         lblNumFiles.setLayoutData(gdtxt2);
 
         Label lblMolRestext=toolkit.createLabel(sectionClient, "Structures in analysis:");
-        GridData gdtxtres=new GridData(GridData.FILL_BOTH);
+        GridData gdtxtres=new GridData(GridData.FILL_VERTICAL);
         lblMolRestext.setLayoutData(gdtxtres);
 
         lblNumStructures=toolkit.createLabel(sectionClient, "N/A");
@@ -295,11 +313,25 @@ public class OverviewPage extends FormPage implements IEditingDomainProvider, IP
         molSection.setDescription("The selected descriptors in this analysis");
 
         Composite sectionClient = toolkit.createComposite(molSection);
-        sectionClient.setLayout(new GridLayout(2,false));
+        sectionClient.setLayout(new GridLayout(3,false));
         molSection.setClient(sectionClient);
+        
+        final Image consensusImage=net.bioclipse.qsar.ui.Activator
+                        .getImageDescriptor( "icons48/3dmol.jpg" ).createImage();
+        Canvas consensusCanvas = new Canvas(sectionClient,SWT.NO_REDRAW_RESIZE);
+        consensusCanvas.addPaintListener(new PaintListener() {
+            public void paintControl(PaintEvent e) {
+             e.gc.drawImage(consensusImage,0,1);
+            }
+        });
+        GridData gdIm=new GridData(GridData.FILL_VERTICAL);
+        gdIm.verticalSpan=3;
+        gdIm.widthHint=60;
+        consensusCanvas.setLayoutData(gdIm);
 
         Label lblMoltext=toolkit.createLabel(sectionClient, "Descriptors:");
-        GridData gdtxt=new GridData(GridData.FILL_BOTH);
+        GridData gdtxt=new GridData(GridData.FILL_VERTICAL);
+        gdtxt.widthHint=100;
         lblMoltext.setLayoutData(gdtxt);
 
         lblNumDescriptors=toolkit.createLabel(sectionClient, "N/A");
@@ -345,11 +377,25 @@ public class OverviewPage extends FormPage implements IEditingDomainProvider, IP
         molSection.setDescription("The biological responses in this analysis");
 
         Composite sectionClient = toolkit.createComposite(molSection);
-        sectionClient.setLayout(new GridLayout(2,false));
+        sectionClient.setLayout(new GridLayout(3,false));
         molSection.setClient(sectionClient);
+        
+        final Image consensusImage=net.bioclipse.qsar.ui.Activator
+                        .getImageDescriptor( "icons48/chemistry.png" ).createImage();
+        Canvas consensusCanvas = new Canvas(sectionClient,SWT.NO_REDRAW_RESIZE);
+        consensusCanvas.addPaintListener(new PaintListener() {
+            public void paintControl(PaintEvent e) {
+             e.gc.drawImage(consensusImage,0,1);
+            }
+        });
+        GridData gdIm=new GridData(GridData.FILL_VERTICAL);
+        gdIm.verticalSpan=3;
+        gdIm.widthHint=60;
+        consensusCanvas.setLayoutData(gdIm);
 
         Label lblMoltext=toolkit.createLabel(sectionClient, "Responses:");
-        GridData gdtxt=new GridData(GridData.FILL_BOTH);
+        GridData gdtxt=new GridData(GridData.FILL_VERTICAL);
+        gdtxt.widthHint=100;
         lblMoltext.setLayoutData(gdtxt);
 
         lblNumResponses=toolkit.createLabel(sectionClient, "N/A");
@@ -357,7 +403,7 @@ public class OverviewPage extends FormPage implements IEditingDomainProvider, IP
         lblNumResponses.setLayoutData(gdtxt2);
 
         Label lblMolErrorText=toolkit.createLabel(sectionClient, "Missing responses: ");
-        GridData gdtxt3=new GridData(GridData.FILL_BOTH);
+        GridData gdtxt3=new GridData(GridData.FILL_VERTICAL);
         lblMolErrorText.setLayoutData(gdtxt3);
 
         lblNumMissingResponses=toolkit.createLabel(sectionClient, "N/A");
@@ -402,11 +448,25 @@ public class OverviewPage extends FormPage implements IEditingDomainProvider, IP
         molSection.setDescription("Results from the last build");
 
         Composite sectionClient = toolkit.createComposite(molSection);
-        sectionClient.setLayout(new GridLayout(2,false));
+        sectionClient.setLayout(new GridLayout(3,false));
         molSection.setClient(sectionClient);
-
+        
+        final Image consensusImage=net.bioclipse.qsar.ui.Activator
+                        .getImageDescriptor( "icons48/wheel.png" ).createImage();
+        Canvas consensusCanvas = new Canvas(sectionClient,SWT.NO_REDRAW_RESIZE);
+        consensusCanvas.addPaintListener(new PaintListener() {
+            public void paintControl(PaintEvent e) {
+             e.gc.drawImage(consensusImage,0,1);
+            }
+        });
+        GridData gdIm=new GridData(GridData.FILL_VERTICAL);
+        gdIm.verticalSpan=3;
+        gdIm.widthHint=60;
+        consensusCanvas.setLayoutData(gdIm);
+        
         Label lblMoltext51=toolkit.createLabel(sectionClient, "Status");
-        GridData gdtxt51=new GridData(GridData.FILL_BOTH);
+        GridData gdtxt51=new GridData(GridData.FILL_VERTICAL);
+        gdtxt51.widthHint=100;
         lblMoltext51.setLayoutData(gdtxt51);
 
         lblCalculationStatus=toolkit.createLabel(sectionClient, "N/A");
@@ -414,39 +474,34 @@ public class OverviewPage extends FormPage implements IEditingDomainProvider, IP
         lblCalculationStatus.setLayoutData(gdtxt76);
 
         Label lblMoltext5=toolkit.createLabel(sectionClient, "Calculation time:");
-        GridData gdtxt5=new GridData(GridData.FILL_BOTH);
+        GridData gdtxt5=new GridData(GridData.FILL_VERTICAL);
         lblMoltext5.setLayoutData(gdtxt5);
 
         lblCalculationTime=toolkit.createLabel(sectionClient, "N/A");
         GridData gdtxt7=new GridData(GridData.FILL_BOTH);
         lblCalculationTime.setLayoutData(gdtxt7);
 
-        Label lblMoltext=toolkit.createLabel(sectionClient, "Dataset # rows:");
-        GridData gdtxt=new GridData(GridData.FILL_BOTH);
-        lblMoltext.setLayoutData(gdtxt);
+//        Label lblMoltext=toolkit.createLabel(sectionClient, "Dataset # rows:");
+//        GridData gdtxt=new GridData(GridData.FILL_BOTH);
+//        lblMoltext.setLayoutData(gdtxt);
 
-        lblDatasetRows=toolkit.createLabel(sectionClient, "N/A");
-        GridData gdtxt2=new GridData(GridData.FILL_BOTH);
-        lblDatasetRows.setLayoutData(gdtxt2);
-
-        Label lblMolErrorText=toolkit.createLabel(sectionClient, "Dataset # columns: ");
-        GridData gdtxt3=new GridData(GridData.FILL_BOTH);
-        lblMolErrorText.setLayoutData(gdtxt3);
-
-        lblDatasetColumns=toolkit.createLabel(sectionClient, "N/A");
-        GridData gdtxt4=new GridData(GridData.FILL_BOTH);
-        lblDatasetColumns.setLayoutData(gdtxt4);
 
         //Hyperlink to build
         Hyperlink link = toolkit.createHyperlink(sectionClient,"Trigger full build...", SWT.WRAP);
         link.addHyperlinkListener(new HyperlinkAdapter() {
             public void linkActivated(HyperlinkEvent e) {
 
+                //Make all dirty
+                QsarType qsarModel = ((QsarEditor)getEditor()).getQsarModel();
+                QsarHelper.setAllDirty(qsarModel, project);
+
+                //Start build job
                 WorkspaceJob job = new WorkspaceJob("Building qsar project"){
 
                     @Override
                     public IStatus runInWorkspace(IProgressMonitor monitor)
                     throws CoreException {
+
                         project.build(IncrementalProjectBuilder.FULL_BUILD, monitor);
                         return Status.OK_STATUS;
                     }
@@ -490,29 +545,52 @@ public class OverviewPage extends FormPage implements IEditingDomainProvider, IP
         //				"exchanging of complete dataset formation.");
 
         Composite sectionClient = toolkit.createComposite(molSection);
-        sectionClient.setLayout(new GridLayout(2,false));
+        sectionClient.setLayout(new GridLayout(3,false));
         molSection.setClient(sectionClient);
-
-        //Hyperlink to export QSAR.ML
-        Hyperlink link = toolkit.createHyperlink(sectionClient,"Export QSAR-ML", SWT.WRAP);
-        link.addHyperlinkListener(new HyperlinkAdapter() {
-            public void linkActivated(HyperlinkEvent e) {
-                showMessage("Not implemented");
+        
+        final Image consensusImage=net.bioclipse.qsar.ui.Activator
+                        .getImageDescriptor( "icons48/export.jpg" ).createImage();
+        Canvas consensusCanvas = new Canvas(sectionClient,SWT.NO_REDRAW_RESIZE);
+        consensusCanvas.addPaintListener(new PaintListener() {
+            public void paintControl(PaintEvent e) {
+             e.gc.drawImage(consensusImage,0,1);
             }
         });
-        GridData gd=new GridData(GridData.FILL_BOTH);
-        link.setLayoutData(gd);
+        GridData gdIm=new GridData(GridData.FILL_VERTICAL);
+        gdIm.verticalSpan=3;
+        gdIm.widthHint=60;
+        consensusCanvas.setLayoutData(gdIm);
 
-        Label lblMolErrorText=toolkit.createLabel(sectionClient, "");
-        GridData gdtxt3=new GridData(GridData.FILL_BOTH);
-        lblMolErrorText.setLayoutData(gdtxt3);
+//        //Hyperlink to export QSAR.ML
+//        Hyperlink link = toolkit.createHyperlink(sectionClient,"Export QSAR-ML", SWT.WRAP);
+//        link.addHyperlinkListener(new HyperlinkAdapter() {
+//            public void linkActivated(HyperlinkEvent e) {
+//                showMessage("Not implemented");
+//            }
+//        });
+//        GridData gd=new GridData(GridData.FILL_BOTH);
+//        link.setLayoutData(gd);
+
+//        Label lblMolErrorText=toolkit.createLabel(sectionClient, "");
+//        GridData gdtxt3=new GridData(GridData.FILL_BOTH);
+//        lblMolErrorText.setLayoutData(gdtxt3);
 
 
         //Hyperlink to export QSAR project
         Hyperlink link2 = toolkit.createHyperlink(sectionClient,"Export QSAR project", SWT.WRAP);
         link2.addHyperlinkListener(new HyperlinkAdapter() {
             public void linkActivated(HyperlinkEvent e) {
-                showMessage("Not implemented");
+                
+                ExportQsarWizard wizard = new ExportQsarWizard();
+                StructuredSelection sel = new StructuredSelection(((QsarEditor)getEditor()).getActiveProject());
+                wizard.init( getSite().getWorkbenchWindow().getWorkbench(), sel);
+                
+                // Instantiates the wizard container with the wizard and opens it
+                WizardDialog dialog = new WizardDialog(getSite().getShell(), wizard);
+                dialog.create();
+                int r = dialog.open();
+                if (r==Window.CANCEL){
+                }
             }
         });
         GridData gd2=new GridData(GridData.FILL_BOTH);
@@ -550,11 +628,25 @@ public class OverviewPage extends FormPage implements IEditingDomainProvider, IP
         molSection.setDescription("Metadata about the datase");
 
         Composite sectionClient = toolkit.createComposite(molSection);
-        sectionClient.setLayout(new GridLayout(2,false));
+        sectionClient.setLayout(new GridLayout(3,false));
         molSection.setClient(sectionClient);
+        
+        final Image consensusImage=net.bioclipse.qsar.ui.Activator
+                        .getImageDescriptor( "icons48/info.jpg" ).createImage();
+        Canvas consensusCanvas = new Canvas(sectionClient,SWT.NO_REDRAW_RESIZE);
+        consensusCanvas.addPaintListener(new PaintListener() {
+            public void paintControl(PaintEvent e) {
+             e.gc.drawImage(consensusImage,0,1);
+            }
+        });
+        GridData gdIm=new GridData(GridData.FILL_VERTICAL);
+        gdIm.verticalSpan=3;
+        gdIm.widthHint=60;
+        consensusCanvas.setLayoutData(gdIm);
+
 
         Label lblMoltext=toolkit.createLabel(sectionClient, "Dataset name:");
-        GridData gdtxt=new GridData(GridData.FILL_BOTH);
+        GridData gdtxt=new GridData(GridData.FILL_VERTICAL);
         lblMoltext.setLayoutData(gdtxt);
 
         lblDatasetName=toolkit.createLabel(sectionClient, "N/A");
@@ -562,7 +654,8 @@ public class OverviewPage extends FormPage implements IEditingDomainProvider, IP
         lblDatasetName.setLayoutData(gdtxt2);
 
         Label lblMolRestext=toolkit.createLabel(sectionClient, "Authors:");
-        GridData gdtxtres=new GridData(GridData.FILL_BOTH);
+        GridData gdtxtres=new GridData(GridData.FILL_VERTICAL);
+        gdtxtres.widthHint=100;
         lblMolRestext.setLayoutData(gdtxtres);
 
         lblAuthors=toolkit.createLabel(sectionClient, "N/A");
