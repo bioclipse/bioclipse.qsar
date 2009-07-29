@@ -213,7 +213,7 @@ public class CDKDescriptorCalculator implements IDescriptorCalculator {
             }
 
 
-            logger.debug("CDK calculating descriptor: " + descType.getOntologyid() + "for mol: " + cdkmol.getName());
+//            logger.debug("CDK calculating descriptor: " + descType.getOntologyid() + " for mol: " + cdkmol.getName());
             monitor.subTask("Molecule: " + cdkmol.getName() + "\nDescriptor: " + descType.getOntologyid());
             monitor.worked(1);
 
@@ -239,8 +239,8 @@ public class CDKDescriptorCalculator implements IDescriptorCalculator {
 
                 //Do we have parameters available for this descriptorID in Map?
                 if (descType.getParameter()!=null && descType.getParameter().size()>0){
-                    logger.debug("We have: " + descType.getParameter().size() 
-                                 + " params available.");
+//                    logger.debug("We have: " + descType.getParameter().size() 
+//                                 + " params available.");
 
                     //OK, get it and set it to descriptor
                     EList<ParameterType> bcParams = descType.getParameter();
@@ -260,11 +260,11 @@ public class CDKDescriptorCalculator implements IDescriptorCalculator {
 
                         for (int i=0; i< cdkParams.length; i++){
                             String cdkName=cdkDescriptor.getParameterNames()[i];
-                            logger.debug("CDK descr accepts param: " + cdkName);
+//                            logger.debug("CDK descr accepts param: " + cdkName);
 
                             if (cdkName.equalsIgnoreCase("checkAromaticity")){
-                                logger.debug("Aromaticity detection set as false, " +
-                                "as this is already done");
+//                                logger.debug("Aromaticity detection set as false, " +
+//                                "as this is already done");
                                 cdkParams[i]=false;
                             }
 
@@ -280,10 +280,10 @@ public class CDKDescriptorCalculator implements IDescriptorCalculator {
                                             try{
                                                 Integer ival=Integer.parseInt(param.getValue());
                                                 cdkParams[i]=ival;
-                                                logger.debug("   - Set param: " + 
-                                                             cdkName + " to " + param.getValue());
+//                                                logger.debug("   - Set param: " + 
+//                                                             cdkName + " to " + param.getValue());
                                             }catch (NumberFormatException e){
-                                                logger.debug("   - expected an Integer " +
+                                                logger.error("   - expected an Integer " +
                                                              "param for " + cdkName + 
                                                              " but found: "  + 
                                                              param.getValue());
@@ -295,16 +295,16 @@ public class CDKDescriptorCalculator implements IDescriptorCalculator {
                                             //Do conversion from String to Boolean
                                             if (param.getValue().equalsIgnoreCase("true")){
                                                 cdkParams[i]=true;
-                                                logger.debug("   - Set param: " + 
-                                                             cdkName + " to " + param.getValue());
+//                                                logger.debug("   - Set param: " + 
+//                                                             cdkName + " to " + param.getValue());
                                             }
                                             else if (param.getValue().equalsIgnoreCase("false")){
                                                 cdkParams[i]=false;
-                                                logger.debug("   - Set param: " + 
-                                                             cdkName + " to " + param.getValue());
+//                                                logger.debug("   - Set param: " + 
+//                                                             cdkName + " to " + param.getValue());
                                             }
                                             else{
-                                                logger.debug("   - expected a boolean " +
+                                                logger.error("   - expected a boolean " +
                                                              "param for " + cdkName + 
                                                              " but found: "  + 
                                                              param.getValue());
@@ -314,8 +314,8 @@ public class CDKDescriptorCalculator implements IDescriptorCalculator {
                                         //String
                                         else if (obj instanceof String) {
                                             cdkParams[i]=param.getValue();
-                                            logger.debug("   - Set param: " + 
-                                                         cdkName + " to " + param.getValue());
+//                                            logger.debug("   - Set param: " + 
+//                                                         cdkName + " to " + param.getValue());
                                         }
                                     }
                                 }
@@ -337,7 +337,7 @@ public class CDKDescriptorCalculator implements IDescriptorCalculator {
                                                length() > 0 ? cdkDescriptor.getDescriptorResultType().
                                                        length() : 1];
                 String[] resultLabels = null;
-                logger.debug("# result values: " + resultVals.length);
+//                logger.debug("# result values: " + resultVals.length);
 
                 //Calculate descriptor
                 try {
@@ -347,28 +347,28 @@ public class CDKDescriptorCalculator implements IDescriptorCalculator {
                     if (result instanceof BooleanResult) {
                         if (((BooleanResult)result).booleanValue()) {
                             resultVals[0] = 1f;
-                            logger.debug("Calculated value: " + resultVals[0]);
+//                            logger.debug("Calculated value: " + resultVals[0]);
                         } else {
                             resultVals[0] = 0f;
-                            logger.debug("Calculated value: " + resultVals[0]);
+//                            logger.debug("Calculated value: " + resultVals[0]);
                         }
                     } else if (result instanceof DoubleResult) {
                         resultVals[0] = (float)((DoubleResult)result).doubleValue();
-                        logger.debug("Calculated value: " + resultVals[0]);
+//                        logger.debug("Calculated value: " + resultVals[0]);
                     } else if (result instanceof IntegerResult) {
                         resultVals[0] = (float)((IntegerResult)result).intValue();
-                        logger.debug("Calculated value: " + resultVals[0]);
+//                        logger.debug("Calculated value: " + resultVals[0]);
                     } else if (result instanceof IntegerArrayResult) {
                         resultVals = new Float[((IntegerArrayResult)result).length()];
                         for (int i=0; i<resultVals.length; i++) {
                             resultVals[i] = (float)((IntegerArrayResult)result).get(i);
-                            logger.debug("Calculated value " + i +": " + resultVals[i]);
+//                            logger.debug("Calculated value " + i +": " + resultVals[i]);
                         }
                     } else if (result instanceof DoubleArrayResult) {
                         resultVals = new Float[((DoubleArrayResult)result).length()];
                         for (int i=0; i<resultVals.length; i++) {
                             resultVals[i] = (float)((DoubleArrayResult)result).get(i);
-                            logger.debug("Calculated value " + i +": " + resultVals[i]);
+//                            logger.debug("Calculated value " + i +": " + resultVals[i]);
                         }
                     } else {
                         logger.error("Uknown descriptor result type: " + result.getClass().getName());
@@ -385,7 +385,7 @@ public class CDKDescriptorCalculator implements IDescriptorCalculator {
 
                 //Check that we got back correct number of values
                 if (resultLabels.length != resultVals.length) {
-                    System.out.println("WARN: #labels != #vals for " + descType.getOntologyid());
+                    logger.warn("#labels != #vals for " + descType.getOntologyid());
                 }
 
                 res.setLabels(resultLabels);
