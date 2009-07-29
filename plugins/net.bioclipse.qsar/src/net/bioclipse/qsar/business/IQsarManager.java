@@ -49,15 +49,15 @@ public interface IQsarManager extends IBioclipseManager{
     @PublishedMethod( 
                       params="IMolecule molecule, String descriptorImplID",
                       methodSummary = "Calculates a descriptor for a molecule" )
-    public IDescriptorResult calculate(IMolecule molecule, String descriptorImplID);
+    public IDescriptorResult calculate(IMolecule molecule, String descriptorImplID) throws BioclipseException;
 
     public List<IDescriptorResult> calculate(IMolecule molecule,
-                                             List<DescriptorType> descriptorTypes);
+                                             List<DescriptorType> descriptorTypes) throws BioclipseException;
 
     public Map<? extends IMolecule, List<IDescriptorResult>> calculate(
                                                                        List<? extends IMolecule> molecules, 
                                                                        List<DescriptorType> descriptorTypes, IProgressMonitor monitor)
-                                                                       throws OperationCanceledException;
+                                                                       throws OperationCanceledException, BioclipseException;
 
     @Recorded
     @PublishedMethod(params="List<? extends IMolecule> molecules, " +
@@ -65,7 +65,7 @@ public interface IQsarManager extends IBioclipseManager{
          methodSummary = "Calculates a list of descriptors for a " +
     "list of molecules" )
     public Map<? extends IMolecule, List<IDescriptorResult>> calculateNoParams(
-         List<? extends IMolecule> molecules, List<String> descriptorIDs);
+         List<? extends IMolecule> molecules, List<String> descriptorIDs) throws BioclipseException;
 
     @PublishedMethod( methodSummary = "Returns the available descriptor providers" )
     public List<String> getProviders();
@@ -145,6 +145,7 @@ public interface IQsarManager extends IBioclipseManager{
      * @param molDescMap Map of molecule to list of descriptors
      * @param monitor
      * @return
+     * @throws BioclipseException 
      */
     @PublishedMethod(params="Map<IMolecule, List<DescriptorType>> molDescMap, " +
     		"IProgressMonitor monitor ",
@@ -152,7 +153,7 @@ public interface IQsarManager extends IBioclipseManager{
     @Recorded
     public Map<IMolecule, List<IDescriptorResult>> doCalculation(
           Map<IMolecule, List<DescriptorType>> molDescMap,
-          IProgressMonitor monitor );
+          IProgressMonitor monitor ) throws BioclipseException;
 
     @Deprecated
     public void addResourcesToQsarModel( QsarType qsarmodel, EditingDomain editingDomain,

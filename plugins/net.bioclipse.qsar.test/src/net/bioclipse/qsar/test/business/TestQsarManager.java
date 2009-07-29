@@ -521,7 +521,7 @@ public class TestQsarManager {
 
 	
 	@Test
-	public void testCalculateSingleMolSingleDescriptor(){
+	public void testCalculateSingleMolSingleDescriptor() throws BioclipseException{
 
 		IMolecule mol=new SMILESMolecule("C1CCCCC1CC(CC)CC");
 		String descriptorID="http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#chiChain";
@@ -539,7 +539,7 @@ public class TestQsarManager {
 	}
 
 	@Test
-	public void testCalculateDescriptorWithError(){
+	public void testCalculateDescriptorWithError() throws BioclipseException{
 
 		IMolecule mol=new SMILESMolecule("C1CCCCC1CC(CC)CC");
 		String descriptorID="http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#aromaticBondsCount";

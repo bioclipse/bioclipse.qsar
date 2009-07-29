@@ -533,11 +533,12 @@ public class QsarManager implements IQsarManager{
 
     /**
      * Calculate descriptors for N molecules with D descriptors with P params.
+     * @throws BioclipseException 
      * 
      */
     public Map<? extends IMolecule, List<IDescriptorResult>> calculate(
                                                                        List<? extends IMolecule> molecules, 
-                                                                       List<DescriptorType> descriptorTypes, IProgressMonitor monitor)   throws OperationCanceledException{
+                                                                       List<DescriptorType> descriptorTypes, IProgressMonitor monitor) throws BioclipseException{
 
         Map<IMolecule, List<DescriptorType>> molDescMap=new HashMap<IMolecule, List<DescriptorType>>();
 
@@ -554,9 +555,10 @@ public class QsarManager implements IQsarManager{
     /**
      * Convenience method to calculate a descriptor for a single mol and 
      * a single descriptorID.
+     * @throws BioclipseException 
      */
     @Deprecated
-    public IDescriptorResult calculate(IMolecule molecule, String descriptorID) {
+    public IDescriptorResult calculate(IMolecule molecule, String descriptorID) throws BioclipseException {
 
         List<IMolecule> mollist=new ArrayList<IMolecule>();
         mollist.add(molecule);
@@ -797,9 +799,10 @@ public class QsarManager implements IQsarManager{
      * Convert MAP to an EMF MAP of DescriptorType to operate on
      * @param calculationMap
      * @return
+     * @throws BioclipseException 
      */
     private DescriptorCalculationResult calculate2(
-                                                    Map<IMolecule, List<DescriptorImpl>> calculationMap ) {
+                                                    Map<IMolecule, List<DescriptorImpl>> calculationMap ) throws BioclipseException {
 
         Map<IMolecule, List<DescriptorType>> molDescMap=new HashMap<IMolecule, List<DescriptorType>>();
 
@@ -925,9 +928,10 @@ public class QsarManager implements IQsarManager{
 
     /**
      * Convenience call to set up calculationMap for one mol and one descimpl
+     * @throws BioclipseException 
      */
     private DescriptorCalculationResult calculate2( IMolecule mol,
-                                                    DescriptorImpl impl ) {
+                                                    DescriptorImpl impl ) throws BioclipseException {
         
         Map<IMolecule, List<DescriptorImpl>> calculationMap=
                                  new HashMap<IMolecule, List<DescriptorImpl>>();
@@ -943,7 +947,7 @@ public class QsarManager implements IQsarManager{
      * BELOW IS OLD IMPLE
      */
     public List<IDescriptorResult> calculate(IMolecule molecule,
-                                             List<DescriptorType> descriptorTypes) {
+                                             List<DescriptorType> descriptorTypes) throws BioclipseException {
 
         List<IMolecule> mollist=new ArrayList<IMolecule>();
         mollist.add(molecule);
@@ -956,7 +960,7 @@ public class QsarManager implements IQsarManager{
 
 
     public Map<? extends IMolecule, List<IDescriptorResult>> calculateNoParams(
-                                                                               List<? extends IMolecule> molecules, List<String> descriptorIDs) {
+                                                                               List<? extends IMolecule> molecules, List<String> descriptorIDs) throws BioclipseException {
         List<DescriptorType> descTypes=new ArrayList<DescriptorType>();
 
         for (String descriptorID : descriptorIDs){
@@ -1148,10 +1152,11 @@ public class QsarManager implements IQsarManager{
 
     /**
      * Collect by provider and invoke calculator ono the molecules.
+     * @throws BioclipseException 
      */
     public Map<IMolecule, List<IDescriptorResult>> doCalculation(
                                 Map<IMolecule, List<DescriptorType>> molDescMap,
-                                IProgressMonitor monitor ) {
+                                IProgressMonitor monitor ) throws BioclipseException {
         
         //We are to calculate the following combinations
         monitor.beginTask( "Calculating descriptors", molDescMap.size()+1 );
@@ -1206,19 +1211,26 @@ public class QsarManager implements IQsarManager{
                                             = moldescByProvider.get( provider );
 
             //Invoke calculation from providers calculator
-            Map<? extends IMolecule, List<IDescriptorResult>> results = 
-                calculator.calculateDescriptor(moldesc, 
-                               new SubProgressMonitor(monitor, moldesc.size()));
+            try{
+                Map<? extends IMolecule, List<IDescriptorResult>> results = 
+                    calculator.calculateDescriptor(moldesc, 
+                                                   new SubProgressMonitor(monitor, moldesc.size()));
 
-            //Add these results to the molecule
-            for (IMolecule mol : results.keySet()){
-                if (allResults.get(mol)==null) allResults.put(mol, 
-                                            new ArrayList<IDescriptorResult>());
-                List<IDescriptorResult> reslist=allResults.get(mol);
+                //Add these results to the molecule
+                for (IMolecule mol : results.keySet()){
+                    if (allResults.get(mol)==null) allResults.put(mol, 
+                                                                  new ArrayList<IDescriptorResult>());
+                    List<IDescriptorResult> reslist=allResults.get(mol);
 
-                //Add the computed result to the reslist
-                reslist.addAll(results.get(mol));
+                    //Add the computed result to the reslist
+                    reslist.addAll(results.get(mol));
+                }
+
+            }catch (OperationCanceledException e){
+                monitor.setCanceled( true );
+                throw new BioclipseException("Descriptor calculation was aborted", e);
             }
+
 
         }
 
@@ -1367,6 +1379,13 @@ public class QsarManager implements IQsarManager{
         ICDKManager cdk = net.bioclipse.cdk.business.Activator.getDefault()
                                                            .getJavaCDKManager();
 
+        if (monitor.isCanceled()){
+            logger.debug("Adding files was cencelled.");
+            return;
+        }
+        
+        monitor.subTask( "Parsing file..." );
+        
         StructurelistType structList = qsarmodel.getStructurelist();
         ResponsesListType responseList = qsarmodel.getResponselist();
         CompoundCommand ccmd=new CompoundCommand();
@@ -1395,6 +1414,11 @@ public class QsarManager implements IQsarManager{
             List<ICDKMolecule> mollist = cdk.loadMolecules(file);
             if (mollist==null || mollist.size()<=0){
                 throw new BioclipseException("No molecules in file");
+            }
+            
+            if (monitor.isCanceled()){
+                logger.debug("Adding files was cencelled.");
+                return;
             }
 
             //Count no of 2D and 3D
