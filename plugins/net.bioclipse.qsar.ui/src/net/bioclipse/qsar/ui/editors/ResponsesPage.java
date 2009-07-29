@@ -127,7 +127,7 @@ public class ResponsesPage extends FormPage implements IEditingDomainProvider, I
         toolkit.decorateFormHeading(form.getForm());
 
         IProject project=((QsarEditor)getEditor()).getActiveProject();
-        ToolbarHelper.setupToolbar(form, project);
+        ToolbarHelper.setupToolbar(form, project, (QsarEditor)getEditor());
 
         GridLayout layout = new GridLayout();
         layout.numColumns=2;

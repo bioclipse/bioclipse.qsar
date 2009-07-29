@@ -161,7 +161,7 @@ private Table paramsTable;
         toolkit.decorateFormHeading(form.getForm());
         
 		IProject project=((QsarEditor)getEditor()).getActiveProject();
-        ToolbarHelper.setupToolbar(form, project);
+    ToolbarHelper.setupToolbar(form, project, (QsarEditor)getEditor());
         
 //        setupToolbar(form);
         

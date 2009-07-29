@@ -95,7 +95,7 @@ public class InformationPage extends FormPage implements IEditingDomainProvider,
         toolkit.decorateFormHeading(form.getForm());
 
         IProject project=((QsarEditor)getEditor()).getActiveProject();
-        ToolbarHelper.setupToolbar(form, project);
+        ToolbarHelper.setupToolbar(form, project, (QsarEditor)getEditor());
 
         //		form.setBackgroundImage(FormArticlePlugin.getDefault().getImage(
         //				FormArticlePlugin.IMG_FORM_BG));

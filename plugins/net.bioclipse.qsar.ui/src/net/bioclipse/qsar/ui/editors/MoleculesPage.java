@@ -183,7 +183,7 @@ public class MoleculesPage extends FormPage implements IEditingDomainProvider, I
         toolkit.decorateFormHeading(form.getForm());
 
         IProject project=((QsarEditor)getEditor()).getActiveProject();
-        ToolbarHelper.setupToolbar(form, project);
+        ToolbarHelper.setupToolbar(form, project, (QsarEditor)getEditor());
 
         //        form.setBackgroundImage(FormArticlePlugin.getDefault().getImage(FormArticlePlugin.IMG_FORM_BG));
         GridLayout layout = new GridLayout();
@@ -416,6 +416,7 @@ public class MoleculesPage extends FormPage implements IEditingDomainProvider, I
 //    protected void addResources(final IResource[] resources, final IProgressMonitor monitor) {
     protected void addResources(final Map<IFile, PropertyEntry> filemap, final IProgressMonitor monitor) {
 
+        monitor.beginTask( "Adding resources", IProgressMonitor.UNKNOWN );
         
         //Set up input with propertyobject, not wrapper class since that is 
         //local to this plugin. This is the one we will send to QSARManager 
@@ -508,6 +509,11 @@ public class MoleculesPage extends FormPage implements IEditingDomainProvider, I
                     }
                 });
             }
+        }
+        
+        if (monitor.isCanceled()){
+            logger.debug("Adding files was cencelled.");
+            return;
         }
 
         //Ok, add these resources to QsarModel using manager
@@ -691,7 +697,7 @@ public class MoleculesPage extends FormPage implements IEditingDomainProvider, I
         makeActions();
         hookContextMenu();
 
-        getSite().setSelectionProvider( molViewer );
+//        getSite().setSelectionProvider( molViewer );
 
     }
 
