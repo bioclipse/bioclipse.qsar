@@ -257,6 +257,12 @@ public class QSARBuilder extends IncrementalProjectBuilder
             return;
         }
 
+        if (checkCancel(monitor)){
+            handleInterruptedBuild();
+            return;
+        }
+
+
         logger.debug( "******************************************\n" +
                       "Building qsar project: " + getProject().getName() );
         logger.debug( "******************************************");
@@ -264,7 +270,7 @@ public class QSARBuilder extends IncrementalProjectBuilder
         //We have X phases in the qsar building, each with their respective
         //subtask
         monitor.beginTask("Building QSAR project", 5);
-        monitor.subTask( "Preparing build");
+        monitor.subTask( "Preparing build...");
         monitor.worked( 1 );
 
         QsarHelper.setBuildStatus( getProject(), "RUNNING" );
@@ -282,7 +288,9 @@ public class QSARBuilder extends IncrementalProjectBuilder
         //Extract structures from model for descriptor calculation
         //================================================
         Map<StructureType, IMolecule> structureMap=extractMoleculesFromQSARType(qsarModel);
-        logger.debug("Structures: \n" + debugStructureMap(structureMap) );
+        logger.debug("Structure count: " + structureMap.size() );
+//        logger.debug(debugStructureMap(structureMap) );
+        logger.debug("Time: " + stopwatch.toString());
         if (checkCancel(monitor)){
             handleInterruptedBuild();
             return;
@@ -291,7 +299,9 @@ public class QSARBuilder extends IncrementalProjectBuilder
         //List descriptors for calculation
         //================================================
         List<DescriptorType> allDescriptors=qsarModel.getDescriptorlist().getDescriptors();
-        logger.debug("Descriptors: \n" + debugDescList(allDescriptors) );
+        logger.debug("Descriptor count: " + allDescriptors.size() );
+//        logger.debug(debugDescList(allDescriptors) );
+        logger.debug("Time: " + stopwatch.toString());
         if (checkCancel(monitor)){
             handleInterruptedBuild();
             return;
@@ -303,7 +313,13 @@ public class QSARBuilder extends IncrementalProjectBuilder
         Map<IMolecule, List<DescriptorType>> molDescMap = 
                 getComboForCalculation(structureMap, allDescriptors, qsarModel);
         logger.debug("In need of calculation (" + molDescMap.size() 
-                     + " entries):\n" + debugMolDescMap(molDescMap));
+                     + " entries)");
+//        logger.debug(debugMolDescMap(molDescMap));
+        logger.debug("Time: " + stopwatch.toString());
+        if (checkCancel(monitor)){
+            handleInterruptedBuild();
+            return;
+        }
 
         //Calculate descriptors for all such combos
         //================================================
@@ -311,24 +327,58 @@ public class QSARBuilder extends IncrementalProjectBuilder
         int jobSize=molDescMap.size() + 1;
 //        monitor.beginTask("Building QSAR project", jobSize);
 //        monitor.subTask("Building QSAR project", jobSize);
+        
+        monitor.worked( 1 );
+        monitor.subTask( "Calculating descriptors" );
 
         //Calculate all changed descriptors
         IQsarManager qsar = net.bioclipse.qsar.init.Activator.getDefault().getQsarManager();
-        Map<IMolecule, List<IDescriptorResult>> resultMap = qsar.doCalculation(molDescMap, new SubProgressMonitor(monitor, jobSize));
-        logger.debug("Calculation results: \n" + debugResultMap(resultMap));
+        Map<IMolecule, List<IDescriptorResult>> resultMap;
+        try {
+            logger.debug("Time before calculation: " + stopwatch.toString());
+            resultMap = qsar.doCalculation(molDescMap, new SubProgressMonitor(monitor, jobSize));
+            logger.debug("Time after calculation: " + stopwatch.toString());
+        } catch ( Exception e ) {
+            if (checkCancel(monitor)){
+                handleInterruptedBuild();
+                return;
+            }
+            LogUtils.debugTrace( logger, e );
+            handleInterruptedBuild();
+            return;
+            
+        }
+
         if (checkCancel(monitor)){
             handleInterruptedBuild();
             return;
         }
+        monitor.worked( 1 );
+        monitor.subTask( "Handling results" );
 
+
+        logger.debug("Calculation results size: " + resultMap.size());
+//        logger.debug(debugResultMap(resultMap));
         monitor.worked(1);
         monitor.subTask("Processing descriptor results");
 
         //Process results, concatenate with already calculated mols in QsarModel
         storeDescrResultsInQsarModel(qsarModel, resultMap, structureMap);
+        logger.debug("Stored results in QSAR model");
+        logger.debug("Time: " + stopwatch.toString());
+        if (checkCancel(monitor)){
+            handleInterruptedBuild();
+            return;
+        }
 
         //Save qsarmodel
         saveModelToProjectFile(qsarModel);
+        logger.debug("Saved new QSAR model file qsar.xml");
+        logger.debug("Time: " + stopwatch.toString());
+        if (checkCancel(monitor)){
+            handleInterruptedBuild();
+            return;
+        }
 
         //Make all structures and descriptors not dirty and save the prefs
         makeAllNonDirty(qsarModel);
@@ -336,9 +386,9 @@ public class QSARBuilder extends IncrementalProjectBuilder
 
         //Serialize qsarmodel to CSV file
         serializeToCSV(qsarModel);
+        logger.debug("Serialized to CSV.");
 
-        //Serialize mols with results to CML
-        //TODO
+        //Serialize mols with results to CML in the future maybe
 
         stopwatch.stop();
         QsarHelper.setBuildStatus(getProject(), "FINISHED");
@@ -371,13 +421,15 @@ public class QSARBuilder extends IncrementalProjectBuilder
             if (descres.getErrorString()==null){
                 //No error! Use this as first ok structure until a better way is found
                 firstOKStructureID = descres.getStructureid();
-                numberDescriptorsPerStructure=descres.getDescriptorvalue().size();
-                break;
+            }
+            //If this is the structure, get values from this descriptorresult
+            if (descres.getStructureid().equals( firstOKStructureID )){
+                numberDescriptorsPerStructure=numberDescriptorsPerStructure+descres.getDescriptorvalue().size();
             }
         }
         
         logger.debug("First OK structure: " + firstOKStructureID 
-                     + "; # descriptors for this: " + numberDescriptorsPerStructure);
+                     + "; # descriptor values for this: " + numberDescriptorsPerStructure);
         
         
         //Set up rowlabels and fill responseColumn
@@ -435,7 +487,12 @@ public class QSARBuilder extends IncrementalProjectBuilder
         //==============================
         dataset=new float[rowLabels.size()][columnLabels.size()];
         
-        //Fill with NaN?
+        //Fill with NaN
+        for (int i=0; i<dataset.length; i++){
+            for (int j=0; j<dataset[i].length; j++){
+                dataset[i][j]=Float.NaN;
+            }
+        }
 
         //For each row=structureid
         int currentrow=0;
@@ -449,13 +506,10 @@ public class QSARBuilder extends IncrementalProjectBuilder
                     //If this is the structure, get values from this descriptorresult
                     if (descres.getStructureid().equals( structure.getId() )){
 
-// Commented out, since use a correct descriptor for number of cols                        
-//                        for (int i=0; i<descres.getDescriptorvalue().size();i++){
-                        for (int i=0; i<numberDescriptorsPerStructure;i++){
+                        if (descres.getDescriptorvalue()!=null){
 
-                            if (descres.getDescriptorvalue()!=null && 
-                                    descres.getDescriptorvalue().size()>0){
-                                
+                            for (int i=0; i<descres.getDescriptorvalue().size();i++){
+
                                 DescriptorvalueType val = descres.getDescriptorvalue().get( i );
                                 if (val!= null){
                                     try{
@@ -469,13 +523,15 @@ public class QSARBuilder extends IncrementalProjectBuilder
                                     //IF we have no result here, add NaN
                                     dataset[currentrow][currentcol]=Float.NaN;
                                 }
-                            }
-                            else{
-                                //IF we have no result here, add NaN
-                                dataset[currentrow][currentcol]=Float.NaN;
-                            }
 
-                            currentcol++;
+                                currentcol++;
+                            }
+                        }
+                        else{
+                            //IF we have no result here, how do we know how many NaN to add?
+                            logger.debug("Descriptor value problems for " +
+                                "structure: " + structure.getId() 
+                                + " and descr: " + descres.getDescriptorid());
                         }
                     }
                 }
@@ -588,6 +644,7 @@ public class QSARBuilder extends IncrementalProjectBuilder
 
         stopwatch.stop();
         QsarHelper.setBuildStatus(getProject(), "INTERRUPTED");
+        logger.debug( "QSAR build was canceled." );
 
     }
 
@@ -635,9 +692,9 @@ public class QSARBuilder extends IncrementalProjectBuilder
                 //Loop over all descriptors
                 for (IDescriptorResult descres : resultMap.get( mol )){
 
-                    logger.debug( " ## Attempting to store struct: " 
-                                  + structure.getId() + " - AND - " 
-                                  + descres.getDescriptor().getOntologyid());
+//                    logger.debug( " ## Attempting to store struct: " 
+//                                  + structure.getId() + " - AND - " 
+//                                  + descres.getDescriptor().getOntologyid());
 
                     //If this descriptorresult already exists in qsarmodel, use it
                     DescriptorresultType dres=getDescriptorResultFromQsarModel(qsarModel, descres, structure);
@@ -655,7 +712,7 @@ public class QSARBuilder extends IncrementalProjectBuilder
                     if (descres.getErrorMessage()!=null && 
                             descres.getErrorMessage().length()>0){
 
-                        logger.error("Descriptor calculation failed for: " 
+                        logger.error("Descriptor calculation has failed for: " 
                                      + structure + "\n   Failing descriptor: " 
                                      + descres.getDescriptor() 
                                      + "\n  Error message: " 
@@ -673,7 +730,7 @@ public class QSARBuilder extends IncrementalProjectBuilder
                             dval.setLabel( descres.getLabels()[i] );
                             dval.setValue( "" + descres.getValues()[i] );
                             dres.getDescriptorvalue().add( dval );
-                            logger.debug( "   #### added value: " + dval  );
+//                            logger.debug( "   #### added value: " + dval  );
                         }
                     }
                 }
@@ -1020,7 +1077,7 @@ public class QSARBuilder extends IncrementalProjectBuilder
     }
 
     /**
-     * Read in project file and parse it with EMF
+     * Save the model to file
      * @param qsarModel 
      * @return QsarType model object
      */
