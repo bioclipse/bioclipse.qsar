@@ -95,7 +95,6 @@ public interface ResourceType extends EObject {
 
     /**
      * Returns the value of the '<em><b>Contains Errors</b></em>' attribute.
-     * The default value is <code>"false"</code>.
      * <!-- begin-user-doc -->
      * <p>
      * If the meaning of the '<em>Contains Errors</em>' attribute isn't clear,
@@ -107,7 +106,7 @@ public interface ResourceType extends EObject {
      * @see #unsetContainsErrors()
      * @see #setContainsErrors(boolean)
      * @see net.bioclipse.qsar.QsarPackage#getResourceType_ContainsErrors()
-     * @model default="false" unsettable="true" dataType="org.eclipse.emf.ecore.xml.type.Boolean"
+     * @model unsettable="true" dataType="org.eclipse.emf.ecore.xml.type.Boolean"
      *        extendedMetaData="kind='attribute' name='containsErrors'"
      * @generated
      */

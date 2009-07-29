@@ -87,7 +87,7 @@
 		</attribute>
 		<attribute name="URL" type="string"></attribute>
 		<attribute name="file" type="string"></attribute>
-		<attribute name="containsErrors" type="boolean" default="false"></attribute>
+		<attribute name="containsErrors" type="boolean"></attribute>
 	</complexType>
 
 	<complexType name="descriptorType">
