@@ -96,6 +96,10 @@ public class QSARBuilder extends IncrementalProjectBuilder
     public static final String KEY = "key";
     public static final String VIOLATION = "violation";
 
+    //Extend the building with a specific full build identifier since
+    //we do not want full build on startup for this project
+    public static final int FULL_BUILD_QSAR = 852;
+
     /**
      * Simple data structure class containing a key and the location of
      * that key in a file
@@ -184,16 +188,23 @@ public class QSARBuilder extends IncrementalProjectBuilder
 
     /**
      * Determines whether files should be built by checking for
-     * FULL_BUILD, or if the qsar.xml has changed.
+     * FULL_BUILD_QSAR, or if the qsar.xml has changed.
      * 
      * @param kind the kind of build
      * @return <code>true</code> if file should be audited, else
      *         <code>false</code>.
      */
     private boolean shouldBuild(int kind) {
+        
+        //IF not a FULL BUILD, require autobuild to be true
+        if (!QsarHelper.isAutoBuild( getProject() ))
+            return false;
+
         if (kind == FULL_BUILD){
             return true;
         }
+
+        //Ok, check if delta is this projects qsar.xml and build if so
         IResourceDelta delta = getDelta(getProject());
         if (delta == null)
             return false;
@@ -642,7 +653,8 @@ public class QSARBuilder extends IncrementalProjectBuilder
 
     private void handleInterruptedBuild() {
 
-        stopwatch.stop();
+        if (stopwatch!=null)
+            stopwatch.stop();
         QsarHelper.setBuildStatus(getProject(), "INTERRUPTED");
         logger.debug( "QSAR build was canceled." );
 

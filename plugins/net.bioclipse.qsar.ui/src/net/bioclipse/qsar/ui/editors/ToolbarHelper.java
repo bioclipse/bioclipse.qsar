@@ -12,6 +12,7 @@ package net.bioclipse.qsar.ui.editors;
 
 import net.bioclipse.qsar.QsarType;
 import net.bioclipse.qsar.ui.QsarHelper;
+import net.bioclipse.qsar.ui.builder.QSARBuilder;
 
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IncrementalProjectBuilder;
@@ -42,7 +43,10 @@ public class ToolbarHelper {
 
 					    //Make all dirty
 					    QsarHelper.setAllDirty(qsarEditor.getQsarModel(), project);
-					    project.build(IncrementalProjectBuilder.FULL_BUILD, monitor);
+					    boolean storedStatus=QsarHelper.isAutoBuild( project );
+					    QsarHelper.setAutoBuild( project, true );
+              project.build(IncrementalProjectBuilder.FULL_BUILD, monitor);
+              QsarHelper.setAutoBuild( project, storedStatus );
 					    return Status.OK_STATUS;
 					}
 					
@@ -55,8 +59,9 @@ public class ToolbarHelper {
 		};
 		buildAction.setText("Build all descriptors");
 		buildAction.setToolTipText("Build all descriptors");
-//		buildAction.setImageDescriptor(net.bioclipse.qsar.ui.Activator.getImageDescriptor("icons/play.png"));
-		
+		buildAction.setDescription( "Build all descriptors" );
+//    buildAction.setHoverImageDescriptor( net.bioclipse.qsar.ui.Activator.getImageDescriptor("icons32/execute32_hover.gif"));
+		buildAction.setImageDescriptor(net.bioclipse.qsar.ui.Activator.getImageDescriptor("icons32/execute32.gif"));
 		form.getToolBarManager().add(buildAction);
 		form.updateToolBar();
 		

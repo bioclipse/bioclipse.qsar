@@ -61,21 +61,21 @@ public class QSARNature
     */
    public void configure() throws CoreException {
        QSARBuilder.addBuilderToProject(project);
-      new Job("QSAR Builder") {
-         protected IStatus run(IProgressMonitor monitor) {
-            try {
-               project.build(
-                       QSARBuilder.FULL_BUILD,
-                  QSARBuilder.BUILDER_ID,
-                  null,
-                  monitor);
-            }
-            catch (CoreException e) {
-               logger.error(e);
-            }
-            return Status.OK_STATUS;
-         }
-      }.schedule();
+//      new Job("QSAR Builder") {
+//         protected IStatus run(IProgressMonitor monitor) {
+//            try {
+//               project.build(
+//                       QSARBuilder.FULL_BUILD,
+//                  QSARBuilder.BUILDER_ID,
+//                  null,
+//                  monitor);
+//            }
+//            catch (CoreException e) {
+//               logger.error(e);
+//            }
+//            return Status.OK_STATUS;
+//         }
+//      }.schedule();
    }
 
    /**

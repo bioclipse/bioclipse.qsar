@@ -40,10 +40,13 @@ import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.events.PaintListener;
+import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Canvas;
+import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.ui.forms.IFormColors;
@@ -87,6 +90,8 @@ public class OverviewPage extends FormPage implements IEditingDomainProvider, IP
     private Label lblDatasetName;
 
     private Label lblAuthors;
+
+    private Combo cboAutobuild;
 
     public OverviewPage(FormEditor editor, 
                         EditingDomain editingDomain) {
@@ -212,6 +217,12 @@ public class OverviewPage extends FormPage implements IEditingDomainProvider, IP
         //Should be either Calculating, finished, and finsished with <a>errors</a>
         lblCalculationStatus.setText(QsarHelper.getBuildStatus( project ));
         lblCalculationTime.setText(QsarHelper.getBuildTime( project ));
+        
+        
+        if (QsarHelper.isAutoBuild( project ))
+            cboAutobuild.select( 0 );
+        else
+            cboAutobuild.select( 1 );
 
     }
 
@@ -475,15 +486,43 @@ public class OverviewPage extends FormPage implements IEditingDomainProvider, IP
 
         Label lblMoltext5=toolkit.createLabel(sectionClient, "Calculation time:");
         GridData gdtxt5=new GridData(GridData.FILL_VERTICAL);
+        gdtxt5.verticalAlignment=GridData.CENTER;
         lblMoltext5.setLayoutData(gdtxt5);
 
         lblCalculationTime=toolkit.createLabel(sectionClient, "N/A");
         GridData gdtxt7=new GridData(GridData.FILL_BOTH);
+        gdtxt7.verticalAlignment=GridData.CENTER;
         lblCalculationTime.setLayoutData(gdtxt7);
 
-//        Label lblMoltext=toolkit.createLabel(sectionClient, "Dataset # rows:");
-//        GridData gdtxt=new GridData(GridData.FILL_BOTH);
-//        lblMoltext.setLayoutData(gdtxt);
+        Label lblAutobuild=toolkit.createLabel(sectionClient, "Autobuild is: ");
+        GridData gdtxt=new GridData(GridData.FILL_VERTICAL);
+        gdtxt.verticalAlignment=GridData.CENTER;
+        lblAutobuild.setLayoutData(gdtxt);
+        
+        cboAutobuild = new Combo(sectionClient, SWT.NONE);
+        GridData gdAutoBuild=new GridData();
+        gdAutoBuild.widthHint=70;
+        cboAutobuild.setLayoutData(gdAutoBuild);
+        cboAutobuild.add( "ON" );
+        cboAutobuild.add( "OFF" );
+        
+        cboAutobuild.addSelectionListener( new SelectionListener(){
+
+            public void widgetDefaultSelected( SelectionEvent e ) {
+            }
+
+            public void widgetSelected( SelectionEvent e ) {
+                Combo cbo=(Combo) e.getSource();
+                if (cbo.getSelectionIndex()==0){
+                    //ON
+                    QsarHelper.setAutoBuild( project, true );
+                }
+                else{
+                    //OFF
+                    QsarHelper.setAutoBuild( project, false );
+                }
+            }
+        });
 
 
         //Hyperlink to build
@@ -514,7 +553,7 @@ public class OverviewPage extends FormPage implements IEditingDomainProvider, IP
             }
         });
         GridData gd=new GridData(GridData.FILL_BOTH);
-        gd.horizontalSpan=2;
+        gd.horizontalSpan=3;
         link.setLayoutData(gd);
 
     }
