@@ -8,7 +8,7 @@
             name="QSAR Editor"
             default="true"
             filenames="qsar.xml"
-            icon="icons/descriptor.png"
+            icon="icons/qsar-file2.gif"
             contributorClass="net.bioclipse.qsar.ui.editors.QsarActionBarContributor"
             class="net.bioclipse.qsar.ui.editors.QsarEditor"
             id="net.bioclipse.qsar.ui.editor2.QsarEditor">
@@ -43,7 +43,7 @@
    <extension
          point="org.eclipse.ui.ide.projectNatureImages">
       <image
-            icon="icons/qsar_ovr.gif"
+            icon="icons/qsar_ovr4.gif"
             id="net.bioclipse.images.QsarProjectImage"
             natureId="net.bioclipse.qsar.QSARNature"/>
    </extension>
