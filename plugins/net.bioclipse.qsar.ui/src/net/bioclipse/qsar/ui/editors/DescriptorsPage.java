@@ -575,7 +575,7 @@ private Table paramsTable;
                     values[i] = shortname;
                 }
 
-                ComboBoxCellEditor cbo=new ComboBoxCellEditor(rightTable,values);
+                ComboBoxCellEditor cbo=new ComboBoxCellEditor(rightTable,values, SWT.DROP_DOWN | SWT.READ_ONLY);
                 return cbo;
             } catch ( BioclipseException e ) {
                 LogUtils.handleException( e, logger, 
