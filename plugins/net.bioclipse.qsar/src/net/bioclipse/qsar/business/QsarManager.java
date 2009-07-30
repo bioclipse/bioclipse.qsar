@@ -1222,8 +1222,10 @@ public class QsarManager implements IQsarManager{
                                                                   new ArrayList<IDescriptorResult>());
                     List<IDescriptorResult> reslist=allResults.get(mol);
 
-                    //Add the computed result to the reslist
-                    reslist.addAll(results.get(mol));
+                    if (results.get( mol )!=null){
+                        //Add the computed result to the reslist
+                        reslist.addAll(results.get(mol));
+                    }
                 }
 
             }catch (OperationCanceledException e){
