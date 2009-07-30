@@ -67,6 +67,34 @@ public class QsarHelper {
     }
 
     /**
+     * Set the autobuild preference for a project
+     * @param structure
+     * @param project
+     * @param newValue
+     */
+    public static void setAutoBuild( IProject project, boolean newValue) {
+
+        IEclipsePreferences node = new InstanceScope().getNode(net.bioclipse.qsar.ui.Activator.PLUGIN_ID);
+        node.putBoolean( project.getName()+"_autobuild", newValue);
+        try {
+            node.flush();
+        } catch ( BackingStoreException e ) {
+            e.printStackTrace();
+        }
+
+    }
+
+    /**
+     * Read prefs to determine if autobuild is on. Default is false
+     * @return
+     */
+    public static boolean isAutoBuild( IProject project) {
+        IEclipsePreferences node = new InstanceScope().getNode(net.bioclipse.qsar.ui.Activator.PLUGIN_ID);
+        return node.getBoolean( project.getName()+"_autobuild", false);
+    }
+
+
+    /**
      * Read prefs to determine if this descriptor is dirty. Default is TRUE.
      * @return
      */
