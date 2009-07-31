@@ -92,7 +92,7 @@ public class TestQsarManager {
       
       qsar.addResponseUnitToModel( qsarModel, editingDomain, list );
       assertEquals( 1, qsarModel.getResponseunit().size() );
-      qsar.removeResponseUnitsFromModel( qsarModel, editingDomain, list );
+      qsar.removeResponseUnitsFromModel( qsarModel, editingDomain, qsarModel.getResponseunit() );
       assertEquals( 0, qsarModel.getResponseunit().size() );
       
   }
