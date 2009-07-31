@@ -32,7 +32,10 @@ import net.bioclipse.qsar.QsarType;
 import net.bioclipse.qsar.ResourceType;
 import net.bioclipse.qsar.ResponseType;
 import net.bioclipse.qsar.ResponsesListType;
+import net.bioclipse.qsar.ResponseunitType;
 import net.bioclipse.qsar.StructureType;
+import net.bioclipse.qsar.business.IQsarManager;
+import net.bioclipse.qsar.descriptor.model.ResponseUnit;
 import net.bioclipse.qsar.ui.dialogs.ImportResultsDialog;
 
 import org.apache.log4j.Logger;
@@ -43,6 +46,11 @@ import org.eclipse.emf.common.ui.viewer.IViewerProvider;
 import org.eclipse.emf.edit.command.SetCommand;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.domain.IEditingDomainProvider;
+import org.eclipse.jface.action.Action;
+import org.eclipse.jface.action.IMenuListener;
+import org.eclipse.jface.action.IMenuManager;
+import org.eclipse.jface.action.MenuManager;
+import org.eclipse.jface.action.Separator;
 import org.eclipse.jface.dialogs.IPageChangedListener;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.dialogs.PageChangedEvent;
@@ -51,13 +59,16 @@ import org.eclipse.jface.viewers.CellEditor;
 import org.eclipse.jface.viewers.ColumnLabelProvider;
 import org.eclipse.jface.viewers.ColumnPixelData;
 import org.eclipse.jface.viewers.ColumnViewer;
+import org.eclipse.jface.viewers.ComboBoxCellEditor;
 import org.eclipse.jface.viewers.EditingSupport;
 import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.jface.viewers.TableLayout;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.TableViewerColumn;
 import org.eclipse.jface.viewers.TextCellEditor;
 import org.eclipse.jface.viewers.Viewer;
+import org.eclipse.jface.window.Window;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.KeyEvent;
 import org.eclipse.swt.events.KeyListener;
@@ -67,7 +78,10 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Listener;
+import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.Table;
+import org.eclipse.ui.IWorkbenchActionConstants;
+import org.eclipse.ui.dialogs.ListDialog;
 import org.eclipse.ui.forms.IManagedForm;
 import org.eclipse.ui.forms.editor.FormEditor;
 import org.eclipse.ui.forms.editor.FormPage;
@@ -86,6 +100,7 @@ public class ResponsesPage extends FormPage implements IEditingDomainProvider, I
     DecimalFormat formatter;
 
     private EditingDomain editingDomain;
+    private Action setAllResponsesAction;
 
 
     public ResponsesPage(FormEditor editor,
@@ -136,8 +151,8 @@ public class ResponsesPage extends FormPage implements IEditingDomainProvider, I
         responsesViewer = new TableViewer(form.getBody(), SWT.BORDER
                                           | SWT.FULL_SELECTION );
         responsesTable=responsesViewer.getTable();
-        GridData gd=new GridData(GridData.FILL_VERTICAL);
-        gd.widthHint=400;
+        GridData gd=new GridData(GridData.FILL_BOTH);
+//        gd.widthHint=400;
         responsesTable.setLayoutData( gd );
 
         responsesTable.setHeaderVisible(true);
@@ -209,6 +224,89 @@ public class ResponsesPage extends FormPage implements IEditingDomainProvider, I
 
         });
 
+        
+        
+        TableViewerColumn unitsCol=new TableViewerColumn(responsesViewer, SWT.NONE);
+        unitsCol.getColumn().setText("Unit");
+        tableLayout.addColumnData(new ColumnPixelData(100));
+
+        unitsCol.setLabelProvider(new ColumnLabelProvider(){
+            @Override
+            public String getText(Object element) {
+                ResponseType response = (ResponseType)element;
+                    return response.getUnit();
+            }
+        });
+
+        unitsCol.setEditingSupport(new EditingSupport(responsesViewer){
+            private ComboBoxCellEditor cellEditor;
+
+            @Override
+            protected boolean canEdit(Object element) {
+                return true;
+            }
+
+            @Override
+            protected CellEditor getCellEditor(Object element) {
+                
+                //Get values from qsarmodel
+                List<String> values=new ArrayList<String>();
+                QsarType qsarModel = ((QsarEditor)getEditor()).getQsarModel();
+                for (ResponseunitType resp : qsarModel.getResponseunit()){
+                    values.add(resp.getShortname());
+                }
+                
+                cellEditor=new ComboBoxCellEditor(
+                                                 responsesTable, 
+                                                 values.toArray(new String[0]), 
+                                                 SWT.DROP_DOWN | SWT.READ_ONLY);
+                
+                return cellEditor;
+            }
+
+            @Override
+            protected Object getValue(Object element) {
+                ResponseType response = (ResponseType)element;
+
+                //Build a list in same order as combocelleditor
+                List<String> values=new ArrayList<String>();
+                QsarType qsarModel = ((QsarEditor)getEditor()).getQsarModel();
+                for (ResponseunitType resp : qsarModel.getResponseunit()){
+                    values.add(resp.getId());
+                }
+
+                //Look up the integer for this in the combo
+                int ix=values.indexOf( response.getUnit() );
+                return new Integer(ix);
+            }
+
+            @Override
+            protected void setValue(Object element, Object value) {
+                ResponseType response = (ResponseType)element;
+
+                //User selected this shortname
+                int ix=(Integer)value;
+                if (ix<0) return;
+                
+                //Build a list in same order as combocelleditor
+                QsarType qsarModel = ((QsarEditor)getEditor()).getQsarModel();
+                ResponseunitType resp = qsarModel.getResponseunit().get( ix );
+                
+                if (response.getUnit().equals( resp.getId() )){
+                    //Same selected, nothing to store
+                    return;
+                }
+
+                Command cmd=new SetCommand(editingDomain,response,
+                                           QsarPackage.Literals.RESPONSE_TYPE__UNIT,
+                                           resp.getId());
+                editingDomain.getCommandStack().execute(cmd);
+                responsesViewer.refresh();
+            }
+
+        });
+        
+        
 
         responsesViewer.setContentProvider(new ArrayContentProvider());
         //        responsesViewer.setLabelProvider(new DescriptorLabelProvider());
@@ -235,6 +333,7 @@ public class ResponsesPage extends FormPage implements IEditingDomainProvider, I
             }
         });
 
+        /*
         Button btnAdd=toolkit.createButton(form.getBody(), "Import values... ", SWT.PUSH);
         btnAdd.addListener(SWT.Selection, new Listener() {
             public void handleEvent(Event e) {
@@ -244,6 +343,8 @@ public class ResponsesPage extends FormPage implements IEditingDomainProvider, I
         GridData gda2=new GridData(GridData.VERTICAL_ALIGN_BEGINNING);
         gda2.widthHint=100;
         btnAdd.setLayoutData( gda2 );
+        
+        */
 
         toolkit.paintBordersFor(form);
 
@@ -257,9 +358,100 @@ public class ResponsesPage extends FormPage implements IEditingDomainProvider, I
         if (responsesList.eContents()!=null){
             responsesViewer.setInput(responsesList.eContents().toArray());
         }
+        
+        makeActions();
+        hookContextMenu();
 
     }
 
+    
+    /**
+     * The actions in the viewer
+     */
+    private void makeActions() {
+
+        setAllResponsesAction=new Action("Set all responses...", 
+                            net.bioclipse.qsar.ui.Activator.getImageDescriptor( "icons/error_co.gif" )) {
+            @Override
+            public void run() {
+                
+                //Open up units dialog with available units
+                IQsarManager qsar = net.bioclipse.qsar.init.Activator
+                                        .getDefault().getQsarManager();
+                List<ResponseUnit> list = qsar.getFullResponseUnits();
+                
+                ListDialog dlg=new ListDialog(getSite().getShell());
+                dlg.setContentProvider( new ArrayContentProvider() );
+                dlg.setLabelProvider( new LabelProvider(){
+                    @Override
+                    public String getText( Object element ) {
+                        if ( element instanceof ResponseUnit ) {
+                            ResponseUnit unit = (ResponseUnit) element;
+                            return "" + unit.getShortname() + " - " + unit.getName();
+                        }
+                        return super.getText( element );
+                    }
+                    
+                } );
+                
+                dlg.setInput( list );
+                
+                int res=dlg.open();
+                if (res==Window.CANCEL) return;
+                
+                Object[] objs = dlg.getResult();
+                if (objs==null || objs[0]==null) return;
+
+                //It can only be one from ListDialog
+                ResponseUnit newUnit =(ResponseUnit) objs[0];
+
+                //Add selected units to model
+                QsarType qsarModel = ((QsarEditor)getEditor()).getQsarModel();
+                List<ResponseUnit> toAddList=new ArrayList<ResponseUnit>();
+                toAddList.add( newUnit );
+                
+                qsar.addResponseUnitToModel( qsarModel, editingDomain, toAddList );
+                
+                //Ok, set this response for all responses in qsar model
+                CompoundCommand ccmd=new CompoundCommand();
+                for (ResponseType resp : qsarModel.getResponselist().getResponse()){
+
+                    Command cmd=new SetCommand(editingDomain,resp,
+                                               QsarPackage.Literals.RESPONSE_TYPE__UNIT,
+                                               newUnit.getId());
+                    ccmd.append( cmd );
+                    
+                }
+
+                editingDomain.getCommandStack().execute(ccmd);
+
+                responsesViewer.refresh();
+
+            }
+        };
+        
+    }
+
+    /**
+     * A context menu
+     */
+    private void hookContextMenu() {
+        MenuManager menuMgr = new MenuManager("#PopupMenu");
+        menuMgr.setRemoveAllWhenShown(true);
+        menuMgr.addMenuListener(new IMenuListener() {
+            public void menuAboutToShow(IMenuManager manager) {
+                    manager.add(setAllResponsesAction);
+            }
+
+        });
+        Menu menu = menuMgr.createContextMenu(responsesViewer.getControl());
+        responsesViewer.getControl().setMenu(menu);
+    }
+
+    
+    
+    
+    
 
     /**
      * Add a response for every structure.
