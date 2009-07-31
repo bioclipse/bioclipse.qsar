@@ -11,6 +11,7 @@
 package net.bioclipse.qsar.ui.wizards;
 
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,6 +21,8 @@ import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IProjectNature;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.wizard.IWizardPage;
@@ -27,6 +30,8 @@ import org.eclipse.jface.wizard.Wizard;
 import org.eclipse.ui.IExportWizard;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.dialogs.WizardExportResourcesPage;
+import org.eclipse.ui.internal.wizards.datatransfer.ArchiveFileExportOperation;
+import org.eclipse.ui.internal.wizards.datatransfer.DataTransferMessages;
 import org.eclipse.ui.internal.wizards.datatransfer.WizardFileSystemResourceExportPage1;
 import org.eclipse.ui.internal.wizards.datatransfer.ZipFileExporter;
 
@@ -44,6 +49,7 @@ public class ExportQsarWizard extends Wizard implements IExportWizard {
 	}
 
 	private IWizardPage page;
+    private IProject exportProject;
 
 	public ExportQsarWizard() {
 	}
@@ -79,6 +85,7 @@ public class ExportQsarWizard extends Wizard implements IExportWizard {
 			page=new ExportQsarWizardFilePage("Export QSAR project");
 			page.setTitle("Export QSAR project");
 			page.setDescription("Export QSAR project to file");
+			exportProject=qsarProjects.get( 0 );
 		}else{
 			showMessage("You have selected resources from more than one project. " +
 					"Please only select a single object for export.");
@@ -99,16 +106,44 @@ public class ExportQsarWizard extends Wizard implements IExportWizard {
                                        message );
     }
 
-	@Override
-	public boolean performFinish() {
-		
-		System.out.println("Do export to file: " + filename);
-		
-//		try {
-//			ZipFileExporter zip=new ZipFileExporter(filename,true);
-//			zip.write(resource, destinationPath)
-//			zip.finished();
-//		} catch (IOException e) {
+    private void showError(String message) {
+        MessageDialog.openError( getShell(),
+                                       "Error",
+                                       message );
+    }
+
+    @Override
+    public boolean performFinish() {
+
+        System.out.println("Do export to file: " + filename);
+
+        ArchiveFileExportOperation op = new ArchiveFileExportOperation(
+                                                                       exportProject, filename);
+
+        op.setCreateLeadupStructure(true);
+        op.setUseCompression(true);
+        op.setUseTarFormat(false);
+
+        try {
+            getContainer().run(true, true, op);
+        } catch (InterruptedException e) {
+            return false;
+        } catch (InvocationTargetException e) {
+            showError( "Error exporting project: " + e.getMessage());
+            return false;
+        }
+
+        IStatus status = op.getStatus();
+        if (!status.isOK()) {
+            showError( "Export returned error: " + status.getMessage() );
+            return false;
+        }
+
+        //		try {
+        //			ZipFileExporter zip=new ZipFileExporter(filename,true);
+        //			zip.write(resource, destinationPath)
+        //			zip.finished();
+        //		} catch (IOException e) {
 //			System.out.println("Could not write file: " + filename + ". " + e.getMessage());
 //			return false;
 //		}
