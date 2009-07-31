@@ -32,6 +32,7 @@ import net.bioclipse.qsar.business.IQsarManager;
 import net.bioclipse.qsar.business.QsarManager;
 import net.bioclipse.qsar.descriptor.IDescriptorResult;
 import net.bioclipse.qsar.descriptor.model.Descriptor;
+import net.bioclipse.qsar.descriptor.model.DescriptorCalculationResult;
 import net.bioclipse.qsar.descriptor.model.DescriptorImpl;
 import net.bioclipse.qsar.descriptor.model.DescriptorParameter;
 import net.bioclipse.qsar.descriptor.model.DescriptorProvider;
@@ -52,6 +53,7 @@ public class TestCDKQsar {
     IQsarManager qsar;
     private String cdkProviderID="net.bioclipse.cdk.descriptorprovider";
     private String cdkProviderName="Chemistry Development Kit";
+    private static final String CDK_SHORT_NAME="CDK";
 
     String bpolID="http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#bpol";
     String xlogpID="http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#xlogP";
@@ -81,7 +83,6 @@ public class TestCDKQsar {
         assertEquals("Chemistry Development Kit", provider.getName());
         assertEquals("http://cdk.sourceforge.net", provider.getNamesapce());
         assertEquals("CDK", provider.getShortName());
-        assertEquals("1.1.0.v20080808", provider.getVersion());
 
         //Get provider classes
         List<DescriptorProvider> lstFull = qsar.getFullProviders();
@@ -207,7 +208,7 @@ public class TestCDKQsar {
 
         IMolecule mol=new SMILESMolecule("C1CNCCC1CC(COC)CCNC");
 
-        IDescriptorResult dres = qsar.calculate(mol, bpolID);
+        IDescriptorResult dres = qsar.calculate(mol, bpolID, CDK_SHORT_NAME);
 
         //We know only one result as we only asked for one descriptor
         assertNotNull(dres);
@@ -233,7 +234,7 @@ public class TestCDKQsar {
 
         IMolecule mol=new SMILESMolecule("C1CNCCC1CC(COC)CCNC");
 
-        IDescriptorResult dres1=qsar.calculate(mol, xlogpID);
+        IDescriptorResult dres1=qsar.calculate(mol, xlogpID, CDK_SHORT_NAME);
         assertNotNull(dres1);
         assertNull(dres1.getErrorMessage());
         assertEquals(xlogpID, dres1.getDescriptor().getOntologyid());
@@ -263,7 +264,7 @@ public class TestCDKQsar {
 
         ICDKMolecule mol = cdk.loadMolecule( new MockIFile(str) );
 
-        IDescriptorResult dres1=qsar.calculate(mol, xlogpID);
+        IDescriptorResult dres1=qsar.calculate(mol, xlogpID, CDK_SHORT_NAME);
         assertNotNull(dres1);
         assertNull(dres1.getErrorMessage(),dres1.getErrorMessage());
         assertEquals(xlogpID, dres1.getDescriptor().getOntologyid());
@@ -288,7 +289,7 @@ public class TestCDKQsar {
 
         IMolecule mol=new SMILESMolecule("C1CNCCC1CC(COC)CCNC");
 
-        IDescriptorResult dres1=qsar.calculate(mol, bcutID);
+        IDescriptorResult dres1=qsar.calculate(mol, bcutID, CDK_SHORT_NAME);
         assertNotNull(dres1);
         assertNull(dres1.getErrorMessage());
         assertEquals(bcutID, dres1.getDescriptor().getOntologyid());
@@ -334,7 +335,10 @@ public class TestCDKQsar {
         descs.add(bpolID);
         descs.add(xlogpID);
 
-        Map<? extends IMolecule, List<IDescriptorResult>> res = qsar.calculateNoParams(mols, descs);
+        DescriptorCalculationResult calres = qsar.calculate(mols, descs, CDK_SHORT_NAME);
+        
+        Map<IMolecule, List<IDescriptorResult>> res = calres.getResultMap();
+        
         assertNotNull(res);
 
         List<IDescriptorResult> res1=res.get(mol1);
@@ -405,7 +409,7 @@ public class TestCDKQsar {
         //Calculate C and N from this SMILES mol
         IMolecule mol=new SMILESMolecule("C1CNCCC1CC(COC)CCNC");
 
-        IDescriptorResult dres1=qsar.calculate(mol, atomCountlID);
+        IDescriptorResult dres1=qsar.calculate(mol, atomCountlID, CDK_SHORT_NAME);
         assertNotNull(dres1);
         assertNull(dres1.getErrorMessage());
         assertEquals(atomCountlID, dres1.getDescriptor().getOntologyid());

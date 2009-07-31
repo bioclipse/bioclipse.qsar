@@ -155,14 +155,7 @@ public class PluginTestCDKRESTQsar {
         IMolecule mol=new SMILESMolecule("C1CNCCC1CC(COC)CCNC");
 
 //        DescriptorImpl desc=qsar.getDescriptorImpl(bpolID, cdkRestProviderID);
-        DescriptorCalculationResult dcalres = qsar.calculate2(mol, bpolID, CDK_REST_SHORTNAME);
-
-        //We know only one result as we only asked for one descriptor
-        assertNotNull(dcalres);
-        assertEquals( 1, dcalres.getResultMap().size());
-        assertEquals(1, dcalres.getResultMap().values().size());
-        List<IDescriptorResult> reslist=(List<IDescriptorResult>) dcalres.getResultMap().values().toArray()[0];
-        IDescriptorResult dres=reslist.get( 0 );
+        IDescriptorResult dres = qsar.calculate(mol, bpolID, CDK_REST_SHORTNAME);
 
         assertNull(dres.getErrorMessage());
         assertEquals(bpolID, dres.getDescriptor().getOntologyid());
@@ -186,12 +179,7 @@ public class PluginTestCDKRESTQsar {
 
         IMolecule mol=new SMILESMolecule("C1CNCCC1CC(COC)CCNC");
 
-        DescriptorCalculationResult dcalres=qsar.calculate2(mol, xlogpID, CDK_REST_SHORTNAME);
-        
-        assertNotNull(dcalres);
-        assertEquals( 1, dcalres.getResultMap().size());
-        List<IDescriptorResult> reslist=(List<IDescriptorResult>) dcalres.getResultMap().values().toArray()[0];
-        IDescriptorResult dres1=reslist.get( 0 );
+        IDescriptorResult dres1 =qsar.calculate(mol, xlogpID, CDK_REST_SHORTNAME);
         
         assertNotNull(dres1);
         assertNull(dres1.getErrorMessage());
@@ -222,19 +210,9 @@ public class PluginTestCDKRESTQsar {
 
         ICDKMolecule mol = cdk.loadMolecule( new MockIFile(str) );
 
-        DescriptorCalculationResult dcalres=qsar.calculate2(mol, xlogpID, CDK_REST_SHORTNAME);
-        DescriptorCalculationResult dcalres2=qsar.calculate2(mol, xlogpID, "CDK");
+        IDescriptorResult dres1=qsar.calculate(mol, xlogpID, CDK_REST_SHORTNAME);
+        IDescriptorResult dres2=qsar.calculate(mol, xlogpID, "CDK");
         
-        assertNotNull(dcalres);
-        assertEquals( 1, dcalres.getResultMap().size());
-        List<IDescriptorResult> reslist=(List<IDescriptorResult>) dcalres.getResultMap().values().toArray()[0];
-        IDescriptorResult dres1=reslist.get( 0 );
-
-        assertNotNull(dcalres2);
-        assertEquals( 1, dcalres2.getResultMap().size());
-        List<IDescriptorResult> reslist2=(List<IDescriptorResult>) dcalres2.getResultMap().values().toArray()[0];
-        IDescriptorResult dres2=reslist2.get( 0 );
-
         assertNotNull(dres1);
         assertNull(dres1.getErrorMessage(),dres1.getErrorMessage());
         assertEquals(xlogpID, dres1.getDescriptor().getOntologyid());
@@ -253,11 +231,7 @@ public class PluginTestCDKRESTQsar {
 
         IMolecule mol=new SMILESMolecule("C1CNCCC1CC(COC)CCNC");
 
-        DescriptorCalculationResult dcalres=qsar.calculate2(mol, bcutID, CDK_REST_SHORTNAME);
-        assertNotNull(dcalres);
-        assertEquals( 1, dcalres.getResultMap().size());
-        List<IDescriptorResult> reslist=(List<IDescriptorResult>) dcalres.getResultMap().values().toArray()[0];
-        IDescriptorResult dres1=reslist.get( 0 );
+        IDescriptorResult dres1 = qsar.calculate(mol, bcutID, CDK_REST_SHORTNAME);
 
         assertNotNull(dres1);
         assertNull(dres1.getErrorMessage());
@@ -305,7 +279,7 @@ public class PluginTestCDKRESTQsar {
         descs.add(bpolID);
         descs.add(xlogpID);
 
-        DescriptorCalculationResult calres = qsar.calculate2(mols, descs, CDK_REST_SHORTNAME);
+        DescriptorCalculationResult calres = qsar.calculate(mols, descs, CDK_REST_SHORTNAME);
         
         Map<IMolecule, List<IDescriptorResult>> res = calres.getResultMap();
         
@@ -379,12 +353,7 @@ public class PluginTestCDKRESTQsar {
         //Calculate C and N from this SMILES mol
         IMolecule mol=new SMILESMolecule("C1CNCCC1CC(COC)CCNC");
 
-        DescriptorCalculationResult dcalres=qsar.calculate2(mol, atomCountlID, CDK_REST_SHORTNAME);
-        
-        assertNotNull(dcalres);
-        assertEquals( 1, dcalres.getResultMap().size());
-        List<IDescriptorResult> reslist=(List<IDescriptorResult>) dcalres.getResultMap().values().toArray()[0];
-        IDescriptorResult dres1=reslist.get( 0 );
+        IDescriptorResult dres1 = qsar.calculate(mol, atomCountlID, CDK_REST_SHORTNAME);
         
         assertNotNull(dres1);
         assertNull(dres1.getErrorMessage());
