@@ -15,6 +15,7 @@ import java.util.List;
 
 import net.bioclipse.qsar.QsarPackage;
 import net.bioclipse.qsar.QsarType;
+import net.bioclipse.qsar.ResponseunitType;
 import net.bioclipse.qsar.business.IQsarManager;
 import net.bioclipse.qsar.descriptor.model.ResponseUnit;
 import net.bioclipse.qsar.init.Activator;
@@ -39,6 +40,7 @@ import org.eclipse.jface.dialogs.IPageChangedListener;
 import org.eclipse.jface.dialogs.PageChangedEvent;
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.ColumnPixelData;
+import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.jface.viewers.TableLayout;
 import org.eclipse.jface.viewers.TableViewer;
@@ -46,6 +48,8 @@ import org.eclipse.jface.viewers.TableViewerColumn;
 import org.eclipse.jface.window.Window;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.*;
+import org.eclipse.swt.events.KeyEvent;
+import org.eclipse.swt.events.KeyListener;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.layout.*;
 import org.eclipse.swt.widgets.*;
@@ -391,13 +395,26 @@ public class InformationPage extends FormPage implements IEditingDomainProvider,
         Button btnDel=toolkit.createButton(tabContent, "Remove", SWT.PUSH);
         btnDel.addListener(SWT.Selection, new Listener() {
             public void handleEvent(Event e) {
-//                deleteUnit();
+                deleteUnit();
             }
         });
         gd2=new GridData(GridData.VERTICAL_ALIGN_BEGINNING);
         gd2.widthHint=60;
         btnDel.setLayoutData( gd2 );
 
+        
+        unitTable.addKeyListener( new KeyListener(){
+            public void keyPressed( KeyEvent e ) {
+                //Delete key
+                if (e.keyCode==SWT.DEL){
+                    deleteUnit();
+                }
+            }
+            public void keyReleased( KeyEvent e ) {
+            }
+        });
+
+        
         
         // The content provider is responsible to handle add and
         // remove notification for the Person#address EList
@@ -471,6 +488,31 @@ public class InformationPage extends FormPage implements IEditingDomainProvider,
         qsar.addResponseUnitToModel( qsarModel, editingDomain, toAddList );
         
     }
+    
+    
+    protected void deleteUnit() {
+        //Get selection
+        IStructuredSelection sel=(IStructuredSelection) 
+                                                      unitViewer.getSelection();
+        
+        QsarType qsarModel = ((QsarEditor)getEditor()).getQsarModel();
+        IQsarManager qsar = Activator.getDefault().getQsarManager();
+        List<ResponseunitType> toRemoveList=new ArrayList<ResponseunitType>();
+        for (Object obj : sel.toList()){
+            if ( obj instanceof ResponseunitType ) {
+                ResponseunitType ru = (ResponseunitType) obj;
+                toRemoveList.add( ru );
+            }
+        }
+        
+        if (toRemoveList.isEmpty()) return;
+        
+        //Delete it
+        qsar.removeResponseUnitsFromModel( qsarModel, editingDomain, toRemoveList );
+        
+    }
+
+
 
     public EditingDomain getEditingDomain() {
         return editingDomain;
