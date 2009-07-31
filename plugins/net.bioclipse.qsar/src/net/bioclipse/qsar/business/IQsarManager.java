@@ -32,6 +32,7 @@ import net.bioclipse.managers.business.IBioclipseManager;
 import net.bioclipse.qsar.DescriptorType;
 import net.bioclipse.qsar.QsarType;
 import net.bioclipse.qsar.ResourceType;
+import net.bioclipse.qsar.ResponseunitType;
 import net.bioclipse.qsar.descriptor.IDescriptorResult;
 import net.bioclipse.qsar.descriptor.model.Descriptor;
 import net.bioclipse.qsar.descriptor.model.DescriptorCalculationResult;
@@ -177,7 +178,7 @@ public interface IQsarManager extends IBioclipseManager{
                                  List<ResponseUnit> list );
     void removeResponseUnitsFromModel( QsarType qsarModel,
                                        EditingDomain editingDomain,
-                                       List<ResponseUnit> list );
+                                       List<ResponseunitType> list );
 
     void addResourcesAndResponsesToQsarModel(
                                               QsarType qsarmodel,

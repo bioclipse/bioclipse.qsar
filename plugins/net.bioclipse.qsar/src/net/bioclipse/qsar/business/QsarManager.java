@@ -73,6 +73,7 @@ import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.common.command.CompoundCommand;
 import org.eclipse.emf.edit.command.AddCommand;
 import org.eclipse.emf.edit.command.RemoveCommand;
+import org.eclipse.emf.edit.command.SetCommand;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.openscience.cdk.atomtype.CDKAtomTypeMatcher;
@@ -1851,49 +1852,96 @@ public class QsarManager implements IQsarManager{
         Command cmd;
         for (ResponseUnit storedunit : list){
             
-            ResponseunitType unit1=QsarFactory.eINSTANCE.createResponseunitType();
-            unit1.setId( storedunit.getId() );
-            unit1.setName( storedunit.getName() );
-            unit1.setShortname( storedunit.getShortname() );
-            unit1.setDescription( storedunit.getDescription());
-            unit1.setURL( storedunit.getUrl() );
-            
-            cmd=AddCommand.create(editingDomain, qsarModel, 
-                                  QsarPackage.Literals.QSAR_TYPE__RESPONSEUNIT, unit1);
-            logger.debug("Adding response value: " + unit1.getId());
-            cCmd.append(cmd);
-        }
+            //Make sure already not in QSAR model
+            boolean present=false;
+            for (ResponseunitType rt : qsarModel.getResponseunit()){
+                if (rt.getId().equals( storedunit.getId() ))
+                    present=true;
+            }
 
-        //Execute the compound command
-        editingDomain.getCommandStack().execute(cCmd);        
-    }
+            if (!present){
+                ResponseunitType unit1=QsarFactory.eINSTANCE.createResponseunitType();
+                unit1.setId( storedunit.getId() );
+                unit1.setName( storedunit.getName() );
+                unit1.setShortname( storedunit.getShortname() );
+                unit1.setDescription( storedunit.getDescription());
+                unit1.setURL( storedunit.getUrl() );
 
-    
-    public void removeResponseUnitsFromModel( QsarType qsarModel,
-                                            EditingDomain editingDomain,
-                                            List<ResponseUnit> list ) {
-
-        CompoundCommand ccmd=new CompoundCommand();
-
-        //Collect commands from selection
-        for (ResponseUnit unit : list){
-            
-            //Look up in model
-            for ( ResponseunitType rtype : qsarModel.getResponseunit()){
-                
-                if (rtype.getId().equals( unit.getId() )){
-                    Command cmd=RemoveCommand.create(editingDomain, qsarModel, 
-                           QsarPackage.Literals.QSAR_TYPE__RESPONSEUNIT, rtype);
-                    ccmd.append(cmd);
-                    logger.debug("Removing response value: " + unit.getId());
-                }
+                cmd=AddCommand.create(editingDomain, qsarModel, 
+                                      QsarPackage.Literals.QSAR_TYPE__RESPONSEUNIT, unit1);
+                logger.debug("Adding response value: " + unit1.getId());
+                cCmd.append(cmd);
             }
         }
 
-        //Execute the commands as one 
-        editingDomain.getCommandStack().execute(ccmd);
-
+        //Execute the compound command
+        if (!cCmd.isEmpty())
+            editingDomain.getCommandStack().execute(cCmd);        
     }
+
+    
+//    public void removeResponseUnitsFromModel( QsarType qsarModel,
+//                                            EditingDomain editingDomain,
+//                                            List<ResponseUnit> list ) {
+//
+//        CompoundCommand ccmd=new CompoundCommand();
+//
+//        //Collect commands from selection
+//        for (ResponseUnit unit : list){
+//            
+//            //Look up in model
+//            for ( ResponseunitType rtype : qsarModel.getResponseunit()){
+//                
+//                if (rtype.getId().equals( unit.getId() )){
+//                    Command cmd=RemoveCommand.create(editingDomain, qsarModel, 
+//                           QsarPackage.Literals.QSAR_TYPE__RESPONSEUNIT, rtype);
+//                    ccmd.append(cmd);
+//                    logger.debug("Removing response value: " + unit.getId());
+//                }
+//            }
+//        }
+//
+//        //Execute the commands as one 
+//        editingDomain.getCommandStack().execute(ccmd);
+//
+//    }
+
+    public void removeResponseUnitsFromModel( QsarType qsarModel,
+                                              EditingDomain editingDomain,
+                                              List<ResponseunitType> listToRemove ) {
+
+          CompoundCommand ccmd=new CompoundCommand();
+
+
+
+          //Remove the actual response unit too
+          for (ResponseunitType unitToRemove : listToRemove){
+              
+              //Ok, also remove all references to this in responses
+              for (ResponseType resp : qsarModel.getResponselist().getResponse()){
+
+                  //IF this response has the unit to remove as unit, remove it
+                  if (resp.getUnit()!=null && unitToRemove.getId().equals( resp.getUnit())){
+
+                      Command cmd=new SetCommand(editingDomain,resp,
+                                                 QsarPackage.Literals.RESPONSE_TYPE__UNIT,
+                                                 "");
+                      ccmd.append( cmd );
+                  }
+              }
+
+              //Also remove the actuial responseunit
+              Command cmd=RemoveCommand.create(editingDomain, qsarModel, 
+                                               QsarPackage.Literals.QSAR_TYPE__RESPONSEUNIT, unitToRemove);
+              ccmd.append(cmd);
+              logger.debug("Removing response value: " + unitToRemove.getId());
+          }
+
+
+          //Execute the commands as one 
+          editingDomain.getCommandStack().execute(ccmd);
+
+      }
 
     
 }
