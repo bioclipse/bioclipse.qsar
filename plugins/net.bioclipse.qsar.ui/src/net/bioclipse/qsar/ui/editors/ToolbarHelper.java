@@ -20,21 +20,48 @@ import org.eclipse.core.resources.WorkspaceJob;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Status;
+import org.eclipse.core.runtime.jobs.ISchedulingRule;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IAction;
+import org.eclipse.jface.dialogs.MessageDialog;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.forms.editor.FormEditor;
 import org.eclipse.ui.forms.widgets.ScrolledForm;
+import org.eclipse.ui.progress.UIJob;
 
 public class ToolbarHelper {
 
 	
-	public static void setupToolbar(ScrolledForm form, final IProject project, final QsarEditor qsarEditor) {
-	    
+	public static void setupToolbar(final ScrolledForm form, final IProject project, final QsarEditor qsarEditor) {
+
 		IAction buildAction=new Action(){
+		    
 			@Override
 			public void run() {
+			    
+          if (qsarEditor.isDirty()){
 
+              boolean res = MessageDialog.openConfirm( form.getShell(), 
+                                         "Confirm save", "There are changes in the " +
+                                             "QSAR editor that must " +
+                                         "be saved before a full build can " +
+                                         "take place.\n\n" +
+                                         "OK to save?" );
+              if (res==false)
+                  return;
+              else{
+                  
+                  qsarEditor.doSave( new NullProgressMonitor() );
+
+                  
+              }
+          }
+          
+          
+
+          //OK, saved, let's build this thing
 				WorkspaceJob job = new WorkspaceJob("Building qsar project"){
 
 					@Override
@@ -53,10 +80,11 @@ public class ToolbarHelper {
 				};
 				
 				job.setUser(true);
-				job.schedule();
+				job.schedule(200);
 				
 			}
 		};
+		
 		buildAction.setText("Build all descriptors");
 		buildAction.setToolTipText("Build all descriptors");
 		buildAction.setDescription( "Build all descriptors" );

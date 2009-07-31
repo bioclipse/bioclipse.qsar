@@ -28,6 +28,7 @@ import org.eclipse.core.resources.WorkspaceJob;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.domain.IEditingDomainProvider;
@@ -529,7 +530,23 @@ public class OverviewPage extends FormPage implements IEditingDomainProvider, IP
         Hyperlink link = toolkit.createHyperlink(sectionClient,"Trigger full build...", SWT.WRAP);
         link.addHyperlinkListener(new HyperlinkAdapter() {
             public void linkActivated(HyperlinkEvent e) {
+                
+                //Save editor
+                if (editor.isDirty()){
 
+                    boolean res = MessageDialog.openConfirm( form.getShell(), 
+                                               "Confirm save", "There are changes in the " +
+                                                   "QSAR editor that must " +
+                                               "be saved before a full build can " +
+                                               "take place.\n\n" +
+                                               "OK to save?" );
+                    if (res==false)
+                        return;
+                    else{
+                        editor.doSave( new NullProgressMonitor() );
+                    }
+                }
+                
                 //Make all dirty
                 QsarType qsarModel = ((QsarEditor)getEditor()).getQsarModel();
                 QsarHelper.setAllDirty(qsarModel, project);
