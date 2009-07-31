@@ -115,19 +115,27 @@ public class QsarManager implements IQsarManager{
 
         //Firstly, build hierarchy from descriptor OWL with Jena
         try {
-            model=JenaReader.populateHierarchy();
+//            model=JenaReader.populateHierarchy();
+            model=OntologyHelper.buildDescriptorHierarchy();
             logger.debug("** descriptor model initialized from ontology **");
         } catch (IOException e) {
-            logger.error("Could not initialize Jena model: " + e.getMessage());
+            logger.error("Could not initialize Descriptor model from ontology:"
+                         + e.getMessage());
             //			e.printStackTrace();
             return;
-        } catch (URISyntaxException e) {
-            logger.error("Could not initialize Jena model: " + e.getMessage());
-            //			e.printStackTrace();
-            return;
+//        } catch (URISyntaxException e) {
+//            logger.error("Could not initialize Jena model: " + e.getMessage());
+//            //			e.printStackTrace();
+//            return;
+        } catch ( BioclipseException e ) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch ( CoreException e ) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
         }
         if (model==null){
-            logger.error("Could not initialize Jena model. ");
+            logger.error("Could not initialize Descriptor model from ontology.");
             return;
         }
 

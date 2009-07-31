@@ -10,6 +10,7 @@
  *******************************************************************************/
 package net.bioclipse.qsar.descriptor.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.ui.views.properties.IPropertySource;
@@ -49,6 +50,10 @@ public class DescriptorCategory extends BaseEPObject{
 
 		return super.getAdapter(adapter);
 	}
+    public void addDescriptor( Descriptor desc ) {
+        if (descriptors==null) descriptors=new ArrayList<Descriptor>();
+        descriptors.add(desc);
+    }
 
 	
 }
