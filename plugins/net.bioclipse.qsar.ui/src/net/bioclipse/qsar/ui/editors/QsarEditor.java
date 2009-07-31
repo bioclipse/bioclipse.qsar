@@ -735,8 +735,9 @@ public class QsarEditor extends FormEditor implements IEditingDomainProvider,
         return
         MessageDialog.openQuestion
         (getSite().getShell(),
-         "_UI_FileConflict_label",
-        "_WARN_FileConflict");
+         "File conflict",
+        "The editor is unsaved but file was changed by background process. " +
+        "Reload contents from file?");
     }
 
     /**
@@ -1488,7 +1489,7 @@ public class QsarEditor extends FormEditor implements IEditingDomainProvider,
                 Collection<?> collection = ((IStructuredSelection)selection).toList();
                 switch (collection.size()) {
                     case 0: {
-                        statusLineManager.setMessage("_UI_NoObjectSelected");
+                        statusLineManager.setMessage("");
                         break;
                     }
                     case 1: {
