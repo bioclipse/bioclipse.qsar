@@ -46,30 +46,6 @@ import net.bioclipse.qsar.descriptor.model.ResponseUnit;
 @PublishedClass("A manager for QSAR")
 public interface IQsarManager extends IBioclipseManager{
 
-    @Recorded
-    @PublishedMethod( 
-                      params="IMolecule molecule, String descriptorImplID",
-                      methodSummary = "Calculates a descriptor for a molecule" )
-    @Deprecated
-    public IDescriptorResult calculate(IMolecule molecule, String descriptorImplID) throws BioclipseException;
-
-    public List<IDescriptorResult> calculate(IMolecule molecule,
-                                             List<DescriptorType> descriptorTypes) throws BioclipseException;
-
-    public Map<? extends IMolecule, List<IDescriptorResult>> calculate(
-                                                                       List<? extends IMolecule> molecules, 
-                                                                       List<DescriptorType> descriptorTypes, IProgressMonitor monitor)
-                                                                       throws OperationCanceledException, BioclipseException;
-
-    @Recorded
-    @PublishedMethod(params="List<? extends IMolecule> molecules, " +
-    		"List<String> descriptorIDs",
-         methodSummary = "Calculates a list of descriptors for a " +
-    "list of molecules" )
-    @Deprecated
-    public Map<? extends IMolecule, List<IDescriptorResult>> calculateNoParams(
-         List<? extends IMolecule> molecules, List<String> descriptorIDs) throws BioclipseException;
-
     @PublishedMethod( methodSummary = "Returns the available descriptor providers" )
     public List<String> getProviders();
     public List<DescriptorProvider> getFullProviders();
@@ -158,13 +134,6 @@ public interface IQsarManager extends IBioclipseManager{
           Map<IMolecule, List<DescriptorType>> molDescMap,
           IProgressMonitor monitor ) throws BioclipseException;
 
-    @Deprecated
-    public void addResourcesToQsarModel( QsarType qsarmodel, EditingDomain editingDomain,
-                          List<IResource> resourcesToAdd, IProgressMonitor monitor )
-                                                           throws IOException,
-                                                           BioclipseException,
-                                                           CoreException;
-
     public void addCalculatedPropertiesToQsarModel( QsarType qsarModel );
     public void removeResourcesFromModel( QsarType qsarModel,
                                           EditingDomain editingDomain, List<ResourceType> list );
@@ -191,6 +160,7 @@ public interface IQsarManager extends IBioclipseManager{
                                               BioclipseException,
                                               CoreException;
 
+    
     @PublishedMethod(params="String ontologyID",
                      methodSummary = "Show all implementations for this " +
                      		"entry in the ontology." )
@@ -212,14 +182,14 @@ public interface IQsarManager extends IBioclipseManager{
                      methodSummary = "Calculate a descriptor for a molecule " +
                      		"with the default implementation.")
     @Recorded
-    DescriptorCalculationResult calculate2( IMolecule mol, String ontologyID )
+    IDescriptorResult calculate( IMolecule mol, String ontologyID )
                                                       throws BioclipseException;
 
     @PublishedMethod(params="IMolecule mol, String descriptor, String provider",
                      methodSummary = "Calculate a descriptor for a molecule " +
                         "using the default provider.")
     @Recorded
-    DescriptorCalculationResult calculate2( IMolecule mol, String ontologyID,
+    IDescriptorResult calculate( IMolecule mol, String ontologyID,
                                             String providerID )
                                                       throws BioclipseException;
 
@@ -228,7 +198,7 @@ public interface IQsarManager extends IBioclipseManager{
                      		"list of molecules " +
                         "using the default provider.")
     @Recorded
-    DescriptorCalculationResult calculate2( List<IMolecule> mols,
+    DescriptorCalculationResult calculate( List<IMolecule> mols,
                                             List<String> descriptors )
                                                       throws BioclipseException;
 
@@ -238,7 +208,7 @@ public interface IQsarManager extends IBioclipseManager{
                                      "list of molecules " +
                                      "using the selected provider.")
     @Recorded
-    DescriptorCalculationResult calculate2( List<IMolecule> mols,
+    DescriptorCalculationResult calculate( List<IMolecule> mols,
                                             List<String> descriptors,
                                             String provider )
                                                       throws BioclipseException;
@@ -253,6 +223,19 @@ public interface IQsarManager extends IBioclipseManager{
                      methodSummary = "Convert a short ontology ID to full ID")
     @Recorded
     String getRealOntologyID( String ontologyID ) throws BioclipseException;
+
+
+    /*
+     * UNPUBLISHED methods
+     */
+    
+    public List<IDescriptorResult> calculate(IMolecule molecule,
+                                             List<DescriptorType> descriptorTypes) throws BioclipseException;
+
+    public Map<? extends IMolecule, List<IDescriptorResult>> calculate(
+                                                                       List<? extends IMolecule> molecules, 
+                                                                       List<DescriptorType> descriptorTypes, IProgressMonitor monitor)
+                                                                       throws OperationCanceledException, BioclipseException;
 
 
 }

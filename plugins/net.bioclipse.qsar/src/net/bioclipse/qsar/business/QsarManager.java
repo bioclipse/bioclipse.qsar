@@ -553,32 +553,6 @@ public class QsarManager implements IQsarManager{
     }
 
 
-    /**
-     * Convenience method to calculate a descriptor for a single mol and 
-     * a single descriptorID.
-     * @throws BioclipseException 
-     */
-    @Deprecated
-    public IDescriptorResult calculate(IMolecule molecule, String descriptorID) throws BioclipseException {
-
-        List<IMolecule> mollist=new ArrayList<IMolecule>();
-        mollist.add(molecule);
-
-        List<String> descIDs=new ArrayList<String>();
-        descIDs.add(descriptorID);
-
-        Map<? extends IMolecule, List<IDescriptorResult>> retMap = calculateNoParams(mollist, descIDs);
-        if (retMap==null || retMap.size()<1){
-            throw new NoSuchElementException("Calculation did not return a result");
-        }
-        List<IDescriptorResult> res=retMap.get(molecule);
-        if (res==null || res.size()<=0)
-            throw new NoSuchElementException("Calculation returned empty result");
-
-        return res.get(0);
-
-    }
-
     /*
      * BELOW IS NEW IMPLE
      */
@@ -730,9 +704,8 @@ public class QsarManager implements IQsarManager{
      * calculate("CCC", "bondcount?order=s")  > use param and preferred impl
      * Input can be short/full ontology id and optionally a parameter
      * @throws BioclipseException 
-     * @throws BioclipseException 
      */
-    public DescriptorCalculationResult calculate2(IMolecule mol, String descriptor) throws BioclipseException{
+    public IDescriptorResult calculate(IMolecule mol, String descriptor) throws BioclipseException{
         
         //Create a new instance of a descriptorimpl
         DescriptorImpl dimpl = getPreferredImpl( 
@@ -740,7 +713,7 @@ public class QsarManager implements IQsarManager{
         parseDescriptorParameters(dimpl,descriptor);
         logger.debug("Chosen provider: " + dimpl.getProvider().getShortName() 
                      + " for descriptor: " + toShortOntologyForm( descriptor ));
-        return calculate2( mol, dimpl);
+        return calculate( mol, dimpl);
     }
     
     /**
@@ -751,10 +724,10 @@ public class QsarManager implements IQsarManager{
      * @throws BioclipseException 
      * @throws BioclipseException 
      */
-    public DescriptorCalculationResult calculate2(List<IMolecule> mols, List<String> descriptors) throws BioclipseException{
+    public DescriptorCalculationResult calculate(List<IMolecule> mols, List<String> descriptors) throws BioclipseException{
 
         //Just propagate with provider as null
-        return calculate2( mols, descriptors, null );
+        return calculate( mols, descriptors, null );
     }
     
     /**
@@ -764,7 +737,7 @@ public class QsarManager implements IQsarManager{
      * @throws BioclipseException 
      * @throws BioclipseException 
      */
-    public DescriptorCalculationResult calculate2(List<IMolecule> mols, List<String> descriptors, String provider) throws BioclipseException{
+    public DescriptorCalculationResult calculate(List<IMolecule> mols, List<String> descriptors, String provider) throws BioclipseException{
 
         Map<IMolecule, List<DescriptorImpl>> calculationMap=new HashMap<IMolecule, List<DescriptorImpl>>();
         
@@ -791,7 +764,7 @@ public class QsarManager implements IQsarManager{
 
         }
         
-        return calculate2( calculationMap);
+        return calculate( calculationMap);
     }
     
     
@@ -802,7 +775,7 @@ public class QsarManager implements IQsarManager{
      * @return
      * @throws BioclipseException 
      */
-    private DescriptorCalculationResult calculate2(
+    private DescriptorCalculationResult calculate(
                                                     Map<IMolecule, List<DescriptorImpl>> calculationMap ) throws BioclipseException {
 
         Map<IMolecule, List<DescriptorType>> molDescMap=new HashMap<IMolecule, List<DescriptorType>>();
@@ -917,21 +890,21 @@ public class QsarManager implements IQsarManager{
      * calculate("CCC", "xlogp", "cdk.rest")
      * @throws BioclipseException  
      */
-    public DescriptorCalculationResult calculate2(IMolecule mol, 
+    public IDescriptorResult calculate(IMolecule mol, 
                                                   String ontologyID, 
                                                   String providerID)
                                                   throws BioclipseException {
         //Look up impl be ontologyID and provider
         DescriptorImpl dimpl = getDescriptorImpl( ontologyID, providerID );
         parseDescriptorParameters(dimpl,ontologyID);
-        return calculate2( mol, dimpl);
+        return calculate( mol, dimpl);
     }
 
     /**
      * Convenience call to set up calculationMap for one mol and one descimpl
      * @throws BioclipseException 
      */
-    private DescriptorCalculationResult calculate2( IMolecule mol,
+    private IDescriptorResult calculate( IMolecule mol,
                                                     DescriptorImpl impl ) throws BioclipseException {
         
         Map<IMolecule, List<DescriptorImpl>> calculationMap=
@@ -939,7 +912,11 @@ public class QsarManager implements IQsarManager{
         List<DescriptorImpl> impls = new ArrayList<DescriptorImpl>();
         impls.add( impl );
         calculationMap.put( mol, impls );
-        return calculate2( calculationMap );
+        DescriptorCalculationResult res =  calculate( calculationMap );
+        
+        //We know we want only one result for one mol
+        List<IDescriptorResult> results = res.getResultMap().get( mol );
+        return results.get( 0 );
     }
     
     
@@ -957,34 +934,6 @@ public class QsarManager implements IQsarManager{
 
         return ret.get(molecule);
     }
-
-
-
-    public Map<? extends IMolecule, List<IDescriptorResult>> calculateNoParams(
-                                                                               List<? extends IMolecule> molecules, List<String> descriptorIDs) throws BioclipseException {
-        List<DescriptorType> descTypes=new ArrayList<DescriptorType>();
-
-        for (String descriptorID : descriptorIDs){
-            //Look up descriptor by ID
-            Descriptor desc=getDescriptorByID(descriptorID);
-            if (desc==null){
-                throw new IllegalArgumentException("Could not find descriptor: " + descriptorID);
-            }
-
-            //Loop up preferred implementation
-            DescriptorImpl impl=getPreferredImpl(descriptorID);
-            if (impl==null){
-                throw new IllegalArgumentException("Could not find an implementation for descriptor: " + descriptorID);
-            }
-
-
-            DescriptorType descType=createDescriptorType(null, null, desc, impl,null);
-            descTypes.add(descType);
-        }
-
-        return calculate(molecules, descTypes, new NullProgressMonitor());
-    }
-
 
     public DescriptorType createDescriptorType2(DescriptorImpl impl) {
 
@@ -1245,127 +1194,124 @@ public class QsarManager implements IQsarManager{
     //QSAR model operatios below
     //===============================
 
-    /**
-     * Add resources to QSAR model.
-     */
-    public void addResourcesToQsarModel(QsarType qsarmodel, EditingDomain editingDomain, 
-                                        List<IResource> resourcesToAdd, final IProgressMonitor monitor) throws IOException, BioclipseException, CoreException {
-
-        ICDKManager cdk = net.bioclipse.cdk.business.Activator.getDefault().getJavaCDKManager();
-
-        StructurelistType structList = qsarmodel.getStructurelist();
-        CompoundCommand ccmd=new CompoundCommand();
-
-        //Intermediate storage to keep track of what we have added, 
-        //in order to get unique structureIds
-        List<String> storedStructureIDs=new ArrayList<String>();
-
-        for (IResource resource : resourcesToAdd){
-
-            if (resource instanceof IFile) {
-                IFile file = (IFile) resource;
-
-                //Check if this file is already in model
-                for (ResourceType existingRes : structList.getResources()){
-                    if (existingRes.getName().equals(file.getName())){
-                        throw new UnsupportedOperationException("File: " + 
-                                                                file.getName() + 
-                        " already exists in QSAR analysis.");
-                    }
-                }
-
-                //Load molecules into file
-                List<ICDKMolecule> mollist = cdk.loadMolecules(file);
-                if (mollist==null || mollist.size()<=0){
-                    throw new BioclipseException("No molecules in file");
-                }
-
-                //Count no of 2D and 3D
-                int no2d=0;
-                int no3d=0;
-                for (ICDKMolecule mol : mollist){
-                    if (cdk.has2d( mol ))
-                        no2d++;
-                    if (cdk.has3d( mol ))
-                        no3d++;
-                }
-
-                //Add resource to QSAR model
-                ResourceType res=QsarFactory.eINSTANCE.createResourceType();
-                res.setId(file.getName());
-                res.setName(file.getName());
-                res.setFile(file.getFullPath().toString());
-                res.setNo2d( no2d );
-                res.setNo3d( no3d );
-                res.setNoMols( mollist.size() );
-                Command cmd=AddCommand.create(editingDomain, structList, 
-                                              QsarPackage.Literals.STRUCTURELIST_TYPE__RESOURCES, res);
-                ccmd.append(cmd);
-
-                //Add all structures in resource as well as children to resource
-                int molindex=0;
-                for (ICDKMolecule mol : mollist){
-
-                    StructureType structure=QsarFactory.eINSTANCE.createStructureType();
-
-                    if (mol.getName()!=null && mol.getName().length()>0){
-                        if (existsStructureIDInModel(qsarmodel, mol.getName())){
-                            //Use a generated structureID
-                            structure.setId( getStructureName(resource,molindex) );
-                        }else{
-                            if (storedStructureIDs.contains( mol.getName() )){
-                                //Use a generated structureID
-                                structure.setId( getStructureName(resource,molindex) );
-                            }else{
-                                //IDs should not start with _
-                                if (mol.getName().startsWith( "_" )){
-                                    //Use a generated structureID
-                                    structure.setId( getStructureName(resource,molindex) );
-                                }else{
-                                    //This id is free and can be used
-                                    structure.setId( mol.getName() );
-                                }
-                            }
-                        }
-                    }else{
-                        //Use a generated structureID
-                        structure.setId( getStructureName(resource,molindex) );
-                    }
-
-                    storedStructureIDs.add( structure.getId() );
-
-                    //If text-based (currently the only supported method in Bioclipse)
-                    structure.setResourceindex( molindex );
-
-                    //FIXME: set structure changed in preferences!
-                    //                    structure.setChanged( true );
-
-                    //Calculate and add inchi to structure
-                    try {
-                        String inchistr = mol.getInChI(
-                            net.bioclipse.core.domain.IMolecule
-                                .Property.USE_CACHED_OR_CALCULATED
-                        );
-                        structure.setInchi( inchistr );
-                    } catch ( Exception e ) {
-                        logger.error("Could not generate inchi for mol " + 
-                                     molindex + " in file " + file.getName());
-                    }
-
-                    cmd=AddCommand.create(editingDomain, res, 
-                                          QsarPackage.Literals.RESOURCE_TYPE__STRUCTURE, structure);
-                    ccmd.append(cmd);
-
-                    molindex++;
-                }
-
-            }
-        }
-
-        //Execute the CompoundCommand
-        editingDomain.getCommandStack().execute(ccmd);    
-
-    }
+//    /**
+//     * Add resources to QSAR model.
+//     */
+//    public void addResourcesToQsarModel(QsarType qsarmodel, EditingDomain editingDomain, 
+//                                        List<IResource> resourcesToAdd, final IProgressMonitor monitor) throws IOException, BioclipseException, CoreException {
+//
+//        ICDKManager cdk = net.bioclipse.cdk.business.Activator.getDefault().getJavaCDKManager();
+//
+//        StructurelistType structList = qsarmodel.getStructurelist();
+//        CompoundCommand ccmd=new CompoundCommand();
+//
+//        //Intermediate storage to keep track of what we have added, 
+//        //in order to get unique structureIds
+//        List<String> storedStructureIDs=new ArrayList<String>();
+//
+//        for (IResource resource : resourcesToAdd){
+//
+//            if (resource instanceof IFile) {
+//                IFile file = (IFile) resource;
+//
+//                //Check if this file is already in model
+//                for (ResourceType existingRes : structList.getResources()){
+//                    if (existingRes.getName().equals(file.getName())){
+//                        throw new UnsupportedOperationException("File: " + 
+//                                                                file.getName() + 
+//                        " already exists in QSAR analysis.");
+//                    }
+//                }
+//
+//                //Load molecules into file
+//                List<ICDKMolecule> mollist = cdk.loadMolecules(file);
+//                if (mollist==null || mollist.size()<=0){
+//                    throw new BioclipseException("No molecules in file");
+//                }
+//
+//                //Count no of 2D and 3D
+//                int no2d=0;
+//                int no3d=0;
+//                for (ICDKMolecule mol : mollist){
+//                    if (cdk.has2d( mol ))
+//                        no2d++;
+//                    if (cdk.has3d( mol ))
+//                        no3d++;
+//                }
+//
+//                //Add resource to QSAR model
+//                ResourceType res=QsarFactory.eINSTANCE.createResourceType();
+//                res.setId(file.getName());
+//                res.setName(file.getName());
+//                res.setFile(file.getFullPath().toString());
+//                res.setNo2d( no2d );
+//                res.setNo3d( no3d );
+//                res.setNoMols( mollist.size() );
+//                Command cmd=AddCommand.create(editingDomain, structList, 
+//                                              QsarPackage.Literals.STRUCTURELIST_TYPE__RESOURCES, res);
+//                ccmd.append(cmd);
+//
+//                //Add all structures in resource as well as children to resource
+//                int molindex=0;
+//                for (ICDKMolecule mol : mollist){
+//
+//                    StructureType structure=QsarFactory.eINSTANCE.createStructureType();
+//
+//                    if (mol.getName()!=null && mol.getName().length()>0){
+//                        if (existsStructureIDInModel(qsarmodel, mol.getName())){
+//                            //Use a generated structureID
+//                            structure.setId( getStructureName(resource,molindex) );
+//                        }else{
+//                            if (storedStructureIDs.contains( mol.getName() )){
+//                                //Use a generated structureID
+//                                structure.setId( getStructureName(resource,molindex) );
+//                            }else{
+//                                //IDs should not start with _
+//                                if (mol.getName().startsWith( "_" )){
+//                                    //Use a generated structureID
+//                                    structure.setId( getStructureName(resource,molindex) );
+//                                }else{
+//                                    //This id is free and can be used
+//                                    structure.setId( mol.getName() );
+//                                }
+//                            }
+//                        }
+//                    }else{
+//                        //Use a generated structureID
+//                        structure.setId( getStructureName(resource,molindex) );
+//                    }
+//
+//                    storedStructureIDs.add( structure.getId() );
+//
+//                    //If text-based (currently the only supported method in Bioclipse)
+//                    structure.setResourceindex( molindex );
+//
+//                    //Calculate and add inchi to structure
+//                    try {
+//                        String inchistr = mol.getInChI(
+//                            net.bioclipse.core.domain.IMolecule
+//                                .Property.USE_CACHED_OR_CALCULATED
+//                        );
+//                        structure.setInchi( inchistr );
+//                    } catch ( Exception e ) {
+//                        logger.error("Could not generate inchi for mol " + 
+//                                     molindex + " in file " + file.getName());
+//                    }
+//
+//                    cmd=AddCommand.create(editingDomain, res, 
+//                                          QsarPackage.Literals.RESOURCE_TYPE__STRUCTURE, structure);
+//                    ccmd.append(cmd);
+//
+//                    molindex++;
+//                }
+//
+//            }
+//        }
+//
+//        //Execute the CompoundCommand
+//        editingDomain.getCommandStack().execute(ccmd);    
+//
+//    }
     
     /**
      * Add resources to QSAR model, and also add selected property as response
@@ -1483,10 +1429,6 @@ public class QsarManager implements IQsarManager{
                 //If text-based (currently the only sup. method in Bioclipse)
                 structure.setResourceindex( molindex );
 
-                //FIXME: set structure changed in preferences!
-                //                    structure.setChanged( true );
-                //Is this really needed? first time is always changed...
-                
                 IAtomContainer container = mol.getAtomContainer();
                 CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.getInstance(
                                                  container.getBuilder() );
@@ -1880,32 +1822,6 @@ public class QsarManager implements IQsarManager{
     }
 
     
-//    public void removeResponseUnitsFromModel( QsarType qsarModel,
-//                                            EditingDomain editingDomain,
-//                                            List<ResponseUnit> list ) {
-//
-//        CompoundCommand ccmd=new CompoundCommand();
-//
-//        //Collect commands from selection
-//        for (ResponseUnit unit : list){
-//            
-//            //Look up in model
-//            for ( ResponseunitType rtype : qsarModel.getResponseunit()){
-//                
-//                if (rtype.getId().equals( unit.getId() )){
-//                    Command cmd=RemoveCommand.create(editingDomain, qsarModel, 
-//                           QsarPackage.Literals.QSAR_TYPE__RESPONSEUNIT, rtype);
-//                    ccmd.append(cmd);
-//                    logger.debug("Removing response value: " + unit.getId());
-//                }
-//            }
-//        }
-//
-//        //Execute the commands as one 
-//        editingDomain.getCommandStack().execute(ccmd);
-//
-//    }
-
     public void removeResponseUnitsFromModel( QsarType qsarModel,
                                               EditingDomain editingDomain,
                                               List<ResponseunitType> listToRemove ) {
