@@ -580,15 +580,15 @@ public class OverviewPage extends FormPage implements IEditingDomainProvider, IP
             }
         });
         molSection.setText("Export");
-        //		molSection.setDescription("Export the project az an archive to allow for " +
-        //				"exchanging of complete dataset formation.");
+        		molSection.setDescription("Export the project to allow for " +
+        				"exchanging of complete datasets.");
 
         Composite sectionClient = toolkit.createComposite(molSection);
         sectionClient.setLayout(new GridLayout(3,false));
         molSection.setClient(sectionClient);
         
         final Image consensusImage=net.bioclipse.qsar.ui.Activator
-                        .getImageDescriptor( "icons48/export.jpg" ).createImage();
+                        .getImageDescriptor( "icons48/archiver48.png" ).createImage();
         Canvas consensusCanvas = new Canvas(sectionClient,SWT.NO_REDRAW_RESIZE);
         consensusCanvas.addPaintListener(new PaintListener() {
             public void paintControl(PaintEvent e) {
@@ -633,6 +633,7 @@ public class OverviewPage extends FormPage implements IEditingDomainProvider, IP
             }
         });
         GridData gd2=new GridData(GridData.FILL_BOTH);
+        gd2.verticalAlignment=GridData.CENTER;
         link2.setLayoutData(gd2);
 
         Label lblMolErrorText2=toolkit.createLabel(sectionClient, "", SWT.WRAP);

@@ -13,6 +13,8 @@ package net.bioclipse.qsar.ui.wizards;
 import java.util.List;
 import java.util.Map;
 
+import net.bioclipse.qsar.ui.Activator;
+
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.jface.wizard.IWizardPage;
@@ -69,6 +71,8 @@ public class AddMoleculeFilesWizard extends Wizard{
         //Page 2: Select properties to use as response values for the molecules
         selectResponsePage=new SelectPropertyAsResponsePage("Select property as response");
         addPage( selectResponsePage );
+
+
     }
 
     /**

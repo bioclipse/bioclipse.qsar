@@ -10,6 +10,8 @@
  ******************************************************************************/
 package net.bioclipse.qsar.ui.dialogs;
 
+import net.bioclipse.qsar.ui.Activator;
+
 import org.eclipse.jface.dialogs.TitleAreaDialog;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
@@ -44,8 +46,6 @@ public class ImportResultsDialog extends TitleAreaDialog {
             | SWT.SEPARATOR);
         titleBarSeparator.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 
-        //TODO: Continue here with more GUI elements
-        
         return composite;
     }
 }

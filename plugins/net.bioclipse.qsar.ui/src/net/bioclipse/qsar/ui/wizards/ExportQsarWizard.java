@@ -15,6 +15,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.bioclipse.qsar.ui.Activator;
 import net.bioclipse.qsar.ui.builder.QSARNature;
 
 import org.eclipse.core.resources.IProject;
@@ -85,6 +86,7 @@ public class ExportQsarWizard extends Wizard implements IExportWizard {
 			page=new ExportQsarWizardFilePage("Export QSAR project");
 			page.setTitle("Export QSAR project");
 			page.setDescription("Export QSAR project to file");
+			page.setImageDescriptor( Activator.getImageDescriptor( "wizban/wiz_export2.gif" ) );
 			exportProject=qsarProjects.get( 0 );
 		}else{
 			showMessage("You have selected resources from more than one project. " +

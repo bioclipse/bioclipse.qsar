@@ -13,6 +13,7 @@ package net.bioclipse.qsar.ui.wizards;
 import java.util.ArrayList;
 
 import net.bioclipse.chemoinformatics.util.MoleculeContentTypeViewerFilter;
+import net.bioclipse.qsar.ui.Activator;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.ResourcesPlugin;
@@ -50,6 +51,7 @@ public class SelectMoleculesPage extends WizardPage implements ISelectionChanged
         
         setTitle( "Add files" );
         setDescription( "Select files with molecules to add to the QSAR project." );
+        setImageDescriptor( Activator.getImageDescriptor( "wizban/wiz_imp_mol.gif" ) );
 
         Composite comp = new Composite(parent, SWT.NONE);
         GridLayout layout=new GridLayout();
