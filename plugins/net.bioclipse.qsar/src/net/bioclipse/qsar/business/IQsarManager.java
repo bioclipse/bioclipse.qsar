@@ -50,6 +50,7 @@ public interface IQsarManager extends IBioclipseManager{
     @PublishedMethod( 
                       params="IMolecule molecule, String descriptorImplID",
                       methodSummary = "Calculates a descriptor for a molecule" )
+    @Deprecated
     public IDescriptorResult calculate(IMolecule molecule, String descriptorImplID) throws BioclipseException;
 
     public List<IDescriptorResult> calculate(IMolecule molecule,
@@ -65,6 +66,7 @@ public interface IQsarManager extends IBioclipseManager{
     		"List<String> descriptorIDs",
          methodSummary = "Calculates a list of descriptors for a " +
     "list of molecules" )
+    @Deprecated
     public Map<? extends IMolecule, List<IDescriptorResult>> calculateNoParams(
          List<? extends IMolecule> molecules, List<String> descriptorIDs) throws BioclipseException;
 
