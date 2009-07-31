@@ -23,28 +23,24 @@ import net.bioclipse.core.domain.SMILESMolecule;
 import net.bioclipse.qsar.DescriptorType;
 import net.bioclipse.qsar.QSARConstants;
 import net.bioclipse.qsar.QsarFactory;
-import net.bioclipse.qsar.QsarPackage;
 import net.bioclipse.qsar.QsarType;
-import net.bioclipse.qsar.ResponseunitType;
 import net.bioclipse.qsar.business.IQsarManager;
 import net.bioclipse.qsar.business.QsarManager;
 import net.bioclipse.qsar.descriptor.IDescriptorResult;
 import net.bioclipse.qsar.descriptor.model.Descriptor;
+import net.bioclipse.qsar.descriptor.model.DescriptorCalculationResult;
 import net.bioclipse.qsar.descriptor.model.DescriptorImpl;
 import net.bioclipse.qsar.descriptor.model.DescriptorCategory;
-import net.bioclipse.qsar.descriptor.model.DescriptorModel;
 import net.bioclipse.qsar.descriptor.model.DescriptorParameter;
 import net.bioclipse.qsar.descriptor.model.DescriptorProvider;
 import net.bioclipse.qsar.descriptor.model.ResponseUnit;
 import net.bioclipse.qsar.init.Activator;
-import net.bioclipse.qsar.provider.QsarmodelEditPlugin;
 import net.bioclipse.qsar.util.QsarAdapterFactory;
 
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.preferences.DefaultScope;
 import org.eclipse.core.runtime.preferences.IEclipsePreferences;
 import org.eclipse.emf.common.command.BasicCommandStack;
-import org.eclipse.emf.edit.command.AddCommand;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.junit.Test;
@@ -426,7 +422,7 @@ public class TestQsarManager {
 		public void testGetDescriptorImplsByID(){
 		//Matches plugin.xml
 		String descriptorImplID="net.bioclipse.qsar.test.descriptor3";
-		String cat1id="http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#molecularDescriptor";
+//		String cat1id="http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#molecularDescriptor";
 
 		//Get decriptor by hardcoded id
 		DescriptorImpl desc=qsar.getDescriptorImplByID(descriptorImplID);
@@ -444,7 +440,7 @@ public class TestQsarManager {
 	public void testGetDescriptorImplsByIDRequire3D(){
 		//Matches plugin.xml
 		String descriptorID3D="net.bioclipse.qsar.test.descriptor3D";
-		String cat2id="http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#constitutionalDescriptor";
+//		String cat2id="http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#constitutionalDescriptor";
 
 		//Get decriptor by hardcoded id requiring 3D
 		DescriptorImpl desc=qsar.getDescriptorImplByID(descriptorID3D);
@@ -503,7 +499,6 @@ public class TestQsarManager {
   @Test
   public void testDescriptorImpl(){
       String descriptorID="http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#BCUT";
-      String providerID="";
       String expectedImplID="net.bioclipse.qsar.test.descriptor1";
 
       DescriptorImpl impl = qsar.getPreferredImpl( descriptorID );
@@ -573,8 +568,9 @@ public class TestQsarManager {
 		mols.add(mol2);
 		descs.add(descriptorID);
 		descs.add(descriptorID2);
-		
-		Map<? extends IMolecule, List<IDescriptorResult>> res = qsar.calculateNoParams(mols, descs);
+
+		DescriptorCalculationResult calres = qsar.calculate(mols, descs);
+		Map<? extends IMolecule, List<IDescriptorResult>> res = calres.getResultMap();
 		assertNotNull(res);
 		
 		List<IDescriptorResult> res1=res.get(mol1);
