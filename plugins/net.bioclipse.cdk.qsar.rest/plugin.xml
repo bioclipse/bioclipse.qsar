@@ -14,7 +14,7 @@
             version="1.2.2"
             shortName="CDK REST"
             icon="icons/cdklogo.png"
-            calculator="net.bioclipse.cdk.qsar.rest.CDKDescriptorCalculator"
+            calculator="net.bioclipse.cdk.qsar.rest.CdkRESTDescriptorCalculator"
             acceptsSmiles="true"
             acceptsCml="false"
             acceptsMolfile="false">
@@ -39,7 +39,7 @@
                   definition="http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#aromaticBondsCount"
                   name="AromaticBondsCount">
              </descriptorImpl>
-             <descriptorImpl
+             <!--descriptorImpl
                   id="org.openscience.cdk.qsar.rest.descriptors.molecular.AtomCountDescriptor"
                   definition="http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#atomCount"
                   description="Number of atoms of a certain element type."
@@ -54,7 +54,7 @@
                         <listedvalue value="H" />
                         <listedvalue value="*" />
                   </parameter>
-             </descriptorImpl>
+             </descriptorImpl-->
              <descriptorImpl
                   id="org.openscience.cdk.qsar.rest.descriptors.molecular.AutocorrelationDescriptorCharge"
                   definition="http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#autoCorrelationCharge"
@@ -73,7 +73,7 @@
                   description="ATS autocorrelation descriptor, where the weight equal to the charges."
                   name="AutocorrelationDescriptorPolarizability">
              </descriptorImpl>
-            <descriptorImpl
+            <!--descriptorImpl
                   id="org.openscience.cdk.qsar.rest.descriptors.molecular.BCUTDescriptor"
                   definition="http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#BCUT"
                   description="Eigenvalue based descriptor noted for its utility in chemical diversity."
@@ -88,7 +88,7 @@
                         description="Number of lowest eigenvalues. 0 (default) means all."
                         key="nlow">
                   </parameter>
-             </descriptorImpl>
+             </descriptorImpl-->
             <descriptorImpl
                   id="org.openscience.cdk.qsar.rest.descriptors.molecular.BondCountDescriptor"
                   definition="http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#bondCount"
@@ -228,11 +228,11 @@
                   definition="http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#longestAliphaticChain"
                   description="number of atoms in the longest aliphatic chain"
                   name="LongestAliphaticChain">
-                  <parameter
+                  <!--parameter
                         defaultvalue="false"
                         description="True is the CDKConstant.ISINRING has to be set"
                         key="checkRingSystem">
-                  </parameter>
+                  </parameter-->
             </descriptorImpl>
              <descriptorImpl
                   id="org.openscience.cdk.qsar.rest.descriptors.molecular.MDEDescriptor"
@@ -263,10 +263,10 @@
                   definition="http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#rotatableBondsCount"
                   description="The number of rotatable bonds is given by the SMARTS specified by Daylight."
                   name="RotatableBondsCount">
-                  <parameter
+                  <!--parameter
                         defaultvalue="false"
                         key="includeTerminals">
-                  </parameter>
+                  </parameter-->
             </descriptorImpl>
              <descriptorImpl
                   id="org.openscience.cdk.qsar.rest.descriptors.molecular.RuleOfFiveDescriptor"
@@ -286,7 +286,7 @@
                   description="Vertex adjacency information (magnitude): 1 + log2 m where m is the number of heavy-heavy bonds. If m is zero, then zero is returned."
                   name="VAdjMa">
             </descriptorImpl>
-             <descriptorImpl
+             <!--descriptorImpl
                   id="org.openscience.cdk.qsar.rest.descriptors.molecular.WeightDescriptor"
                   definition="http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#weight"
                   description="weight of atoms of a certain element type."
@@ -296,14 +296,14 @@
                         description="If *, returns the molecular weight, otherwise the weight for the given element"
                         key="elementSymbol">
                   </parameter>
-            </descriptorImpl>
+            </descriptorImpl-->
              <descriptorImpl
                   id="org.openscience.cdk.qsar.rest.descriptors.molecular.WeightedPathDescriptor"
                   definition="http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#weightedPath"
                   description="Evaluates the weighted path descriptors."
                   name="WeightedPath">
             </descriptorImpl>
-             <descriptorImpl
+             <!--descriptorImpl
                   id="org.openscience.cdk.qsar.rest.descriptors.molecular.WHIMDescriptor"
                   definition="http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#WHIM"
                   description="Holistic descriptors described by Todeschini et al. The descriptors are based on a number of atom weightings."
@@ -318,7 +318,7 @@
                         <listedvalue value="eneg" />
                         <listedvalue value="polar" />
                   </parameter>
-            </descriptorImpl>
+            </descriptorImpl-->
              <descriptorImpl
                   id="org.openscience.cdk.qsar.rest.descriptors.molecular.WienerNumbersDescriptor"
                   definition="http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#wienerNumbers"
@@ -330,11 +330,11 @@
                   description="Prediction of logP based on the atom-type method called XLogP."
                   definition="http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#xlogP"
                   name="XLogP">
-                  <parameter
+                  <!--parameter
                         defaultvalue="true"
                         description="True is to use the salicyl acid correction factor"
                         key="salicylFlag">
-                  </parameter>
+                  </parameter-->
             </descriptorImpl>
             <descriptorImpl
                   id="org.openscience.cdk.qsar.rest.descriptors.molecular.ZagrebIndexDescriptor"
