@@ -31,7 +31,6 @@ import net.bioclipse.core.domain.IMolecule;
 import net.bioclipse.core.util.LogUtils;
 import net.bioclipse.qsar.DescriptorType;
 import net.bioclipse.qsar.business.IQsarManager;
-import net.bioclipse.qsar.business.QsarManager;
 import net.bioclipse.qsar.descriptor.DescriptorResult;
 import net.bioclipse.qsar.descriptor.IDescriptorCalculator;
 import net.bioclipse.qsar.descriptor.IDescriptorResult;
@@ -48,30 +47,38 @@ import nu.xom.ValidityException;
  * @author ola
  *
  */
-public class CDKDescriptorCalculator implements IDescriptorCalculator {
+public class CdkRESTDescriptorCalculator implements IDescriptorCalculator {
     
     private static final String REST_PROVIDER_ID="net.bioclipse.cdk.rest.descriptorprovider";
 //    private static final String BASE_URL="http://toposome.chemistry.drexel.edu:6666/cdk/descriptor/";
     private static final String BASE_URL="http://ws1.bmc.uu.se:8182/cdk/descriptor/";
     
         
-    private static final Logger logger = Logger.getLogger(QsarManager.class);
+    private static final Logger logger = Logger.getLogger(CdkRESTDescriptorCalculator.class);
 
     ICDKManager cdk;
 
-    public CDKDescriptorCalculator() {
+    public CdkRESTDescriptorCalculator() {
         cdk=Activator.getDefault().getJavaCDKManager();
     }
 
    public Map<? extends IMolecule, List<IDescriptorResult>> calculateDescriptor(
              Map<IMolecule, List<DescriptorType>> moldesc,
-             IProgressMonitor monitor ) {
+             IProgressMonitor monitor ) throws BioclipseException {
 
         Map<IMolecule, List<IDescriptorResult>> allResults=
             new HashMap<IMolecule, List<IDescriptorResult>>();
 
         IQsarManager qsar = net.bioclipse.qsar.init.Activator
         .getDefault().getQsarManager();
+
+        //Verify REST server before processing molecules
+        try {
+            verifyRestServer();
+        } catch ( Exception e ) {
+            throw new BioclipseException("Could not contact rest server: " 
+                                         + BASE_URL);
+        }
 
         int molindex=1;
         //For each molecule
@@ -136,6 +143,23 @@ public class CDKDescriptorCalculator implements IDescriptorCalculator {
         return allResults;
     }
 
+
+    private void verifyRestServer() throws MalformedURLException, IOException {
+
+        String url=BASE_URL;
+        
+        BufferedReader r = new BufferedReader(
+                           new InputStreamReader(
+                           new URL(url).openStream()));
+
+        String line=r.readLine();
+        StringBuffer buffer=new StringBuffer();
+        while ( line!=null ) {
+            buffer.append( line );
+            line=r.readLine();
+        }
+    
+}
 
     private String runRest( String classname, String smiles ) throws 
                                             MalformedURLException, IOException {

@@ -20,7 +20,6 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.OperationCanceledException;
 import org.eclipse.emf.common.util.EList;
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.aromaticity.AromaticityCalculator;
 import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
 import org.openscience.cdk.atomtype.CDKAtomTypeMatcher;
 import org.openscience.cdk.exception.CDKException;
@@ -52,14 +51,13 @@ import net.bioclipse.core.util.LogUtils;
 import net.bioclipse.qsar.DescriptorType;
 import net.bioclipse.qsar.ParameterType;
 import net.bioclipse.qsar.business.IQsarManager;
-import net.bioclipse.qsar.business.QsarManager;
 import net.bioclipse.qsar.descriptor.DescriptorResult;
 import net.bioclipse.qsar.descriptor.IDescriptorCalculator;
 import net.bioclipse.qsar.descriptor.IDescriptorResult;
 
 public class CDKDescriptorCalculator implements IDescriptorCalculator {
 
-    private static final Logger logger = Logger.getLogger(QsarManager.class);
+    private static final Logger logger = Logger.getLogger(CDKDescriptorCalculator.class);
 
     ICDKManager cdk;
     private DescriptorEngine engine = null;
