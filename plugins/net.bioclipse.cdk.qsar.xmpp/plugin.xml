@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+
+<extension
+      point="net.bioclipse.qsar.descriptorProvider">
+  
+         <provider
+            id="net.bioclipse.cdk.xmpp.descriptorprovider"
+            name="CDK XMPP"
+            vendor="Chemistry Development Kit"
+            namespace="http://ws1.bmc.uu.se"
+            version="1.2.3"
+            shortName="CDK XMPP"
+            icon="icons/xmpp.jpg"
+            calculator="net.bioclipse.cdk.qsar.xmpp.CdkXMPPDescriptorCalculator"
+            acceptsSmiles="false"
+            acceptsCml="true"
+            acceptsMolfile="false">
+            <descriptorImpl
+                  id="org.openscience.cdk.qsar.xmpp.descriptors.molecular.BCUTDescriptor"
+                  definition="http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#BCUT"
+                  description="Eigenvalue based descriptor noted for its utility in chemical diversity."
+                  name="BCUT">
+                  <!--parameter
+                        defaultvalue="1"
+                        description="Number of highest eigenvalues. 0 (default) means all."
+                        key="nhigh">
+                  </parameter>
+                  <parameter
+                        defaultvalue="1"
+                        description="Number of lowest eigenvalues. 0 (default) means all."
+                        key="nlow">
+                  </parameter-->
+             </descriptorImpl>
+
+             <descriptorImpl
+                  id="org.openscience.cdk.qsar.xmpp.descriptors.molecular.RuleOfFiveDescriptor"
+                  definition="http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#lipinskifailures"
+                  description="Returns the number failures of the Lipinski's Rule Of 5."
+                  name="RuleOfFive">
+            </descriptorImpl>
+             <descriptorImpl
+                  id="org.openscience.cdk.qsar.xmpp.descriptors.molecular.TPSADescriptor"
+                  definition="http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#tpsa"
+                  description="Calculation of topological polar surface area based on fragment contributions (TPSA)."
+                  name="TPSA">
+            </descriptorImpl>
+           <descriptorImpl
+                  id="org.openscience.cdk.qsar.xmpp.descriptors.molecular.XLogPDescriptor"
+                  description="Prediction of logP based on the atom-type method called XLogP."
+                  definition="http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#xlogP"
+                  name="XLogP">
+                  <!--parameter
+                        defaultvalue="true"
+                        description="True is to use the salicyl acid correction factor"
+                        key="salicylFlag">
+                  </parameter-->
+            </descriptorImpl>
+            
+         </provider>
+</extension>
+
+</plugin>
