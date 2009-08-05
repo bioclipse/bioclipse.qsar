@@ -52,14 +52,18 @@ import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.dialogs.ProgressMonitorDialog;
 
+import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.ISelectionProvider;
 import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.jface.viewers.ListViewer;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TableViewer;
+import org.eclipse.jface.viewers.TreeNode;
+import org.eclipse.jface.viewers.TreeNodeContentProvider;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.Viewer;
 
@@ -86,6 +90,7 @@ import org.eclipse.ui.forms.editor.FormEditor;
 import org.eclipse.ui.ide.IGotoMarker;
 
 import org.eclipse.ui.part.FileEditorInput;
+import org.eclipse.ui.part.Page;
 
 import org.eclipse.ui.views.contentoutline.ContentOutline;
 import org.eclipse.ui.views.contentoutline.ContentOutlinePage;
@@ -181,6 +186,9 @@ public class QsarEditor extends FormEditor implements IEditingDomainProvider,
     private ResponsesPage responsesPage;
     private OverviewPage overviewPage;
     private InformationPage informationPage;
+
+    Map<IEditorPart, Integer> editorPages;
+
 
 //    private QsarEditorSelectionProvider selectionProvider;
     private XMLEditor xmlEditor;
@@ -1112,6 +1120,8 @@ public class QsarEditor extends FormEditor implements IEditingDomainProvider,
     public IContentOutlinePage getContentOutlinePage() {
         if (contentOutlinePage == null) {
             // The content outline is just a tree.
+            
+            
             //
             class MyContentOutlinePage extends ContentOutlinePage {
                 @Override
@@ -1120,11 +1130,45 @@ public class QsarEditor extends FormEditor implements IEditingDomainProvider,
                     contentOutlineViewer = getTreeViewer();
                     contentOutlineViewer.addSelectionChangedListener(this);
 
+                    TreeNode tn_root = new TreeNode("wee");
+
+                    List<TreeNode> pages=new ArrayList<TreeNode>();
+                    TreeNode tn_op = new TreeNode(overviewPage);
+                    tn_op.setParent( tn_root );
+                    pages.add(tn_op);
+
+                    tn_op = new TreeNode(informationPage);
+                    tn_op.setParent( tn_root );
+                    pages.add(tn_op);
+
+                    tn_op = new TreeNode(molPage);
+                    tn_op.setParent( tn_root );
+                    pages.add(tn_op);
+
+                    tn_op = new TreeNode(descPage);
+                    tn_op.setParent( tn_root );
+                    pages.add(tn_op);
+
+                    tn_op = new TreeNode(responsesPage);
+                    tn_op.setParent( tn_root );
+                    pages.add(tn_op);
+
+                    tn_op = new TreeNode(xmlEditor);
+                    tn_op.setParent( tn_root );
+                    pages.add(tn_op);
+
+                    tn_root.setChildren( pages.toArray(new TreeNode[0]) );
+
                     // Set up the tree viewer.
                     //
-                    contentOutlineViewer.setContentProvider(new AdapterFactoryContentProvider(adapterFactory));
-                    contentOutlineViewer.setLabelProvider(new AdapterFactoryLabelProvider(adapterFactory));
-                    contentOutlineViewer.setInput(editingDomain.getResourceSet());
+                    contentOutlineViewer.setContentProvider( new TreeNodeContentProvider() );
+                    contentOutlineViewer.setLabelProvider( new LabelProvider() );
+                    contentOutlineViewer.setInput( tn_root );
+                    contentOutlineViewer.expandAll();
+                    
+//                    contentOutlineViewer.setContentProvider(new AdapterFactoryContentProvider(adapterFactory));
+//                    contentOutlineViewer.setLabelProvider(new AdapterFactoryLabelProvider(adapterFactory));
+//                    contentOutlineViewer.setInput(editingDomain.getResourceSet());
 
                     // Make sure our popups work.
                     //
@@ -1133,7 +1177,7 @@ public class QsarEditor extends FormEditor implements IEditingDomainProvider,
                     if (!editingDomain.getResourceSet().getResources().isEmpty()) {
                         // Select the root object in the view.
                         //
-                        contentOutlineViewer.setSelection(new StructuredSelection(editingDomain.getResourceSet().getResources().get(0)), true);
+//                        contentOutlineViewer.setSelection(new StructuredSelection(getActivePageInstance()), true);
                     }
                 }
 
@@ -1208,28 +1252,33 @@ public class QsarEditor extends FormEditor implements IEditingDomainProvider,
                 // Get the first selected element.
                 //
                 Object selectedElement = selectedElements.next();
+                
+                if ( selectedElement instanceof IEditorPart );
+                IEditorPart page = (IEditorPart) selectedElement;
+                if (editorPages.get( page )!=null)
+                    setActivePage( editorPages.get( page ) );
 
-                // If it's the selection viewer, then we want it to select the same selection as this selection.
-                //
-                if (currentViewerPane.getViewer() == selectionViewer) {
-                    ArrayList<Object> selectionList = new ArrayList<Object>();
-                    selectionList.add(selectedElement);
-                    while (selectedElements.hasNext()) {
-                        selectionList.add(selectedElements.next());
-                    }
-
-                    // Set the selection to the widget.
-                    //
-                    selectionViewer.setSelection(new StructuredSelection(selectionList));
-                }
-                else {
-                    // Set the input to the widget.
-                    //
-                    if (currentViewerPane.getViewer().getInput() != selectedElement) {
-                        currentViewerPane.getViewer().setInput(selectedElement);
-                        currentViewerPane.setTitle(selectedElement);
-                    }
-                }
+//                // If it's the selection viewer, then we want it to select the same selection as this selection.
+//                //
+//                if (currentViewerPane.getViewer() == selectionViewer) {
+//                    ArrayList<Object> selectionList = new ArrayList<Object>();
+//                    selectionList.add(selectedElement);
+//                    while (selectedElements.hasNext()) {
+//                        selectionList.add(selectedElements.next());
+//                    }
+//
+//                    // Set the selection to the widget.
+//                    //
+//                    selectionViewer.setSelection(new StructuredSelection(selectionList));
+//                }
+//                else {
+//                    // Set the input to the widget.
+//                    //
+//                    if (currentViewerPane.getViewer().getInput() != selectedElement) {
+//                        currentViewerPane.getViewer().setInput(selectedElement);
+//                        currentViewerPane.setTitle(selectedElement);
+//                    }
+//                }
             }
         }
     }
@@ -1608,26 +1657,34 @@ public class QsarEditor extends FormEditor implements IEditingDomainProvider,
         responsesPage=new ResponsesPage(this, editingDomain);
         overviewPage=new OverviewPage(this, editingDomain);
         informationPage=new InformationPage(this, editingDomain);
-        
+
+        editorPages=new HashMap<IEditorPart, Integer>();
+
         try {
             //Overview page comes first with summary
             overviewPageIndex=addPage(overviewPage);
+            editorPages.put(overviewPage, overviewPageIndex);
 
             //Molecules page with interactions
             infoPageIndex=addPage(informationPage);
+            editorPages.put(informationPage, infoPageIndex);
 
             //Molecules page with interactions
             molPageIndex=addPage(molPage);
+            editorPages.put(molPage, molPageIndex);
 
             //Descriptors page
             descPageIndex=addPage(descPage);
+            editorPages.put(descPage, descPageIndex);
 
             //Descriptors page
             responsesPageIndex=addPage(responsesPage);
+            editorPages.put(responsesPage, responsesPageIndex);
 
             xmlEditor = new XMLEditor();
             textEditorIndex = addPage(xmlEditor, getEditorInput());
             setPageText(textEditorIndex, "Source");
+            editorPages.put(xmlEditor, textEditorIndex);
             
         } catch (PartInitException e) {
             LogUtils.debugTrace(logger, e);
