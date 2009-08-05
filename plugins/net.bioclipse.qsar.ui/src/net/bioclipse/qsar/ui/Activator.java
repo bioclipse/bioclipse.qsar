@@ -10,13 +10,19 @@
  *******************************************************************************/
 package net.bioclipse.qsar.ui;
 
+import net.bioclipse.qsar.descriptor.model.DescriptorModel;
 import net.bioclipse.ui.BioclipseActivator;
 
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
+import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.forms.FormColors;
 import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
+import org.osgi.framework.BundleContext;
 
 /**
  * The activator class controls the plug-in life cycle
@@ -48,6 +54,26 @@ public class Activator extends AbstractUIPlugin {
         return imageDescriptorFromPlugin(PLUGIN_ID, path);
     }
 
+    @Override
+    public void start( BundleContext context ) throws Exception {
+        super.start( context );
+        
+        Job job=new Job("Reading descriptor ontology"){
+
+            @Override
+            protected IStatus run( IProgressMonitor monitor ) {
+
+                //This call will initialize the qsar model from ontology and EP
+                net.bioclipse.qsar.init.Activator.getDefault()
+                        .getQsarManager().getModel();
+                return Status.OK_STATUS;
+            }
+            
+        };
+        job.setUser( false );
+        job.schedule();
+        
+    }
 
     /**
      * Returns the shared instance.
