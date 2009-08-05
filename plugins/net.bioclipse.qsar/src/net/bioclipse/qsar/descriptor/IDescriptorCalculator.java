@@ -15,6 +15,7 @@ import java.util.Map;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 
+import net.bioclipse.core.business.BioclipseException;
 import net.bioclipse.core.domain.IMolecule;
 import net.bioclipse.qsar.DescriptorType;
 
@@ -26,8 +27,9 @@ public interface IDescriptorCalculator {
      * @param moldesc Map from IMolecule to a list of Descriptortypes
      * @param monitor Progressmonitor. Set worked++ for each molecule/descriptor combo calculated
      * @return Map<IMolecule, IDescriptorResult> results for each molecule
+     * @throws BioclipseException 
      */
     public Map<? extends IMolecule, List<IDescriptorResult>> calculateDescriptor(
              Map<IMolecule, List<DescriptorType>> moldesc,
-             IProgressMonitor monitor );
+             IProgressMonitor monitor ) throws BioclipseException;
 }
