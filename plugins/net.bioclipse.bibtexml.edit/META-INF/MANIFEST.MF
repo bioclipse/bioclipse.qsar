@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: BibTexML Edit
 Bundle-SymbolicName: net.bioclipse.bibtexml.edit;singleton:=true
-Bundle-Version: 2.0.0.v20090707
+Bundle-Version: 2.1.0.v20090807
 Bundle-ClassPath: .
 Bundle-Activator: net.sf.bibtexml.provider.BibtexmlHandwrittenEditPlugin$Implementation
 Bundle-Vendor: The Bioclipse Team
