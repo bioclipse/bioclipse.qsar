@@ -42,6 +42,7 @@ import net.bioclipse.qsar.StructureType;
 import net.bioclipse.qsar.business.IQsarManager;
 import net.bioclipse.qsar.descriptor.IDescriptorResult;
 import net.bioclipse.qsar.ui.QsarHelper;
+import net.bioclipse.qsar.util.QsarAdapterFactory;
 import net.bioclipse.qsar.util.QsarResourceFactoryImpl;
 import net.sf.bibtexml.BibtexmlPackage;
 
@@ -60,12 +61,17 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.OperationCanceledException;
 import org.eclipse.core.runtime.SubProgressMonitor;
+import org.eclipse.emf.common.command.BasicCommandStack;
+import org.eclipse.emf.common.command.Command;
+import org.eclipse.emf.common.command.CompoundCommand;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.xmi.XMLResource;
+import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
+import org.eclipse.emf.edit.domain.EditingDomain;
 
 /**
  * A Builder for QSAR projects that synchronizes the project file 
@@ -222,6 +228,10 @@ public class QSARBuilder extends IncrementalProjectBuilder
         return getProject().getFile( "qsar.xml" );
     }
 
+    private IFile getDescriptorValuesFile(){
+        return getProject().getFile( "descriptorValues.xml" );
+    }
+
     /**
      * Scan the plugin.xml and plugin.properties files and correlate
      * the key/value pairs; any keys appearing in plugin.xml should
@@ -261,7 +271,7 @@ public class QSARBuilder extends IncrementalProjectBuilder
     private void scanQsarFile(IProgressMonitor monitor) throws OperationCanceledException {
 
         //Read project file (qsar.xml) into an EMF model
-        QsarType qsarModel=readModelFromProjectFile();
+        QsarType qsarModel=readModelFromProjectFile(getQsarFile());
         if (qsarModel==null){
             logger.debug( "Building qsar project '" + getProject() + "' skipped " +
             "since project file could not be parsed." );
@@ -293,6 +303,9 @@ public class QSARBuilder extends IncrementalProjectBuilder
         //================================================
         if (isQsarTypeEmpty(qsarModel)){
             logger.debug("QSAR model does not contain structures and descriptors. Building canceled.");
+            //TODO: remove csv and xml result file
+            
+            return;
         }
 
 
@@ -344,17 +357,26 @@ public class QSARBuilder extends IncrementalProjectBuilder
 
         //Calculate all changed descriptors
         IQsarManager qsar = net.bioclipse.qsar.init.Activator.getDefault().getQsarManager();
-        Map<IMolecule, List<IDescriptorResult>> resultMap;
+        Map<IMolecule, List<IDescriptorResult>> resultMap=null;
         try {
             logger.debug("Time before calculation: " + stopwatch.toString());
             resultMap = qsar.doCalculation(molDescMap, new SubProgressMonitor(monitor, jobSize));
             logger.debug("Time after calculation: " + stopwatch.toString());
-        } catch ( Exception e ) {
+        }catch (BioclipseException e){
+            //Check if exception was due to cancellation, no need for error box
             if (checkCancel(monitor)){
                 handleInterruptedBuild();
                 return;
             }
-            LogUtils.debugTrace( logger, e );
+            
+        } catch ( Exception e ) {
+            //Check if exception was due to cancellation, no need for error box
+            if (checkCancel(monitor)){
+                handleInterruptedBuild();
+                return;
+            }
+
+            LogUtils.handleException( e, logger, net.bioclipse.qsar.ui.Activator.PLUGIN_ID );
             handleInterruptedBuild();
             return;
             
@@ -374,8 +396,13 @@ public class QSARBuilder extends IncrementalProjectBuilder
         monitor.subTask("Processing descriptor results");
 
         //Process results, concatenate with already calculated mols in QsarModel
-        storeDescrResultsInQsarModel(qsarModel, resultMap, structureMap);
-        logger.debug("Stored results in QSAR model");
+//        storeDescrResultsInQsarModel(qsarModel, resultMap, structureMap);
+
+        monitor.subTask("Storing descriptor values");
+        QsarType valuesModel=readValuesModelFromFile();
+
+        storeDescrResultsInSeparateFile(valuesModel, resultMap, structureMap);
+        logger.debug("Stored results in model");
         logger.debug("Time: " + stopwatch.toString());
         if (checkCancel(monitor)){
             handleInterruptedBuild();
@@ -383,8 +410,23 @@ public class QSARBuilder extends IncrementalProjectBuilder
         }
 
         //Save qsarmodel
-        saveModelToProjectFile(qsarModel);
-        logger.debug("Saved new QSAR model file qsar.xml");
+        saveModelToFile(qsarModel, getQsarFile());
+        logger.debug("Saved QSAR model to file: " + getQsarFile().getName());
+        logger.debug("Time: " + stopwatch.toString());
+        if (checkCancel(monitor)){
+            handleInterruptedBuild();
+            return;
+        }
+        
+        //Save valuesmodel
+        saveModelToFile(valuesModel, getDescriptorValuesFile());
+        try {
+            getDescriptorValuesFile().setDerived( true );
+        } catch ( CoreException e ) {
+            LogUtils.handleException( e, logger, 
+                                     net.bioclipse.qsar.ui.Activator.PLUGIN_ID);
+        }
+        logger.debug("Saved values model to file:" + getDescriptorValuesFile().getName());
         logger.debug("Time: " + stopwatch.toString());
         if (checkCancel(monitor)){
             handleInterruptedBuild();
@@ -394,9 +436,10 @@ public class QSARBuilder extends IncrementalProjectBuilder
         //Make all structures and descriptors not dirty and save the prefs
         makeAllNonDirty(qsarModel);
 
+        monitor.subTask("Writing CSV file");
 
         //Serialize qsarmodel to CSV file
-        serializeToCSV(qsarModel);
+        serializeToCSV(qsarModel, valuesModel);
         logger.debug("Serialized to CSV.");
 
         //Serialize mols with results to CML in the future maybe
@@ -409,7 +452,39 @@ public class QSARBuilder extends IncrementalProjectBuilder
 
     }
 
-    private void serializeToCSV( QsarType qsarModel ) {
+
+    private QsarType readValuesModelFromFile() {
+
+        //load old file into EMF model, we will extend it if exists 
+        QsarType valuesModel=readModelFromProjectFile(getDescriptorValuesFile());
+        if (valuesModel==null){
+            //We might need to create a new model
+            logger.debug( "Could not parse descriptorValues file. " +
+                "Creating a new." );
+            
+            QsarAdapterFactory factory=new QsarAdapterFactory();
+            EditingDomain editingDomain=new AdapterFactoryEditingDomain(factory, new BasicCommandStack());
+
+            //Create the super types
+            DocumentRoot root=QsarFactory.eINSTANCE.createDocumentRoot();
+            
+            //Collect commands here
+            CompoundCommand cCmd = new CompoundCommand();
+            Command cmd;
+
+            //Create editor type to hold everything else
+            valuesModel=QsarFactory.eINSTANCE.createQsarType();
+
+//            //could not get SetCommand to work for root element, add directly 
+            root.setQsar(valuesModel);
+            
+        }
+        
+       
+        return valuesModel;
+    }
+
+    private void serializeToCSV( QsarType qsarModel, QsarType valuesModel ) {
 
         List<String> columnLabels=new ArrayList<String>();
         List<String> rowLabels=new ArrayList<String>();
@@ -428,7 +503,7 @@ public class QSARBuilder extends IncrementalProjectBuilder
         int numberDescriptorsPerStructure=0;
 
         //Isolate first structure without error in descriptor calc
-        for (DescriptorresultType descres : qsarModel.getDescriptorresultlist().getDescriptorresult()){
+        for (DescriptorresultType descres : valuesModel.getDescriptorresultlist().getDescriptorresult()){
             if (descres.getErrorString()==null){
                 //No error! Use this as first ok structure until a better way is found
                 firstOKStructureID = descres.getStructureid();
@@ -461,7 +536,7 @@ public class QSARBuilder extends IncrementalProjectBuilder
         }
 
         //Set up columnheaders
-        for (DescriptorresultType descres : qsarModel.getDescriptorresultlist().getDescriptorresult()){
+        for (DescriptorresultType descres : valuesModel.getDescriptorresultlist().getDescriptorresult()){
 
             //We only want for one structure so get first one (and hope it has not failed!)
             if (descres.getStructureid().equals( firstOKStructureID )){
@@ -512,7 +587,7 @@ public class QSARBuilder extends IncrementalProjectBuilder
 
                 //For each column
                 int currentcol=0;
-                for (DescriptorresultType descres : qsarModel.getDescriptorresultlist().getDescriptorresult()){
+                for (DescriptorresultType descres : valuesModel.getDescriptorresultlist().getDescriptorresult()){
 
                     //If this is the structure, get values from this descriptorresult
                     if (descres.getStructureid().equals( structure.getId() )){
@@ -679,6 +754,81 @@ public class QSARBuilder extends IncrementalProjectBuilder
 
     }
 
+    
+    private void storeDescrResultsInSeparateFile(QsarType valuesModel,
+                                                 Map<IMolecule, List<IDescriptorResult>> resultMap,
+                                                 Map<StructureType, IMolecule> structureMap ) {
+
+        
+        //If we have no list to hold descriptorresults, add it
+        if (valuesModel.getDescriptorresultlist()==null){
+            DescriptorresultlistsType descreslist=QsarFactory.eINSTANCE.createDescriptorresultlistsType();
+            valuesModel.setDescriptorresultlist( descreslist );
+        }
+
+        //Loop over all calculated molecules
+        for (IMolecule mol : resultMap.keySet()){
+
+            StructureType structure=findStructure(mol, structureMap);
+            if (structure!=null) {
+
+                //Loop over all descriptors
+                for (IDescriptorResult descres : resultMap.get( mol )){
+
+//                    logger.debug( " ## Attempting to store struct: " 
+//                                  + structure.getId() + " - AND - " 
+//                                  + descres.getDescriptor().getOntologyid());
+
+                    //If this descriptorresult already exists in qsarmodel, use it
+                    DescriptorresultType dres=getDescriptorResultFromQsarModel(valuesModel, descres, structure);
+                    if (dres==null){
+                        //Else, create a new
+                        dres=QsarFactory.eINSTANCE.createDescriptorresultType();
+                        dres.setDescriptorid( descres.getDescriptor().getId() );
+                        dres.setStructureid( structure.getId());
+                        valuesModel.getDescriptorresultlist().getDescriptorresult().add( dres );
+                    }
+
+                    //Remove all values, we have new!
+                    dres.getDescriptorvalue().clear();
+
+                    if (descres.getErrorMessage()!=null && 
+                            descres.getErrorMessage().length()>0){
+
+                        logger.error("Descriptor calculation has failed for: " 
+                                     + structure + "\n   Failing descriptor: " 
+                                     + descres.getDescriptor() 
+                                     + "\n  Error message: " 
+                                     + descres.getErrorMessage());
+                        dres.setErrorString( descres.getErrorMessage() );
+                    }
+
+                    //Else no error, add result
+                    else{
+
+                        //Add values to the found/created descriptorresult
+                        for (int i=0; i< descres.getLabels().length;i++){
+                            DescriptorvalueType dval=QsarFactory.eINSTANCE.createDescriptorvalueType();
+                            dval.setIndex( i );
+                            dval.setLabel( descres.getLabels()[i] );
+                            dval.setValue( "" + descres.getValues()[i] );
+                            dres.getDescriptorvalue().add( dval );
+//                            logger.debug( "   #### added value: " + dval  );
+                        }
+                    }
+                }
+
+            }else{
+                logger.error("Desired mol not found in allMap. Should not happen." );
+            }
+
+        }
+        
+        
+        
+   }
+
+    
     /**
      * Store calculated results in the QsarModel.
      * @param qsarModel
@@ -892,7 +1042,7 @@ public class QSARBuilder extends IncrementalProjectBuilder
 
                 //If descriptor is dirty
                 if (QsarHelper.isDirtyInPreference(desc, getProject())
-                        || isResponseEmpty(desc, structure, qsarModel)       
+                        /*|| isResponseEmpty(desc, structure, qsarModel)*/       
                 ){
                     List<DescriptorType>  localDescList;
                     if (molDescMap.containsKey( mol )){
@@ -1029,9 +1179,10 @@ public class QSARBuilder extends IncrementalProjectBuilder
 
     /**
      * Read in project file and parse it with EMF
+     * @param file 
      * @return QsarType model object
      */
-    private QsarType readModelFromProjectFile() {
+    private QsarType readModelFromProjectFile(IFile file) {
 
         // Register the package -- only needed for stand-alone!
         @SuppressWarnings("unused")
@@ -1065,13 +1216,13 @@ public class QSARBuilder extends IncrementalProjectBuilder
         EcoreUtil.resolveAll( resourceSet );
 
 
-        IFile qsarfile = getQsarFile();
-        logger.debug("QSAR file: " + qsarfile.getRawLocation().toOSString());
+        logger.debug("Model file to read: " 
+                     + file.getRawLocation().toOSString());
 
         // Get the URI of the model file.
         //        URI fileURI = URI.createFileURI(qsarfile.getRawLocation().toOSString());
 
-        URI uri=URI.createPlatformResourceURI(getQsarFile().getFullPath().toString(), true);
+        URI uri=URI.createPlatformResourceURI(file.getFullPath().toString(), true);
 
         // Demand load the resource for this file.
         try{
@@ -1081,8 +1232,9 @@ public class QSARBuilder extends IncrementalProjectBuilder
 
             return qsarType;
         }catch (Exception e){
-            logger.error("Could not read qsar.xml in project: " + getProject() 
-                         + " with error: " + e.getMessage());
+            logger.error("Could not read file:" + file.getName() 
+                         + " in project: " + getProject() 
+                         + " because error: " + e.getMessage());
         }
 
         return null;
@@ -1093,7 +1245,7 @@ public class QSARBuilder extends IncrementalProjectBuilder
      * @param qsarModel 
      * @return QsarType model object
      */
-    private void saveModelToProjectFile(QsarType qsarModel) {
+    private void saveModelToFile(QsarType qsarModel, IFile file) {
 
         //We need a documentroot for serialization
         DocumentRoot root=QsarFactory.eINSTANCE.createDocumentRoot();
@@ -1105,7 +1257,7 @@ public class QSARBuilder extends IncrementalProjectBuilder
             //For now, only one QSAR file per project
             //            IFile qsarfile = getProject().getFile("qsar.xml");
             //            fileURI = URI.createFileURI(qsarfile.getRawLocation().toOSString());
-            URI uri=URI.createPlatformResourceURI(getQsarFile().getFullPath().toString(), true);
+            URI uri=URI.createPlatformResourceURI(file.getFullPath().toString(), true);
 
             Resource.Factory.Registry.INSTANCE.getExtensionToFactoryMap().put("xml", new QsarResourceFactoryImpl());
 
@@ -1120,7 +1272,7 @@ public class QSARBuilder extends IncrementalProjectBuilder
             //Save to file
             resource.save(opts);
 
-            getProject().getFile( "qsar.xml" ).refreshLocal( 0, new NullProgressMonitor());
+            file.refreshLocal( 0, new NullProgressMonitor());
 
             //Serialize to byte[] and print to sysout
             //            ByteArrayOutputStream os=new ByteArrayOutputStream();
