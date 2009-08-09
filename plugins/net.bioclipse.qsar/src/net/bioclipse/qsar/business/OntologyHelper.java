@@ -36,16 +36,8 @@ public class OntologyHelper {
      */
     public static DescriptorModel buildDescriptorHierarchy() throws IOException, BioclipseException, CoreException{
 
-        
         //The new model
         DescriptorModel descriptorModel=new DescriptorModel();
-
-        //We need a new list of descriptor categories
-        List<DescriptorCategory> categories=new ArrayList<DescriptorCategory>();
-
-        
-        IRDFManager rdf=Activator.getDefault().getJavaManager();
-        IRDFStore owl = rdf.createStore();
 
         //Use hardcoded owl
         String owlFile="/ontology/descriptor-algorithms.owl";
@@ -56,7 +48,22 @@ public class OntologyHelper {
         URL furl=FileLocator.toFileURL(url);
         logger.debug("BODOntology as fileURL: " + furl);
 
-        rdf.importURL(owl,furl.toString());
+        return addDescriptorHierarchy(descriptorModel, furl);
+    }
+
+    public static DescriptorModel addDescriptorHierarchy(
+        DescriptorModel descriptorModel, URL url) throws
+        IOException, BioclipseException, CoreException {
+
+        //We need a new list of descriptor categories
+        List<DescriptorCategory> categories = descriptorModel.getCategories();
+        if (categories == null)
+            categories = new ArrayList<DescriptorCategory>();
+
+        IRDFManager rdf=Activator.getDefault().getJavaManager();
+        IRDFStore owl = rdf.createStore();
+
+        rdf.importURL(owl, url.toString());
 
         // list all descriptor categories
         List<List<String>> cats = rdf.sparql(owl,
@@ -82,8 +89,12 @@ public class OntologyHelper {
             //Create model object and store in list
             DescriptorCategory dcat=new DescriptorCategory(identifier, label);
             categories.add( dcat );
+        }
 
-            
+        // because we may be adding from a new OWL file, we have to also
+        // now earlier added categories, so we reiterate
+        for (DescriptorCategory dcat : categories) {
+            String identifier = dcat.getId();
             // list of descriptors for this category; it takes advantage from the fact
             // that the identifier is namespace prefix, and we use the same here
             String sparql = "PREFIX qsar: <http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#> " +
@@ -97,7 +108,7 @@ public class OntologyHelper {
                 for (int j=0; j<descriptors.size(); j++) {
                     List<String> descriptor = descriptors.get(j);
                     String descriptorID = descriptor.get(0);
-                    label = descriptor.get(1);
+                    String label = descriptor.get(1);
 //                    logger.debug("  " + descriptorID + " = " + label + "\n");
                     
                     //Remove the starting qsar:
