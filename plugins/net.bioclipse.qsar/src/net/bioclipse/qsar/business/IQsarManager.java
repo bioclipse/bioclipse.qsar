@@ -82,6 +82,11 @@ public interface IQsarManager extends IBioclipseManager{
      */
     public DescriptorModel getModel();
 
+    @PublishedMethod(methodSummary =
+        "Adds the descriptors defined in the OWL model behind the given URL."
+    )
+    public void addDescriptors(String urlString) throws BioclipseException;
+
     @Recorded
     @PublishedMethod(methodSummary = "Get a list of descriptor IDs" )
     public List<String> getDescriptorIDs();

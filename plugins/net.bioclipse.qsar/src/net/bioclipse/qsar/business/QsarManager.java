@@ -12,7 +12,8 @@
 package net.bioclipse.qsar.business;
 
 import java.io.IOException;
-import java.net.URISyntaxException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -107,6 +108,20 @@ public class QsarManager implements IQsarManager{
         return model;
     }
 
+
+    public void addDescriptors(String urlString) throws BioclipseException {
+        try {
+            URL url = new URL(urlString);
+            if (model == null) initializeDescriptorModel();
+            model = OntologyHelper.addDescriptorHierarchy(model, url);
+        } catch (MalformedURLException exc) {
+            throw new BioclipseException("The given URL is not valid.", exc);
+        } catch (IOException exc) {
+            throw new BioclipseException("Error while adding descriptor.", exc);
+        } catch (CoreException exc) {
+            throw new BioclipseException("Error while adding descriptor.", exc);
+        }
+    }
 
     /**
      * Populate model from OWL Ontology and Extension Point.
