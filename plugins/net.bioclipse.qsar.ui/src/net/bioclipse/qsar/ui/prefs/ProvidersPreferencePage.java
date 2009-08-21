@@ -49,7 +49,7 @@ implements IWorkbenchPreferencePage {
 
 			@Override
 			protected String createList(String[] items) {
-				return QsarPreferenceHelper.createQsarPreferenceListFromString(items);
+				return QsarPreferenceHelper.createQsarPreferenceStringFromItems(items);
 			}
 
 

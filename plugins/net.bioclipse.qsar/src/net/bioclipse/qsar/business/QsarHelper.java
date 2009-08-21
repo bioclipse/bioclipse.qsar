@@ -19,6 +19,7 @@ import net.bioclipse.qsar.descriptor.model.DescriptorImpl;
 import net.bioclipse.qsar.descriptor.model.DescriptorParameter;
 import net.bioclipse.qsar.descriptor.model.DescriptorProvider;
 import net.bioclipse.qsar.descriptor.model.ResponseUnit;
+import net.bioclipse.qsar.prefs.QsarPreferenceHelper;
 
 import org.apache.log4j.Logger;
 import org.eclipse.core.runtime.CoreException;
@@ -224,7 +225,7 @@ public class QsarHelper {
     }
 
 
-    public static List<ResponseUnit> readUnitsFromEP() {
+    public static List<ResponseUnit> readUnitsFromEPAndPreferences() {
 
         List<ResponseUnit> responses=new ArrayList<ResponseUnit>();
 
@@ -275,6 +276,10 @@ public class QsarHelper {
 
             }
         }
+        
+        //Ok, move on to preferences
+        responses.addAll( QsarPreferenceHelper.getAvailableUnitsFromPrefs() );
+        
 
         return responses;
     }

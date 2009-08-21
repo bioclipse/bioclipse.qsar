@@ -242,5 +242,10 @@ public interface IQsarManager extends IBioclipseManager{
                                                                        List<DescriptorType> descriptorTypes, IProgressMonitor monitor)
                                                                        throws OperationCanceledException, BioclipseException;
 
+    /**
+     * Used to force reading of units from EP and prefs
+     */
+    public void updateUnits();
+
 
 }

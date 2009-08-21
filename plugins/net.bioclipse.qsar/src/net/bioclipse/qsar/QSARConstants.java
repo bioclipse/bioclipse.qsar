@@ -14,7 +14,9 @@ public interface QSARConstants {
 
 	//Preferences
 	public static final String QSAR_PROVIDERS_ORDER_PREFERENCE = "QSARProvderOrder";
+	public static final String QSAR_ONTOLOGY_FILES_PREFERENCE = "QSARontologyFiles";
 	public static final String PREFS_SEPERATOR = ";";
+	public static final String PREFS_INTERNAL_SEPERATOR = "|";
 	
 	//Properties
 	public static final String QSAR_RESPONSE_PROPERTY="qsar.response";
@@ -33,6 +35,7 @@ public interface QSARConstants {
   public static final String RESPONSEUNITS_ELEMENT_NAME = "responseUnit";
   
   public static final String MISSING_VALUE_STRING = "NaN";
+  public static final String QSAR_UNITS_PREFERENCE = "QsarUnits";
 
 
 }

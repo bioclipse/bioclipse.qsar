@@ -158,13 +158,15 @@ public class QsarManager implements IQsarManager{
         model.setProviders(QsarHelper.readProvidersAndDescriptorImplsfromEP());
 
         //Create new list of providers
-        model.setUnits( QsarHelper.readUnitsFromEP());
+        model.setUnits( QsarHelper.readUnitsFromEPAndPreferences());
 
-        //        //Add categories from extension point
-        //        addCategories(serviceObjectExtensions, catlist);
-        //TODO: might be used to complement categories from ontology at later point
-
-
+    }
+    
+    public void updateUnits(){
+        if (model==null)
+            initializeDescriptorModel();
+        else
+            model.setUnits( QsarHelper.readUnitsFromEPAndPreferences());
     }
 
 

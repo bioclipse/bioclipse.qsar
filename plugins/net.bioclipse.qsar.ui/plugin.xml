@@ -85,9 +85,25 @@
 </extension>
    
    <extension point="org.eclipse.ui.preferencePages">
-    	<page id="net.bioclipse.qsar.ui.prefs.ProvidersPreferencePage"
+   
+    	<page id="net.bioclipse.qsar.ui.prefs.QSARPreferencePage"
   	      	name="QSAR"
+	      	class="net.bioclipse.qsar.ui.prefs.QSARPreferencePage">
+	   	</page>
+    	<page id="net.bioclipse.qsar.ui.prefs.ProvidersPreferencePage"
+  	      	name="Providers"
+  	      	category="net.bioclipse.qsar.ui.prefs.QSARPreferencePage"
 	      	class="net.bioclipse.qsar.ui.prefs.ProvidersPreferencePage">
+	   	</page>
+    	<page id="net.bioclipse.qsar.ui.prefs.OntologyFilesPreferencePage"
+  	      	name="Descriptors"
+  	      	category="net.bioclipse.qsar.ui.prefs.QSARPreferencePage"
+	      	class="net.bioclipse.qsar.ui.prefs.DescriptorFilesPreferencePage">
+	   	</page>
+    	<page id="net.bioclipse.qsar.ui.prefs.UnitsPreferencePage"
+  	      	name="Units"
+  	      	category="net.bioclipse.qsar.ui.prefs.QSARPreferencePage"
+	      	class="net.bioclipse.qsar.ui.prefs.UnitsPreferencePage">
 	   	</page>
    </extension>
 

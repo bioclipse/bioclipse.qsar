@@ -10,14 +10,16 @@
  ******************************************************************************/
 package net.bioclipse.qsar.ui.prefs;
 
-import net.bioclipse.qsar.QsarPackage;
+import java.util.List;
 
-import org.eclipse.core.databinding.DataBindingContext;
-import org.eclipse.emf.databinding.edit.EMFEditObservables;
-import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
-import org.eclipse.jface.databinding.swt.SWTObservables;
+import net.bioclipse.qsar.descriptor.model.ResponseUnit;
+import net.bioclipse.qsar.init.Activator;
+
+import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.TitleAreaDialog;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.KeyEvent;
+import org.eclipse.swt.events.KeyListener;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
@@ -26,18 +28,30 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 
-
+/**
+ * 
+ * @author ola
+ *
+ */
 public class CreateNewUnitDialog extends TitleAreaDialog{
 
-    private AdapterFactoryEditingDomain editingDomain;
+    ResponseUnit unitModel;
 
-    public CreateNewUnitDialog(Shell parentShell, AdapterFactoryEditingDomain editingDomain) {
+    private Text txtURL;
+    private Text txtDescription;
+    private Text txtShortName;
+    private Text txtName;
+
+    public CreateNewUnitDialog(Shell parentShell) {
         super( parentShell );
-        this.editingDomain=editingDomain;
     }
     
     @Override
     protected Control createDialogArea( Composite parent ) {
+        
+        
+        setTitle( "Add response unit" );
+        
         
         // create the top level composite for the dialog area
         Composite composite = new Composite(parent, SWT.NONE);
@@ -46,15 +60,17 @@ public class CreateNewUnitDialog extends TitleAreaDialog{
         layout.marginWidth = 0;
         layout.verticalSpacing = 0;
         layout.horizontalSpacing = 0;
+        layout.numColumns = 2;
         composite.setLayout(layout);
         composite.setLayoutData(new GridData(GridData.FILL_BOTH));
         composite.setFont(parent.getFont());
         // Build the separator line
         Label titleBarSeparator = new Label(composite, SWT.HORIZONTAL
             | SWT.SEPARATOR);
-        titleBarSeparator.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+        GridData gdtr = new GridData(GridData.FILL_HORIZONTAL);
+        gdtr.horizontalSpan=2;
+        titleBarSeparator.setLayoutData(gdtr);
 
-        layout.numColumns = 2;
         
         
         //Create our model object
@@ -63,50 +79,146 @@ public class CreateNewUnitDialog extends TitleAreaDialog{
 
         //Name
         Label lblName = new Label(composite, SWT.NONE);
-        GridData gd2 = new GridData(GridData.HORIZONTAL_ALIGN_BEGINNING);
-        lblName.setLayoutData(gd2);
-
-        Text txtName = new Text(composite, SWT.NONE);
-        GridData gd = new GridData(GridData.FILL_HORIZONTAL);
-        gd.heightHint=16;
-        txtName.setLayoutData(gd);
+        GridData labelGD = new GridData(GridData.HORIZONTAL_ALIGN_BEGINNING);
+        labelGD.widthHint=100;
+        labelGD.horizontalIndent=10;
+        lblName.setLayoutData(labelGD);
         lblName.setText( "Name" );
- 
+
+        txtName = new Text(composite, SWT.BORDER);
+        GridData gd = new GridData(GridData.FILL_HORIZONTAL);
+//        gd.heightHint=16;
+        txtName.setLayoutData(gd);
+        txtName.addKeyListener( new KeyListener(){
+            public void keyPressed( KeyEvent e ) {
+            }
+            public void keyReleased( KeyEvent e ) {
+                updateStatus();
+            }
+        } );
+
         //Shortname
         Label lblShortName = new Label(composite, SWT.NONE);
-        GridData gd3 = new GridData(GridData.HORIZONTAL_ALIGN_BEGINNING);
-        lblShortName.setLayoutData(gd3);
+        lblShortName.setLayoutData(labelGD);
         lblShortName.setText( "Shortname" );
 
-        Text txtShortName = new Text(composite, SWT.NONE);
+        txtShortName = new Text(composite, SWT.BORDER);
         GridData gd4 = new GridData(GridData.FILL_HORIZONTAL);
         gd4.heightHint=16;
         txtShortName.setLayoutData(gd4);
+        txtShortName.addKeyListener( new KeyListener(){
+            public void keyPressed( KeyEvent e ) {
+            }
+            public void keyReleased( KeyEvent e ) {
+                updateStatus();
+            }
+        } );
 
         //Shortname
         Label lblDescription = new Label(composite, SWT.NONE);
-        GridData gd5 = new GridData(GridData.HORIZONTAL_ALIGN_BEGINNING);
-        lblDescription.setLayoutData(gd5);
+        lblDescription.setLayoutData(labelGD);
         lblDescription.setText( "Description" );
 
-        Text txtDescription = new Text(composite, SWT.NONE);
+        txtDescription = new Text(composite, SWT.BORDER);
         GridData gd6 = new GridData(GridData.FILL_HORIZONTAL);
         gd6.heightHint=16;
         txtDescription.setLayoutData(gd6);
+        txtDescription.addKeyListener( new KeyListener(){
+            public void keyPressed( KeyEvent e ) {
+            }
+            public void keyReleased( KeyEvent e ) {
+                updateStatus();
+            }
+        } );
 
         //Shortname
         Label lblURL = new Label(composite, SWT.NONE);
-        GridData gd7 = new GridData(GridData.HORIZONTAL_ALIGN_BEGINNING);
-        lblURL.setLayoutData(gd7);
+        lblURL.setLayoutData(labelGD);
         lblURL.setText( "URL" );
 
-        Text txtURL = new Text(composite, SWT.NONE);
+        txtURL = new Text(composite, SWT.BORDER);
         GridData gd8 = new GridData(GridData.FILL_HORIZONTAL);
         gd8.heightHint=16;
         txtURL.setLayoutData(gd8);
-        
+        txtURL.addKeyListener( new KeyListener(){
+            public void keyPressed( KeyEvent e ) {
+            }
+            public void keyReleased( KeyEvent e ) {
+                updateStatus();
+            }
+        } );
+
+
         return composite;
         
+    }
+
+    protected void updateStatus() {
+        
+        setErrorMessage( null );
+        unitModel=null;
+
+        String name=txtName.getText();
+        String shortName=txtShortName.getText();
+        String url=txtURL.getText();
+        String desc = txtDescription.getText();
+        
+        if (name==null || name.length()<=0){
+            setErrorMessage( "Name field must not be empty" );
+            getButton(IDialogConstants.OK_ID).setEnabled( false);
+            return;
+        }
+        
+        if (shortName==null || shortName.length()<=0){
+            setErrorMessage( "ShortName field must not be empty" );
+            getButton(IDialogConstants.OK_ID).setEnabled( false);
+            return;
+        }
+        
+        //Make sure name and shortname are unique
+        List<ResponseUnit> existingUnits = Activator.getDefault()
+                                       .getQsarManager().getFullResponseUnits();
+        
+        for (ResponseUnit eunit : existingUnits){
+            if (eunit.getName().equals( name )){
+                setErrorMessage( "The name: " + name + " already exist in " +
+                		"another response unit" );
+                getButton(IDialogConstants.OK_ID).setEnabled( false);
+                return;
+            }
+            
+            if (eunit.getShortname().equals( shortName)){
+                setErrorMessage( "The short name: " + shortName+ " already exist in " +
+                    "another response unit" );
+                getButton(IDialogConstants.OK_ID).setEnabled( false);
+                return;
+            }
+        }
+
+        //Ok, valid
+        unitModel=new ResponseUnit(shortName, name);
+        unitModel.setShortname( shortName );
+        unitModel.setUrl( url );
+        unitModel.setDescription( desc );
+
+        getButton(IDialogConstants.OK_ID).setEnabled( true);
+
+    }
+
+    public ResponseUnit getResponseUnit() {
+
+        return unitModel;
+    }
+    
+    @Override
+    protected void okPressed() {
+        //Make sure we have a valid responseunit, else return
+        if (unitModel==null){
+            updateStatus();
+            return;
+        }
+
+        super.okPressed();
     }
 
 }

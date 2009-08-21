@@ -11,26 +11,43 @@
 package net.bioclipse.qsar.prefs;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.StringTokenizer;
 
 import net.bioclipse.qsar.QSARConstants;
+import net.bioclipse.qsar.business.QsarHelper;
+import net.bioclipse.qsar.descriptor.model.ResponseUnit;
+import net.bioclipse.qsar.init.Activator;
 
+import org.apache.log4j.Logger;
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IExtension;
 import org.eclipse.core.runtime.IExtensionPoint;
 import org.eclipse.core.runtime.IExtensionRegistry;
 import org.eclipse.core.runtime.Platform;
+import org.eclipse.core.runtime.preferences.DefaultScope;
+import org.eclipse.core.runtime.preferences.IEclipsePreferences;
+import org.eclipse.jface.preference.IPreferenceStore;
 
+/**
+ * 
+ * @author ola
+ *
+ */
 public class QsarPreferenceHelper {
 
-	static Map<String, String> providerNameToID = new HashMap<String, String>();
+    private static final Logger logger = Logger.getLogger(
+                                                    QsarPreferenceHelper.class);
+
+
+    static Map<String, String> providerNameToID = new HashMap<String, String>();
 
     public static String getAvailableProvidersFromEP(){
-    	
-		//Initialize implementations via extension points
+
+        //Initialize implementations via extension points
         IExtensionRegistry registry = Platform.getExtensionRegistry();
 
         if ( registry == null )
@@ -39,7 +56,7 @@ public class QsarPreferenceHelper {
         // it likely means that the Eclipse workbench has not
         // started, for example when running tests
 
-		/*
+        /*
          * service objects
          */
         IExtensionPoint serviceObjectExtensionPoint = registry
@@ -49,56 +66,145 @@ public class QsarPreferenceHelper {
         = serviceObjectExtensionPoint.getExtensions();
 
         List<String> providerNames=new ArrayList<String>();
-		
+
         for(IExtension extension : serviceObjectExtensions) {
             for( IConfigurationElement element
                     : extension.getConfigurationElements() ) {
 
-                if (element.getName().equals(QSARConstants.PROVIDER_ELEMENT_NAME)){
-                	
-                	String providerID=element.getAttribute("id");
-                	String providerName=element.getAttribute("name");
-                	providerNames.add(providerName);
-                	providerNameToID.put(providerName, providerID);
-                	
+                if (element.getName().equals(QSARConstants
+                                                       .PROVIDER_ELEMENT_NAME)){
+
+                    String providerID=element.getAttribute("id");
+                    String providerName=element.getAttribute("name");
+                    providerNames.add(providerName);
+                    providerNameToID.put(providerName, providerID);
+
                 }
             }
         }
         if (providerNames.size()>0){
             String[] providersAsArray=providerNames.toArray(new String[0]);
-            return createQsarPreferenceListFromString(
-            		providersAsArray);
+            return createQsarPreferenceStringFromItems(
+                                                       providersAsArray);
         }
-        
-    	return "ERROR";
+
+        return "ERROR";
     }
 
-    
-	public static String[] parseQsarPreferenceString(String stringList) {
-		StringTokenizer st = 
-			new StringTokenizer(stringList, QSARConstants.PREFS_SEPERATOR); //$NON-NLS-1$
-		ArrayList v = new ArrayList();
-		while (st.hasMoreElements()) {
-			v.add(st.nextElement());
-		}
-		return (String[])v.toArray(new String[v.size()]);
-	}
 
-	
-	public static String createQsarPreferenceListFromString(String[] items) {
-		
-		StringBuffer path = new StringBuffer("");//$NON-NLS-1$
-		
-		for (int i = 0; i < items.length; i++) {
-			path.append(items[i]);
-			path.append(QSARConstants.PREFS_SEPERATOR);
-		}
-		return path.toString();
-	}
-	
-	public static String getProviderID(String providerName){
-		return providerNameToID.get(providerName);
-	}
+    public static String[] parseQsarPreferenceString(String stringList) {
+        StringTokenizer st = 
+            new StringTokenizer(stringList, QSARConstants.PREFS_SEPERATOR);
+        ArrayList v = new ArrayList();
+        while (st.hasMoreElements()) {
+            v.add(st.nextElement());
+        }
+        return (String[])v.toArray(new String[v.size()]);
+    }
 
-	
+
+    public static String createQsarPreferenceStringFromItems(String[] items) {
+
+        StringBuffer path = new StringBuffer("");//$NON-NLS-1$
+
+        for (int i = 0; i < items.length; i++) {
+            path.append(items[i]);
+            path.append(QSARConstants.PREFS_SEPERATOR);
+        }
+        return path.toString();
+    }
+
+    public static String getProviderID(String providerName){
+        return providerNameToID.get(providerName);
+    }
+
+
+    public static String createQsarPreferenceStringFromResponseUnit(
+                                                            ResponseUnit unit) {
+
+        StringBuffer ret = new StringBuffer("");
+
+        ret.append(unit.getId()+QSARConstants.PREFS_INTERNAL_SEPERATOR);
+        ret.append(unit.getName()+QSARConstants.PREFS_INTERNAL_SEPERATOR);
+        ret.append(unit.getShortname()+QSARConstants.PREFS_INTERNAL_SEPERATOR);
+       ret.append(unit.getDescription()+QSARConstants.PREFS_INTERNAL_SEPERATOR);
+        ret.append(unit.getUrl()+QSARConstants.PREFS_INTERNAL_SEPERATOR);
+
+        return ret.toString();
+    }
+
+
+    /**
+     * Input: concatenated info like ID¤name¤shortname¤...
+     * Output: ResponseUnit or null if not valid
+     * 
+     * @param stringParts
+     * @return
+     */
+    public static ResponseUnit parseQsarPreferenceStringIntoResponseUnit(
+                                                             String unitString){
+        StringTokenizer st = 
+            new StringTokenizer(unitString, 
+                                QSARConstants.PREFS_INTERNAL_SEPERATOR);
+
+        if (st.countTokens()<3)
+            return null;
+
+        String newId=(String) st.nextElement();
+        String newName=(String) st.nextElement();
+        String newShortname=(String) st.nextElement();
+
+        ResponseUnit unit=new ResponseUnit(newId, newName);
+        unit.setShortname( newShortname );
+        
+        if (st.hasMoreElements())
+            unit.setDescription( (String) st.nextElement() );
+        if (st.hasMoreElements())
+            unit.setUrl( (String) st.nextElement() );
+
+        return unit;
+
+    }
+
+
+    /**
+     * Reads preference string and parses into list of ResponeUnits
+     * @return list of ResponeUnits
+     */
+    public static List<ResponseUnit> getAvailableUnitsFromPrefs() {
+
+        List<ResponseUnit> retlist=new ArrayList<ResponseUnit>();
+        
+        
+        IPreferenceStore store =
+            Activator.getDefault().getPreferenceStore();
+
+        String completePref = store.getString( 
+                                          QSARConstants.QSAR_UNITS_PREFERENCE );
+
+
+        if (completePref==null)
+            return retlist;
+
+        String[] unitStrings = QsarPreferenceHelper
+        .parseQsarPreferenceString( completePref );
+
+        //Parse individual strings into response units
+        for (String unitString : unitStrings){
+            ResponseUnit unit = QsarPreferenceHelper
+                                   .parseQsarPreferenceStringIntoResponseUnit( 
+                                                                   unitString );
+            if (unit!=null)
+                retlist.add(unit);
+            else{
+                logger.error("Could not parse string: '" + unitString 
+                             + "' into a ResponseUnit.");
+            }
+        }
+
+        return retlist;
+    }
+
+
+
 }
