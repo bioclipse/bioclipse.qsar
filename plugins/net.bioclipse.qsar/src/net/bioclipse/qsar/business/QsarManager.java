@@ -77,6 +77,7 @@ import org.eclipse.emf.edit.command.RemoveCommand;
 import org.eclipse.emf.edit.command.SetCommand;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.domain.EditingDomain;
+import org.eclipse.jface.preference.IPreferenceStore;
 import org.openscience.cdk.atomtype.CDKAtomTypeMatcher;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
@@ -489,13 +490,19 @@ public class QsarManager implements IQsarManager{
     public DescriptorImpl getPreferredImpl(String descriptorID){
 
         //Read preference and get order of providers
+        
+        IPreferenceStore store =
+            Activator.getDefault().getPreferenceStore();
 
-        IEclipsePreferences prefs = new DefaultScope().getNode(Activator.PLUGIN_ID);
-        String ret=prefs.get(QSARConstants.QSAR_PROVIDERS_ORDER_PREFERENCE, null);
+        String ret = store.getString( 
+                                QSARConstants.QSAR_PROVIDERS_ORDER_PREFERENCE );
+
         if (ret==null || ret.equalsIgnoreCase( "error" )){
             //If empty, initialize prefs from scratch
             new QSARPreferenceInitializer().initializeDefaultPreferences();
-            ret=prefs.get(QSARConstants.QSAR_PROVIDERS_ORDER_PREFERENCE, null);
+            
+            ret=store.getString( QSARConstants.QSAR_PROVIDERS_ORDER_PREFERENCE);
+
             if (ret==null || ret.equalsIgnoreCase( "error" )){
                 //If still empty, give up
                 logger.equals( "Could not get default DescrProvider." );
