@@ -89,7 +89,7 @@ public class QsarManager implements IQsarManager{
 
 
     //The descriptor model
-    DescriptorModel model;
+    private volatile DescriptorModel model;
 
     //For console namespace
     public String getManagerName() {
