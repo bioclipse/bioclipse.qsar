@@ -126,7 +126,7 @@ public class QsarManager implements IQsarManager{
     /**
      * Populate model from OWL Ontology and Extension Point.
      */
-    private void initializeDescriptorModel() {
+    public void initializeDescriptorModel() {
 
         //Firstly, build hierarchy from descriptor OWL with Jena
         try {
@@ -153,6 +153,9 @@ public class QsarManager implements IQsarManager{
             logger.error("Could not initialize Descriptor model from ontology.");
             return;
         }
+        
+        //Add separate descriptor definition files to model
+        QsarHelper.addDescriptorDefinitionsFromFiles(model);
 
         //Create new list of providers
         model.setProviders(QsarHelper.readProvidersAndDescriptorImplsfromEP());

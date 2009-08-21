@@ -82,9 +82,9 @@ public interface IQsarManager extends IBioclipseManager{
      */
     public DescriptorModel getModel();
 
-    @PublishedMethod(methodSummary =
-        "Adds the descriptors defined in the OWL model behind the given URL."
-    )
+//    @PublishedMethod(methodSummary =
+//        "Adds the descriptors defined in the OWL model behind the given URL."
+//    )
     public void addDescriptors(String urlString) throws BioclipseException;
 
     @Recorded
@@ -246,6 +246,11 @@ public interface IQsarManager extends IBioclipseManager{
      * Used to force reading of units from EP and prefs
      */
     public void updateUnits();
+    
+    /**
+     * Force reread of descriptor hierarchy from ontology + extra files
+     */
+    void initializeDescriptorModel();
 
 
 }
