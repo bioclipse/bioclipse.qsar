@@ -10,12 +10,16 @@
  ******************************************************************************/
 package net.bioclipse.qsar.business;
 
+import java.io.IOException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.bioclipse.core.business.BioclipseException;
 import net.bioclipse.qsar.QSARConstants;
 import net.bioclipse.qsar.descriptor.IDescriptorCalculator;
 import net.bioclipse.qsar.descriptor.model.DescriptorImpl;
+import net.bioclipse.qsar.descriptor.model.DescriptorModel;
 import net.bioclipse.qsar.descriptor.model.DescriptorParameter;
 import net.bioclipse.qsar.descriptor.model.DescriptorProvider;
 import net.bioclipse.qsar.descriptor.model.ResponseUnit;
@@ -282,6 +286,23 @@ public class QsarHelper {
         
 
         return responses;
+    }
+
+
+    public static void addDescriptorDefinitionsFromFiles( DescriptorModel model ) {
+
+        //Get files
+        List<URL> urls=QsarPreferenceHelper.getAvailableDescriptorDefinitionFilesFromPrefs();
+
+        for (URL url : urls){
+            try {
+                model = OntologyHelper.addDescriptorHierarchy(model, url);
+            } catch ( Exception e ) {
+                logger.error("Error adding descriptors from url: " + url 
+                             + ". Reason: " + e.getMessage());
+            }
+        }
+        
     }
 
 }
