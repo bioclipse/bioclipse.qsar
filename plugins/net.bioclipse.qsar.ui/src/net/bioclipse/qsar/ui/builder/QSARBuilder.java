@@ -774,6 +774,11 @@ public class QSARBuilder extends IncrementalProjectBuilder
 
                 //Loop over all descriptors
                 for (IDescriptorResult descres : resultMap.get( mol )){
+                    if (descres==null){
+                        logger.error("DescriptorResult is null! " +
+                        		"Cannot store results for it.");
+                        break;
+                    }
 
 //                    logger.debug( " ## Attempting to store struct: " 
 //                                  + structure.getId() + " - AND - " 
