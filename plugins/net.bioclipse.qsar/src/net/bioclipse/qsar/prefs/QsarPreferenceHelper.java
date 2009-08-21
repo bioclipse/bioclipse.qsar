@@ -10,6 +10,8 @@
  ******************************************************************************/
 package net.bioclipse.qsar.prefs;
 
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -203,6 +205,33 @@ public class QsarPreferenceHelper {
         }
 
         return retlist;
+    }
+
+
+    /**
+     * Read all descr def files stored as strings and return list of URLs
+     * @return
+     */
+    public static List<URL> getAvailableDescriptorDefinitionFilesFromPrefs() {
+
+        IPreferenceStore store =
+            Activator.getDefault().getPreferenceStore();
+
+        String completePref = store.getString( 
+                                          QSARConstants.QSAR_ONTOLOGY_FILES_PREFERENCE );
+
+        String[] urlStrings = parseQsarPreferenceString( completePref );
+        
+        List<URL> urls=new ArrayList<URL>();
+        for (String urlstr : urlStrings){
+            try {
+                urls.add( new URL(urlstr) );
+            } catch ( MalformedURLException e ) {
+                logger.error( "Could not convert prefs string to url: " + urlstr );
+            }
+        }
+        
+        return urls;
     }
 
 
