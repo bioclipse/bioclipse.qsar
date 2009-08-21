@@ -1782,14 +1782,19 @@ public class QsarManager implements IQsarManager{
             ccmd.append(cmd);
             logger.debug("Removing descriptor: " + descType.getId());
 
-            //Also delete any descriptorresults for this descriptor
-            for (DescriptorresultType dres : qsarModel.getDescriptorresultlist().getDescriptorresult()){
-                if (dres.getDescriptorid().equals( descType.getId() )){
-                    cmd=RemoveCommand.create(editingDomain, qsarModel.getDescriptorresultlist(), QsarPackage.Literals.DESCRIPTORRESULTLISTS_TYPE__DESCRIPTORRESULT, dres);
-                    ccmd.append(cmd);
-                    logger.debug("   Removing corresponding descriptorresult: " + dres);
+            if (qsarModel.getDescriptorresultlist()!=null){
+
+                //Also delete any descriptorresults for this descriptor
+                for (DescriptorresultType dres : qsarModel.getDescriptorresultlist().getDescriptorresult()){
+                    if (dres.getDescriptorid().equals( descType.getId() )){
+                        cmd=RemoveCommand.create(editingDomain, qsarModel.getDescriptorresultlist(), QsarPackage.Literals.DESCRIPTORRESULTLISTS_TYPE__DESCRIPTORRESULT, dres);
+                        ccmd.append(cmd);
+                        logger.debug("   Removing corresponding descriptorresult: " + dres);
+                    }
                 }
             }
+            
+
 
             //Check for unused descriptorproviders and remove them too
             /*
