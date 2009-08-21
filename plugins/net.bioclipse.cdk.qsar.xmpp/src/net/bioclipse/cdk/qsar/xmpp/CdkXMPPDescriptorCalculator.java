@@ -20,6 +20,8 @@ import java.util.Map;
 import org.apache.log4j.Logger;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.xmlcml.cml.base.CMLElement;
+import org.xmlcml.cml.element.CMLProperty;
+import org.xmlcml.cml.element.CMLScalar;
 
 import net.bioclipse.cdk.business.Activator;
 import net.bioclipse.cdk.business.ICDKManager;
@@ -182,7 +184,8 @@ public class CdkXMPPDescriptorCalculator implements IDescriptorCalculator {
         // convert the returned CML into CMLXOM
         CMLElement propertyList = cml.fromString(cmlReturned);
 
-//        xlogp = propertyList.getChildCMLElements().get(0).getScalarElements().get(0).getValue()
+        CMLProperty property = (CMLProperty)propertyList.getChildCMLElements().get(0);
+        String xlogp = property.getScalarElements().get(0).getValue();
          
 //        logger.debug("TPSA: " + xlogp + "\n");
 
