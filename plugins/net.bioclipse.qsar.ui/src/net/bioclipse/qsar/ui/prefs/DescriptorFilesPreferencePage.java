@@ -10,10 +10,17 @@
  ******************************************************************************/
 package net.bioclipse.qsar.ui.prefs;
 
+import java.io.File;
+import java.net.MalformedURLException;
+import java.net.URL;
+
+import net.bioclipse.core.util.LogUtils;
 import net.bioclipse.qsar.QSARConstants;
+import net.bioclipse.qsar.business.QsarManager;
 import net.bioclipse.qsar.init.Activator;
 import net.bioclipse.qsar.prefs.QsarPreferenceHelper;
 
+import org.apache.log4j.Logger;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.preference.FieldEditorPreferencePage;
 import org.eclipse.jface.preference.IPreferenceStore;
@@ -32,7 +39,8 @@ import org.eclipse.ui.IWorkbenchPreferencePage;
 public class DescriptorFilesPreferencePage extends FieldEditorPreferencePage 
                                          implements IWorkbenchPreferencePage {
 
-    
+    private static final Logger logger = Logger.getLogger(DescriptorFilesPreferencePage.class);
+
     
     public DescriptorFilesPreferencePage() {
         super(FieldEditorPreferencePage.GRID);
@@ -62,10 +70,23 @@ public class DescriptorFilesPreferencePage extends FieldEditorPreferencePage
             protected String getNewInputObject() {
                 FileDialog dlg=new FileDialog(getShell(), SWT.OPEN);
                 dlg.setFilterExtensions( new String[]{"*.owl;*.xml;*.rdf"} );
-                String file=dlg.open();
+                String pfile=dlg.open();
+                if (pfile==null)
+                    return null;
                 
-                if (isValidDescriptorFile(file))
-                    return file;
+                File file=new File(pfile);
+                URL url;
+                try {
+                    url = file.toURL();
+                } catch ( MalformedURLException e ) {
+                    LogUtils.handleException( e, logger, 
+                                     net.bioclipse.qsar.ui.Activator.PLUGIN_ID);
+                    return null;
+                }
+ 
+                //Check if valid and add if so
+                if (isValidDescriptorDefinition(url))
+                    return url.toString();
                 else{
                     showError("The file: " + file + " is not a valid " +
                     		"'descriptor definition file.");
@@ -95,19 +116,28 @@ public class DescriptorFilesPreferencePage extends FieldEditorPreferencePage
 
 
     /**
-     * Validate that the file at this location is a valid descriptor ontology
-     * file.
-     * @param file
-     * @return true if valid
+     * Validate that the contents at this location is a valid descriptor 
+     * definition and is not empty
+     * 
+     * @param url
+     * @return true if valid, false otherwise
      */
-    protected boolean isValidDescriptorFile( String file ) {
+    protected boolean isValidDescriptorDefinition( URL url ) {
 
-        // TODO validate the file by reading in descriptors from OWL
-
+        // TODO egonw: Implement (filed as bug 1537)
+        return true;
+    }
+    
+    
+    @Override
+    public boolean performOk() {
+    
+        // TODO Auto-generated method stub
+        boolean ret = super.performOk();
         
+        Activator.getDefault().getQsarManager().initializeDescriptorModel();
         
-        
-        return false;
+        return ret;
     }
 
 
