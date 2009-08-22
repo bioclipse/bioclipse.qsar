@@ -116,8 +116,38 @@
 
     <owl:ObjectProperty rdf:about="&me;isA">
         <rdfs:label>Is A</rdfs:label>
-        <rdfs:domain rdf:resource="&owl;Thing"/>
-        <rdfs:range rdf:resource="&owl;Thing"/>
+        <rdfs:domain rdf:resource="&me;Algorithm"/>
+        <rdfs:range rdf:resource="&me;Algorithm"/>
+        <rdfs:comment>
+          Relation that indicates that object Algorithm is changed form of the
+          subject Algorithm. The actual change is specified by the
+        </rdfs:comment>
+    </owl:ObjectProperty>
+
+    <owl:ObjectProperty rdf:about="&me;isAModificationOf">
+        <rdfs:label>Is a modification of</rdfs:label>
+        <rdfs:subPropertyOf rdf:resource="&me;isA"/>
+        <owl:differentFrom rdf:resource="&me;isAParameterizationOf"/>
+        <rdfs:domain rdf:resource="&me;Descriptor"/>
+        <rdfs:range rdf:resource="&me;Descriptor"/>
+        <rdfs:comment>
+          Relation that indicates that object Descriptor is modified form of the
+          subject Descriptor.
+        </rdfs:comment>
+    </owl:ObjectProperty>
+
+    <owl:ObjectProperty rdf:about="&me;isAParameterizationOf">
+        <rdfs:label>Is a parameterization of</rdfs:label>
+        <rdfs:subPropertyOf rdf:resource="&me;isA"/>
+        <owl:differentFrom rdf:resource="&me;isAModificationOf"/>
+        <rdfs:domain rdf:resource="&me;Descriptor"/>
+        <rdfs:range rdf:resource="&me;Descriptor"/>
+        <rdfs:comment>
+          Relation that indicates that object (parent) Descriptor is identical
+          to the subject Descriptor, but that the subject Descriptor has
+          parameters of the parent Descriptor explicitly set to a particular
+          value.
+        </rdfs:comment>
     </owl:ObjectProperty>
 
     <owl:ObjectProperty rdf:about="&me;instanceOf">
