@@ -979,7 +979,7 @@
             over all heavy atoms i with degree greather than zero, carbon connectivity index
             takes into account only carbon atoms with degree greather than zero.
         </description>
-        <!-- relatedEntry type="qsar-descriptors-metadata:isAModificationOf" href="chi0"/ -->
+        <isAParameterizationOf href="&me;chi0"/>
         <isClassifiedAs rdf:resource="&me;topologicalDescriptor"/>
     </MolecularDescriptor>
 
@@ -1022,7 +1022,7 @@
             over all bonds between heavy atoms i and j, the carbon connectivity index
             takes into account only bonds between carbon atoms.
         </description>
-        <!-- relatedEntry type="qsar-descriptors-metadata:isAModificationOf" href="chi1"/ -->
+        <isAParameterizationOf href="&me;chi1"/>
         <isClassifiedAs rdf:resource="&me;topologicalDescriptor"/>
     </MolecularDescriptor>
 
@@ -1081,7 +1081,7 @@
             <bibtex:cite ref="WES98"/>
             .
         </description>
-        <!-- relatedEntry type="qsar-descriptors-metadata:isAModificationOf" href="gravitationalIndex" / -->
+        <isAModificationOf href="&me;gravitationalIndex"/>
     </MolecularDescriptor>
 
     <MolecularDescriptor rdf:about="&me;hBondacceptors">
