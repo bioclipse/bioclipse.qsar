@@ -2003,6 +2003,18 @@
         <isClassifiedAs rdf:resource="&me;constitutionalDescriptor"/>
     </MolecularDescriptor>
 
+    <MolecularDescriptor rdf:about="&me;logPbyAtomicContributions">
+        <rdfs:label>LogP by Atomic Contributions</rdfs:label>
+        <dc:contributor rdf:resource="&me;mf"/>
+        <dc:contributor rdf:resource="&me;elw"/>
+        <dc:date>2005-01-27</dc:date>
+        <definition rdf:parseType='Literal'>
+            Prediction of logP based on the summation of atomic contributions,
+            where the contributions are based on atom types specified in
+            SMARTS (see <bibtex:cite ref="WC99"/>).
+        </definiton>
+        <isClassifiedAs rdf:resource="&me;constitutionalDescriptor"/>
+    </MolecularDescriptor>
 
     <MolecularDescriptor rdf:about="&me;ALOGP">
         <rdfs:label>ALogP</rdfs:label>
@@ -2723,6 +2735,24 @@
                 <bibtex:year>1998</bibtex:year>
                 <bibtex:volume>38</bibtex:volume>
                 <bibtex:pages>726-735</bibtex:pages>
+            </bibtex:article>
+        </bibtex:entry>
+    </Reference>
+
+    <Reference rdf:about="&me;WC99">
+        <bibtex:entry rdf:parseType='Literal'>
+            <bibtex:article>
+                <bibtex:author>Wildman, Scott A. and Crippen, Gordon M.</bibtex:author>
+                <bibtex:title>
+                  Prediction of Physicochemical Parameters by Atomic
+                  Contributions
+                </bibtex:title>
+                <bibtex:journal>Journal of Chemical Information and Computer
+                    Sciences
+                </bibtex:journal>
+                <bibtex:year>1999</bibtex:year>
+                <bibtex:volume>39</bibtex:volume>
+                <bibtex:pages>868-873</bibtex:pages>
             </bibtex:article>
         </bibtex:entry>
     </Reference>
