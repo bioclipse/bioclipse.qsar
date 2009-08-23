@@ -1853,7 +1853,7 @@
                 <dc:contributor rdf:resource="&me;mf"/>
                 <dc:date>2005-02-07</dc:date>
         <definition rdf:parseType='Literal'>
-            Descriptor that calculates the number of nonrotatable bonds on a molecule.
+            Descriptor that calculates the number of rotatable bonds on a molecule.
         </definition>
         <description rdf:parseType='Literal'>
             The number of rotatable bonds is given by the SMARTS specified by Daylight on
