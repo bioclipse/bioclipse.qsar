@@ -2012,7 +2012,7 @@
             Prediction of logP based on the summation of atomic contributions,
             where the contributions are based on atom types specified in
             SMARTS (see <bibtex:cite ref="WC99"/>).
-        </definiton>
+        </definition>
         <isClassifiedAs rdf:resource="&me;constitutionalDescriptor"/>
     </MolecularDescriptor>
 
