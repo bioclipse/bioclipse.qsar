@@ -1,0 +1,57 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
+	<TITLE>QSAR Projects</TITLE>
+  <link rel="stylesheet" href="../../PRODUCT_PLUGIN/narrow_book.css" type="text/css">
+</HEAD>
+<BODY LANG="en-US" DIR="LTR">
+<h1>QSAR Projects</h1>
+
+<p>
+Bioclipse resources are grouped in Projects in the Bioclipse Navigator; see the page 
+<a href="../../PRODUCT_PLUGIN/html/concepts.html"">Bioclipse Concepts</a> for a general introduction.
+
+<p>
+A QSAR Project is required to to work with Bioclipse-QSAR in the GUI. It can be created from 
+the main menu under <b>File > New</b>  menu and then selecting <b>QSAR > QSAR Project</b>. 
+When created, a new project appears in the Bioclipse Navigator, and contains the central file (also called 
+Project File), <b>qsar.xml</b>. This is the file that contains all information about the QSAR project, such as 
+the chemical structures, chosen descriptors, responses, metadata etc. and adheres to the <a href="../qsar-ml.html">QSAR-ML</a> exchange format. 
+Double-clicking the qsar.xml file opens the <a href="editor/overviewPage.html">QSAR Editor</a>.
+
+<p>
+After a QSAR project is built, it can also contain the files <b>dataset.csv</b> and <b>descriptorValues.xml</b>. 
+These are derived (=generated) files which contains the calculated information from the QSAR project. 
+It is not recommended to edit these files as they are overwritten on every QSAR project build.
+
+<p><br>
+<center>
+	<img src="images/qsar-project-nav.png">
+	<br>
+	<h4>
+	The Bioclipse Navigator with a QSAR project open. Note the project file 
+	<b>qsar.xml</b> and the derived files <b>dataset.csv</b> and <b>descriptorValues.xml</b>.
+	</h4>
+</center>
+
+<p><br>
+The file <b>dataset.csv</b> contains a comma-separated matrix of calculated descriptor 
+values concatenated with the Response variable. Double-click the file to open it in the Matrix Editor.
+
+<p><br>
+<center>
+	<img src="images/matrix-editor.png">
+	<br>
+	<h4>
+	A small CSV file opened in the Matrix Editor.
+	</h4>
+</center>
+
+<p><br>
+The file <b>descriptorValues.xml</b> contains the calculated descriptor values in XML, 
+according to the <a href="../qsar-ml.html">QSAR-ML</a> format.
+
+
+</BODY>
+</HTML>

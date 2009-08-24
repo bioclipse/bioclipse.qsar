@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?NLS TYPE="org.eclipse.help.toc"?>
+
+<toc label="Bioclipse-QSAR">
+  <topic label="About Bioclipse-QSAR" href="html/about.html"/>
+  <topic label="Installation" href="html/installation.html"/>
+  <topic label="User guide" >
+	  <topic label="QSAR Projects" href="html/qsarProjects.html" />
+	  <topic label="QSAR Editor">
+		  <topic label="Overview Page" href="html/editor/overviewPage.html" />
+		  <topic label="Information Page" href="html/editor/infoPage.html" />
+		  <topic label="Molecules Page" href="html/editor/molPage.html" />
+		  <topic label="Descriptors Page" href="html/editor/descPage.html" />
+		  <topic label="Responses Page" href="html/editor/responsePage.html" />
+		  <topic label="Source Page" href="html/editor/sourcePage.html" />
+	  </topic>
+	  <topic label="Descriptor ontology" href="html/bodo.html" />
+	  <topic label="Preferences" href="html/prefs.html" />
+	  <topic label="Scripting QSAR" href="html/scripting.html" />
+	  <topic label="QSAR-ML" href="html/qsar-ml.html" />
+	  <topic label="Exporting" href="html/export.html" />
+
+  </topic>
+</toc>
