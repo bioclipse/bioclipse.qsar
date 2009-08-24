@@ -287,6 +287,11 @@
     <Category rdf:about="&me;hybridDescriptor">
         <rdfs:label>Hybrid Descriptor</rdfs:label>
         <dc:contributor rdf:resource="&me;rg"/>
+        <dc:date>2009-08-24</dc:date>
+        <definition rdf:parseType='Literal'>
+            A descriptor that combines multiple types of molecular features such
+            as electronic and topological or electronic and geometric features.
+        </definition>
         <isClassifiedAs rdf:resource="&me;descriptorCategories"/>
     </Category>
 
