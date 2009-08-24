@@ -143,6 +143,15 @@
             id="net.bioclipse.qsar.ui.calcpropscdk"
             name="Calculate properties with CDK scripts"/>
    </extension>
+   <extension
+         point="org.eclipse.ui.perspectives">
+      <perspective
+            class="net.bioclipse.qsar.ui.QSARPerspective"
+            icon="icons/descriptor.png"
+            id="net.bioclipse.qsar.ui.QSARPerspective"
+            name="QSAR">
+      </perspective>
+   </extension>
 
 
 </plugin>
