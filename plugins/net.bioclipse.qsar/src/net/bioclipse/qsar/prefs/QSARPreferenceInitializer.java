@@ -18,6 +18,7 @@ import org.apache.log4j.Logger;
 import org.eclipse.core.runtime.preferences.AbstractPreferenceInitializer;
 import org.eclipse.core.runtime.preferences.DefaultScope;
 import org.eclipse.core.runtime.preferences.IEclipsePreferences;
+import org.eclipse.jface.preference.IPreferenceStore;
 
 public class QSARPreferenceInitializer extends AbstractPreferenceInitializer {
 
@@ -35,10 +36,13 @@ public class QSARPreferenceInitializer extends AbstractPreferenceInitializer {
 		
 		logger.debug( "Read availiable descriptors from ExPo: " + defstr );
 
-		IEclipsePreferences prefs = new DefaultScope().getNode(Activator.PLUGIN_ID);
-		prefs.put(
-				QSARConstants.QSAR_PROVIDERS_ORDER_PREFERENCE, 
-				defstr);
+		
+    IPreferenceStore store =
+        Activator.getDefault().getPreferenceStore();
+    
+    store.setDefault( 
+              QSARConstants.QSAR_PROVIDERS_ORDER_PREFERENCE, 
+              defstr);
 
     logger.debug( "Set qsar providers order prefs to: " + defstr );
 
