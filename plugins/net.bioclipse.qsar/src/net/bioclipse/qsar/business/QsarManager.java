@@ -159,13 +159,35 @@ public class QsarManager implements IQsarManager{
         QsarHelper.addDescriptorDefinitionsFromFiles(model);
 
         //Create new list of providers
-        model.setProviders(QsarHelper.readProvidersAndDescriptorImplsfromEP());
+        List<DescriptorProvider> providers=QsarHelper.readProvidersAndDescriptorImplsfromEP();
 
+        //Here we can see what providers impl does not have an entry in BODO
+        checkProvidersAgainstOntology(providers);
+        
+        model.setProviders(providers);
+        
         //Create new list of providers
         model.setUnits( QsarHelper.readUnitsFromEPAndPreferences());
 
     }
     
+    private void checkProvidersAgainstOntology(
+                                           List<DescriptorProvider> providers) {
+
+        List<String> descIDs = getDescriptorIDs();
+        for (DescriptorProvider prov : providers){
+            for (DescriptorImpl impl : prov.getDescriptorImpls()){
+                if (!(descIDs.contains( impl.getDefinition()))){
+                    logger.error("Descriptor impl: " + impl + " does not " +
+                    		"exist in available descriptors.");
+                }
+            }
+        }
+
+    }
+
+
+
     public void updateUnits(){
         if (model==null)
             initializeDescriptorModel();

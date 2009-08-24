@@ -103,5 +103,10 @@ public class DescriptorImpl extends BaseEPObject{
 	    return impl;
 	}
 	
+	@Override
+	public String toString() {
+	    return provider.getShortName()+" - " + definition;
+	}
+	
 	
 }

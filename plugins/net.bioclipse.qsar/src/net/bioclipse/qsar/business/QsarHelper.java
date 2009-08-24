@@ -143,7 +143,7 @@ public class QsarHelper {
 
                             String ddef=providerChild.getAttribute("definition");
                             descImpl.setDefinition(ddef);
-
+                            
                             String ddesc=providerChild.getAttribute("description");
                             descImpl.setDescription(ddesc);
 
@@ -206,12 +206,12 @@ public class QsarHelper {
                             descImpl.setProvider(provider);
 
                             provider.getDescriptorImpls().add(descImpl);
-                            logger.debug("  Added descriptor: " + dname);
+                            logger.debug("  Added descriptor impl: " + dname + " for provider: " + pshortname);
 
                         }
 
                         provlist.add(provider);
-                        logger.debug("Added descriptor provider: " + pname);
+                        logger.debug("Finished adding descriptor provider: " + pname);
 
                     } catch (CoreException e) {
                         logger.error("Could not initialize EP. Reason: " + e.getMessage());
