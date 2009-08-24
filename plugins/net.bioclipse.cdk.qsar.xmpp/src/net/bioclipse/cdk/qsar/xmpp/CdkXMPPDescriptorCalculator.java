@@ -20,6 +20,7 @@ import java.util.Map;
 import org.apache.log4j.Logger;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.xmlcml.cml.base.CMLElement;
+import org.xmlcml.cml.base.CMLElements;
 import org.xmlcml.cml.element.CMLProperty;
 import org.xmlcml.cml.element.CMLScalar;
 
@@ -143,12 +144,13 @@ public class CdkXMPPDescriptorCalculator implements IDescriptorCalculator {
                     
                     //Call XMPP service
                     try {
-                    IDescriptorResult res=invokeXMPP(xmppFunction, molCML, service);
+                    IDescriptorResult res=invokeXMPP(xmppFunction, molCML, service, desc);
                     retlist.add (res);
                     } catch ( Exception e ) {
                         logger.error("Problems invoking XMPP function: " 
                                      + xmppFunction 
-                                     + " for descriptor " + ontologyID );
+                                     + " for descriptor " + ontologyID + "\n" + e.getMessage());
+                        
                     }
                     
                     monitor.worked( 1 );
@@ -174,25 +176,111 @@ public class CdkXMPPDescriptorCalculator implements IDescriptorCalculator {
     }
 
 
-    private IDescriptorResult invokeXMPP( String xmppFunction, String molCML, IService service ) throws XmppException, XwsException, InterruptedException, BioclipseException {
+    private IDescriptorResult invokeXMPP( String xmppFunction, String molCML, IService service, DescriptorType desc ) throws XmppException, XwsException, InterruptedException, BioclipseException {
 
-        IFunction f = service.getFunction("TPSA");
-        
+        IFunction f = service.getFunction(xmppFunction);
+
+        logger.debug("Invoking XMPP service: " + service.getJid() +" for function: " + xmppFunction);
         org.w3c.dom.Element result = f.invokeSync(molCML, 10000);
         String cmlReturned = xmpp.toString(result);
          
         // convert the returned CML into CMLXOM
         CMLElement propertyList = cml.fromString(cmlReturned);
+        
+        
+        for (CMLElement ele : propertyList.getChildCMLElements()){
+            CMLProperty property =(CMLProperty)ele;
+            
+            for (CMLScalar cmle : property.getScalarElements()){
+                String name=cmle.getDictRef();
+                String val=cmle.getValue();
+                
+                System.out.println("XMPP result: " + name + " = " + val);
+            }
 
-        CMLProperty property = (CMLProperty)propertyList.getChildCMLElements().get(0);
-        String xlogp = property.getScalarElements().get(0).getValue();
-         
-//        logger.debug("TPSA: " + xlogp + "\n");
+            
+        }
+        
+        //TODO: We need to put the results in an IDescriptorResult.
 
-          System.out.println(propertyList);
+        
+        
+        /*
+        
+        //Store results in this, to return
+        IDescriptorResult descriptorResult=new DescriptorResult();
+        descriptorResult.setDescriptor( desc );
+        List<String> labels=new ArrayList<String>();
+        List<Float> values=new ArrayList<Float>();
+
         
 
-          return null;
+        for (int i = 0; i < root.getChildCount(); i++) {
+            Node child = root.getChild(i);
+            if ( child instanceof Element ) {
+                Element childelement = (Element) child;
+                
+                assert("Descriptor".equals( childelement.getQualifiedName()));
+                assert(childelement.getAttributeCount()==3);
+
+                String rParent=childelement.getAttributeValue( "parent" );
+                String rname = childelement.getAttributeValue( "name" );
+                String rval = childelement.getAttributeValue( "value" );
+
+                if (rParent!=null && rname!=null && rval!=null){
+
+                    //Confirm the same descriptor we asked for
+                    if (classname.endsWith( rParent)){
+                        //All is well
+                        labels.add(rname);
+
+                        //Parse value
+                        if (rval.equalsIgnoreCase( "false" ))
+                            values.add(new Float(0));
+                        else if (rval.equalsIgnoreCase( "true" ))
+                            values.add(new Float(1));
+                        else{
+                            //Try to parse as float
+                            try{
+                                Float valueToAdd=Float.parseFloat( rval );
+                                values.add(valueToAdd);
+                            }catch(NumberFormatException e){
+                                //Not a float. Cannot handle this
+                                descriptorResult.setErrorMessage( "Could not " +
+                                                 "parse result value: " + rval);
+                            }
+                        }
+                        
+                    }else{
+                        logger.error("Expected results from descriptor: " 
+                             + desc.getId() + " but got results " +
+                             "from descriptor: " 
+                             + childelement.getQualifiedName());
+                        descriptorResult.setErrorMessage( "Expected results " +
+                            "from descriptor: " 
+                             + desc.getId() + " but got results " +
+                             "from descriptor: " 
+                             + childelement.getQualifiedName());                    
+
+                    }
+                    
+                    
+                }else{
+                    logger.error("Parsed values were null!");
+                    descriptorResult.setErrorMessage(
+                                                    "Parsed values were null!");
+                }
+                
+            }
+        }            
+        descriptorResult.setLabels( labels.toArray( new String[0] ) );
+        descriptorResult.setValues( values.toArray( new Float[0] ) );
+
+        return descriptorResult;
+        
+        */
+
+        return null;
 }
 
 
