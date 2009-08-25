@@ -131,10 +131,6 @@ public interface IQsarManager extends IBioclipseManager{
      * @return
      * @throws BioclipseException 
      */
-    @PublishedMethod(params="Map<IMolecule, List<DescriptorType>> molDescMap, " +
-    		"IProgressMonitor monitor ",
-    		methodSummary = "Calculate for all molecules, the descriptors in associated list." )
-    @Recorded
     public Map<IMolecule, List<IDescriptorResult>> doCalculation(
           Map<IMolecule, List<DescriptorType>> molDescMap,
           IProgressMonitor monitor ) throws BioclipseException;
