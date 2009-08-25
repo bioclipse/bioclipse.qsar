@@ -227,15 +227,15 @@ public class PluginTestCDKRESTQsar {
 
 
     @Test
-    public void testCalculateBCUTFromSMILES() throws BioclipseException{
+    public void testCalculateBpolFromSMILES() throws BioclipseException{
 
         IMolecule mol=new SMILESMolecule("C1CNCCC1CC(COC)CCNC");
 
-        IDescriptorResult dres1 = qsar.calculate(mol, bcutID, CDK_REST_SHORTNAME);
+        IDescriptorResult dres1 = qsar.calculate(mol, bpolID, CDK_REST_SHORTNAME);
 
         assertNotNull(dres1);
         assertNull(dres1.getErrorMessage());
-        assertEquals(bcutID, dres1.getDescriptor().getOntologyid());
+        assertEquals(bpolID, dres1.getDescriptor().getOntologyid());
         assertEquals(cdkRestProviderID, dres1.getDescriptor().getProvider());
 
         System.out.println("Mol: " + 
@@ -346,27 +346,6 @@ public class PluginTestCDKRESTQsar {
     }
 
 
-
-    @Test
-    public void testCalculateAtomCountWithDefaultParams() throws BioclipseException{
-
-        //Calculate C and N from this SMILES mol
-        IMolecule mol=new SMILESMolecule("C1CNCCC1CC(COC)CCNC");
-
-        IDescriptorResult dres1 = qsar.calculate(mol, atomCountlID, CDK_REST_SHORTNAME);
-        
-        assertNotNull(dres1);
-        assertNull(dres1.getErrorMessage());
-        assertEquals(atomCountlID, dres1.getDescriptor().getOntologyid());
-
-        assertEquals(1, dres1.getValues().length);
-
-        System.out.println("Mol with default param C: " +
-                           mol.toSMILES() + 
-                           " ; Desc: " + dres1.getDescriptor().getOntologyid() +": " + dres1.getValues()[0] );
-
-
-    }
 
     @Test
     public void testCalculateMolDescMap() throws BioclipseException{

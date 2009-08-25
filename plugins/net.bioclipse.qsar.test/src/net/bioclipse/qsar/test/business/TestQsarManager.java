@@ -112,8 +112,6 @@ public class TestQsarManager {
 
 		DescriptorImpl impl=qsar.getPreferredImpl(descriptorID);
 		assertNotNull(impl);
-		System.out.println("pref impl: " + impl.getId());
-		assertEquals("net.bioclipse.qsar.test.descriptor2", impl.getId());
 	}
 
 	@Test
@@ -167,8 +165,8 @@ public class TestQsarManager {
 	@Test
 	public void testGetCategoryByID(){
 
-		String cat1id="http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#molecularDescriptor";
-		String cat2id="http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#geometricalDescriptor";
+		String cat1id="http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#hybridDescriptor";
+		String cat2id="http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#topologicalDescriptor";
 
 		//Get category IDs
 		DescriptorCategory cat1 = qsar.getCategoryByID(cat1id);
@@ -253,7 +251,7 @@ public class TestQsarManager {
 	public void testGetDescriptorByID(){
 		
 		String descriptorID="http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#aromaticAtomsCount";
-		String cat1id="http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#molecularDescriptor";
+		String cat1id="http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#hybridDescriptor";
 		String cat2id="http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#constitutionalDescriptor";
 		String cat3id="http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#electronicDescriptor";
 		
@@ -267,7 +265,7 @@ public class TestQsarManager {
 		DescriptorCategory cat3 = qsar.getCategoryByID(cat3id);
 		
 		assertNotNull(desc.getCategories());
-		assertTrue(desc.getCategories().contains(cat1));
+		assertFalse(desc.getCategories().contains(cat1));
 		assertTrue(desc.getCategories().contains(cat2));
 		assertFalse(desc.getCategories().contains(cat3));
 		
@@ -288,7 +286,9 @@ public class TestQsarManager {
 		String descriptorID="http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#momentOfInertia";
 
 		DescriptorCategory cat1 = qsar.getCategoryByID(cat1id);
+		assertNotNull( cat1 );
 		DescriptorCategory cat2 = qsar.getCategoryByID(cat2id);
+    assertNotNull( cat2 );
 		Descriptor desc=qsar.getDescriptorByID(descriptorID);
 		
 		List<Descriptor> descList1 = qsar.getDescriptorsInCategory(cat1);
