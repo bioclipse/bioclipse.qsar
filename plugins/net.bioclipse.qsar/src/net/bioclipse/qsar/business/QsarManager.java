@@ -1165,10 +1165,18 @@ public class QsarManager implements IQsarManager{
                                 Map<IMolecule, List<DescriptorType>> molDescMap,
                                 IProgressMonitor monitor ) throws BioclipseException {
         
+        //The complete workload is all mols x their descs
+        int totalWorkload=0;
+        for (IMolecule mol : molDescMap.keySet()){
+            totalWorkload=totalWorkload+molDescMap.get( mol ).size();
+        }
+        logger.debug("All providers have a total workload: " + totalWorkload 
+                     + " descr calculations");
+
         //We are to calculate the following combinations
-        monitor.beginTask( "Calculating descriptors", molDescMap.size()+1 );
+        monitor.beginTask( "Calculating descriptors", totalWorkload );
         monitor.subTask( "Sorting descriptors by provider" );
-        
+
         Map<IMolecule, List<IDescriptorResult>> allResults=
             new HashMap<IMolecule, List<IDescriptorResult>>();
 
@@ -1216,30 +1224,31 @@ public class QsarManager implements IQsarManager{
 
             Map<IMolecule, List<DescriptorType>> moldesc 
                                             = moldescByProvider.get( provider );
+            
+            //The workload for this provider is mols x their descs
+            int workload=0;
+            for (IMolecule mol : moldesc.keySet()){
+                workload=workload+moldesc.get( mol ).size();
+            }
+            logger.debug("Provider: " + provider.getShortName() 
+                        + " has workload: " + workload + " descr calculations");
 
             //Invoke calculation from providers calculator
-            try{
-                Map<? extends IMolecule, List<IDescriptorResult>> results = 
-                    calculator.calculateDescriptor(moldesc, 
-                                                   new SubProgressMonitor(monitor, moldesc.size()));
+            Map<? extends IMolecule, List<IDescriptorResult>> results = 
+                calculator.calculateDescriptor(moldesc, 
+                                               new SubProgressMonitor(monitor, workload));
 
-                //Add these results to the molecule
-                for (IMolecule mol : results.keySet()){
-                    if (allResults.get(mol)==null) allResults.put(mol, 
-                                                                  new ArrayList<IDescriptorResult>());
-                    List<IDescriptorResult> reslist=allResults.get(mol);
+            //Add these results to the molecule
+            for (IMolecule mol : results.keySet()){
+                if (allResults.get(mol)==null) allResults.put(mol, 
+                                                              new ArrayList<IDescriptorResult>());
+                List<IDescriptorResult> reslist=allResults.get(mol);
 
-                    if (results.get( mol )!=null){
-                        //Add the computed result to the reslist
-                        reslist.addAll(results.get(mol));
-                    }
+                if (results.get( mol )!=null){
+                    //Add the computed result to the reslist
+                    reslist.addAll(results.get(mol));
                 }
-
-            }catch (OperationCanceledException e){
-                monitor.setCanceled( true );
-                throw new BioclipseException("Descriptor calculation was aborted", e);
             }
-
 
         }
 
