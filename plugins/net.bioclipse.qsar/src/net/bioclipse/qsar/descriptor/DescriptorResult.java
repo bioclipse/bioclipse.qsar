@@ -66,7 +66,7 @@ public class DescriptorResult implements IDescriptorResult{
     public String toString() {
 	    
 	    if (labels==null || labels.length<=0) return "null";
-	    IQsarManager qsar=Activator.getDefault().getQsarManager();
+	    IQsarManager qsar=Activator.getDefault().getJavaQsarManager();
 	    
 	    String provider=qsar.getProviderByID( descriptor.getProvider() ).getShortName();
 	    String paramstr="";

@@ -135,7 +135,7 @@ public class DescriptorFilesPreferencePage extends FieldEditorPreferencePage
         // TODO Auto-generated method stub
         boolean ret = super.performOk();
         
-        Activator.getDefault().getQsarManager().initializeDescriptorModel();
+        Activator.getDefault().getJavaQsarManager().initializeDescriptorModel();
         
         return ret;
     }

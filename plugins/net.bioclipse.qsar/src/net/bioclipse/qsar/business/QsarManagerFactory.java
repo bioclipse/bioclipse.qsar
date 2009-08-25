@@ -31,7 +31,7 @@ public class QsarManagerFactory implements IExecutableExtension,
     public void setInitializationData(IConfigurationElement config,
             String propertyName, Object data) throws CoreException {
         
-        qsarManager = Activator.getDefault().getQsarManager();
+        qsarManager = Activator.getDefault().getJavaQsarManager();
         if(qsarManager==null) {
             qsarManager = new Object();
         }

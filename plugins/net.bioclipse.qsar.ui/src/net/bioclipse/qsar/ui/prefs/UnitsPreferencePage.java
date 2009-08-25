@@ -94,7 +94,7 @@ public class UnitsPreferencePage extends FieldEditorPreferencePage
     @Override
     public boolean performOk() {
         boolean ret = super.performOk();
-        Activator.getDefault().getQsarManager().updateUnits();
+        Activator.getDefault().getJavaQsarManager().updateUnits();
         return ret;
     }
 

@@ -377,7 +377,7 @@ public class ResponsesPage extends FormPage implements IEditingDomainProvider, I
                 
                 //Open up units dialog with available units
                 IQsarManager qsar = net.bioclipse.qsar.init.Activator
-                                        .getDefault().getQsarManager();
+                                        .getDefault().getJavaQsarManager();
                 List<ResponseUnit> list = qsar.getFullResponseUnits();
                 
                 ListDialog dlg=new ListDialog(getSite().getShell());

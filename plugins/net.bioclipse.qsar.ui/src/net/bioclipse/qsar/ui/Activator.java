@@ -65,7 +65,7 @@ public class Activator extends AbstractUIPlugin {
 
                 //This call will initialize the qsar model from ontology and EP
                 net.bioclipse.qsar.init.Activator.getDefault()
-                        .getQsarManager().getModel();
+                        .getJavaQsarManager().getModel();
                 return Status.OK_STATUS;
             }
             

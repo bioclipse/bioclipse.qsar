@@ -70,7 +70,7 @@ public class CdkRESTDescriptorCalculator implements IDescriptorCalculator {
             new HashMap<IMolecule, List<IDescriptorResult>>();
 
         IQsarManager qsar = net.bioclipse.qsar.init.Activator
-        .getDefault().getQsarManager();
+        .getDefault().getJavaQsarManager();
 
         //Verify REST server before processing molecules
         try {

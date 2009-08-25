@@ -25,7 +25,7 @@ public class DescriptorProviderPropertySource extends BaseEPObjectPropertySource
     
 	public DescriptorProviderPropertySource(BaseEPObject item) {
 		super(item);
-		qsar=Activator.getDefault().getQsarManager();
+		qsar=Activator.getDefault().getJavaQsarManager();
 	}
 	
 	@Override

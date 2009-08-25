@@ -449,7 +449,7 @@ public class InformationPage extends FormPage implements IEditingDomainProvider,
     protected void addUnit() {
 
         
-        List<ResponseUnit> list = Activator.getDefault().getQsarManager().getFullResponseUnits();
+        List<ResponseUnit> list = Activator.getDefault().getJavaQsarManager().getFullResponseUnits();
         
         ListDialog dlg=new ListDialog(getSite().getShell());
         dlg.setContentProvider( new ArrayContentProvider() );
@@ -477,7 +477,7 @@ public class InformationPage extends FormPage implements IEditingDomainProvider,
 
         //Add selected units to model
         QsarType qsarModel = ((QsarEditor)getEditor()).getQsarModel();
-        IQsarManager qsar = Activator.getDefault().getQsarManager();
+        IQsarManager qsar = Activator.getDefault().getJavaQsarManager();
         List<ResponseUnit> toAddList=new ArrayList<ResponseUnit>();
         for (Object u : objs){
             ResponseUnit newUnit =(ResponseUnit) u;
@@ -496,7 +496,7 @@ public class InformationPage extends FormPage implements IEditingDomainProvider,
                                                       unitViewer.getSelection();
         
         QsarType qsarModel = ((QsarEditor)getEditor()).getQsarModel();
-        IQsarManager qsar = Activator.getDefault().getQsarManager();
+        IQsarManager qsar = Activator.getDefault().getJavaQsarManager();
         List<ResponseunitType> toRemoveList=new ArrayList<ResponseunitType>();
         for (Object obj : sel.toList()){
             if ( obj instanceof ResponseunitType ) {

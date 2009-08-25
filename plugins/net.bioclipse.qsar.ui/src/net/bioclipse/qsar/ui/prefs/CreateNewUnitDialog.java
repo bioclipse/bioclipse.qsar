@@ -177,7 +177,7 @@ public class CreateNewUnitDialog extends TitleAreaDialog{
         
         //Make sure name and shortname are unique
         List<ResponseUnit> existingUnits = Activator.getDefault()
-                                       .getQsarManager().getFullResponseUnits();
+                                       .getJavaQsarManager().getFullResponseUnits();
         
         for (ResponseUnit eunit : existingUnits){
             if (eunit.getName().equals( name )){

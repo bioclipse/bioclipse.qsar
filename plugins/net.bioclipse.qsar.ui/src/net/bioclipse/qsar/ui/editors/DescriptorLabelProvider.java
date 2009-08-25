@@ -31,7 +31,7 @@ public class DescriptorLabelProvider implements ITableLabelProvider, ILabelProvi
 	IQsarManager qsar;
 	
 	public DescriptorLabelProvider() {
-        qsar=net.bioclipse.qsar.init.Activator.getDefault().getQsarManager();
+        qsar=net.bioclipse.qsar.init.Activator.getDefault().getJavaQsarManager();
 	}
 
 	public Image getColumnImage(Object element, int columnIndex) {

@@ -28,7 +28,7 @@ public class OnlyWithImplFilter extends ViewerFilter {
 	
 
 	public OnlyWithImplFilter() {
-	    qsar=net.bioclipse.qsar.init.Activator.getDefault().getQsarManager();
+	    qsar=net.bioclipse.qsar.init.Activator.getDefault().getJavaQsarManager();
 	}
 	
 	@Override

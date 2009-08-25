@@ -144,7 +144,7 @@ public class MoleculesPage extends FormPage implements IEditingDomainProvider, I
 
         //Get managers
         cdk=Activator.getDefault().getJavaCDKManager();
-        qsar=net.bioclipse.qsar.init.Activator.getDefault().getQsarManager();
+        qsar=net.bioclipse.qsar.init.Activator.getDefault().getJavaQsarManager();
 
         //Set up formatter
         //We need to ensure that '.' is always decimal separator in all locales

@@ -136,7 +136,7 @@ private Table paramsTable;
 		this.editingDomain=editingDomain;
 
 		//Get Managers via OSGI
-        qsar=net.bioclipse.qsar.init.Activator.getDefault().getQsarManager();
+        qsar=net.bioclipse.qsar.init.Activator.getDefault().getJavaQsarManager();
 		cdk=Activator.getDefault().getJavaCDKManager();
 
     //We need to ensure that '.' is always decimal separator in all locales

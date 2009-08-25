@@ -61,7 +61,7 @@ public class PluginTestCDKRESTQsar {
     String rotBondsCntID="http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#rotatableBondsCount";
 
     public PluginTestCDKRESTQsar() {
-        qsar=Activator.getDefault().getQsarManager();
+        qsar=Activator.getDefault().getJavaQsarManager();
     }
 
 

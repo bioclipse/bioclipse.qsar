@@ -23,7 +23,7 @@ public class DescriptorContentProvider implements ITreeContentProvider {
 	
 	public DescriptorContentProvider() {
         //Get qsarmanager via OSGI
-        qsar=net.bioclipse.qsar.init.Activator.getDefault().getQsarManager();
+        qsar=net.bioclipse.qsar.init.Activator.getDefault().getJavaQsarManager();
 	}
 	
 	

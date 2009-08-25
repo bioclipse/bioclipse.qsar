@@ -36,7 +36,7 @@ public class DescriptorPropertySource extends BaseEPObjectPropertySource{
 	@Override
 	public void addPropertiesWithValues() {
 
-		qsar=Activator.getDefault().getQsarManager();
+		qsar=Activator.getDefault().getJavaQsarManager();
 		
 		//Add id and name
 		super.addPropertiesWithValues();

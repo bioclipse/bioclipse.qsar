@@ -10,7 +10,12 @@
  ******************************************************************************/
 package net.bioclipse.qsar.init;
 
+import net.bioclipse.cdk.business.ICDKManager;
+import net.bioclipse.cdk.business.IJavaCDKManager;
+import net.bioclipse.cdk.business.IJavaScriptCDKManager;
 import net.bioclipse.core.util.LogUtils;
+import net.bioclipse.qsar.business.IJavaQSARManager;
+import net.bioclipse.qsar.business.IJavascriptQSARManager;
 import net.bioclipse.qsar.business.IQsarManager;
 
 import org.apache.log4j.Logger;
@@ -31,6 +36,7 @@ public class Activator extends AbstractUIPlugin {
     private static final Logger logger = Logger.getLogger(Activator.class);
 
     private ServiceTracker finderTracker;
+    private ServiceTracker jsFinderTracker;
     
     // The shared instance
     private static Activator plugin;
@@ -53,9 +59,15 @@ public class Activator extends AbstractUIPlugin {
         plugin = this;
 
         finderTracker = new ServiceTracker( context, 
-                IQsarManager.class.getName(), 
-                null );
+                                            IJavaQSARManager.class.getName(), 
+                                            null );
+        
         finderTracker.open();
+        jsFinderTracker = new ServiceTracker( context, 
+                                            IJavascriptQSARManager.class.getName(), 
+                                            null );
+                                    
+        jsFinderTracker.open();
 
     }
     
@@ -73,7 +85,7 @@ public class Activator extends AbstractUIPlugin {
         return plugin;
     }
 
-    public IQsarManager getQsarManager() {
+    public IQsarManager getJavaQsarManager() {
         IQsarManager manager = null;
         try {
             manager = (IQsarManager) finderTracker.waitForService(1000*10);
@@ -83,6 +95,20 @@ public class Activator extends AbstractUIPlugin {
         }
         if(manager == null) {
             throw new IllegalStateException("Could not get the qsar manager");
+        }
+        return manager;
+    }
+    
+   
+    public IJavascriptQSARManager getJavaScriptQSARManager() {
+        IJavascriptQSARManager manager = null;
+        try {
+            manager = (IJavascriptQSARManager) jsFinderTracker.waitForService(1000*10);
+        } catch (InterruptedException e) {
+            LogUtils.debugTrace(logger, e);
+        }
+        if(manager == null) {
+            throw new IllegalStateException("Could not get the QSAR manager");
         }
         return manager;
     }

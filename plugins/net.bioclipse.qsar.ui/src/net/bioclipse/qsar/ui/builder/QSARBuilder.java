@@ -357,7 +357,7 @@ public class QSARBuilder extends IncrementalProjectBuilder
         monitor.subTask( "Calculating descriptors" );
 
         //Calculate all changed descriptors
-        IQsarManager qsar = net.bioclipse.qsar.init.Activator.getDefault().getQsarManager();
+        IQsarManager qsar = net.bioclipse.qsar.init.Activator.getDefault().getJavaQsarManager();
         Map<IMolecule, List<IDescriptorResult>> resultMap=null;
         try {
             logger.debug("Time before calculation: " + stopwatch.toString());
