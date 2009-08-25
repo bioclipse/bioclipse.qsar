@@ -86,8 +86,17 @@ public class OntologyHelper {
             String definition = cat.get(2);
 //            logger.debug("Category: " + label + "\n");
 
+            //Remove the starting qsar:
+            identifier=identifier.substring( 5 );
+            identifier=BO_NAMESPACE + "/#" + identifier;
+
             //Create model object and store in list
             DescriptorCategory dcat=new DescriptorCategory(identifier, label);
+            
+            /*
+            FIXME: Egonw, see bug 1566
+            dcat.setDate( TODO );
+            */
             categories.add( dcat );
         }
 
@@ -100,7 +109,7 @@ public class OntologyHelper {
             String sparql = "PREFIX qsar: <http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#> " +
             "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> " +
             "SELECT ?s ?label WHERE { " + 
-            "  ?s ?p " + identifier + ";" +
+            "  ?s ?p <" + identifier + ">;" +
             "     rdfs:label ?label." +
             "}";
             List<List<String>> descriptors = rdf.sparql(owl, sparql);
@@ -116,6 +125,14 @@ public class OntologyHelper {
                     
                     Descriptor desc = new Descriptor(BO_NAMESPACE + "/#" + descriptorID,label);
                     desc.setNamesapce(BO_NAMESPACE);
+                    desc.addCategory(dcat);
+
+                    /*
+                      
+                     FIXME: Egonw, see bug 1566
+                    desc.setDate( TODO );
+                    desc.setDescription( TODO );
+                    */
                     
                     dcat.addDescriptor(desc);
                     
