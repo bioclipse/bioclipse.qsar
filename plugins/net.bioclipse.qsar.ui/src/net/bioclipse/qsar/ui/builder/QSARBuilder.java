@@ -274,7 +274,7 @@ public class QSARBuilder extends IncrementalProjectBuilder
         QsarType qsarModel=readModelFromProjectFile(getQsarFile());
         if (qsarModel==null){
             logger.debug( "Building qsar project '" + getProject() + "' skipped " +
-            "since project file could not be parsed." );
+            "since project file could not be parsed into non-null model." );
             return;
         }
 
@@ -289,10 +289,11 @@ public class QSARBuilder extends IncrementalProjectBuilder
         logger.debug( "******************************************");
 
         //We have X phases in the qsar building, each with their respective
-        //subtask
-        monitor.beginTask("Building QSAR project", 5);
+        //subtask. Scale each subtask to 1000
+        int scale=1000;
+        monitor.beginTask("Building QSAR project", 10*scale);
         monitor.subTask( "Preparing build...");
-        monitor.worked( 1 );
+        monitor.worked( 1 * scale );
 
         QsarHelper.setBuildStatus( getProject(), "RUNNING" );
         QsarHelper.setBuildTime( getProject(), "" );
@@ -350,7 +351,7 @@ public class QSARBuilder extends IncrementalProjectBuilder
         int jobSize_old=allDescriptors.size() * structureMap.size()+1;
         int jobSize=molDescMap.size() + 1;
 //        monitor.beginTask("Building QSAR project", jobSize);
-//        monitor.subTask("Building QSAR project", jobSize);
+        logger.debug("Descriptors to calculate: " + jobSize);
         
         monitor.worked( 1 );
         monitor.subTask( "Calculating descriptors" );
@@ -360,40 +361,26 @@ public class QSARBuilder extends IncrementalProjectBuilder
         Map<IMolecule, List<IDescriptorResult>> resultMap=null;
         try {
             logger.debug("Time before calculation: " + stopwatch.toString());
-            resultMap = qsar.doCalculation(molDescMap, new SubProgressMonitor(monitor, jobSize));
+            resultMap = qsar.doCalculation(molDescMap, new SubProgressMonitor(monitor, 8 * scale));
             logger.debug("Time after calculation: " + stopwatch.toString());
-        }catch (BioclipseException e){
-            //Check if exception was due to cancellation, no need for error box
-            if (checkCancel(monitor)){
-                handleInterruptedBuild();
-                return;
-            }
-            
-        } catch ( Exception e ) {
-            //Check if exception was due to cancellation, no need for error box
-            if (checkCancel(monitor)){
-                handleInterruptedBuild();
-                return;
-            }
-
+        }
+        catch (OperationCanceledException e){
+            handleInterruptedBuild();
+            return;
+        }
+        catch (BioclipseException e){
             LogUtils.handleException( e, logger, net.bioclipse.qsar.ui.Activator.PLUGIN_ID );
             handleInterruptedBuild();
             return;
-            
         }
-
+        
         if (checkCancel(monitor)){
             handleInterruptedBuild();
             return;
         }
-        monitor.worked( 1 );
-        monitor.subTask( "Handling results" );
-
 
         logger.debug("Calculation results size: " + resultMap.size());
 //        logger.debug(debugResultMap(resultMap));
-        monitor.worked(1);
-        monitor.subTask("Processing descriptor results");
 
         //Process results, concatenate with already calculated mols in QsarModel
 //        storeDescrResultsInQsarModel(qsarModel, resultMap, structureMap);
@@ -448,7 +435,10 @@ public class QSARBuilder extends IncrementalProjectBuilder
         QsarHelper.setBuildStatus(getProject(), "FINISHED");
         QsarHelper.setBuildTime(getProject(), stopwatch.toString());
 
-        logger .debug ("** Building qsar project: " + getProject().getName() + " FINISHED. **" );
+        logger .debug ("** Building qsar project: " + getProject().getName() 
+                       + " FINISHED in " + stopwatch.toString() + " **" );
+        
+        monitor.done();
 
     }
 
