@@ -1904,16 +1904,18 @@ public class QsarManager implements IQsarManager{
           //Remove the actual response unit too
           for (ResponseunitType unitToRemove : listToRemove){
               
-              //Ok, also remove all references to this in responses
-              for (ResponseType resp : qsarModel.getResponselist().getResponse()){
+              //Ok, also remove all references to this in responses, if not empty
+              if (qsarModel.getResponselist()!=null){
+                  for (ResponseType resp : qsarModel.getResponselist().getResponse()){
 
-                  //IF this response has the unit to remove as unit, remove it
-                  if (resp.getUnit()!=null && unitToRemove.getId().equals( resp.getUnit())){
+                      //IF this response has the unit to remove as unit, remove it
+                      if (resp.getUnit()!=null && unitToRemove.getId().equals( resp.getUnit())){
 
-                      Command cmd=new SetCommand(editingDomain,resp,
-                                                 QsarPackage.Literals.RESPONSE_TYPE__UNIT,
-                                                 "");
-                      ccmd.append( cmd );
+                          Command cmd=new SetCommand(editingDomain,resp,
+                                                     QsarPackage.Literals.RESPONSE_TYPE__UNIT,
+                          "");
+                          ccmd.append( cmd );
+                      }
                   }
               }
 
