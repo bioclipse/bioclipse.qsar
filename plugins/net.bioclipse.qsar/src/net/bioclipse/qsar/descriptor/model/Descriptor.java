@@ -26,6 +26,9 @@ public class Descriptor extends BaseEPObject{
 	private String date;
 	private List<DescriptorCategory> categories;
 	
+	protected Descriptor(){
+	}
+	
 	public Descriptor(String id, String name) {
 		super(id, name);
 	}

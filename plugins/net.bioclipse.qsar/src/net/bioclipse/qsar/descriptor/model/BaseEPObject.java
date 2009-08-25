@@ -85,7 +85,7 @@ public class BaseEPObject extends BioObject{
 		return super.getAdapter(adapter);
 	}
 	
-	BaseEPObject(){
+	protected BaseEPObject(){
 	}
 
 }

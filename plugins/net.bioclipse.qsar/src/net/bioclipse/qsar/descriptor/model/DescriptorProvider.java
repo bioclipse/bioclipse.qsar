@@ -16,13 +16,23 @@ import org.eclipse.ui.views.properties.IPropertySource;
 
 import net.bioclipse.qsar.descriptor.IDescriptorCalculator;
 
+/**
+ * 
+ * @author ola
+ *
+ */
 public class DescriptorProvider extends BaseEPObject{
+    
+	protected DescriptorProvider() {
+        super();
+    }
 
+	
 	public DescriptorProvider(String id, String name) {
-		super(id, name);
+	    super(id, name);
 	}
 	public DescriptorProvider(String id, String name, String icon_path) {
-		super(id, name, icon_path);
+	    super(id, name, icon_path);
 	}
 
 	private List<DescriptorImpl> descriptorImpls;

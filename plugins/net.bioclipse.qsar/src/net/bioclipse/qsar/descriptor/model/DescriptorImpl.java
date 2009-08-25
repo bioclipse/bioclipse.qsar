@@ -66,9 +66,9 @@ public class DescriptorImpl extends BaseEPObject{
 		super(id, name, icon_path);
 	}
 
-	DescriptorImpl(){
+	protected DescriptorImpl(){
+	    super();
 	}
-
 
 	public Object getAdapter(Class adapter) {
 

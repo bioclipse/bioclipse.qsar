@@ -37,7 +37,10 @@ Require-Bundle: org.eclipse.core.runtime,
  org.openscience.cdk.interfaces;bundle-version="1.2.2",
  org.openscience.cdk.atomtype;bundle-version="1.2.2",
  org.openscience.cdk.standard;bundle-version="1.2.2",
- net.bioclipse.rdf;bundle-version="2.0.0"
+ net.bioclipse.rdf;bundle-version="2.0.0",
+ org.springframework.bundle.spring.aop,
+ org.springframework.osgi.aopalliance.osgi,
+ net.sf.cglib
 Bundle-ActivationPolicy: lazy
 Export-Package: net.bioclipse.qsar,
  net.bioclipse.qsar.business,

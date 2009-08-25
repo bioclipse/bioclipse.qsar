@@ -33,7 +33,8 @@ public class DescriptorCategory extends BaseEPObject{
 		super(id, name, icon_path);
 	}
 
-
+	protected DescriptorCategory() {
+	}
 	
 	
 	public String getDate() {
