@@ -210,9 +210,9 @@ public class CDKDescriptorCalculator implements IDescriptorCalculator {
                 throw new OperationCanceledException();
             }
 
-
 //            logger.debug("CDK calculating descriptor: " + descType.getOntologyid() + " for mol: " + cdkmol.getName());
-            monitor.subTask("\nMolecule: " + cdkmol.getName() + "\nDescriptor: " + descType.getOntologyid());
+            monitor.subTask("Molecule: " + cdkmol.getName() 
+                            + "\nCDK Descriptor: " + descType.getOntologyid());
             monitor.worked(1);
 
 

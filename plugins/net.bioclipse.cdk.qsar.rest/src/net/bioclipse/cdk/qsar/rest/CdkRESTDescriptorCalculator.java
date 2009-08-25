@@ -23,6 +23,7 @@ import java.util.Map;
 
 import org.apache.log4j.Logger;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.OperationCanceledException;
 
 import net.bioclipse.cdk.business.Activator;
 import net.bioclipse.cdk.business.ICDKManager;
@@ -71,6 +72,14 @@ public class CdkRESTDescriptorCalculator implements IDescriptorCalculator {
 
         IQsarManager qsar = net.bioclipse.qsar.init.Activator
         .getDefault().getJavaQsarManager();
+        
+        //The workload for this provider is mols x their descs
+        int workload=0;
+        for (IMolecule mol : moldesc.keySet()){
+            workload=workload+moldesc.get( mol ).size();
+        }
+        
+        monitor.beginTask( "Calculating descriptors with CDK REST" , workload );
 
         //Verify REST server before processing molecules
         try {
@@ -79,8 +88,9 @@ public class CdkRESTDescriptorCalculator implements IDescriptorCalculator {
             throw new BioclipseException("Could not contact rest server: " 
                                          + BASE_URL);
         }
-
+        
         int molindex=1;
+        int molSize=moldesc.keySet().size();
         //For each molecule
         for (IMolecule mol : moldesc.keySet()){
             try {
@@ -102,9 +112,11 @@ public class CdkRESTDescriptorCalculator implements IDescriptorCalculator {
                     //We need to remove .rest to get classname
                     String classname=descid.replaceAll( ".rest", "" );
                     
-                    monitor.subTask( "Callin CDK REST descriptor: " 
-                                     + dimpl.getName() + " for molecule " 
-                                     + molindex );
+                    if (monitor.isCanceled())
+                        throw new OperationCanceledException();
+
+                    monitor.subTask( "Molecule " + molindex + "/" + molSize + "\nCDK REST Descriptor:"
+                                        + dimpl.getName());
                     
                     //Call REST service
                     String retxml=runRest(classname, smiles);

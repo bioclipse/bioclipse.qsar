@@ -308,7 +308,7 @@ private Table paramsTable;
           
           TreeViewerColumn providersCol=new TreeViewerColumn(descViewer, SWT.NONE);
           providersCol.getColumn().setText("Provider(s)");
-          tableLayout.addColumnData(new ColumnPixelData(100));
+          tableLayout.addColumnData(new ColumnPixelData(200));
           
           descViewer.setContentProvider( new DescriptorContentProvider());
           descViewer.setLabelProvider( new DescriptorLabelProvider() );

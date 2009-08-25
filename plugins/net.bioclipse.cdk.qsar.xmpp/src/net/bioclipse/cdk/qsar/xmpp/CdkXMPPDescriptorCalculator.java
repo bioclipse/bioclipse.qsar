@@ -19,6 +19,7 @@ import java.util.Map;
 
 import org.apache.log4j.Logger;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.OperationCanceledException;
 import org.xmlcml.cml.base.CMLElement;
 import org.xmlcml.cml.base.CMLElements;
 import org.xmlcml.cml.element.CMLProperty;
@@ -26,6 +27,7 @@ import org.xmlcml.cml.element.CMLScalar;
 
 import net.bioclipse.cdk.business.Activator;
 import net.bioclipse.cdk.business.ICDKManager;
+import net.bioclipse.cdk.domain.ICDKMolecule;
 import net.bioclipse.cml.managers.IJavaValidateCMLManager;
 import net.bioclipse.core.business.BioclipseException;
 import net.bioclipse.core.domain.IMolecule;
@@ -103,6 +105,15 @@ public class CdkXMPPDescriptorCalculator implements IDescriptorCalculator {
 
         IService service=null;
         
+        //The workload for this provider is mols x their descs
+        int workload=0;
+        for (IMolecule mol : moldesc.keySet()){
+            workload=workload+moldesc.get( mol ).size();
+        }
+        
+        monitor.beginTask( "Calculating descriptors with CDK XMPP" , workload );
+
+        monitor.subTask( "Connecting to XMPP network." );
         // connect to the XMPP hive
             try {
                 xmpp.connect();
@@ -127,7 +138,8 @@ public class CdkXMPPDescriptorCalculator implements IDescriptorCalculator {
             try {
                 
                 //We need the SMILES for the REST descriptors
-                String molCML=cdk.asCDKMolecule( mol ).toCML();
+                ICDKMolecule cdkmol = cdk.asCDKMolecule( mol );
+                String molCML=cdkmol.toCML();
                 
                 List<IDescriptorResult> retlist=
                                              new ArrayList<IDescriptorResult>();
@@ -135,6 +147,11 @@ public class CdkXMPPDescriptorCalculator implements IDescriptorCalculator {
                 for (DescriptorType desc : moldesc.get( mol )){
                     
                     String ontologyID=desc.getOntologyid();
+                    if (monitor.isCanceled())
+                        throw new OperationCanceledException();
+                    
+                    monitor.subTask("Molecule: " + cdkmol.getName() 
+                                    + "\nCDK XMPP Descriptor: " + ontologyID);
                     
                     //Look up function name in map
                     String xmppFunction=ontologyMap.get(ontologyID);
