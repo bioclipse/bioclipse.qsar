@@ -212,7 +212,7 @@ public class CDKDescriptorCalculator implements IDescriptorCalculator {
 
 
 //            logger.debug("CDK calculating descriptor: " + descType.getOntologyid() + " for mol: " + cdkmol.getName());
-            monitor.subTask("Molecule: " + cdkmol.getName() + "\nDescriptor: " + descType.getOntologyid());
+            monitor.subTask("\nMolecule: " + cdkmol.getName() + "\nDescriptor: " + descType.getOntologyid());
             monitor.worked(1);
 
 
@@ -460,10 +460,18 @@ public class CDKDescriptorCalculator implements IDescriptorCalculator {
 
     public Map<? extends IMolecule, List<IDescriptorResult>> calculateDescriptor(
              Map<IMolecule, List<DescriptorType>> moldesc,
-             IProgressMonitor monitor ) {
+             IProgressMonitor monitor ){
 
         Map<IMolecule, List<IDescriptorResult>> allResults=
             new HashMap<IMolecule, List<IDescriptorResult>>();
+        
+        //The workload for this provider is mols x their descs
+        int workload=0;
+        for (IMolecule mol : moldesc.keySet()){
+            workload=workload+moldesc.get( mol ).size();
+        }
+        
+        monitor.beginTask( "Calculating descriptors with CDK" , workload );
 
         for (IMolecule mol : moldesc.keySet()){
             try {
