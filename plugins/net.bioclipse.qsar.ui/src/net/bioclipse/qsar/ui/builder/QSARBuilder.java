@@ -644,7 +644,7 @@ public class QSARBuilder extends IncrementalProjectBuilder
         for (int i=0;i< dataset.length; i++){
 
             //Add label first in line
-            buffer.append(rowLabels.get(i));
+            buffer.append(replaceCommaBySemiColon(rowLabels.get(i)));
             buffer.append(SEPARATOR + responseColumn.get(i));
 
             //Add descriptor values
@@ -693,6 +693,10 @@ public class QSARBuilder extends IncrementalProjectBuilder
         //        }
         logger.debug("============================================");
 
+    }
+
+    private String replaceCommaBySemiColon(String string) {
+        return string.replaceAll(",", ";");
     }
 
     private void fillEmptyRespones( QsarType qsarModel ) {
