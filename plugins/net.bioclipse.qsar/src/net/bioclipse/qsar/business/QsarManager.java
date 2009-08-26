@@ -1077,7 +1077,7 @@ public class QsarManager implements IQsarManager{
             String pname=prov.getName();
             String pvend=prov.getVendor();
             String pvers=prov.getVersion();
-            String pns=prov.getNamesapce();
+            String pns=prov.getNamespace();
 
             //Create a provider (=descrProviderType) in qsar model root
             DescriptorproviderType newdimpl=QsarFactory.eINSTANCE.createDescriptorproviderType();
@@ -1495,14 +1495,24 @@ public class QsarManager implements IQsarManager{
                 //If text-based (currently the only sup. method in Bioclipse)
                 structure.setResourceindex( molindex );
 
+                //Do some sanity checks with CDK
+                //==============================
+                
+                //Check atom typing works
                 IAtomContainer container = mol.getAtomContainer();
                 CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.getInstance(
                                                  container.getBuilder() );
                 Iterator<IAtom> atoms = container.atoms().iterator();
 
+                int totalCharge=0;
                 try {
                     while (atoms.hasNext()) {
                         IAtom atom = atoms.next();
+
+                        //Add atom's charge to total charge
+                        totalCharge += atom.getFormalCharge() == null ? 0 
+                                : atom.getFormalCharge();
+                        
                         IAtomType type = matcher.findMatchingAtomType(container, atom);
                         if (type==null){
                             logger.error( "Atom typing error: Could not find atom " +
@@ -1523,6 +1533,26 @@ public class QsarManager implements IQsarManager{
                          + " in resource: " + file 
                          + " experienced Atom typing error: " + e.getMessage());
                     LogUtils.debugTrace( logger, e );
+                }
+                
+                /*
+                //Check so total charge is not zero
+                if (totalCharge<=0){
+                    String msg="Structure has zero total charge.";
+                    logger.warn( msg );
+                    structure.getProblem().add( msg);
+                    res.setContainsErrors( true );
+                }
+                */
+                
+                //Check so not salt, this is not good
+                if (cdk.partition( mol )!=null && 
+                        cdk.partition( mol ).size()!=1){
+                    String msg="Structure can be partitioned into more than " +
+                    		"one structure.";
+                    logger.warn( msg );
+                    structure.getProblem().add( msg);
+                    res.setContainsErrors( true );
                 }
 
                 //Calculate and add inchi to structure
@@ -1753,7 +1783,7 @@ public class QsarManager implements IQsarManager{
             String pname=prov.getName();
             String pvend=prov.getVendor();
             String pvers=prov.getVersion();
-            String pns=prov.getNamesapce();
+            String pns=prov.getNamespace();
 
             //Create a provider (=descrImplType) in qsar model root
             DescriptorproviderType newdprov=QsarFactory.eINSTANCE.createDescriptorproviderType();
