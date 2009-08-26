@@ -268,7 +268,8 @@ public class TestQsarManager {
 		
 		assertNotNull(desc.getDate());
 		
-		assertNotNull(desc.getDefinition());
+    assertNotNull(desc.getDefinition());
+//    assertNotNull(desc.getDescription());
 		
 	}
 
