@@ -661,13 +661,13 @@ public class QsarManager implements IQsarManager{
 
     /**
      * If input starts with 
-     * http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#
+     * BO-NAMESPACE
      * then remove it and return the rightmost part
      * @param ontologyID
      * @return the rightmost part or entire string if not starting with http://
      */
     public String toShortOntologyForm(String ontologyID){
-        if (ontologyID.startsWith( "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#" )){
+        if (ontologyID.startsWith( QSARConstants.BO_NAMESPACE )){
             return ontologyID.substring( ontologyID.indexOf( "#" )+1 );
         }
         //Could not remove it, return as is
@@ -730,15 +730,12 @@ public class QsarManager implements IQsarManager{
         }
 
         //If already full form, return it as is
-        if (ontologyID.startsWith( 
-        "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#" ))
+        if (ontologyID.startsWith(QSARConstants.BO_NAMESPACE ))
             fullOntologyID=ontologyID;
         
         else{
             //Try to add it and see if it is valid
-            fullOntologyID=
-                "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#"
-                + ontologyID;
+            fullOntologyID=QSARConstants.BO_NAMESPACE + ontologyID;
         }
 
         //Confirm validity or throw exception

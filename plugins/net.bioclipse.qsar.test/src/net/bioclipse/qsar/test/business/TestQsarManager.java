@@ -47,9 +47,6 @@ import org.junit.Test;
 
 public class TestQsarManager {
 
-	private static final String BO_NAMESPACE = "http://www.blueobelisk.org/" +
-	"ontologies/chemoinformatics-algorithms";
-
 	IQsarManager qsar;
 	
 	public TestQsarManager() {
@@ -257,7 +254,7 @@ public class TestQsarManager {
 		
 		Descriptor desc=qsar.getDescriptorByID(descriptorID);
 		assertNotNull(desc);
-		assertEquals(BO_NAMESPACE, desc.getNamespace());
+		assertEquals(QSARConstants.BO_NAMESPACE, desc.getNamespace());
 
 		
 		DescriptorCategory cat1 = qsar.getCategoryByID(cat1id);

@@ -44,6 +44,7 @@ public class JenaReader {
 	private static final String BO_NAMESPACE = "http://www.blueobelisk.org/" +
 	"ontologies/chemoinformatics-algorithms";
 
+	@Deprecated
 	public static DescriptorModel populateHierarchy() throws IOException, 
 															URISyntaxException{
 
@@ -213,6 +214,7 @@ public class JenaReader {
 	}
 
 
+	@Deprecated
 	private static DescriptorCategory findCategoryByID(DescriptorModel descriptorModel, String categoryID) {
 
 		for (DescriptorCategory cat:  descriptorModel.getCategories()){
@@ -227,6 +229,7 @@ public class JenaReader {
 	/**
 	 * If not a # in namespace, add it
 	 */
+	@Deprecated
 	public static String addLastDash(String input){
 		int lastSlashIX=input.lastIndexOf('/');
 		
@@ -239,7 +242,7 @@ public class JenaReader {
 		return newstr;
 	}
 
-
+	@Deprecated
 	public static void printStatements(Model m, Resource s, Property p, Resource o) {
 		for (StmtIterator i = m.listStatements(s,p,o); i.hasNext(); ) {
 			Statement stmt = i.nextStatement();

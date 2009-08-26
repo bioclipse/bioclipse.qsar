@@ -22,6 +22,7 @@ import org.eclipse.core.runtime.Platform;
 import org.osgi.framework.Bundle;
 
 import net.bioclipse.core.business.BioclipseException;
+import net.bioclipse.qsar.QSARConstants;
 import net.bioclipse.qsar.descriptor.model.Descriptor;
 import net.bioclipse.qsar.descriptor.model.DescriptorCategory;
 import net.bioclipse.qsar.descriptor.model.DescriptorModel;
@@ -33,9 +34,6 @@ import net.bioclipse.rdf.business.IRDFStore;
 public class OntologyHelper {
 
     private static final Logger logger = Logger.getLogger(OntologyHelper.class);
-
-    private static final String BO_NAMESPACE = "http://www.blueobelisk.org/" +
-    "ontologies/chemoinformatics-algorithms";
 
     /**
      * Parse OWL using RDF plugin and build descriptor hierarchy
@@ -98,7 +96,7 @@ public class OntologyHelper {
 
             //Remove the starting qsar:
             identifier=identifier.substring( 5 );
-            identifier=BO_NAMESPACE + "/#" + identifier;
+            identifier=QSARConstants.BO_NAMESPACE + identifier;
 
             //Create model object and store in list
             DescriptorCategory dcat=new DescriptorCategory(identifier, label);
@@ -133,8 +131,8 @@ public class OntologyHelper {
                     //Remove the starting qsar:
                     descriptorID=descriptorID.substring( 5 );
                     
-                    Descriptor desc = new Descriptor(BO_NAMESPACE + "/#" + descriptorID,label);
-                    desc.setNamespace(BO_NAMESPACE);
+                    Descriptor desc = new Descriptor(QSARConstants.BO_NAMESPACE + descriptorID,label);
+                    desc.setNamespace(QSARConstants.BO_NAMESPACE);
                     desc.addCategory(dcat);
 
                     /*

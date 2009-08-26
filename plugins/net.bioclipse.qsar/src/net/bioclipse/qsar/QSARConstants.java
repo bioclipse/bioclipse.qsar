@@ -12,6 +12,9 @@ package net.bioclipse.qsar;
 
 public interface QSARConstants {
 
+  public static final String BO_NAMESPACE = "http://www.blueobelisk.org/" +
+  "ontologies/chemoinformatics-algorithms/#";
+    
 	//Preferences
 	public static final String QSAR_PROVIDERS_ORDER_PREFERENCE = "QSARProvderOrder";
 	public static final String QSAR_ONTOLOGY_FILES_PREFERENCE = "QSARontologyFiles";
