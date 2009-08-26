@@ -3,21 +3,5 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/J2SE-1.5"/>
 	<classpathentry kind="con" path="org.eclipse.pde.core.requiredPlugins"/>
 	<classpathentry kind="src" path="src"/>
-	<classpathentry exported="true" kind="lib" path="lib/antlr-2.7.5.jar" sourcepath="net.bioclipse.qsarsrc.zip"/>
-	<classpathentry exported="true" kind="lib" path="lib/arq-extra.jar" sourcepath="net.bioclipse.qsarsrc.zip"/>
-	<classpathentry exported="true" kind="lib" path="lib/arq.jar" sourcepath="net.bioclipse.qsarsrc.zip"/>
-	<classpathentry exported="true" kind="lib" path="lib/commons-logging-1.1.1.jar" sourcepath="net.bioclipse.qsarsrc.zip"/>
-	<classpathentry exported="true" kind="lib" path="lib/concurrent.jar" sourcepath="net.bioclipse.qsarsrc.zip"/>
-	<classpathentry exported="true" kind="lib" path="lib/icu4j_3_4.jar" sourcepath="net.bioclipse.qsarsrc.zip"/>
-	<classpathentry exported="true" kind="lib" path="lib/iri.jar" sourcepath="net.bioclipse.qsarsrc.zip"/>
-	<classpathentry exported="true" kind="lib" path="lib/jena.jar" sourcepath="net.bioclipse.qsarsrc.zip"/>
-	<classpathentry exported="true" kind="lib" path="lib/jenatest.jar" sourcepath="net.bioclipse.qsarsrc.zip"/>
-	<classpathentry exported="true" kind="lib" path="lib/json.jar" sourcepath="net.bioclipse.qsarsrc.zip"/>
-	<classpathentry exported="true" kind="lib" path="lib/junit.jar" sourcepath="net.bioclipse.qsarsrc.zip"/>
-	<classpathentry exported="true" kind="lib" path="lib/lucene-core-2.3.1.jar" sourcepath="net.bioclipse.qsarsrc.zip"/>
-	<classpathentry exported="true" kind="lib" path="lib/stax-api-1.0.jar" sourcepath="net.bioclipse.qsarsrc.zip"/>
-	<classpathentry exported="true" kind="lib" path="lib/wstx-asl-3.0.0.jar" sourcepath="net.bioclipse.qsarsrc.zip"/>
-	<classpathentry exported="true" kind="lib" path="lib/xercesImpl.jar" sourcepath="net.bioclipse.qsarsrc.zip"/>
-	<classpathentry exported="true" kind="lib" path="lib/xml-apis.jar" sourcepath="net.bioclipse.qsarsrc.zip"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
