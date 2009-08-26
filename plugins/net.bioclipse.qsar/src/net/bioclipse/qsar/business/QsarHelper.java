@@ -89,7 +89,7 @@ public class QsarHelper {
                         provider.setVersion(pvers);
 
                         String pns=element.getAttribute("namespace");
-                        provider.setNamesapce(pns);
+                        provider.setNamespace(pns);
 
                         IDescriptorCalculator calculator;
                         calculator = (IDescriptorCalculator) 
@@ -148,7 +148,7 @@ public class QsarHelper {
                             descImpl.setDescription(ddesc);
 
                             String dns=element.getAttribute("namespace");
-                            descImpl.setNamesapce(dns);
+                            descImpl.setNamespace(dns);
 
 
                             String req3d=providerChild.getAttribute("requires3D");

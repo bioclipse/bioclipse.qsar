@@ -116,7 +116,8 @@ import org.eclipse.ui.forms.widgets.Section;
  * @author ola
  *
  */
-public class MoleculesPage extends FormPage implements IEditingDomainProvider, IViewerProvider, IPageChangedListener{
+public class MoleculesPage extends FormPage implements IEditingDomainProvider, 
+                                          IViewerProvider, IPageChangedListener{
 
     private TableViewer molViewer;
     private Table molTable;

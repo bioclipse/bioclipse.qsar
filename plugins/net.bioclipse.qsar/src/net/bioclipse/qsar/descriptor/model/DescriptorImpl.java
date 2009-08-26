@@ -86,7 +86,7 @@ public class DescriptorImpl extends BaseEPObject{
 	    impl.setDefinition( getDefinition() );
 	    impl.setDescription( getDescription() );
 	    impl.setIcon( getIcon() );
-	    impl.setNamesapce( getNamesapce() );
+	    impl.setNamespace( getNamespace() );
 	    impl.setProvider( getProvider() );
 	    impl.setRequires3D( isRequires3D() );
 	    List<DescriptorParameter> params = new ArrayList<DescriptorParameter>();

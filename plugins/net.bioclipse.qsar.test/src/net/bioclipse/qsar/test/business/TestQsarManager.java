@@ -214,7 +214,7 @@ public class TestQsarManager {
 		assertEquals(prov.getId(), providerID);
 		assertNotNull(prov.getShortName());
 		assertEquals("provider1", prov.getShortName());
-		assertEquals(expectedNamespace, prov.getNamesapce());
+		assertEquals(expectedNamespace, prov.getNamespace());
 	}
 	
 	@Test
@@ -257,7 +257,7 @@ public class TestQsarManager {
 		
 		Descriptor desc=qsar.getDescriptorByID(descriptorID);
 		assertNotNull(desc);
-		assertEquals(BO_NAMESPACE, desc.getNamesapce());
+		assertEquals(BO_NAMESPACE, desc.getNamespace());
 
 		
 		DescriptorCategory cat1 = qsar.getCategoryByID(cat1id);

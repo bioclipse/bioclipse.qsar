@@ -154,7 +154,7 @@ public class JenaReader {
 			}
 
 			//All these descriptors have the BO namespace
-			desc.setNamesapce(BO_NAMESPACE);
+			desc.setNamespace(BO_NAMESPACE);
 
 //			System.out.println("## Found descriptor: " + descname + 
 //					" with id: " + descid);

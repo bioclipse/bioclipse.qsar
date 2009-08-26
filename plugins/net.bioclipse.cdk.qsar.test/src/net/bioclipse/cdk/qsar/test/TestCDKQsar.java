@@ -81,7 +81,7 @@ public class TestCDKQsar {
         assertEquals(cdkProviderID, provider.getId());
         assertEquals("Chemistry Development Kit", provider.getVendor());
         assertEquals("Chemistry Development Kit", provider.getName());
-        assertEquals("http://cdk.sourceforge.net", provider.getNamesapce());
+        assertEquals("http://cdk.sourceforge.net", provider.getNamespace());
         assertEquals("CDK", provider.getShortName());
 
         //Get provider classes

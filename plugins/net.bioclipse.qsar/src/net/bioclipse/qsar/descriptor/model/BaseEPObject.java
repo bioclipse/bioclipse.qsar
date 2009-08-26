@@ -24,13 +24,13 @@ public class BaseEPObject extends BioObject{
 	String name;
 	String icon_path;
 	Image icon;
-	String namesapce;
+	String namespace;
 	
-	public String getNamesapce() {
-		return namesapce;
+	public String getNamespace() {
+		return namespace;
 	}
-	public void setNamesapce(String namesapce) {
-		this.namesapce = namesapce;
+	public void setNamespace(String namespace) {
+		this.namespace = namespace;
 	}
 	public String getId() {
 		return id;

@@ -124,7 +124,7 @@ public class OntologyHelper {
                     descriptorID=descriptorID.substring( 5 );
                     
                     Descriptor desc = new Descriptor(BO_NAMESPACE + "/#" + descriptorID,label);
-                    desc.setNamesapce(BO_NAMESPACE);
+                    desc.setNamespace(BO_NAMESPACE);
                     desc.addCategory(dcat);
 
                     /*
