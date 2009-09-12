@@ -32,5 +32,5 @@ Export-Package: net.bioclipse.qsar,
  net.bioclipse.qsar.descriptor.model,
  net.bioclipse.qsar.init,
  net.bioclipse.qsar.prefs
-Import-Package: org.apache.log4j;version="1.2.15"
+Import-Package: org.apache.log4j
 Bundle-Activator: net.bioclipse.qsar.init.Activator
