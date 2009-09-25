@@ -224,7 +224,7 @@ public class TestCDKQsar {
         }
 
         assertEquals("bpol", dres.getLabels()[0]);
-        assertEquals(31.659382, dres.getValues()[0]);
+        assertEquals(new Float(31.659382), dres.getValues()[0]);
 
 
     }
@@ -248,7 +248,7 @@ public class TestCDKQsar {
         }
 
         assertEquals("XLogP", dres1.getLabels()[0]);
-        assertEquals(0.184, dres1.getValues()[0]);
+        assertEquals(new Float(0.184), dres1.getValues()[0]);
 
 
     }
@@ -278,7 +278,7 @@ public class TestCDKQsar {
         }
 
         assertEquals("XLogP", dres1.getLabels()[0]);
-        assertEquals(3.604, dres1.getValues()[0]);
+        assertEquals(new Float(3.604), dres1.getValues()[0]);
 
 
     }
@@ -306,18 +306,18 @@ public class TestCDKQsar {
         assertEquals(6, dres1.getLabels().length);
 
         assertEquals("BCUTw-1l", dres1.getLabels()[0]);
-        assertEquals(11.993387, dres1.getValues()[0]);
+        assertEquals(new Float(11.993387), dres1.getValues()[0]);
 
         assertEquals("BCUTw-1h", dres1.getLabels()[1]);
-        assertEquals(15.994919, dres1.getValues()[1]);
+        assertEquals(new Float(15.994919), dres1.getValues()[1]);
         assertEquals("BCUTc-1l", dres1.getLabels()[2]);
-        assertEquals(0.89, dres1.getValues()[2]);
+        assertEquals(new Float(0.89), dres1.getValues()[2]);
         assertEquals("BCUTc-1h", dres1.getLabels()[3]);
-        assertEquals(1.1102645, dres1.getValues()[3]);
+        assertEquals(new Float(1.1102645), dres1.getValues()[3]);
         assertEquals("BCUTp-1l", dres1.getLabels()[4]);
-        assertEquals(4.6727624, dres1.getValues()[4]);
+        assertEquals(new Float(4.6727624), dres1.getValues()[4]);
         assertEquals("BCUTp-1h", dres1.getLabels()[5]);
-        assertEquals(9.596294, dres1.getValues()[5]);
+        assertEquals(new Float(9.596294), dres1.getValues()[5]);
 
     }
 
@@ -390,14 +390,14 @@ public class TestCDKQsar {
         }
 
         assertEquals("bpol", dres1.getLabels()[0]);
-        assertEquals(31.659382, dres1.getValues()[0]);
+        assertEquals(new Float(31.659382), dres1.getValues()[0]);
         assertEquals("XLogP", dres11.getLabels()[0]);
-        assertEquals(0.184, dres11.getValues()[0]);
+        assertEquals(new Float(0.184), dres11.getValues()[0]);
 
         assertEquals("bpol", dres2.getLabels()[0]);
-        assertEquals(41.70466, dres2.getValues()[0]);
+        assertEquals(new Float(41.70466), dres2.getValues()[0]);
         assertEquals("XLogP", dres22.getLabels()[0]);
-        assertEquals(6.749, dres22.getValues()[0]);
+        assertEquals(new Float(6.749), dres22.getValues()[0]);
 
     }
 
@@ -481,9 +481,9 @@ public class TestCDKQsar {
                            mol.toSMILES() + 
                            " ; Desc: " + dres2.getDescriptor().getOntologyid() +": " + dres2.getValues()[0] );
 
-        assertEquals(3, dres1.getValues()[0]);
+        assertEquals(new Float(3), dres1.getValues()[0]);
 
-        assertEquals(13, dres2.getValues()[0]);
+        assertEquals(new Float(13), dres2.getValues()[0]);
 
 
 
@@ -547,9 +547,9 @@ public class TestCDKQsar {
                            mol.toSMILES() + 
                            " ; Desc: " + dres2.getDescriptor().getOntologyid() +": " + dres2.getValues()[0] );
 
-        assertEquals(9.0, dres2.getValues()[0]);
+        assertEquals(new Float(9.0), dres2.getValues()[0]);
 
-        assertEquals(11, dres1.getValues()[0]);
+        assertEquals(new Float(11), dres1.getValues()[0]);
 
 
 
@@ -625,12 +625,12 @@ public class TestCDKQsar {
 
 
         assertEquals("bpol", dres1.getLabels()[0]);
-        assertEquals(26.236967, dres1.getValues()[0]);
+        assertEquals(new Float(26.236967), dres1.getValues()[0]);
         assertEquals("XLogP", dres11.getLabels()[0]);
-        assertEquals(6.706, dres11.getValues()[0]);
+        assertEquals(new Float(6.706), dres11.getValues()[0]);
 
         assertEquals("XLogP", dres2.getLabels()[0]);
-        assertEquals(6.648, dres2.getValues()[0]);
+        assertEquals(new Float(6.648), dres2.getValues()[0]);
 
     }
 
