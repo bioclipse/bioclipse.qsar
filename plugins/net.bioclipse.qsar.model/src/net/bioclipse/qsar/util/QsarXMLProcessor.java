@@ -56,8 +56,10 @@ public class QsarXMLProcessor extends XMLProcessor {
     protected Map<String, Resource.Factory> getRegistrations() {
         if (registrations == null) {
             super.getRegistrations();
-            registrations.put(XML_EXTENSION, new QsarResourceFactoryImpl());
-            registrations.put(STAR_EXTENSION, new QsarResourceFactoryImpl());
+            registrations.put(XML_EXTENSION, 
+                              new QsarResourceFactoryImpl());
+            registrations.put(STAR_EXTENSION, 
+                              new QsarResourceFactoryImpl());
         }
         return registrations;
     }
