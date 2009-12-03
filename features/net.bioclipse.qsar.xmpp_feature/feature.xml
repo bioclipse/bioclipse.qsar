@@ -2,7 +2,7 @@
 <feature
       id="net.bioclipse.qsar.xmpp_feature"
       label="CDK QSAR Xmpp"
-      version="2.2.0.RC1"
+      version="2.2.0.RC2"
       provider-name="The Bioclipse Team"
       plugin="net.bioclipse.cdk.qsar.xmpp">
 

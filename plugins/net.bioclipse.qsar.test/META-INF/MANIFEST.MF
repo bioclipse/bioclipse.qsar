@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Test Plug-in
 Bundle-SymbolicName: net.bioclipse.qsar.test;singleton:=true
-Bundle-Version: 2.2.0.RC1
+Bundle-Version: 2.2.0.RC2
 Bundle-Activator: net.bioclipse.qsar.test.Activator
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
