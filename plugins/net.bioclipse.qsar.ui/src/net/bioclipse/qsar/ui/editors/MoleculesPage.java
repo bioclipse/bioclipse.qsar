@@ -1084,7 +1084,7 @@ public class MoleculesPage extends FormPage implements IEditingDomainProvider,
         if (event.getSelectedPage()!=this) return;
 
         if (molViewer!=null){
-            populateMolsViewerFromModel();
+//            populateMolsViewerFromModel();
         }
 
         activatePage();
