@@ -13,14 +13,9 @@ package net.bioclipse.qsar.business;
 
 
 import java.io.IOException;
+import java.net.URL;
 import java.util.List;
 import java.util.Map;
-
-import org.eclipse.core.resources.IFile;
-import org.eclipse.core.runtime.CoreException;
-import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.core.runtime.OperationCanceledException;
-import org.eclipse.emf.edit.domain.EditingDomain;
 
 import net.bioclipse.core.PublishedClass;
 import net.bioclipse.core.PublishedMethod;
@@ -36,12 +31,18 @@ import net.bioclipse.qsar.StructureType;
 import net.bioclipse.qsar.descriptor.IDescriptorResult;
 import net.bioclipse.qsar.descriptor.model.Descriptor;
 import net.bioclipse.qsar.descriptor.model.DescriptorCalculationResult;
-import net.bioclipse.qsar.descriptor.model.DescriptorImpl;
 import net.bioclipse.qsar.descriptor.model.DescriptorCategory;
+import net.bioclipse.qsar.descriptor.model.DescriptorImpl;
 import net.bioclipse.qsar.descriptor.model.DescriptorModel;
 import net.bioclipse.qsar.descriptor.model.DescriptorParameter;
 import net.bioclipse.qsar.descriptor.model.DescriptorProvider;
 import net.bioclipse.qsar.descriptor.model.ResponseUnit;
+
+import org.eclipse.core.resources.IFile;
+import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.OperationCanceledException;
+import org.eclipse.emf.edit.domain.EditingDomain;
 
 /**
  * 
@@ -282,5 +283,26 @@ public interface IQsarManager extends IBioclipseManager{
                                      EditingDomain editingDomain,
                                      ResourceType resource );
 
+    @Recorded
+    @PublishedMethod(
+        params="String url, String format",
+        methodSummary = "Checks if the document behind the URL is a valid " +
+        		"QSAR descriptor definition. The formats are those " +
+        		"accepted by the RDF manager: \"RDF/XML\", \"N-TRIPLE\", " +
+        		"\"TURTLE\" and \"N3\"."
+    )
+    public boolean isValidDescriptorDefinition(String url, String format)
+    throws BioclipseException;
+
+    @Recorded
+    @PublishedMethod(
+        params="URL url, String format",
+        methodSummary = "Checks if the document behind the URL is a valid " +
+                "QSAR descriptor definition. The formats are those " +
+                "accepted by the RDF manager: \"RDF/XML\", \"N-TRIPLE\", " +
+                "\"TURTLE\" and \"N3\"."
+    )
+    public boolean isValidDescriptorDefinition(URL url, String format);
+    
 
 }

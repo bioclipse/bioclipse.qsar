@@ -58,6 +58,8 @@ import net.bioclipse.qsar.init.Activator;
 import net.bioclipse.qsar.prefs.QSARPreferenceInitializer;
 import net.bioclipse.qsar.prefs.QsarPreferenceHelper;
 import net.bioclipse.qsar.util.QsarAdapterFactory;
+import net.bioclipse.rdf.business.IRDFManager;
+import net.bioclipse.rdf.business.IRDFStore;
 
 import org.apache.log4j.Logger;
 import org.eclipse.core.resources.IFile;
@@ -2020,6 +2022,44 @@ public class QsarManager implements IQsarManager{
           //Execute the commands as one 
           editingDomain.getCommandStack().execute(ccmd);
 
+    }
+
+    public boolean isValidDescriptorDefinition(String url, String format)
+        throws BioclipseException {
+        try {
+            return isValidDescriptorDefinition(new URL(url), format);
+        } catch (MalformedURLException exception) {
+            throw new BioclipseException("Invalid URL.", exception);
+        }
+    }
+
+    public boolean isValidDescriptorDefinition(URL url, String format) {
+        try {
+            IRDFManager rdf =
+                net.bioclipse.rdf.Activator.getDefault().getJavaManager();
+            IRDFStore owl = rdf.createStore();
+            rdf.importFromStream(owl, url.openStream(), format);
+
+            List<List<String>> cats = rdf.sparql(owl,
+                "PREFIX qsar: <http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#> " +
+                "SELECT ?desc WHERE { " +
+                "  { ?desc a qsar:Descriptor . } " +
+                "  UNION " +
+                "  { ?desc a qsar:MolecularDescriptor . } " +
+                "}"
+            );
+
+            // if there is no definition found ...
+            if (cats.size() == 0) return false;
+        } catch (Exception exception) {
+            // any exception means the file is not OK
+            logger.error("Invalid descriptor file: " + exception);
+            logger.debug(exception);
+            exception.printStackTrace();
+            return false;
+        }
+
+        return true;
       }
     
 }
