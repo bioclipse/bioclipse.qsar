@@ -200,7 +200,7 @@ public class QsarActionBarContributor
     @Override
     public void contributeToMenu(IMenuManager menuManager) {
         super.contributeToMenu(menuManager);
-
+/*
         IMenuManager submenuManager = new MenuManager("QSAR menu");
         menuManager.insertAfter("additions", submenuManager);
         submenuManager.add(new Separator("settings"));
@@ -228,6 +228,7 @@ public class QsarActionBarContributor
              });
 
         addGlobalActions(submenuManager);
+        */
     }
     
     /**
