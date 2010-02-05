@@ -69,7 +69,7 @@ public class OntologyHelper {
             categories = new ArrayList<DescriptorCategory>();
 
         IRDFManager rdf=Activator.getDefault().getJavaManager();
-        IRDFStore owl = rdf.createStore();
+        IRDFStore owl = rdf.createInMemoryStore();
 
         rdf.importURL(owl, url.toString());
 
