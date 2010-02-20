@@ -15,12 +15,6 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.log4j.Logger;
-import org.eclipse.core.runtime.CoreException;
-import org.eclipse.core.runtime.FileLocator;
-import org.eclipse.core.runtime.Platform;
-import org.osgi.framework.Bundle;
-
 import net.bioclipse.core.business.BioclipseException;
 import net.bioclipse.qsar.QSARConstants;
 import net.bioclipse.qsar.descriptor.model.Descriptor;
@@ -29,6 +23,13 @@ import net.bioclipse.qsar.descriptor.model.DescriptorModel;
 import net.bioclipse.rdf.Activator;
 import net.bioclipse.rdf.business.IRDFManager;
 import net.bioclipse.rdf.business.IRDFStore;
+import net.bioclipse.rdf.model.IStringMatrix;
+
+import org.apache.log4j.Logger;
+import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.FileLocator;
+import org.eclipse.core.runtime.Platform;
+import org.osgi.framework.Bundle;
 
 
 public class OntologyHelper {
@@ -74,7 +75,7 @@ public class OntologyHelper {
         rdf.importURL(owl, url.toString());
 
         // list all descriptor categories
-        List<List<String>> cats = rdf.sparql(owl,
+        IStringMatrix cats = rdf.sparql(owl,
           "PREFIX qsar: <http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#> " +
           "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> " +
           "PREFIX dc: <http://purl.org/dc/elements/1.1/> " +
@@ -86,16 +87,12 @@ public class OntologyHelper {
           "}"
         );
         // iterate over all categories child of the category 'descriptorCategories'
-        for (int i=0; i<cats.size(); i++) {
-            List<String> cat = cats.get(i);
-            
-
+        for (int i=1; i<=cats.getRowCount(); i++) {
             // the next follows the ?id ?label ?definition order in the SPARQL
-            String identifier = cat.get(0);
-            String label = cat.get(1);
-            String definition = cat.get(2);
-            String date = cat.get(3);
-//            logger.debug("Category: " + label + "\n");
+            String identifier = cats.get(i, "id");
+            String label = cats.get(i, "label");
+            String definition = cats.get(i, "definition");
+            String date = cats.get(i, "date");
 
             //Remove the starting qsar:
             identifier=identifier.substring( 5 );
@@ -123,15 +120,13 @@ public class OntologyHelper {
                 "     dc:date ?date; " +
                 "     rdfs:label ?label." +
                 "}";
-            List<List<String>> descriptors = rdf.sparql(owl, sparql);
+            IStringMatrix descriptors = rdf.sparql(owl, sparql);
             if (descriptors != null) {
-                for (int j=0; j<descriptors.size(); j++) {
-                    List<String> descriptor = descriptors.get(j);
-                    String descriptorID = descriptor.get(0);
-                    String label = descriptor.get(1);
-                    String date = descriptor.get(2);
-                    String definition = descriptor.get(3);
-//                    logger.debug("  " + descriptorID + " = " + label + "\n");
+                for (int j=1; j<descriptors.getRowCount(); j++) {
+                    String descriptorID = descriptors.get(j, "s");
+                    String label = descriptors.get(j, "label");
+                    String date = descriptors.get(j, "date");
+                    String definition = descriptors.get(j, "definition");
                     
                     //Remove the starting qsar:
                     descriptorID=descriptorID.substring( 5 );
