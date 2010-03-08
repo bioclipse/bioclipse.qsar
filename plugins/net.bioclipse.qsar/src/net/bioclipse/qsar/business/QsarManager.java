@@ -26,6 +26,7 @@ import java.util.StringTokenizer;
 
 import net.bioclipse.cdk.business.ICDKManager;
 import net.bioclipse.cdk.domain.ICDKMolecule;
+import net.bioclipse.chembl.business.IChEMBLManager;
 import net.bioclipse.core.business.BioclipseException;
 import net.bioclipse.core.domain.IMolecule;
 import net.bioclipse.core.util.LogUtils;
@@ -1958,6 +1959,17 @@ public class QsarManager implements IQsarManager{
           editingDomain.getCommandStack().execute(ccmd);
 
       }
+    
+    public String projectFromChEMBL(Integer targetID, String activity) throws BioclipseException{
+
+        IChEMBLManager chembl=net.bioclipse.chembl.Activator.getDefault().getJavaChEMBLManager();
+        Map<String, Double> ret = chembl.getQSARData( targetID, activity );
+        String st="";
+        for (String s : ret.keySet()){
+            st=st+s+"\n";
+        }
+        return st;
+    }
 
     
 }

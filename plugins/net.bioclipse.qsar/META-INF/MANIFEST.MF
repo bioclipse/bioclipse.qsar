@@ -24,7 +24,8 @@ Require-Bundle: org.eclipse.core.runtime,
  net.bioclipse.rdf;bundle-version="2.0.0",
  org.springframework.bundle.spring.aop,
  org.springframework.osgi.aopalliance.osgi,
- net.sf.cglib
+ net.sf.cglib,
+ net.bioclipse.chembl;bundle-version="2.3.0"
 Bundle-ActivationPolicy: lazy
 Export-Package: net.bioclipse.qsar,
  net.bioclipse.qsar.business,

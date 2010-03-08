@@ -248,5 +248,11 @@ public interface IQsarManager extends IBioclipseManager{
      */
     void initializeDescriptorModel();
 
+    
+    @PublishedMethod( methodSummary = "Returns the ID's of available descriptors " +
+    "for a provider",
+    params= "Integer targetID, String activity" )
+    public String projectFromChEMBL(Integer targetID, String activity) throws BioclipseException;
+
 
 }
