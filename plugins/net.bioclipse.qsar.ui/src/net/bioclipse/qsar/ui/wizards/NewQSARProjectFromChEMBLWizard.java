@@ -87,6 +87,10 @@ public class NewQSARProjectFromChEMBLWizard extends Wizard implements INewWizard
         this.responseType = responseType;
     }
 
+    @Override
+    public boolean needsProgressMonitor() {
+        return true;
+    }
     
     public Integer getTargetID() {
     
