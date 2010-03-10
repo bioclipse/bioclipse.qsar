@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2008 The Bioclipse Project and others.
+ * Copyright (c) 2008-2010 The Bioclipse Project and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -17,7 +17,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.eclipse.core.resources.IFile;
-import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.OperationCanceledException;
@@ -43,14 +42,21 @@ import net.bioclipse.qsar.descriptor.model.DescriptorParameter;
 import net.bioclipse.qsar.descriptor.model.DescriptorProvider;
 import net.bioclipse.qsar.descriptor.model.ResponseUnit;
 
+/**
+ * 
+ * @author ola
+ *
+ */
 @PublishedClass("A manager for QSAR")
 public interface IQsarManager extends IBioclipseManager{
 
-    @PublishedMethod( methodSummary = "Returns the available descriptor providers" )
+    @PublishedMethod( methodSummary = "Returns the available descriptor " +
+    		"providers" )
     public List<String> getProviders();
     public List<DescriptorProvider> getFullProviders();
 
-    @PublishedMethod( methodSummary = "Returns the available descriptor categories" )
+    @PublishedMethod( methodSummary = "Returns the available descriptor " +
+    		"categories" )
     public List<String> getCategories();
     public List<DescriptorCategory> getFullCategories();
 
@@ -59,16 +65,20 @@ public interface IQsarManager extends IBioclipseManager{
     List<ResponseUnit> getFullResponseUnits();
 
 
-    @PublishedMethod( methodSummary = "Returns the ID's of available descriptors " +
-    "for a provider" )
-    public List<String> getDescriptorImplsByProvider(String providerID) throws BioclipseException;
-    public List<DescriptorImpl> getFullDescriptorImpls(DescriptorProvider provider);
+    @PublishedMethod( methodSummary = "Returns the ID's of " +
+    		"available descriptors for a provider" )
+    public List<String> getDescriptorImplsByProvider(String providerID) 
+    throws BioclipseException;
+    public List<DescriptorImpl> getFullDescriptorImpls(
+                                                   DescriptorProvider provider);
 
 
-    @PublishedMethod( methodSummary = "Returns the descriptor category class by ID" )
+    @PublishedMethod( methodSummary = "Returns the descriptor " +
+    		"category class by ID" )
     public DescriptorCategory getCategoryByID(String categoryID);
 
-    @PublishedMethod( methodSummary = "Returns the descriptor provider class by ID" )
+    @PublishedMethod( methodSummary = "Returns the descriptor " +
+    		"provider class by ID" )
     public DescriptorProvider getProviderByID(String providerID);
 
     @PublishedMethod( methodSummary = "Returns a descriptor class by ID" )
@@ -95,29 +105,34 @@ public interface IQsarManager extends IBioclipseManager{
 
     public Descriptor getDescriptorByID(String descriptorID);
 
-    public List<Descriptor> getDescriptorsInCategory(DescriptorCategory category);
+    public List<Descriptor> getDescriptorsInCategory(
+                                                   DescriptorCategory category);
 
     @Recorded
     @PublishedMethod(params="String categoryID",
-                     methodSummary = "Get a list of descriptor IDs in a category" )
+                 methodSummary = "Get a list of descriptor IDs in a category" )
     public List<String> getDescriptorsInCategory(String categoryID);
 
     public List<DescriptorImpl> getFullDescriptorImpls();
 
     @Recorded
     @PublishedMethod(params="String descriptorID",
-                     methodSummary = "Get a list of descriptor implementations " +
-                     		"for a descriptor" )
-    public List<String> getDescriptorImpls(String descriptorID) throws BioclipseException;
+                     methodSummary = "Get a list of descriptor implementations"+
+                     		" for a descriptor" )
+    public List<String> getDescriptorImpls(String descriptorID) 
+    throws BioclipseException;
 
-    public List<DescriptorImpl> getDescriptorImplsForDescriptor(String descriptorID);
+    public List<DescriptorImpl> getDescriptorImplsForDescriptor(
+                                                           String descriptorID);
 
     public DescriptorImpl getPreferredImpl(String descriptorID);
 
-    DescriptorImpl getDescriptorImpl(String descriptorID, String providerID) throws BioclipseException;
+    DescriptorImpl getDescriptorImpl(String descriptorID, String providerID) 
+    throws BioclipseException;
 
     DescriptorType createDescriptorType(QsarType qsarModel,
-                                        EditingDomain editingDomain, Descriptor desc, DescriptorImpl impl,
+                                        EditingDomain editingDomain, 
+                                        Descriptor desc, DescriptorImpl impl,
                                         List<DescriptorParameter> params);
 
     @PublishedMethod(params="String descriptorID",
@@ -137,9 +152,12 @@ public interface IQsarManager extends IBioclipseManager{
 
     public void addCalculatedPropertiesToQsarModel( QsarType qsarModel );
     public void removeResourcesFromModel( QsarType qsarModel,
-                                          EditingDomain editingDomain, List<ResourceType> list );
+                                          EditingDomain editingDomain, 
+                                          List<ResourceType> list );
 
-    public void addDescriptorToModel( QsarType qsarModel, EditingDomain editingDomain, Descriptor desc,
+    public void addDescriptorToModel( QsarType qsarModel, 
+                                      EditingDomain editingDomain, 
+                                      Descriptor desc,
                                       DescriptorImpl impl );
     public void removeDescriptorsFromModel( QsarType qsarModel,
                                             EditingDomain editingDomain,
@@ -174,7 +192,7 @@ public interface IQsarManager extends IBioclipseManager{
 
     @PublishedMethod(params="boolean hasImpl",
                      methodSummary = "Show all available descriptors. " +
-                     		"If hasImpl=true, only show entries with an available " +
+                     		"If hasImpl=true, only show entries with an available "+
                      		"implementation." )
     @Recorded
     String listDescriptors( boolean hasImpl );
@@ -231,12 +249,16 @@ public interface IQsarManager extends IBioclipseManager{
      */
     
     public List<IDescriptorResult> calculate(IMolecule molecule,
-                                             List<DescriptorType> descriptorTypes) throws BioclipseException;
+                                             List<DescriptorType> 
+                                             descriptorTypes) 
+                                             throws BioclipseException;
 
     public Map<? extends IMolecule, List<IDescriptorResult>> calculate(
-                                                                       List<? extends IMolecule> molecules, 
-                                                                       List<DescriptorType> descriptorTypes, IProgressMonitor monitor)
-                                                                       throws OperationCanceledException, BioclipseException;
+                                           List<? extends IMolecule> molecules, 
+                                           List<DescriptorType> descriptorTypes, 
+                                           IProgressMonitor monitor)
+                                           throws OperationCanceledException, 
+                                           BioclipseException;
 
     /**
      * Used to force reading of units from EP and prefs
@@ -247,12 +269,6 @@ public interface IQsarManager extends IBioclipseManager{
      * Force reread of descriptor hierarchy from ontology + extra files
      */
     void initializeDescriptorModel();
-
-    
-    @PublishedMethod( methodSummary = "Returns the ID's of available descriptors " +
-    "for a provider",
-    params= "Integer targetID, String activity" )
-    public String projectFromChEMBL(Integer targetID, String activity) throws BioclipseException;
 
 
 }

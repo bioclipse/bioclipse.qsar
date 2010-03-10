@@ -59,6 +59,8 @@ import net.bioclipse.qsar.init.Activator;
 import net.bioclipse.qsar.prefs.QSARPreferenceInitializer;
 import net.bioclipse.qsar.prefs.QsarPreferenceHelper;
 import net.bioclipse.qsar.util.QsarAdapterFactory;
+import net.bioclipse.ui.business.IUIManager;
+import net.bioclipse.ui.business.UIManager;
 
 import org.apache.log4j.Logger;
 import org.eclipse.core.resources.IFile;
@@ -1401,6 +1403,17 @@ public class QsarManager implements IQsarManager{
         
         StructurelistType structList = qsarmodel.getStructurelist();
         ResponsesListType responseList = qsarmodel.getResponselist();
+
+        //If no lists, add new
+        if (structList==null){
+            structList=QsarFactory.eINSTANCE.createStructurelistType();
+            qsarmodel.setStructurelist( structList );
+        }
+        if (responseList==null){
+            responseList=QsarFactory.eINSTANCE.createResponsesListType();
+            qsarmodel.setResponselist( responseList );
+        }
+        
         CompoundCommand ccmd=new CompoundCommand();
 
         //Intermediate storage to keep track of what we have added, 
@@ -1959,17 +1972,5 @@ public class QsarManager implements IQsarManager{
           editingDomain.getCommandStack().execute(ccmd);
 
       }
-    
-    public String projectFromChEMBL(Integer targetID, String activity) throws BioclipseException{
-
-        IChEMBLManager chembl=net.bioclipse.chembl.Activator.getDefault().getJavaChEMBLManager();
-        Map<String, Double> ret = chembl.getQSARData( targetID, activity );
-        String st="";
-        for (String s : ret.keySet()){
-            st=st+s+"\n";
-        }
-        return st;
-    }
-
     
 }
