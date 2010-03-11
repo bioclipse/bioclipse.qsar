@@ -348,10 +348,9 @@ public class QSARBuilder extends IncrementalProjectBuilder
 
         //Calculate descriptors for all such combos
         //================================================
-        int jobSize_old=allDescriptors.size() * structureMap.size()+1;
         int jobSize=molDescMap.size() + 1;
 //        monitor.beginTask("Building QSAR project", jobSize);
-        logger.debug("Descriptors to calculate: " + jobSize);
+        logger.debug("Descriptors to calculate: " + (jobSize-1));
         
         monitor.worked( 1 );
         monitor.subTask( "Calculating descriptors" );
@@ -388,7 +387,7 @@ public class QSARBuilder extends IncrementalProjectBuilder
         monitor.subTask("Storing descriptor values");
         QsarType valuesModel=readValuesModelFromFile();
 
-        storeDescrResultsInSeparateFile(valuesModel, resultMap, structureMap);
+        storeDescrResultsInSeparateFile(valuesModel, resultMap, structureMap, qsarModel);
         logger.debug("Stored results in model");
         logger.debug("Time: " + stopwatch.toString());
         if (checkCancel(monitor)){
@@ -751,7 +750,7 @@ public class QSARBuilder extends IncrementalProjectBuilder
     
     private void storeDescrResultsInSeparateFile(QsarType valuesModel,
                                                  Map<IMolecule, List<IDescriptorResult>> resultMap,
-                                                 Map<StructureType, IMolecule> structureMap ) {
+                                                 Map<StructureType, IMolecule> structureMap, QsarType qsarModel ) {
 
         
         //If we have no list to hold descriptorresults, add it
@@ -821,6 +820,24 @@ public class QSARBuilder extends IncrementalProjectBuilder
                 logger.error("Desired mol not found in allMap. Should not happen." );
             }
 
+        }
+        
+        //Ok, handle the case when a descriptor is removed.
+        //Loop over all descriptors in valuemodel and make sure
+        //they still exist in qsarmodel.
+        //If not, they are removed and need to be removed from valuesModel too.
+        List<DescriptorresultType> toRemove=new ArrayList<DescriptorresultType>();
+        for (DescriptorresultType dres : valuesModel.getDescriptorresultlist().getDescriptorresult()){
+            boolean contained=false;
+            for (DescriptorType desc : qsarModel.getDescriptorlist().getDescriptors()){
+                if (dres.getDescriptorid().equals( desc.getId() ))
+                    contained=true;
+            }
+            if (!contained)
+                toRemove.add( dres );
+        }
+        for (DescriptorresultType dres : toRemove){
+            valuesModel.getDescriptorresultlist().getDescriptorresult().remove( dres );
         }
         
         
