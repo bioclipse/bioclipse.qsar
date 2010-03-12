@@ -382,8 +382,13 @@ public class CDKDescriptorCalculator implements IDescriptorCalculator {
                 }
 
                 //Check that we got back correct number of values
-                if (resultLabels.length != resultVals.length) {
-                    logger.warn("#labels != #vals for " + descType.getOntologyid());
+                if (resultLabels==null || resultVals==null){
+                    logger.error("No resultValues or labels for CDK descriptor: " + descType.getOntologyid() + " for mol: " + cdkmol.getName());
+                    res.setErrorMessage( "No resultValues or labels");
+                }
+                else if (resultLabels.length != resultVals.length) {
+                    logger.error("#labels != #vals for " + descType.getOntologyid());
+                    res.setErrorMessage( "#labels != #vals for " + descType.getOntologyid() );
                 }
 
                 res.setLabels(resultLabels);
