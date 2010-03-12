@@ -48,6 +48,7 @@ import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.domain.IEditingDomainProvider;
 import org.eclipse.jface.databinding.viewers.ObservableListContentProvider;
 import org.eclipse.jface.databinding.viewers.ObservableMapLabelProvider;
+import org.eclipse.jface.dialogs.IMessageProvider;
 import org.eclipse.jface.dialogs.IPageChangedListener;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.dialogs.PageChangedEvent;
@@ -92,6 +93,8 @@ import org.eclipse.ui.forms.editor.FormEditor;
 import org.eclipse.ui.forms.editor.FormPage;
 import org.eclipse.ui.forms.events.ExpansionAdapter;
 import org.eclipse.ui.forms.events.ExpansionEvent;
+import org.eclipse.ui.forms.events.HyperlinkAdapter;
+import org.eclipse.ui.forms.events.HyperlinkEvent;
 import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.eclipse.ui.forms.widgets.ScrolledForm;
 import org.eclipse.ui.forms.widgets.Section;
@@ -125,6 +128,8 @@ public class DescriptorsPage extends FormPage implements IEditingDomainProvider,
 //	private QsarType qsarModel;
 private TableViewer paramsViewer;
 private Table paramsTable;
+private ScrolledForm form;
+private List<DescriptorType> duplicates;
 
 //	private List<DescriptorInstance> selectedDescriptors;
 
@@ -155,7 +160,7 @@ private Table paramsTable;
     @Override
     protected void createFormContent(IManagedForm managedForm) {
 
-        ScrolledForm form = managedForm.getForm();
+        form = managedForm.getForm();
         FormToolkit toolkit = managedForm.getToolkit();
         form.setText("Descriptors for QSAR analysis");
         toolkit.decorateFormHeading(form.getForm());
@@ -189,9 +194,47 @@ private Table paramsTable;
 		//Populate selected descriptors from the read qsar model 
 		populateRightViewerFromModel();
 
-        //Post selections to Eclipse via our intermediate selectionprovider
-        descViewer.getTree().setFocus();
-        
+		//Post selections to Eclipse via our intermediate selectionprovider
+		descViewer.getTree().setFocus();
+
+		//Handle the case when an error is clicked in status bar
+		form.getForm().addMessageHyperlinkListener(new HyperlinkAdapter(){
+		    @Override
+		    public void linkEntered( HyperlinkEvent e ) {
+		        if (duplicates.size()>0){
+		            String dups="";
+		            for (DescriptorType desc : duplicates){
+
+		                String label=desc.getOntologyid();
+
+	                  if (label.indexOf('#')>0){
+	                      label=label.substring(label.lastIndexOf('#')+1, label.length());
+	                    }
+
+	                    String cpstr="";
+	                    if (desc.getParameter()!=null && desc.getParameter().size()>0){
+	                      for (ParameterType param : desc.getParameter()){
+	                        String pstr=param.getKey() + "=" + param.getValue()+", ";
+	                        cpstr=cpstr+pstr;
+	                      }
+	                      cpstr=cpstr.substring(0,cpstr.length()-2);
+	                    }
+	                    
+	                    if (cpstr.length()>1){
+	                      label=label + " [" + cpstr + "]";
+	                    }
+		                
+		                dups=" - " + dups+label+"\n";
+		            }
+		            String msg="The following descriptors are duplicated " +
+		            		"in selection.\n\n" + dups; 
+		            System.out.println(msg);
+		        }
+		    }
+		});
+		
+		checkForDuplicateDescriptors();
+
     }
 
     private void populateRightViewerFromModel() {
@@ -431,13 +474,58 @@ private Table paramsTable;
     	}
 
 //    	rightViewer.setInput(descriptorList.eContents().toArray());
+    	checkForDuplicateDescriptors();
 
     }
 
 
 
 
-	/**
+	private void checkForDuplicateDescriptors() {
+	    
+      QsarType qsarModel = ((QsarEditor)getEditor()).getQsarModel();
+      List<DescriptorType> storedDescs=new ArrayList<DescriptorType>();
+      duplicates=new ArrayList<DescriptorType>();
+      for (DescriptorType desc :qsarModel.getDescriptorlist().getDescriptors()){
+          boolean foundNewDesc=true;
+          for (DescriptorType storedDesc : storedDescs){
+              //If same ontology id...
+              if (storedDesc.getOntologyid().equals( desc.getOntologyid() )){
+                  //We have a duplicate desc by ontology id, 
+                  //but do we have duplicate params?
+                  boolean foundDifferingParams=false;
+                  for (ParameterType param : desc.getParameter()){
+                      for (ParameterType storedParam : storedDesc.getParameter()){
+                          if (!(param.getKey().equals( storedParam.getKey() ) && 
+                                  param.getValue().equals( storedParam.getValue()))){
+                              foundDifferingParams=true;
+                          }
+                      }
+                  }
+                  //We have a duplicate desc, but do we have duplicate params?
+                  if (!foundDifferingParams)
+                      foundNewDesc=false;
+
+              }
+          }
+          if (foundNewDesc)
+              storedDescs.add( desc );
+          else
+              duplicates.add( desc );
+
+      }
+
+      //If we have duplicates, set as error
+      if (duplicates.size()>0){
+          form.getForm().setMessage("There are duplicate descriptors selected", IMessageProvider.WARNING);  // NEW LINE
+      }else{
+          form.getForm().setMessage(null, IMessageProvider.NONE);  // NEW LINE
+      }
+        
+    }
+
+
+    /**
      * Handle the case when users press the Remove button next to moleculeviewer
      * or presses the delete button on something
      */
@@ -447,6 +535,8 @@ private Table paramsTable;
     	
       QsarType qsarModel = ((QsarEditor)getEditor()).getQsarModel();
       qsar.removeDescriptorsFromModel(qsarModel, editingDomain, ssel.toList());
+
+      checkForDuplicateDescriptors();
 
     }
 
@@ -822,6 +912,9 @@ private Table paramsTable;
                 		rightViewer.refresh();
             		}
 				}
+        		
+            checkForDuplicateDescriptors();
+
 			}
         	
         });
@@ -894,6 +987,8 @@ private Table paramsTable;
 	    if (rightViewer!=null){
 	        populateRightViewerFromModel();
 	    }
+	    
+	    checkForDuplicateDescriptors();
 
 	    activatePage();
 
