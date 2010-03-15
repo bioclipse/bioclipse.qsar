@@ -152,12 +152,16 @@
 
 	<complexType name="structureType">
 		<sequence>
-			<element name="problem" type="string" maxOccurs="unbounded" minOccurs="0"></element>
+			<element name="problem" type="string" maxOccurs="unbounded"
+				minOccurs="0">
+			</element>
 		</sequence>
 		<attribute name="id" type="string"></attribute>
 		<attribute name="inchi" type="string"></attribute>
 		<attribute name="resourceindex" type="int"></attribute>
 		<attribute name="resourceid" type="string"></attribute>
+		<attribute name="has2d" type="boolean"></attribute>
+		<attribute name="has3d" type="boolean"></attribute>
 	</complexType>
 
 

@@ -31,6 +31,8 @@ import org.eclipse.emf.ecore.util.EDataTypeEList;
  * The following features are implemented:
  * <ul>
  *   <li>{@link net.bioclipse.qsar.impl.StructureTypeImpl#getProblem <em>Problem</em>}</li>
+ *   <li>{@link net.bioclipse.qsar.impl.StructureTypeImpl#isHas2d <em>Has2d</em>}</li>
+ *   <li>{@link net.bioclipse.qsar.impl.StructureTypeImpl#isHas3d <em>Has3d</em>}</li>
  *   <li>{@link net.bioclipse.qsar.impl.StructureTypeImpl#getId <em>Id</em>}</li>
  *   <li>{@link net.bioclipse.qsar.impl.StructureTypeImpl#getInchi <em>Inchi</em>}</li>
  *   <li>{@link net.bioclipse.qsar.impl.StructureTypeImpl#getResourceid <em>Resourceid</em>}</li>
@@ -57,6 +59,64 @@ public class StructureTypeImpl extends EObjectImpl implements StructureType {
      * @ordered
      */
     protected EList<String> problem;
+
+    /**
+     * The default value of the '{@link #isHas2d() <em>Has2d</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #isHas2d()
+     * @generated
+     * @ordered
+     */
+    protected static final boolean HAS2D_EDEFAULT = false;
+
+    /**
+     * The cached value of the '{@link #isHas2d() <em>Has2d</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #isHas2d()
+     * @generated
+     * @ordered
+     */
+    protected boolean has2d = HAS2D_EDEFAULT;
+
+    /**
+     * This is true if the Has2d attribute has been set.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    protected boolean has2dESet;
+
+    /**
+     * The default value of the '{@link #isHas3d() <em>Has3d</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #isHas3d()
+     * @generated
+     * @ordered
+     */
+    protected static final boolean HAS3D_EDEFAULT = false;
+
+    /**
+     * The cached value of the '{@link #isHas3d() <em>Has3d</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #isHas3d()
+     * @generated
+     * @ordered
+     */
+    protected boolean has3d = HAS3D_EDEFAULT;
+
+    /**
+     * This is true if the Has3d attribute has been set.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    protected boolean has3dESet;
 
     /**
      * The default value of the '{@link #getId() <em>Id</em>}' attribute.
@@ -183,6 +243,98 @@ public class StructureTypeImpl extends EObjectImpl implements StructureType {
      * <!-- end-user-doc -->
      * @generated
      */
+    public boolean isHas2d() {
+        return has2d;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public void setHas2d(boolean newHas2d) {
+        boolean oldHas2d = has2d;
+        has2d = newHas2d;
+        boolean oldHas2dESet = has2dESet;
+        has2dESet = true;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, QsarPackage.STRUCTURE_TYPE__HAS2D, oldHas2d, has2d, !oldHas2dESet));
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public void unsetHas2d() {
+        boolean oldHas2d = has2d;
+        boolean oldHas2dESet = has2dESet;
+        has2d = HAS2D_EDEFAULT;
+        has2dESet = false;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.UNSET, QsarPackage.STRUCTURE_TYPE__HAS2D, oldHas2d, HAS2D_EDEFAULT, oldHas2dESet));
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public boolean isSetHas2d() {
+        return has2dESet;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public boolean isHas3d() {
+        return has3d;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public void setHas3d(boolean newHas3d) {
+        boolean oldHas3d = has3d;
+        has3d = newHas3d;
+        boolean oldHas3dESet = has3dESet;
+        has3dESet = true;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, QsarPackage.STRUCTURE_TYPE__HAS3D, oldHas3d, has3d, !oldHas3dESet));
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public void unsetHas3d() {
+        boolean oldHas3d = has3d;
+        boolean oldHas3dESet = has3dESet;
+        has3d = HAS3D_EDEFAULT;
+        has3dESet = false;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.UNSET, QsarPackage.STRUCTURE_TYPE__HAS3D, oldHas3d, HAS3D_EDEFAULT, oldHas3dESet));
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public boolean isSetHas3d() {
+        return has3dESet;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     public String getId() {
         return id;
     }
@@ -297,6 +449,10 @@ public class StructureTypeImpl extends EObjectImpl implements StructureType {
         switch (featureID) {
             case QsarPackage.STRUCTURE_TYPE__PROBLEM:
                 return getProblem();
+            case QsarPackage.STRUCTURE_TYPE__HAS2D:
+                return isHas2d();
+            case QsarPackage.STRUCTURE_TYPE__HAS3D:
+                return isHas3d();
             case QsarPackage.STRUCTURE_TYPE__ID:
                 return getId();
             case QsarPackage.STRUCTURE_TYPE__INCHI:
@@ -304,7 +460,7 @@ public class StructureTypeImpl extends EObjectImpl implements StructureType {
             case QsarPackage.STRUCTURE_TYPE__RESOURCEID:
                 return getResourceid();
             case QsarPackage.STRUCTURE_TYPE__RESOURCEINDEX:
-                return new Integer(getResourceindex());
+                return getResourceindex();
         }
         return super.eGet(featureID, resolve, coreType);
     }
@@ -322,6 +478,12 @@ public class StructureTypeImpl extends EObjectImpl implements StructureType {
                 getProblem().clear();
                 getProblem().addAll((Collection<? extends String>)newValue);
                 return;
+            case QsarPackage.STRUCTURE_TYPE__HAS2D:
+                setHas2d((Boolean)newValue);
+                return;
+            case QsarPackage.STRUCTURE_TYPE__HAS3D:
+                setHas3d((Boolean)newValue);
+                return;
             case QsarPackage.STRUCTURE_TYPE__ID:
                 setId((String)newValue);
                 return;
@@ -332,7 +494,7 @@ public class StructureTypeImpl extends EObjectImpl implements StructureType {
                 setResourceid((String)newValue);
                 return;
             case QsarPackage.STRUCTURE_TYPE__RESOURCEINDEX:
-                setResourceindex(((Integer)newValue).intValue());
+                setResourceindex((Integer)newValue);
                 return;
         }
         super.eSet(featureID, newValue);
@@ -348,6 +510,12 @@ public class StructureTypeImpl extends EObjectImpl implements StructureType {
         switch (featureID) {
             case QsarPackage.STRUCTURE_TYPE__PROBLEM:
                 getProblem().clear();
+                return;
+            case QsarPackage.STRUCTURE_TYPE__HAS2D:
+                unsetHas2d();
+                return;
+            case QsarPackage.STRUCTURE_TYPE__HAS3D:
+                unsetHas3d();
                 return;
             case QsarPackage.STRUCTURE_TYPE__ID:
                 setId(ID_EDEFAULT);
@@ -375,6 +543,10 @@ public class StructureTypeImpl extends EObjectImpl implements StructureType {
         switch (featureID) {
             case QsarPackage.STRUCTURE_TYPE__PROBLEM:
                 return problem != null && !problem.isEmpty();
+            case QsarPackage.STRUCTURE_TYPE__HAS2D:
+                return isSetHas2d();
+            case QsarPackage.STRUCTURE_TYPE__HAS3D:
+                return isSetHas3d();
             case QsarPackage.STRUCTURE_TYPE__ID:
                 return ID_EDEFAULT == null ? id != null : !ID_EDEFAULT.equals(id);
             case QsarPackage.STRUCTURE_TYPE__INCHI:
@@ -399,6 +571,10 @@ public class StructureTypeImpl extends EObjectImpl implements StructureType {
         StringBuffer result = new StringBuffer(super.toString());
         result.append(" (problem: ");
         result.append(problem);
+        result.append(", has2d: ");
+        if (has2dESet) result.append(has2d); else result.append("<unset>");
+        result.append(", has3d: ");
+        if (has3dESet) result.append(has3d); else result.append("<unset>");
         result.append(", id: ");
         result.append(id);
         result.append(", inchi: ");

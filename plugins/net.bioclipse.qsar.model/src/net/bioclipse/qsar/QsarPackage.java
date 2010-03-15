@@ -1041,13 +1041,31 @@ public interface QsarPackage extends EPackage {
     int STRUCTURE_TYPE__PROBLEM = 0;
 
     /**
+     * The feature id for the '<em><b>Has2d</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int STRUCTURE_TYPE__HAS2D = 1;
+
+    /**
+     * The feature id for the '<em><b>Has3d</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int STRUCTURE_TYPE__HAS3D = 2;
+
+    /**
      * The feature id for the '<em><b>Id</b></em>' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int STRUCTURE_TYPE__ID = 1;
+    int STRUCTURE_TYPE__ID = 3;
 
     /**
      * The feature id for the '<em><b>Inchi</b></em>' attribute.
@@ -1056,7 +1074,7 @@ public interface QsarPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int STRUCTURE_TYPE__INCHI = 2;
+    int STRUCTURE_TYPE__INCHI = 4;
 
     /**
      * The feature id for the '<em><b>Resourceid</b></em>' attribute.
@@ -1065,7 +1083,7 @@ public interface QsarPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int STRUCTURE_TYPE__RESOURCEID = 3;
+    int STRUCTURE_TYPE__RESOURCEID = 5;
 
     /**
      * The feature id for the '<em><b>Resourceindex</b></em>' attribute.
@@ -1074,7 +1092,7 @@ public interface QsarPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int STRUCTURE_TYPE__RESOURCEINDEX = 4;
+    int STRUCTURE_TYPE__RESOURCEINDEX = 6;
 
     /**
      * The number of structural features of the '<em>Structure Type</em>' class.
@@ -1083,7 +1101,7 @@ public interface QsarPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int STRUCTURE_TYPE_FEATURE_COUNT = 5;
+    int STRUCTURE_TYPE_FEATURE_COUNT = 7;
 
     /**
      * The meta object id for the '{@link net.bioclipse.qsar.TypeType <em>Type Type</em>}' enum.
@@ -2024,6 +2042,28 @@ public interface QsarPackage extends EPackage {
     EAttribute getStructureType_Problem();
 
     /**
+     * Returns the meta object for the attribute '{@link net.bioclipse.qsar.StructureType#isHas2d <em>Has2d</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Has2d</em>'.
+     * @see net.bioclipse.qsar.StructureType#isHas2d()
+     * @see #getStructureType()
+     * @generated
+     */
+    EAttribute getStructureType_Has2d();
+
+    /**
+     * Returns the meta object for the attribute '{@link net.bioclipse.qsar.StructureType#isHas3d <em>Has3d</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Has3d</em>'.
+     * @see net.bioclipse.qsar.StructureType#isHas3d()
+     * @see #getStructureType()
+     * @generated
+     */
+    EAttribute getStructureType_Has3d();
+
+    /**
      * Returns the meta object for the attribute '{@link net.bioclipse.qsar.StructureType#getId <em>Id</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -2826,6 +2866,22 @@ public interface QsarPackage extends EPackage {
          * @generated
          */
         EAttribute STRUCTURE_TYPE__PROBLEM = eINSTANCE.getStructureType_Problem();
+
+        /**
+         * The meta object literal for the '<em><b>Has2d</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute STRUCTURE_TYPE__HAS2D = eINSTANCE.getStructureType_Has2d();
+
+        /**
+         * The meta object literal for the '<em><b>Has3d</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute STRUCTURE_TYPE__HAS3D = eINSTANCE.getStructureType_Has3d();
 
         /**
          * The meta object literal for the '<em><b>Id</b></em>' attribute feature.

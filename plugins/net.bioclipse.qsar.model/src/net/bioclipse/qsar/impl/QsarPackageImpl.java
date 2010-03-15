@@ -226,20 +226,10 @@ public class QsarPackageImpl extends EPackageImpl implements QsarPackage {
     private static boolean isInited = false;
 
     /**
-     * Creates, registers, and initializes the <b>Package</b> for this
-     * model, and for any others upon which it depends.  Simple
-     * dependencies are satisfied by calling this method on all
-     * dependent packages before doing anything else.  This method drives
-     * initialization for interdependent packages directly, in parallel
-     * with this package, itself.
-     * <p>Of this package and its interdependencies, all packages which
-     * have not yet been registered by their URI values are first created
-     * and registered.  The packages are then initialized in two steps:
-     * meta-model objects for all of the packages are created before any
-     * are initialized, since one package's meta-model objects may refer to
-     * those of another.
-     * <p>Invocation of this method will not affect any packages that have
-     * already been initialized.
+     * Creates, registers, and initializes the <b>Package</b> for this model, and for any others upon which it depends.
+     * 
+     * <p>This method is used to initialize {@link QsarPackage#eINSTANCE} when that field is accessed.
+     * Clients should not invoke it directly. Instead, they should simply access that field to obtain the package.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @see #eNS_URI
@@ -251,7 +241,7 @@ public class QsarPackageImpl extends EPackageImpl implements QsarPackage {
         if (isInited) return (QsarPackage)EPackage.Registry.INSTANCE.getEPackage(QsarPackage.eNS_URI);
 
         // Obtain or create and register package
-        QsarPackageImpl theQsarPackage = (QsarPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(eNS_URI) instanceof QsarPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(eNS_URI) : new QsarPackageImpl());
+        QsarPackageImpl theQsarPackage = (QsarPackageImpl)(EPackage.Registry.INSTANCE.get(eNS_URI) instanceof QsarPackageImpl ? EPackage.Registry.INSTANCE.get(eNS_URI) : new QsarPackageImpl());
 
         isInited = true;
 
@@ -268,6 +258,9 @@ public class QsarPackageImpl extends EPackageImpl implements QsarPackage {
         // Mark meta-data to indicate it can't be changed
         theQsarPackage.freeze();
 
+  
+        // Update the registry and return the package
+        EPackage.Registry.INSTANCE.put(QsarPackage.eNS_URI, theQsarPackage);
         return theQsarPackage;
     }
 
@@ -1041,7 +1034,7 @@ public class QsarPackageImpl extends EPackageImpl implements QsarPackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EAttribute getStructureType_Id() {
+    public EAttribute getStructureType_Has2d() {
         return (EAttribute)structureTypeEClass.getEStructuralFeatures().get(1);
     }
 
@@ -1050,7 +1043,7 @@ public class QsarPackageImpl extends EPackageImpl implements QsarPackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EAttribute getStructureType_Inchi() {
+    public EAttribute getStructureType_Has3d() {
         return (EAttribute)structureTypeEClass.getEStructuralFeatures().get(2);
     }
 
@@ -1059,7 +1052,7 @@ public class QsarPackageImpl extends EPackageImpl implements QsarPackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EAttribute getStructureType_Resourceid() {
+    public EAttribute getStructureType_Id() {
         return (EAttribute)structureTypeEClass.getEStructuralFeatures().get(3);
     }
 
@@ -1068,8 +1061,26 @@ public class QsarPackageImpl extends EPackageImpl implements QsarPackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EAttribute getStructureType_Resourceindex() {
+    public EAttribute getStructureType_Inchi() {
         return (EAttribute)structureTypeEClass.getEStructuralFeatures().get(4);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EAttribute getStructureType_Resourceid() {
+        return (EAttribute)structureTypeEClass.getEStructuralFeatures().get(5);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EAttribute getStructureType_Resourceindex() {
+        return (EAttribute)structureTypeEClass.getEStructuralFeatures().get(6);
     }
 
     /**
@@ -1220,6 +1231,8 @@ public class QsarPackageImpl extends EPackageImpl implements QsarPackage {
 
         structureTypeEClass = createEClass(STRUCTURE_TYPE);
         createEAttribute(structureTypeEClass, STRUCTURE_TYPE__PROBLEM);
+        createEAttribute(structureTypeEClass, STRUCTURE_TYPE__HAS2D);
+        createEAttribute(structureTypeEClass, STRUCTURE_TYPE__HAS3D);
         createEAttribute(structureTypeEClass, STRUCTURE_TYPE__ID);
         createEAttribute(structureTypeEClass, STRUCTURE_TYPE__INCHI);
         createEAttribute(structureTypeEClass, STRUCTURE_TYPE__RESOURCEID);
@@ -1368,6 +1381,8 @@ public class QsarPackageImpl extends EPackageImpl implements QsarPackage {
 
         initEClass(structureTypeEClass, StructureType.class, "StructureType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEAttribute(getStructureType_Problem(), theXMLTypePackage.getString(), "problem", null, 0, -1, StructureType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getStructureType_Has2d(), theXMLTypePackage.getBoolean(), "has2d", null, 0, 1, StructureType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getStructureType_Has3d(), theXMLTypePackage.getBoolean(), "has3d", null, 0, 1, StructureType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getStructureType_Id(), theXMLTypePackage.getString(), "id", null, 0, 1, StructureType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getStructureType_Inchi(), theXMLTypePackage.getString(), "inchi", null, 0, 1, StructureType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getStructureType_Resourceid(), theXMLTypePackage.getString(), "resourceid", null, 0, 1, StructureType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -2011,6 +2026,20 @@ public class QsarPackageImpl extends EPackageImpl implements QsarPackage {
              "kind", "element",
              "name", "problem",
              "namespace", "##targetNamespace"
+           });		
+        addAnnotation
+          (getStructureType_Has2d(), 
+           source, 
+           new String[] {
+             "kind", "attribute",
+             "name", "has2d"
+           });		
+        addAnnotation
+          (getStructureType_Has3d(), 
+           source, 
+           new String[] {
+             "kind", "attribute",
+             "name", "has3d"
            });		
         addAnnotation
           (getStructureType_Id(), 

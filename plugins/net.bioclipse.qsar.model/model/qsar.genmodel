@@ -115,6 +115,8 @@
     </genClasses>
     <genClasses ecoreClass="qsar.ecore#//StructureType">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute qsar.ecore#//StructureType/problem"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute qsar.ecore#//StructureType/has2d"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute qsar.ecore#//StructureType/has3d"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute qsar.ecore#//StructureType/id"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute qsar.ecore#//StructureType/inchi"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute qsar.ecore#//StructureType/resourceid"/>
