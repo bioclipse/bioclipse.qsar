@@ -975,7 +975,7 @@ public class QsarEditor extends FormEditor implements IEditingDomainProvider,
         //Calculate non-stored properties like num of mols, no2D etc
         qsar=Activator.getDefault().getJavaQsarManager();
         if (getQsarModel()!=null){
-            qsar.addCalculatedPropertiesToQsarModel(getQsarModel());
+//            qsar.addCalculatedPropertiesToQsarModel(getQsarModel());
             logger.debug(" ## ## QSAREditor read model file successfully");
         }else{
             logger.error(" ## ## QSAREditor read model file FAILED");

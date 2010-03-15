@@ -556,11 +556,18 @@ public class ResourceTypeImpl extends EObjectImpl implements ResourceType {
 
     /**
      * <!-- begin-user-doc -->
+     * Override to return correct number of 2D
      * <!-- end-user-doc -->
-     * @generated
      */
     public int getNo2d() {
-        return no2d;
+
+        int cnt=0;
+        for (StructureType stype : getStructure()){
+            if (stype.isHas2d())
+                cnt++;
+        }
+        return cnt;
+//        return no2d;
     }
 
     /**
@@ -602,11 +609,17 @@ public class ResourceTypeImpl extends EObjectImpl implements ResourceType {
 
     /**
      * <!-- begin-user-doc -->
+     * Override to return correct number of 3D
      * <!-- end-user-doc -->
-     * @generated
      */
     public int getNo3d() {
-        return no3d;
+        int cnt=0;
+        for (StructureType stype : getStructure()){
+            if (stype.isHas3d())
+                cnt++;
+        }
+        return cnt;
+//        return no3d;
     }
 
     /**
@@ -649,10 +662,12 @@ public class ResourceTypeImpl extends EObjectImpl implements ResourceType {
     /**
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
      */
     public int getNoMols() {
-        return noMols;
+        if (getStructure()!=null)
+            return getStructure().size();
+        return 0;
+//        return noMols;
     }
 
     /**
