@@ -1659,6 +1659,7 @@ public class QsarManager implements IQsarManager{
      * Go through and add transient properties to EMF model, which are not 
      * stored in file.
      */
+    @Deprecated
     public void addCalculatedPropertiesToQsarModel( QsarType qsarModel ) {
 
         ICDKManager cdk = net.bioclipse.cdk.business.Activator.getDefault().getJavaCDKManager();
