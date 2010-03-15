@@ -22,6 +22,8 @@ import org.eclipse.emf.ecore.EObject;
  * The following features are supported:
  * <ul>
  *   <li>{@link net.bioclipse.qsar.StructureType#getProblem <em>Problem</em>}</li>
+ *   <li>{@link net.bioclipse.qsar.StructureType#isHas2d <em>Has2d</em>}</li>
+ *   <li>{@link net.bioclipse.qsar.StructureType#isHas3d <em>Has3d</em>}</li>
  *   <li>{@link net.bioclipse.qsar.StructureType#getId <em>Id</em>}</li>
  *   <li>{@link net.bioclipse.qsar.StructureType#getInchi <em>Inchi</em>}</li>
  *   <li>{@link net.bioclipse.qsar.StructureType#getResourceid <em>Resourceid</em>}</li>
@@ -57,6 +59,114 @@ public interface StructureType extends EObject {
      * @generated
      */
     EList<String> getProblem();
+
+    /**
+     * Returns the value of the '<em><b>Has2d</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of the '<em>Has2d</em>' attribute isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>Has2d</em>' attribute.
+     * @see #isSetHas2d()
+     * @see #unsetHas2d()
+     * @see #setHas2d(boolean)
+     * @see net.bioclipse.qsar.QsarPackage#getStructureType_Has2d()
+     * @model unsettable="true" dataType="org.eclipse.emf.ecore.xml.type.Boolean"
+     *        extendedMetaData="kind='attribute' name='has2d'"
+     * @generated
+     */
+    boolean isHas2d();
+
+    /**
+     * Sets the value of the '{@link net.bioclipse.qsar.StructureType#isHas2d <em>Has2d</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @param value the new value of the '<em>Has2d</em>' attribute.
+     * @see #isSetHas2d()
+     * @see #unsetHas2d()
+     * @see #isHas2d()
+     * @generated
+     */
+    void setHas2d(boolean value);
+
+    /**
+     * Unsets the value of the '{@link net.bioclipse.qsar.StructureType#isHas2d <em>Has2d</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #isSetHas2d()
+     * @see #isHas2d()
+     * @see #setHas2d(boolean)
+     * @generated
+     */
+    void unsetHas2d();
+
+    /**
+     * Returns whether the value of the '{@link net.bioclipse.qsar.StructureType#isHas2d <em>Has2d</em>}' attribute is set.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return whether the value of the '<em>Has2d</em>' attribute is set.
+     * @see #unsetHas2d()
+     * @see #isHas2d()
+     * @see #setHas2d(boolean)
+     * @generated
+     */
+    boolean isSetHas2d();
+
+    /**
+     * Returns the value of the '<em><b>Has3d</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of the '<em>Has3d</em>' attribute isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>Has3d</em>' attribute.
+     * @see #isSetHas3d()
+     * @see #unsetHas3d()
+     * @see #setHas3d(boolean)
+     * @see net.bioclipse.qsar.QsarPackage#getStructureType_Has3d()
+     * @model unsettable="true" dataType="org.eclipse.emf.ecore.xml.type.Boolean"
+     *        extendedMetaData="kind='attribute' name='has3d'"
+     * @generated
+     */
+    boolean isHas3d();
+
+    /**
+     * Sets the value of the '{@link net.bioclipse.qsar.StructureType#isHas3d <em>Has3d</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @param value the new value of the '<em>Has3d</em>' attribute.
+     * @see #isSetHas3d()
+     * @see #unsetHas3d()
+     * @see #isHas3d()
+     * @generated
+     */
+    void setHas3d(boolean value);
+
+    /**
+     * Unsets the value of the '{@link net.bioclipse.qsar.StructureType#isHas3d <em>Has3d</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #isSetHas3d()
+     * @see #isHas3d()
+     * @see #setHas3d(boolean)
+     * @generated
+     */
+    void unsetHas3d();
+
+    /**
+     * Returns whether the value of the '{@link net.bioclipse.qsar.StructureType#isHas3d <em>Has3d</em>}' attribute is set.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return whether the value of the '<em>Has3d</em>' attribute is set.
+     * @see #unsetHas3d()
+     * @see #isHas3d()
+     * @see #setHas3d(boolean)
+     * @generated
+     */
+    boolean isSetHas3d();
 
     /**
      * Returns the value of the '<em><b>Id</b></em>' attribute.

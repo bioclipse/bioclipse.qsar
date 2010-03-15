@@ -76,6 +76,8 @@ public class StructureTypeItemProvider
             super.getPropertyDescriptors(object);
 
             addProblemPropertyDescriptor(object);
+            addHas2dPropertyDescriptor(object);
+            addHas3dPropertyDescriptor(object);
             addIdPropertyDescriptor(object);
             addInchiPropertyDescriptor(object);
             addResourceidPropertyDescriptor(object);
@@ -102,6 +104,50 @@ public class StructureTypeItemProvider
                  false,
                  false,
                  ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+                 null,
+                 null));
+    }
+
+    /**
+     * This adds a property descriptor for the Has2d feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    protected void addHas2dPropertyDescriptor(Object object) {
+        itemPropertyDescriptors.add
+            (createItemPropertyDescriptor
+                (((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+                 getResourceLocator(),
+                 getString("_UI_StructureType_has2d_feature"),
+                 getString("_UI_PropertyDescriptor_description", "_UI_StructureType_has2d_feature", "_UI_StructureType_type"),
+                 QsarPackage.Literals.STRUCTURE_TYPE__HAS2D,
+                 true,
+                 false,
+                 false,
+                 ItemPropertyDescriptor.BOOLEAN_VALUE_IMAGE,
+                 null,
+                 null));
+    }
+
+    /**
+     * This adds a property descriptor for the Has3d feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    protected void addHas3dPropertyDescriptor(Object object) {
+        itemPropertyDescriptors.add
+            (createItemPropertyDescriptor
+                (((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+                 getResourceLocator(),
+                 getString("_UI_StructureType_has3d_feature"),
+                 getString("_UI_PropertyDescriptor_description", "_UI_StructureType_has3d_feature", "_UI_StructureType_type"),
+                 QsarPackage.Literals.STRUCTURE_TYPE__HAS3D,
+                 true,
+                 false,
+                 false,
+                 ItemPropertyDescriptor.BOOLEAN_VALUE_IMAGE,
                  null,
                  null));
     }
@@ -232,6 +278,8 @@ public class StructureTypeItemProvider
 
         switch (notification.getFeatureID(StructureType.class)) {
             case QsarPackage.STRUCTURE_TYPE__PROBLEM:
+            case QsarPackage.STRUCTURE_TYPE__HAS2D:
+            case QsarPackage.STRUCTURE_TYPE__HAS3D:
             case QsarPackage.STRUCTURE_TYPE__ID:
             case QsarPackage.STRUCTURE_TYPE__INCHI:
             case QsarPackage.STRUCTURE_TYPE__RESOURCEID:

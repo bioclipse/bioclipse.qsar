@@ -228,7 +228,7 @@ public class DescriptorvalueTypeImpl extends EObjectImpl implements Descriptorva
     public Object eGet(int featureID, boolean resolve, boolean coreType) {
         switch (featureID) {
             case QsarPackage.DESCRIPTORVALUE_TYPE__INDEX:
-                return new Integer(getIndex());
+                return getIndex();
             case QsarPackage.DESCRIPTORVALUE_TYPE__LABEL:
                 return getLabel();
             case QsarPackage.DESCRIPTORVALUE_TYPE__VALUE:
@@ -246,7 +246,7 @@ public class DescriptorvalueTypeImpl extends EObjectImpl implements Descriptorva
     public void eSet(int featureID, Object newValue) {
         switch (featureID) {
             case QsarPackage.DESCRIPTORVALUE_TYPE__INDEX:
-                setIndex(((Integer)newValue).intValue());
+                setIndex((Integer)newValue);
                 return;
             case QsarPackage.DESCRIPTORVALUE_TYPE__LABEL:
                 setLabel((String)newValue);

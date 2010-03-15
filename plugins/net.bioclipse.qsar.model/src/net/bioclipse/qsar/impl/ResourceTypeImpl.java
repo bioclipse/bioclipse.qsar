@@ -786,9 +786,9 @@ public class ResourceTypeImpl extends EObjectImpl implements ResourceType {
             case QsarPackage.RESOURCE_TYPE__CHECKSUM:
                 return getChecksum();
             case QsarPackage.RESOURCE_TYPE__CONTAINS_ERRORS:
-                return isContainsErrors() ? Boolean.TRUE : Boolean.FALSE;
+                return isContainsErrors();
             case QsarPackage.RESOURCE_TYPE__EXCLUDED:
-                return isExcluded() ? Boolean.TRUE : Boolean.FALSE;
+                return isExcluded();
             case QsarPackage.RESOURCE_TYPE__FILE:
                 return getFile();
             case QsarPackage.RESOURCE_TYPE__ID:
@@ -796,11 +796,11 @@ public class ResourceTypeImpl extends EObjectImpl implements ResourceType {
             case QsarPackage.RESOURCE_TYPE__NAME:
                 return getName();
             case QsarPackage.RESOURCE_TYPE__NO2D:
-                return new Integer(getNo2d());
+                return getNo2d();
             case QsarPackage.RESOURCE_TYPE__NO3D:
-                return new Integer(getNo3d());
+                return getNo3d();
             case QsarPackage.RESOURCE_TYPE__NO_MOLS:
-                return new Integer(getNoMols());
+                return getNoMols();
             case QsarPackage.RESOURCE_TYPE__TYPE:
                 return getType();
             case QsarPackage.RESOURCE_TYPE__URL:
@@ -826,10 +826,10 @@ public class ResourceTypeImpl extends EObjectImpl implements ResourceType {
                 setChecksum((String)newValue);
                 return;
             case QsarPackage.RESOURCE_TYPE__CONTAINS_ERRORS:
-                setContainsErrors(((Boolean)newValue).booleanValue());
+                setContainsErrors((Boolean)newValue);
                 return;
             case QsarPackage.RESOURCE_TYPE__EXCLUDED:
-                setExcluded(((Boolean)newValue).booleanValue());
+                setExcluded((Boolean)newValue);
                 return;
             case QsarPackage.RESOURCE_TYPE__FILE:
                 setFile((String)newValue);
@@ -841,13 +841,13 @@ public class ResourceTypeImpl extends EObjectImpl implements ResourceType {
                 setName((String)newValue);
                 return;
             case QsarPackage.RESOURCE_TYPE__NO2D:
-                setNo2d(((Integer)newValue).intValue());
+                setNo2d((Integer)newValue);
                 return;
             case QsarPackage.RESOURCE_TYPE__NO3D:
-                setNo3d(((Integer)newValue).intValue());
+                setNo3d((Integer)newValue);
                 return;
             case QsarPackage.RESOURCE_TYPE__NO_MOLS:
-                setNoMols(((Integer)newValue).intValue());
+                setNoMols((Integer)newValue);
                 return;
             case QsarPackage.RESOURCE_TYPE__TYPE:
                 setType((TypeType)newValue);
