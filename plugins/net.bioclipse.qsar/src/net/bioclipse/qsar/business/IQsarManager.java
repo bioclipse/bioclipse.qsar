@@ -33,6 +33,7 @@ import net.bioclipse.qsar.DescriptorType;
 import net.bioclipse.qsar.QsarType;
 import net.bioclipse.qsar.ResourceType;
 import net.bioclipse.qsar.ResponseunitType;
+import net.bioclipse.qsar.StructureType;
 import net.bioclipse.qsar.descriptor.IDescriptorResult;
 import net.bioclipse.qsar.descriptor.model.Descriptor;
 import net.bioclipse.qsar.descriptor.model.DescriptorCalculationResult;
@@ -247,6 +248,16 @@ public interface IQsarManager extends IBioclipseManager{
      * Force reread of descriptor hierarchy from ontology + extra files
      */
     void initializeDescriptorModel();
+    
+    void removeStructuresFromModel( QsarType qsarModel,
+                                    EditingDomain editingDomain,
+                                    List<StructureType> structures,
+                                    ResourceType resource );
+    void removeAllStructuresWithErrors( QsarType qsarModel,
+                                        EditingDomain editingDomain );
+    void removeStructuresWithErrors( QsarType qsarModel,
+                                     EditingDomain editingDomain,
+                                     ResourceType resource );
 
 
 }

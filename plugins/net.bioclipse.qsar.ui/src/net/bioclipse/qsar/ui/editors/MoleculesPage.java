@@ -55,9 +55,12 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Status;
+import org.eclipse.emf.common.command.Command;
+import org.eclipse.emf.common.command.CompoundCommand;
 import org.eclipse.emf.common.ui.viewer.IViewerProvider;
 import org.eclipse.emf.databinding.edit.EMFEditObservables;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.edit.command.RemoveCommand;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.domain.IEditingDomainProvider;
 import org.eclipse.jface.action.Action;
@@ -135,6 +138,7 @@ public class MoleculesPage extends FormPage implements IEditingDomainProvider,
 
     private IProject activeProject;
     private Action viewErrorsAction;
+    private Action removeErrorMolsAction;
 
 
     public MoleculesPage(FormEditor editor, 
@@ -734,6 +738,40 @@ public class MoleculesPage extends FormPage implements IEditingDomainProvider,
             }
         };
         
+        removeErrorMolsAction=new Action("Remove molecules with errors", 
+                                    net.bioclipse.qsar.ui.Activator.getImageDescriptor( "icons/error_co.gif" )) {
+                    @Override
+                    public void run() {
+                        IStructuredSelection sel=
+                                           (IStructuredSelection) molViewer.getSelection();
+                        
+                        if ( sel.getFirstElement() instanceof ResourceType ) {
+                            
+                            ResourceType res = (ResourceType)sel.getFirstElement();
+
+                            String str="";
+                            List<StructureType> structWithErrors=new ArrayList<StructureType>();
+                            for (StructureType structure : res.getStructure()){
+                                if (structure.getProblem()!=null && structure.getProblem().size()>0){
+                                    structWithErrors.add( structure );
+                                }
+                            }
+
+                            if (structWithErrors.size()>0){
+
+                                logger.debug("Should remove " 
+                                             + structWithErrors.size() 
+                                             + " structures with errors.");
+
+                                QsarType qsarModel = ((QsarEditor)getEditor()).getQsarModel();
+                                qsar.removeStructuresWithErrors( qsarModel, editingDomain, res );
+                                
+                            }
+                        }
+
+                    }
+                };
+        
     }
 
     /**
@@ -752,7 +790,18 @@ public class MoleculesPage extends FormPage implements IEditingDomainProvider,
 
                 if ( sel.getFirstElement() instanceof ResourceType ) {
                     manager.add(viewErrorsAction);
+                    manager.add(removeErrorMolsAction);
                     manager.add(new Separator(IWorkbenchActionConstants.MB_ADDITIONS));
+                    
+                    //Does any
+                    if (((ResourceType)sel.getFirstElement()).isContainsErrors()){
+                        viewErrorsAction.setEnabled( true );
+                        removeErrorMolsAction.setEnabled( true );
+                    }
+                    else{
+                        viewErrorsAction.setEnabled( false );
+                        removeErrorMolsAction.setEnabled( false );
+                    }
                 }
             }
 
