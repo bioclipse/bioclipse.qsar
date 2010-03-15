@@ -1701,6 +1701,52 @@ public class QsarManager implements IQsarManager{
         }
     }
 
+    public void removeStructuresWithErrors( QsarType qsarModel,
+                                            EditingDomain editingDomain,
+                                            ResourceType resource) {
+
+        List<StructureType> structsWithError=new ArrayList<StructureType>();
+        for (StructureType stype : resource.getStructure()){
+            if (stype.getProblem()!=null && !stype.getProblem().isEmpty()){
+                structsWithError.add( stype );
+            }
+        }
+        
+        if (structsWithError.size()>0)
+            removeStructuresFromModel( qsarModel, editingDomain, 
+                                       structsWithError, resource );
+        
+    }
+
+    public void removeAllStructuresWithErrors( QsarType qsarModel,
+                                           EditingDomain editingDomain) {
+        
+        for (ResourceType res : qsarModel.getStructurelist().getResources()){
+            removeStructuresWithErrors( qsarModel, editingDomain, res );
+        }
+        
+    }
+
+    public void removeStructuresFromModel( QsarType qsarModel,
+                                          EditingDomain editingDomain, 
+                                          List<StructureType> structures, 
+                                          ResourceType resource ) {
+        
+        CompoundCommand cCmd = new CompoundCommand();
+        Command cmd;
+
+        for (StructureType structure : structures){
+                cmd=RemoveCommand.create(editingDomain, 
+                                         resource, 
+                                         QsarPackage.Literals.RESOURCE_TYPE__STRUCTURE, 
+                                         structure);
+                cCmd.append( cmd );
+        }
+
+        //Execute the compound command
+        editingDomain.getCommandStack().execute(cCmd);
+
+    }
 
 
     public void removeResourcesFromModel( QsarType qsarModel,
