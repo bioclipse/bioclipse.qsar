@@ -510,7 +510,11 @@ public class MoleculesPage extends FormPage implements IEditingDomainProvider,
             } catch (final Exception e) {
                 Display.getDefault().syncExec(new Runnable(){
                     public void run() {
-                        showError("Could not add molecule file. \n\nReason: " + e.getMessage());
+                        if (e.getMessage()!=null)
+                            showError("Could not add molecule file. " +
+                            		"\n\nReason: " + e.getMessage());
+                        else
+                            showError("Could not add molecule file.");
                     }
                 });
             }
@@ -765,7 +769,7 @@ public class MoleculesPage extends FormPage implements IEditingDomainProvider,
 
                                 QsarType qsarModel = ((QsarEditor)getEditor()).getQsarModel();
                                 qsar.removeStructuresWithErrors( qsarModel, editingDomain, res );
-                                
+                                molViewer.refresh();
                             }
                         }
 
