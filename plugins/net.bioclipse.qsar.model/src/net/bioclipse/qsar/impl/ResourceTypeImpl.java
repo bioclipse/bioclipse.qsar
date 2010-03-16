@@ -401,11 +401,17 @@ public class ResourceTypeImpl extends EObjectImpl implements ResourceType {
 
     /**
      * <!-- begin-user-doc -->
+     * If only one structure has problems, return true
      * <!-- end-user-doc -->
-     * @generated
      */
     public boolean isContainsErrors() {
-        return containsErrors;
+  
+        for (StructureType stype : getStructure()){
+            if (stype.getProblem()!=null && !stype.getProblem().isEmpty())
+                return true;
+        }
+        return false;
+//        return containsErrors;
     }
 
     /**

@@ -1447,24 +1447,11 @@ public class QsarManager implements IQsarManager{
                 return;
             }
 
-            //Count no of 2D and 3D
-            int no2d=0;
-            int no3d=0;
-            for (ICDKMolecule mol : mollist){
-                if (cdk.has2d( mol ))
-                    no2d++;
-                if (cdk.has3d( mol ))
-                    no3d++;
-            }
-
             //Add resource to QSAR model
             ResourceType res=QsarFactory.eINSTANCE.createResourceType();
             res.setId(file.getName());
             res.setName(file.getName());
             res.setFile(file.getFullPath().toString());
-            res.setNo2d( no2d );
-            res.setNo3d( no3d );
-            res.setNoMols( mollist.size() );
             Command cmd=AddCommand.create(editingDomain, structList, 
                                           QsarPackage.Literals
                                           .STRUCTURELIST_TYPE__RESOURCES, res);
@@ -1476,6 +1463,11 @@ public class QsarManager implements IQsarManager{
 
                 StructureType structure=QsarFactory.eINSTANCE
                                                    .createStructureType();
+                
+                if (cdk.has2d( mol ))
+                    structure.setHas2d( true );
+                if (cdk.has3d( mol ))
+                    structure.setHas3d( true );
 
                 if (mol.getName()!=null && mol.getName().length()>0){
                     if (existsStructureIDInModel(qsarmodel, mol.getName())){
