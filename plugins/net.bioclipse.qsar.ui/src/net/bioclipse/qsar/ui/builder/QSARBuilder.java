@@ -44,6 +44,7 @@ import net.bioclipse.qsar.descriptor.IDescriptorResult;
 import net.bioclipse.qsar.ui.QsarHelper;
 import net.bioclipse.qsar.util.QsarAdapterFactory;
 import net.bioclipse.qsar.util.QsarResourceFactoryImpl;
+import net.bioclipse.scripting.JsThread;
 import net.sf.bibtexml.BibtexmlPackage;
 
 import org.apache.log4j.Logger;
@@ -159,7 +160,7 @@ public class QSARBuilder extends IncrementalProjectBuilder
     ) throws CoreException
     {
         if (shouldBuild(kind)) {
-
+            JsThread.waitUntilNotBusy();
             ResourcesPlugin.getWorkspace().run(
                                                new IWorkspaceRunnable() {
                                                    public void run(IProgressMonitor monitor)
