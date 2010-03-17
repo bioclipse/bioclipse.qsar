@@ -81,7 +81,7 @@ public class CdkXMPPDescriptorCalculator implements IDescriptorCalculator {
         ontologyMap.put( "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#BCUT", "BCUT" );
         ontologyMap.put( "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#lipinskifailures", "LipinskiRuleOfFive" );
         ontologyMap.put( "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#tpsa", "TPSA" );
-        ontologyMap.put( "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#xlogP", "XLOGP" );
+        ontologyMap.put( "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#xlogP", "XLogP" );
 
     }
 
