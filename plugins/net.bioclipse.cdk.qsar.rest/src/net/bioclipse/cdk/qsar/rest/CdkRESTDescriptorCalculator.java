@@ -97,39 +97,56 @@ public class CdkRESTDescriptorCalculator implements IDescriptorCalculator {
                 
                 //We need the SMILES for the REST descriptors
                 String smiles=cdk.calculateSMILES( mol );
+                
                 List<IDescriptorResult> retlist=
                                              new ArrayList<IDescriptorResult>();
 
-                for (DescriptorType desc : moldesc.get( mol )){
-                    
-                    
-                    DescriptorImpl dimpl = qsar.getDescriptorImpl( 
-                                       desc.getOntologyid(), REST_PROVIDER_ID );
-                    
-                    //descriptor class
-                    String descid=dimpl.getId();
-                    
-                    //We need to remove .rest to get classname
-                    String classname=descid.replaceAll( ".rest", "" );
-                    
-                    if (monitor.isCanceled())
-                        throw new OperationCanceledException();
+            	if (smiles==null || smiles.equals("")){
+            		logger.error("Could not generate SMILES for mol: " + mol + ". Returning ERROR for all descriptors for this mol.");
+            	}
 
-                    monitor.subTask( "Molecule " + molindex + "/" + molSize + "\nCDK REST Descriptor:"
-                                        + dimpl.getName());
-                    
-                    //Call REST service
-                    String retxml=runRest(classname, smiles);
-                    
-                    try {
-                        IDescriptorResult res = parseResultingXML(retxml, desc, classname);
-                        retlist.add (res);
-                    } catch ( Exception e ) {
-                        logger.error("Problems parsing values from CDK REST:\n"
-                                     + retxml);
-                    }
-                    
-                    monitor.worked( 1 );
+                for (DescriptorType desc : moldesc.get( mol )){
+
+                	if (smiles==null || smiles.equals("")){
+                		//We have an error, unable to create SMILES ande hence cannot use REST
+            			IDescriptorResult res = new DescriptorResult();
+            			res.setDescriptor(desc);
+            			res.setErrorMessage("Could not generate SMILES for molecule.");
+            			retlist.add (res);
+                	}
+                	else{
+                		//Call REST for this SMILES
+
+                		DescriptorImpl dimpl = qsar.getDescriptorImpl( 
+                				desc.getOntologyid(), REST_PROVIDER_ID );
+
+                		//descriptor class
+                		String descid=dimpl.getId();
+
+                		//We need to remove .rest to get classname
+                		String classname=descid.replaceAll( ".rest", "" );
+
+                		if (monitor.isCanceled())
+                			throw new OperationCanceledException();
+
+                		monitor.subTask( "Molecule " + molindex + "/" + molSize + "\nCDK REST Descriptor:"
+                				+ dimpl.getName());
+
+                		//Call REST service
+                		String retxml=runRest(classname, smiles);
+
+                		try {
+                			IDescriptorResult res = parseResultingXML(retxml, desc, classname);
+                			retlist.add (res);
+                		} catch ( Exception e ) {
+                			logger.error("Problems parsing values from CDK REST:\n"
+                					+ retxml);
+                		}
+
+                		monitor.worked( 1 );
+
+                	}
+
 
                     //Go get next descriptor
                 }
@@ -139,7 +156,7 @@ public class CdkRESTDescriptorCalculator implements IDescriptorCalculator {
 
 
             } catch (BioclipseException e) {
-                logger.error("Unable to create CDKMolecule from Imolecule. " +
+                logger.error("Unable to create CDKMolecule from IMolecule. " +
                 "Skipping descriptor calculation for this mol.");
                 LogUtils.debugTrace(logger, e);
             } catch ( MalformedURLException e ) {
@@ -175,8 +192,10 @@ public class CdkRESTDescriptorCalculator implements IDescriptorCalculator {
 
     private String runRest( String classname, String smiles ) throws 
                                             MalformedURLException, IOException {
+    	
+    	String escapedSmiles=escapeSMILES(smiles);
 
-        String url=BASE_URL+classname +"/" + smiles;
+        String url=BASE_URL+classname +"/" + escapedSmiles;
         
         logger.debug("Calling URL: " + url);
         
@@ -196,8 +215,25 @@ public class CdkRESTDescriptorCalculator implements IDescriptorCalculator {
         return buffer.toString();
     }
 
+
+    /**
+     * % must be excaped as %25 in URLs.
+     * See http://www.december.com/html/spec/esccodes.html
+     * @param smiles SMILES to be escaped.
+     * @return escaped SMILES
+     */
+    private String escapeSMILES(String smiles) {
+    	smiles=smiles.replace("%", "%25");
+    	smiles=smiles.replace("[", "%5B");
+    	smiles=smiles.replace("]", "%5D");
+    	smiles=smiles.replace("#", "%23");
+    	smiles=smiles.replace("@", "%40");
+    	smiles=smiles.replace(":", "%3A");
     
-    private IDescriptorResult parseResultingXML( String retxml, 
+    	return smiles;
+    }
+
+	private IDescriptorResult parseResultingXML( String retxml, 
                                                  DescriptorType desc, 
                                                  String classname ) 
                        throws ValidityException, ParsingException, IOException {
