@@ -644,7 +644,7 @@ public class QsarEditor extends FormEditor implements IEditingDomainProvider,
                                                                        resource.load(Collections.EMPTY_MAP);
 //                                                                       getQsarModel( resource );
                                                                        
-                                                                       QsarHelper.updateTransientProperties(getQsarModel(), getActiveProject());
+//                                                                       QsarHelper.updateTransientProperties(getQsarModel(), getActiveProject());
                                                                        
                                                                        //Force a page change to pick up model reload on page
                                                                        setActivePage( getActivePage() );

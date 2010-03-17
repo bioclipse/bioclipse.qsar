@@ -114,6 +114,7 @@ public class QsarHelper {
         return node.getBoolean( project.getName()+"_"+structure.getId(), true);
     }
 
+    @Deprecated
     public static void updateTransientProperties( QsarType qsarModel, IProject project) {
 
         //If exists in prefs, add them
