@@ -17,14 +17,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.log4j.Logger;
-import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.core.runtime.OperationCanceledException;
-import org.xmlcml.cml.base.CMLElement;
-import org.xmlcml.cml.base.CMLElements;
-import org.xmlcml.cml.element.CMLProperty;
-import org.xmlcml.cml.element.CMLScalar;
-
 import net.bioclipse.cdk.business.Activator;
 import net.bioclipse.cdk.business.ICDKManager;
 import net.bioclipse.cdk.domain.ICDKMolecule;
@@ -41,13 +33,21 @@ import net.bioclipse.xws.client.adhoc.IService;
 import net.bioclipse.xws.exceptions.XmppException;
 import net.bioclipse.xws.exceptions.XwsException;
 import net.bioclipse.xws4j.business.IXwsManager;
-import net.bioclipse.xws4j.exceptions.Xws4jException;
 import nu.xom.Builder;
 import nu.xom.Document;
 import nu.xom.Element;
 import nu.xom.Node;
 import nu.xom.ParsingException;
 import nu.xom.ValidityException;
+
+import org.apache.log4j.Logger;
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.OperationCanceledException;
+import org.openscience.cdk.libio.cml.Convertor;
+import org.xmlcml.cml.base.CMLElement;
+import org.xmlcml.cml.element.CMLMolecule;
+import org.xmlcml.cml.element.CMLProperty;
+import org.xmlcml.cml.element.CMLScalar;
 
 /**
  * 
@@ -139,7 +139,7 @@ public class CdkXMPPDescriptorCalculator implements IDescriptorCalculator {
                 
                 //We need the SMILES for the REST descriptors
                 ICDKMolecule cdkmol = cdk.asCDKMolecule( mol );
-                String molCML=cdkmol.toCML();
+                String molCML= toCML(cdkmol);
                 
                 List<IDescriptorResult> retlist=
                                              new ArrayList<IDescriptorResult>();
@@ -192,6 +192,14 @@ public class CdkXMPPDescriptorCalculator implements IDescriptorCalculator {
         return allResults;
     }
 
+
+    private String toCML(ICDKMolecule cdkmol) {
+        Convertor convertor = new Convertor(true, null);
+        CMLMolecule cmlMol = convertor.cdkAtomContainerToCMLMolecule(
+            cdkmol.getAtomContainer()
+        );
+        return cmlMol.toXML();
+    }
 
     private IDescriptorResult invokeXMPP( String xmppFunction, String molCML, IService service, DescriptorType desc ) throws XmppException, XwsException, InterruptedException, BioclipseException {
 
