@@ -56,7 +56,7 @@ public class MoleculePropertyContentProvider implements ITreeContentProvider{
                 cdkmol = cdk.loadMolecule( molfile );
             }
         } catch ( Exception e ) {
-            e.printStackTrace();
+//            e.printStackTrace();
             return EMPTY_CHILDREN;
         }
 
