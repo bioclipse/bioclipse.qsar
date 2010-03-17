@@ -312,12 +312,12 @@
                         key="elementSymbol">
                   </parameter>
             </descriptorImpl>
-             <descriptorImpl
+             <!--descriptorImpl
                   id="org.openscience.cdk.qsar.descriptors.molecular.WeightedPathDescriptor"
                   definition="http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#weightedPath"
                   description="Evaluates the weighted path descriptors."
                   name="WeightedPath">
-            </descriptorImpl>
+            </descriptorImpl-->
              <descriptorImpl
                   id="org.openscience.cdk.qsar.descriptors.molecular.WHIMDescriptor"
                   definition="http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#WHIM"
