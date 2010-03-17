@@ -160,7 +160,7 @@ public class QSARBuilder extends IncrementalProjectBuilder
     ) throws CoreException
     {
         if (shouldBuild(kind)) {
-            JsThread.waitUntilNotBusy();
+//            JsThread.waitUntilNotBusy();
             ResourcesPlugin.getWorkspace().run(
                                                new IWorkspaceRunnable() {
                                                    public void run(IProgressMonitor monitor)
