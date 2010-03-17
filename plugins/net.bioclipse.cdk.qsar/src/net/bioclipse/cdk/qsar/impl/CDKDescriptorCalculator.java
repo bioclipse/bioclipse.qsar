@@ -247,7 +247,7 @@ public class CDKDescriptorCalculator implements IDescriptorCalculator {
                     if (cdkDescriptor.getParameterNames()==null && cdkDescriptor
                             .getParameterNames().length<=0){
 
-                        logger.error("Trying to set params for descrImpl: " + 
+                        logger.warn("Trying to set params for descrImpl: " + 
                                      descType.getOntologyid() + " but corresponding " +
                         "CDKDescriptor does not accept any params.");
 
@@ -370,6 +370,7 @@ public class CDKDescriptorCalculator implements IDescriptorCalculator {
                         }
                     } else {
                         logger.error("Uknown descriptor result type: " + result.getClass().getName());
+                        res.setErrorMessage("Uknown descriptor result type: " + result.getClass().getName());
                     }
 
                 } catch (Throwable e) {
@@ -378,6 +379,7 @@ public class CDKDescriptorCalculator implements IDescriptorCalculator {
                     for (int i=0; i<resultVals.length; i++) {
                         resultVals[i] = Float.NaN;
                     }
+                    res.setErrorMessage(e.getMessage());
                     //				e.printStackTrace();
                 }
 
