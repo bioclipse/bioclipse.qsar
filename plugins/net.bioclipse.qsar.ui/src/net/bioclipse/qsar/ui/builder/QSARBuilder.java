@@ -773,6 +773,11 @@ public class QSARBuilder extends IncrementalProjectBuilder
                         		"Cannot store results for it.");
                         break;
                     }
+                    else if (descres.getDescriptor()==null) {
+                        logger.error("DescriptorResult did not have a descriptor! " +
+                		"Cannot store results for it.");
+                        break;
+                    }
 
 //                    logger.debug( " ## Attempting to store struct: " 
 //                                  + structure.getId() + " - AND - " 
@@ -933,12 +938,15 @@ public class QSARBuilder extends IncrementalProjectBuilder
     private DescriptorresultType getDescriptorResultFromQsarModel(
                                                                   QsarType qsarModel, IDescriptorResult descres,
                                                                   StructureType structure ) {
-
-        for (DescriptorresultType lres : qsarModel.getDescriptorresultlist().getDescriptorresult()){
-            if (lres.getDescriptorid().equals( descres.getDescriptor().getId() ) && 
-                    lres.getStructureid().equals( structure.getId() ))
-                return lres;
-        }
+    	try{
+    		for (DescriptorresultType lres : qsarModel.getDescriptorresultlist().getDescriptorresult()){
+    			if (lres.getDescriptorid().equals( descres.getDescriptor().getId() ) && 
+    					lres.getStructureid().equals( structure.getId() ))
+    				return lres;
+    		}
+    	}catch (Exception e){
+    		//Do nothing, we can live with this failing as only additional feature
+    	}
 
         //Not found
         return null;
