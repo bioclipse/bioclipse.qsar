@@ -36,7 +36,8 @@ Require-Bundle: net.bioclipse.core,
  org.eclipse.emf.databinding.edit,
  org.eclipse.emf.edit.ui,
  net.bioclipse.chemoinformatics,
- net.bioclipse.scripting
+ net.bioclipse.scripting,
+ org.eclipse.help
 Bundle-ActivationPolicy: lazy
 Import-Package: org.apache.log4j
 Export-Package: net.bioclipse.qsar.ui,

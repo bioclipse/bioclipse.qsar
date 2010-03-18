@@ -46,6 +46,7 @@ import org.eclipse.emf.edit.command.AddCommand;
 import org.eclipse.emf.edit.command.SetCommand;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.domain.IEditingDomainProvider;
+import org.eclipse.help.IContextProvider;
 import org.eclipse.jface.databinding.viewers.ObservableListContentProvider;
 import org.eclipse.jface.databinding.viewers.ObservableMapLabelProvider;
 import org.eclipse.jface.dialogs.IMessageProvider;
@@ -194,9 +195,19 @@ private List<DescriptorType> duplicates;
 		//Populate selected descriptors from the read qsar model 
 		populateRightViewerFromModel();
 
+		descViewer.getTree().addFocusListener(new FocusListener() {
+			
+			public void focusLost(FocusEvent e) {
+			}
+			
+			public void focusGained(FocusEvent e) {
+				((QsarEditor)getEditor()).getSelectionProvider().setSelectionProviderDelegate(descViewer);
+			}
+		});
+
 		//Post selections to Eclipse via our intermediate selectionprovider
 		descViewer.getTree().setFocus();
-
+		
 		//Handle the case when an error is clicked in status bar
 		form.getForm().addMessageHyperlinkListener(new HyperlinkAdapter(){
 		    @Override
@@ -617,6 +628,7 @@ private List<DescriptorType> duplicates;
 
         
         
+        
         TableViewerColumn provCol=new TableViewerColumn(rightViewer, SWT.NONE);
         provCol.getColumn().setText("Provider");
         tableLayout.addColumnData(new ColumnPixelData(200));
@@ -938,6 +950,17 @@ private List<DescriptorType> duplicates;
     	GridData gd = new GridData(GridData.FILL_BOTH);
     	preSection.setLayoutData(gd);        
 
+    	
+		rightViewer.getTable().addFocusListener(new FocusListener() {
+			
+			public void focusLost(FocusEvent e) {
+			}
+			
+			public void focusGained(FocusEvent e) {
+//				((QsarEditor)getEditor()).getSelectionProvider().setSelectionProviderDelegate(rightViewer);
+			}
+		});
+
     }
 
 
@@ -992,7 +1015,16 @@ private List<DescriptorType> duplicates;
 
 	    activatePage();
 
-	}
+//		((QsarEditor)getEditor()).getSelectionProvider().setSelectionProviderDelegate(descViewer);
 
+	}
+	
+//	@Override
+//	public Object getAdapter(Class key) {
+//		if (key.equals(IContextProvider.class)) {
+//			return new DescriptorContextProvider();
+//		}
+//		return super.getAdapter(key);
+//	}
 
 }

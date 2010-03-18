@@ -706,8 +706,6 @@ public class MoleculesPage extends FormPage implements IEditingDomainProvider,
         makeActions();
         hookContextMenu();
 
-//        getSite().setSelectionProvider( molViewer );
-
     }
 
     /**
@@ -919,8 +917,6 @@ public class MoleculesPage extends FormPage implements IEditingDomainProvider,
         GridData gd = new GridData(GridData.FILL_BOTH);
         preSection.setLayoutData(gd);        
 
-        //Post selections to Eclipse
-        //          getSite().setSelectionProvider(queryViewer);
 
     }
 

@@ -44,6 +44,7 @@ import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.OperationCanceledException;
 import org.eclipse.core.runtime.jobs.Job;
 
+import org.eclipse.help.IContextProvider;
 import org.eclipse.jface.action.IMenuListener;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.IStatusLineManager;
@@ -168,7 +169,7 @@ import org.eclipse.ui.actions.WorkspaceModifyOperation;
  * @generated
  */
 public class QsarEditor extends FormEditor implements IEditingDomainProvider, 
-                                                 ISelectionProvider, IAdaptable, IMenuListener{
+                                                 IAdaptable, IMenuListener{
 
     private static final Logger logger = Logger.getLogger(QsarEditor.class);
 
@@ -190,7 +191,7 @@ public class QsarEditor extends FormEditor implements IEditingDomainProvider,
     Map<IEditorPart, Integer> editorPages;
 
 
-//    private QsarEditorSelectionProvider selectionProvider;
+    private QsarEditorSelectionProvider selectionProvider;
     private XMLEditor xmlEditor;
 
     private IQsarManager qsar;
@@ -623,11 +624,11 @@ public class QsarEditor extends FormEditor implements IEditingDomainProvider,
             updateProblemIndication = false;
             
             try {
-                Job.getJobManager().join(ResourcesPlugin.FAMILY_AUTO_BUILD, null);
+//                Job.getJobManager().join(ResourcesPlugin.FAMILY_AUTO_BUILD, null);
             } catch ( OperationCanceledException e1 ) {
                 e1.printStackTrace();
-            } catch ( InterruptedException e1 ) {
-                e1.printStackTrace();
+//            } catch ( InterruptedException e1 ) {
+//                e1.printStackTrace();
             }
 
             
@@ -1097,12 +1098,16 @@ public class QsarEditor extends FormEditor implements IEditingDomainProvider,
     @SuppressWarnings("unchecked")
     @Override
     public Object getAdapter(Class key) {
+//    	System.out.println(key);
+    	if (key.equals(IContextProvider.class)) {
+    		return new DescriptorContextProvider();
+    	}
         if (key.equals(IContentOutlinePage.class)) {
             return showOutlineView() ? getContentOutlinePage() : null;
         }
-        else if (key.equals(IPropertySheetPage.class)) {
-            return getPropertySheetPage();
-        }
+//        else if (key.equals(IPropertySheetPage.class)) {
+//            return getPropertySheetPage();
+//        }
         else if (key.equals(IGotoMarker.class)) {
             return this;
         }
@@ -1458,12 +1463,18 @@ public class QsarEditor extends FormEditor implements IEditingDomainProvider,
         setSite(site);
         setInputWithNotify(editorInput);
         setPartName(editorInput.getName());
-        site.setSelectionProvider(this);
+        selectionProvider=new QsarEditorSelectionProvider();
+        site.setSelectionProvider(selectionProvider);
+//        site.setSelectionProvider(this);
         site.getPage().addPartListener(partListener);
         ResourcesPlugin.getWorkspace().addResourceChangeListener(resourceChangeListener, IResourceChangeEvent.POST_CHANGE);
     }
 
-    /**
+    public QsarEditorSelectionProvider getSelectionProvider() {
+		return selectionProvider;
+	}
+
+	/**
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
@@ -1517,11 +1528,13 @@ public class QsarEditor extends FormEditor implements IEditingDomainProvider,
      */
     public void setSelection(ISelection selection) {
         editorSelection = selection;
+        
+        //We use intermediate QsarEditorSelectionProvider instead
 
-        for (ISelectionChangedListener listener : selectionChangedListeners) {
-            listener.selectionChanged(new SelectionChangedEvent(this, selection));
-        }
-        setStatusLineManager(selection);
+//        for (ISelectionChangedListener listener : selectionChangedListeners) {
+//            listener.selectionChanged(new SelectionChangedEvent(this, selection));
+//        }
+//        setStatusLineManager(selection);
     }
 
     /**
