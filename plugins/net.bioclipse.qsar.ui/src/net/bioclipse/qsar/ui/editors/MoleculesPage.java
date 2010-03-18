@@ -658,10 +658,10 @@ public class MoleculesPage extends FormPage implements IEditingDomainProvider,
         molViewer.getTable().addFocusListener(new FocusListener(){
 
             public void focusGained(FocusEvent e) {
-                molViewer.setSelection(null);
             }
 
             public void focusLost(FocusEvent e) {
+				((QsarEditor)getEditor()).getSelectionProvider().setSelectionProviderDelegate(molViewer);
             }
         });
 

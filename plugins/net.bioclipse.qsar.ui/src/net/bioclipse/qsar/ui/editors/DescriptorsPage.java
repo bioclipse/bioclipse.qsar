@@ -21,7 +21,6 @@ import net.bioclipse.core.business.BioclipseException;
 import net.bioclipse.core.util.LogUtils;
 import net.bioclipse.qsar.DescriptorType;
 import net.bioclipse.qsar.DescriptorlistType;
-import net.bioclipse.qsar.DescriptorproviderType;
 import net.bioclipse.qsar.ParameterType;
 import net.bioclipse.qsar.QsarFactory;
 import net.bioclipse.qsar.QsarPackage;
@@ -42,13 +41,10 @@ import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.common.ui.viewer.IViewerProvider;
 import org.eclipse.emf.databinding.edit.EMFEditObservables;
 import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.edit.command.AddCommand;
 import org.eclipse.emf.edit.command.SetCommand;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.domain.IEditingDomainProvider;
-import org.eclipse.help.IContextProvider;
 import org.eclipse.jface.databinding.viewers.ObservableListContentProvider;
-import org.eclipse.jface.databinding.viewers.ObservableMapLabelProvider;
 import org.eclipse.jface.dialogs.IMessageProvider;
 import org.eclipse.jface.dialogs.IPageChangedListener;
 import org.eclipse.jface.dialogs.MessageDialog;
@@ -100,6 +96,13 @@ import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.eclipse.ui.forms.widgets.ScrolledForm;
 import org.eclipse.ui.forms.widgets.Section;
 
+/**
+ * A page for selecting descriptors from 
+ * Blue Obelisk Descriptor Ontology 
+ * and also pick implementations.
+ * 
+ * @author ola
+ */
 public class DescriptorsPage extends FormPage implements IEditingDomainProvider, IViewerProvider, IPageChangedListener{
 
     private TreeViewer descViewer;
@@ -759,27 +762,18 @@ private List<DescriptorType> duplicates;
             "should not happen!");
         }
         });
-
-        
-        
-        
-        
-        
-        
-        
-        
         
 
     	//If focus gained, make this viewer provide selections
-        rightTable.addFocusListener(new FocusListener(){
-
-			public void focusGained(FocusEvent e) {
-		        descViewer.setSelection(null);
-			}
-
-			public void focusLost(FocusEvent e) {
-			}
-          });
+//        rightTable.addFocusListener(new FocusListener(){
+//
+//			public void focusGained(FocusEvent e) {
+//		        descViewer.setSelection(null);
+//			}
+//
+//			public void focusLost(FocusEvent e) {
+//			}
+//          });
     	
     	rightTable.addKeyListener( new KeyListener(){
     		public void keyPressed( KeyEvent e ) {
@@ -957,7 +951,7 @@ private List<DescriptorType> duplicates;
 			}
 			
 			public void focusGained(FocusEvent e) {
-//				((QsarEditor)getEditor()).getSelectionProvider().setSelectionProviderDelegate(rightViewer);
+				((QsarEditor)getEditor()).getSelectionProvider().setSelectionProviderDelegate(rightViewer);
 			}
 		});
 
@@ -1015,16 +1009,6 @@ private List<DescriptorType> duplicates;
 
 	    activatePage();
 
-//		((QsarEditor)getEditor()).getSelectionProvider().setSelectionProviderDelegate(descViewer);
-
 	}
-	
-//	@Override
-//	public Object getAdapter(Class key) {
-//		if (key.equals(IContextProvider.class)) {
-//			return new DescriptorContextProvider();
-//		}
-//		return super.getAdapter(key);
-//	}
 
 }

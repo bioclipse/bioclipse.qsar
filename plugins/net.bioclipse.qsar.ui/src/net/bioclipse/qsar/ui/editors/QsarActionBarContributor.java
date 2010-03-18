@@ -297,8 +297,9 @@ public class QsarActionBarContributor
 
         // Generate actions for selection; populate and redraw the menus.
         //
-        createChildActions = generateCreateChildActions(newChildDescriptors, selection);
-        createSiblingActions = generateCreateSiblingActions(newSiblingDescriptors, selection);
+        
+//        createChildActions = generateCreateChildActions(newChildDescriptors, selection);
+//        createSiblingActions = generateCreateSiblingActions(newSiblingDescriptors, selection);
 
         if (createChildMenuManager != null) {
             populateManager(createChildMenuManager, createChildActions, null);
