@@ -1,0 +1,4158 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
+	<TITLE>Blue Obelisk Descriptor Ontology</TITLE>
+  <link rel="stylesheet" href="../../PRODUCT_PLUGIN/narrow_book.css" type="text/css">
+</HEAD>
+<BODY LANG="en-US" DIR="LTR">
+
+<h1>QSAR.sf.net Descriptor Dictionary</h1>
+<p>
+<i>Matteo Floris</i>, <i>Egon Willighagen</i>, <i>Rajarshi Guha</i>, <i>Miguel Rojas</i> and <i>Christian Hoppe</i>
+
+</p>
+<p>
+    This dictionary describes descriptors used in quantitative structure activity
+    relationship (QSAR) programs.
+  </p>
+<p>
+  
+  [<a href="#Entries">Entries</a>]
+  [<a href="#Bibliography">Bibliography</a>]
+  [<a href="#FinalNotes">Final Notes</a>]
+
+</p>
+<h2>
+<a name="TOC">Table of Contents</a>
+</h2>
+<p>
+<b>Constitutional Descriptors</b>
+<div class="toc">
+<a href="#atomCount">Element Count</a>
+</div>
+<div class="toc">
+<a href="#aromaticAtomsCount">Aromatic Atoms Count</a>
+</div>
+<div class="toc">
+
+<a href="#aromaticBondsCount">Aromatic Bonds Count</a>
+</div>
+<div class="toc">
+<a href="#bondCount">Bond Count</a>
+</div>
+<div class="toc">
+<a href="#isProtonInAromaticSystem">Proton belonging to an aromatic system</a>
+</div>
+<div class="toc">
+<a href="#isProtonInConjugatedPiSystem">Proton belonging to a pi-system</a>
+</div>
+<div class="toc">
+<a href="#lipinskifailures">Lipinski's Rule of Five</a>
+
+</div>
+<div class="toc">
+<a href="#period">Period of an atom</a>
+</div>
+<div class="toc">
+<a href="#piContact">Pi-contact of two atoms</a>
+</div>
+<div class="toc">
+<a href="#xlogP">XLogP</a>
+</div>
+<div class="toc">
+<a href="#aminoAcidsCount">Amino Acids Count</a>
+</div>
+
+<b>Electronic Descriptors</b>
+<div class="toc">
+<a href="#apol">Atomic Polarizabilities</a>
+</div>
+<div class="toc">
+<a href="#atomValence">Atomic Valence</a>
+</div>
+<div class="toc">
+<a href="#bpol">Bond Polarizabilities</a>
+</div>
+<div class="toc">
+<a href="#effectivePolarizability">Effective Polarizability</a>
+
+</div>
+<div class="toc">
+<a href="#hBondacceptors">Hydrogen Bond Acceptors</a>
+</div>
+<div class="toc">
+<a href="#hBondDonors">Hydrogen Bond Donors</a>
+</div>
+<div class="toc">
+<a href="#atomicHardness">Inductive atomic hardness</a>
+</div>
+<div class="toc">
+<a href="#atomicSoftness">Inductive atomic softness</a>
+</div>
+
+<div class="toc">
+<a href="#protonPartialCharge">Proton Total Partial Charge</a>
+</div>
+<div class="toc">
+<a href="#partialPiCharge">Partial Pi Charge</a>
+</div>
+<div class="toc">
+<a href="#partialSigmaCharge">Partial Sigma Charge</a>
+</div>
+<div class="toc">
+<a href="#PartialTChargePEOEDescriptor">Partial Total Charge (PEOE)</a>
+</div>
+<div class="toc">
+
+<a href="#PartialTChargeMMFF94">Partial Total Charge (MMFF94)</a>
+</div>
+<div class="toc">
+<a href="#rdfProtonCalculatedValues">RDF Proton Descriptor</a>
+</div>
+<div class="toc">
+<a href="#sigmaElectronegativity">Sigma Electronegativity</a>
+</div>
+<div class="toc">
+<a href="#piElectronegativity">Pi Electronegativity</a>
+</div>
+<div class="toc">
+<a href="#tpsa">Topological Polar Surface Area</a>
+
+</div>
+<div class="toc">
+<a href="#bondPartialPiCharge">Bond Partial Pi Charge</a>
+</div>
+<div class="toc">
+<a href="#bondPartialSigmaCharge">Bond Partial Sigma Charge</a>
+</div>
+<div class="toc">
+<a href="#bondPartialTCharge">Bond Partial Total Charge</a>
+</div>
+<div class="toc">
+<a href="#bondSigmaElectronegativity">Bond Sigma Electronegativity</a>
+</div>
+
+<div class="toc">
+<a href="#CPSA">Charged Partial Surface Area</a>
+</div>
+<b>Geometrical Descriptors</b>
+<div class="toc">
+<a href="#distanceToAtom">Distance to Atom</a>
+</div>
+<div class="toc">
+<a href="#gravitationalIndex">Gravitational Index</a>
+</div>
+<div class="toc">
+<a href="#gravitationalIndex_SquareAndCubeRoots">Gravitational Index (Square and Cube Roots)</a>
+
+</div>
+<div class="toc">
+<a href="#momentOfInertia">Moments of Inertia</a>
+</div>
+<div class="toc">
+<a href="#rdfProtonCalculatedValues">RDF Proton Descriptor</a>
+</div>
+<b>Topological Descriptors</b>
+<div class="toc">
+<a href="#atomDegree">Atomic Degree</a>
+</div>
+<div class="toc">
+<a href="#bondsToAtom">Bonds to Atom</a>
+
+</div>
+<div class="toc">
+<a href="#chi0">Connectivity index (order 0)</a>
+</div>
+<div class="toc">
+<a href="#chi0C">Carbon connectivity index (order 0)</a>
+</div>
+<div class="toc">
+<a href="#chi1">Connectivity index (order 1)</a>
+</div>
+<div class="toc">
+<a href="#chi1C">Carbon connectivity index (order 1)</a>
+</div>
+
+<div class="toc">
+<a href="#kierValues">Kier and Hall kappa molecular shape indices</a>
+</div>
+<div class="toc">
+<a href="#petitjeanNumber">Petitjean Number</a>
+</div>
+<div class="toc">
+<a href="#rdfProtonCalculatedValues">RDF Proton Descriptor</a>
+</div>
+<div class="toc">
+<a href="#tpsa">Topological Polar Surface Area</a>
+</div>
+<div class="toc">
+
+<a href="#wienerNumbers">Wiener Numbers</a>
+</div>
+<div class="toc">
+<a href="#vAdjMa">Vertex adjacency information magnitude</a>
+</div>
+<div class="toc">
+<a href="#chi0v">Valence connectivity index (order 1)</a>
+</div>
+<div class="toc">
+<a href="#chi1vC">Valence carbon connectivity index (order 1)</a>
+</div>
+<div class="toc">
+<a href="#chi0v">Valence connectivity index (order 0)</a>
+
+</div>
+<div class="toc">
+<a href="#chi0vC">Valence carbon connectivity index (order 0)</a>
+</div>
+<div class="toc">
+<a href="#zagrebIndex">Zagreb Index</a>
+</div>
+<div class="toc">
+<a href="#eccentricConnectivityIndex">Charged Partial Surface Area</a>
+</div>
+<div class="toc">
+<a href="#largestChain">Largest Chain</a>
+</div>
+
+<div class="toc">
+<a href="#largestPiSystem">Largest Pi System</a>
+</div>
+<div class="toc">
+<a href="#largestAliphaticChain">Largest Aliphatic Chain</a>
+</div>
+<div class="toc">
+<a href="#petitjeanShapeIndex">Petitjean Shape Indices</a>
+</div>
+<div class="toc">
+<a href="#weightedPath">Weighted Path</a>
+</div>
+<b>Molecular Descriptors</b>
+
+<div class="toc">
+<a href="#atomHybridization">Atomic Hybridization</a>
+</div>
+<div class="toc">
+<a href="#atomHybridizationVSEPR">Atomic Hybridization VSEPR</a>
+</div>
+<div class="toc">
+<a href="#BCUT">BCUT</a>
+</div>
+<div class="toc">
+<a href="#gravitationalIndex">Gravitational Index</a>
+</div>
+<div class="toc">
+
+<a href="#rotatableBondsCount">Rotatable Bonds Count</a>
+</div>
+<div class="toc">
+<a href="#weight">Molecular Weight</a>
+</div>
+<div class="toc">
+<a href="#WHIM">WHIM</a>
+</div>
+<div class="toc">
+<a href="#vdwradius">Van der Waals Radius</a>
+</div>
+<div class="toc">
+<a href="#covalentRadius">Covalent Radius</a>
+
+</div>
+</p>
+<h2>
+<a name="Entries">Entries</a>
+</h2>
+<h3>
+<a id="aminoAcidsCount">Amino Acids Count (aminoAcidsCount)
+    </a>
+</h3>
+<ul>
+<li>
+<p>
+<b>Definition</b>
+<br/>
+        Descriptor that returns the number of amino acids in an atom container.
+    </p>
+
+<p/>
+<p>
+<b>Classification</b>
+<br/>This descriptor is a <a href="http://qsar.sourceforge.net/dicts/qsar-descriptors-metadata/index.xhtml#constitutionalDescriptor">Constitutional Descriptor</a>
+<br/>
+<b>Implementations</b>
+<br/>Search implementations on <a href="http://www.google.com/search?q=qsar-descriptors:aminoAcidsCount&amp;ie=UTF-8&amp;oe=UTF-8">
+    Google.com
+  </a>
+</p>
+</li>
+
+</ul>
+<p class="small">
+<i>
+Contributed by:
+Egon Willighagen.
+Created on: 2006-01-15.
+</i>
+</p>
+<h3>
+<a id="aromaticAtomsCount">Aromatic Atoms Count (aromaticAtomsCount)
+    </a>
+</h3>
+<ul>
+<li>
+<p>
+<b>Definition</b>
+<br/>
+      Descriptor based on the number of aromatic atoms of a molecule.
+    </p>
+
+<p/>
+<p>
+<b>Classification</b>
+<br/>This descriptor is a <a href="http://qsar.sourceforge.net/dicts/qsar-descriptors-metadata/index.xhtml#constitutionalDescriptor">Constitutional Descriptor</a>
+<br/>
+<b>Implementations</b>
+<br/>Search implementations on <a href="http://www.google.com/search?q=qsar-descriptors:aromaticAtomsCount&amp;ie=UTF-8&amp;oe=UTF-8">
+    Google.com
+  </a>
+</p>
+</li>
+
+</ul>
+<p class="small">
+<i>
+Contributed by:
+.
+Created on: 2004-11-26.
+</i>
+</p>
+<h3>
+<a id="aromaticBondsCount">Aromatic Bonds Count (aromaticBondsCount)
+    </a>
+</h3>
+<ul>
+<li>
+<p>
+<b>Definition</b>
+<br/>
+      Descriptor based on the number of aromatic bonds of a molecule.
+    </p>
+
+<p/>
+<p>
+<b>Classification</b>
+<br/>This descriptor is a <a href="http://qsar.sourceforge.net/dicts/qsar-descriptors-metadata/index.xhtml#constitutionalDescriptor">Constitutional Descriptor</a>
+<br/>
+<b>Implementations</b>
+<br/>Search implementations on <a href="http://www.google.com/search?q=qsar-descriptors:aromaticBondsCount&amp;ie=UTF-8&amp;oe=UTF-8">
+    Google.com
+  </a>
+</p>
+</li>
+
+</ul>
+<p class="small">
+<i>
+Contributed by:
+, Egon Willighagen.
+Created on: 2004-11-26.
+</i>
+</p>
+<h3>
+<a id="atomDegree">Atomic Degree (atomDegree)
+    </a>
+</h3>
+<ul>
+<li>
+<p>
+<b>Definition</b>
+<br/>
+        Descriptor that calculates the number of not-Hs substituents of an atom.
+    </p>
+
+<p/>
+<p>
+<b>Classification</b>
+<br/>This descriptor is a <a href="http://qsar.sourceforge.net/dicts/qsar-descriptors-metadata/index.xhtml#topologicalDescriptor">Topological Descriptor</a>
+<br/>
+<b>Implementations</b>
+<br/>Search implementations on <a href="http://www.google.com/search?q=qsar-descriptors:atomDegree&amp;ie=UTF-8&amp;oe=UTF-8">
+    Google.com
+  </a>
+</p>
+</li>
+
+</ul>
+<p class="small">
+<i>
+Contributed by:
+.
+Created on: 2004-11-26.
+</i>
+</p>
+<h3>
+<a id="atomHybridization">Atomic Hybridization (atomHybridization)
+    </a>
+</h3>
+<ul>
+<li>
+<p>
+<b>Definition</b>
+<br/>
+        Descriptor that returns the hybridization state of an atom.
+    </p>
+
+<p/>
+<p>
+<b>Classification</b>
+<br/>This descriptor is a <a href="http://qsar.sourceforge.net/dicts/qsar-descriptors-metadata/index.xhtml#molecularDescriptor">Molecular Descriptor</a>
+<br/>
+<b>Implementations</b>
+<br/>Search implementations on <a href="http://www.google.com/search?q=qsar-descriptors:atomHybridization&amp;ie=UTF-8&amp;oe=UTF-8">
+    Google.com
+  </a>
+</p>
+</li>
+
+</ul>
+<p class="small">
+<i>
+Contributed by:
+.
+Created on: 2004-11-26.
+</i>
+</p>
+<h3>
+<a id="atomHybridizationVSEPR">Atomic Hybridization VSEPR (atomHybridizationVSEPR)
+    </a>
+</h3>
+<ul>
+<li>
+<p>
+<b>Definition</b>
+<br/>
+        Descriptor that returns the hybridization state of an atom.
+    </p>
+
+<p>
+<b>Description</b>
+<br/>
+        The calculation find a SIMPLE WAY the molecular geometry for following from
+        Valence Shell Electron Pair Repulsion or VSEPR model and at the same time its
+        hybridization of atoms in a molecule.
+    </p>
+<p>
+<b>Classification</b>
+<br/>This descriptor is a <a href="http://qsar.sourceforge.net/dicts/qsar-descriptors-metadata/index.xhtml#molecularDescriptor">Molecular Descriptor</a>
+<br/>
+<b>Implementations</b>
+<br/>Search implementations on <a href="http://www.google.com/search?q=qsar-descriptors:atomHybridizationVSEPR&amp;ie=UTF-8&amp;oe=UTF-8">
+
+    Google.com
+  </a>
+</p>
+</li>
+</ul>
+<p class="small">
+<i>
+Contributed by:
+.
+Created on: 2006-05-08.
+</i>
+</p>
+<h3>
+<a id="apol">Atomic Polarizabilities (apol)
+    </a>
+</h3>
+<ul>
+<li>
+
+<p>
+<b>Definition</b>
+<br/>
+        Descriptor that calculates the sum of the atomic polarizabilities (including implicit hydrogens).
+    </p>
+<p>
+<b>Description</b>
+<br/>
+      	Polarizabilities derive from periodic tables.
+    </p>
+<p>
+<b>Classification</b>
+
+<br/>This descriptor is a <a href="http://qsar.sourceforge.net/dicts/qsar-descriptors-metadata/index.xhtml#electronicDescriptor">Electronic Descriptor</a>
+<br/>
+<b>Implementations</b>
+<br/>Search implementations on <a href="http://www.google.com/search?q=qsar-descriptors:apol&amp;ie=UTF-8&amp;oe=UTF-8">
+    Google.com
+  </a>
+</p>
+</li>
+</ul>
+<p class="small">
+<i>
+Contributed by:
+, Egon Willighagen.
+Created on: 2004-11-26.
+
+</i>
+</p>
+<h3>
+<a id="atomValence">Atomic Valence (atomValence)
+    </a>
+</h3>
+<ul>
+<li>
+<p>
+<b>Definition</b>
+<br/>
+        Descriptor that calculates the valence of an atom.
+    </p>
+<p/>
+<p>
+
+<b>Classification</b>
+<br/>This descriptor is a <a href="http://qsar.sourceforge.net/dicts/qsar-descriptors-metadata/index.xhtml#electronicDescriptor">Electronic Descriptor</a>
+<br/>
+<b>Implementations</b>
+<br/>Search implementations on <a href="http://www.google.com/search?q=qsar-descriptors:atomValence&amp;ie=UTF-8&amp;oe=UTF-8">
+    Google.com
+  </a>
+</p>
+</li>
+</ul>
+<p class="small">
+
+<i>
+Contributed by:
+.
+Created on: 2004-11-26.
+</i>
+</p>
+<h3>
+<a id="BCUT">BCUT (BCUT)
+    </a>
+</h3>
+<ul>
+<li>
+<p>
+<b>Definition</b>
+<br/>
+      Eigenvalue based descriptor noted for its utility in chemical diversity
+      described by Pearlman et al. 
+    [<a href="#bibtex:PEA99">PEA99</a>]
+  .
+    </p>
+
+<p/>
+<p>
+<b>Classification</b>
+<br/>This descriptor is a <a href="http://qsar.sourceforge.net/dicts/qsar-descriptors-metadata/index.xhtml#molecularDescriptor">Molecular Descriptor</a>
+<br/>
+<b>Implementations</b>
+<br/>Search implementations on <a href="http://www.google.com/search?q=qsar-descriptors:BCUT&amp;ie=UTF-8&amp;oe=UTF-8">
+    Google.com
+  </a>
+</p>
+</li>
+
+</ul>
+<p class="small">
+<i>
+Contributed by:
+, .
+Created on: 2005-01-27.
+</i>
+</p>
+<h3>
+<a id="bondCount">Bond Count (bondCount)
+    </a>
+</h3>
+<ul>
+<li>
+<p>
+<b>Definition</b>
+<br/>
+      Descriptor based on the number of bonds of a certain bond order.
+    </p>
+
+<p/>
+<p>
+<b>Classification</b>
+<br/>This descriptor is a <a href="http://qsar.sourceforge.net/dicts/qsar-descriptors-metadata/index.xhtml#constitutionalDescriptor">Constitutional Descriptor</a>
+<br/>
+<b>Implementations</b>
+<br/>Search implementations on <a href="http://www.google.com/search?q=qsar-descriptors:bondCount&amp;ie=UTF-8&amp;oe=UTF-8">
+    Google.com
+  </a>
+</p>
+</li>
+
+</ul>
+<p class="small">
+<i>
+Contributed by:
+, Egon Willighagen.
+Created on: 2004-11-26.
+</i>
+</p>
+<h3>
+<a id="bondPartialPiCharge">Bond Partial Pi Charge (bondPartialPiCharge)
+    </a>
+</h3>
+<ul>
+<li>
+<p>
+<b>Definition</b>
+<br/>
+        Descriptor that calculates bond-pi Partial charge of a bond.
+    </p>
+
+<p>
+<b>Description</b>
+<br/>
+        Calculation is calculated determining the difference the Partial Pi 
+        Charge on atoms A and B of a bond. Based in Gasteiger Charge.
+    </p>
+<p>
+<b>Classification</b>
+<br/>This descriptor is a <a href="http://qsar.sourceforge.net/dicts/qsar-descriptors-metadata/index.xhtml#electronicDescriptor">Electronic Descriptor</a>
+<br/>
+<b>Implementations</b>
+<br/>Search implementations on <a href="http://www.google.com/search?q=qsar-descriptors:bondPartialPiCharge&amp;ie=UTF-8&amp;oe=UTF-8">
+
+    Google.com
+  </a>
+</p>
+</li>
+</ul>
+<p class="small">
+<i>
+Contributed by:
+.
+Created on: 2006-05-08.
+</i>
+</p>
+<h3>
+<a id="bondPartialSigmaCharge">Bond Partial Sigma Charge (bondPartialSigmaCharge)
+    </a>
+</h3>
+<ul>
+<li>
+
+<p>
+<b>Definition</b>
+<br/>
+        Descriptor that calculates bond-sigma Partial charge of a bond.
+    </p>
+<p>
+<b>Description</b>
+<br/>
+        Calculation is calculated determining the difference the Partial Sigma 
+        Charge on atoms A and B of a bond. Based in Gasteiger Charge.
+    </p>
+<p>
+<b>Classification</b>
+
+<br/>This descriptor is a <a href="http://qsar.sourceforge.net/dicts/qsar-descriptors-metadata/index.xhtml#electronicDescriptor">Electronic Descriptor</a>
+<br/>
+<b>Implementations</b>
+<br/>Search implementations on <a href="http://www.google.com/search?q=qsar-descriptors:bondPartialSigmaCharge&amp;ie=UTF-8&amp;oe=UTF-8">
+    Google.com
+  </a>
+</p>
+</li>
+</ul>
+<p class="small">
+<i>
+Contributed by:
+.
+Created on: 2006-05-08.
+
+</i>
+</p>
+<h3>
+<a id="bondPartialTCharge">Bond Partial Total Charge (bondPartialTCharge)
+    </a>
+</h3>
+<ul>
+<li>
+<p>
+<b>Definition</b>
+<br/>
+        Descriptor that calculates bond-total Partial charge of a bond.
+    </p>
+<p>
+<b>Description</b>
+
+<br/>
+        Calculation is calculated determining the difference the Partial Total 
+        Charge on atoms A and B of a bond. Based in Gasteiger Charge.
+    </p>
+<p>
+<b>Classification</b>
+<br/>This descriptor is a <a href="http://qsar.sourceforge.net/dicts/qsar-descriptors-metadata/index.xhtml#electronicDescriptor">Electronic Descriptor</a>
+<br/>
+<b>Implementations</b>
+<br/>Search implementations on <a href="http://www.google.com/search?q=qsar-descriptors:bondPartialTCharge&amp;ie=UTF-8&amp;oe=UTF-8">
+    Google.com
+  </a>
+
+</p>
+</li>
+</ul>
+<p class="small">
+<i>
+Contributed by:
+.
+Created on: 2006-05-08.
+</i>
+</p>
+<h3>
+<a id="bpol">Bond Polarizabilities (bpol)
+    </a>
+</h3>
+<ul>
+<li>
+<p>
+<b>Definition</b>
+
+<br/>
+        Descriptor that calculates the sum of the absolute value of the difference between atomic 
+	polarizabilities of all bonded atoms in the molecule (including implicit hydrogens).
+    </p>
+<p>
+<b>Description</b>
+<br/>
+      	Polarizabilities derive from periodic tables.
+    </p>
+<p>
+<b>Classification</b>
+<br/>This descriptor is a <a href="http://qsar.sourceforge.net/dicts/qsar-descriptors-metadata/index.xhtml#electronicDescriptor">Electronic Descriptor</a>
+
+<br/>
+<b>Implementations</b>
+<br/>Search implementations on <a href="http://www.google.com/search?q=qsar-descriptors:bpol&amp;ie=UTF-8&amp;oe=UTF-8">
+    Google.com
+  </a>
+</p>
+</li>
+</ul>
+<p class="small">
+<i>
+Contributed by:
+, Egon Willighagen.
+Created on: 2004-11-26.
+</i>
+</p>
+<h3>
+
+<a id="bondSigmaElectronegativity">Bond Sigma Electronegativity (bondSigmaElectronegativity)
+    </a>
+</h3>
+<ul>
+<li>
+<p>
+<b>Definition</b>
+<br/>
+        Descriptor that calculates of bond-Polarizability of a bond.
+    </p>
+<p>
+<b>Description</b>
+<br/>
+        Calculation is calculated determining the difference the Sigma 
+        electronegativity on atoms A and B of a bond.
+    </p>
+
+<p>
+<b>Classification</b>
+<br/>This descriptor is a <a href="http://qsar.sourceforge.net/dicts/qsar-descriptors-metadata/index.xhtml#electronicDescriptor">Electronic Descriptor</a>
+<br/>
+<b>Implementations</b>
+<br/>Search implementations on <a href="http://www.google.com/search?q=qsar-descriptors:bondSigmaElectronegativity&amp;ie=UTF-8&amp;oe=UTF-8">
+    Google.com
+  </a>
+</p>
+</li>
+</ul>
+
+<p class="small">
+<i>
+Contributed by:
+.
+Created on: 2006-05-08.
+</i>
+</p>
+<h3>
+<a id="bondsToAtom">Bonds to Atom (bondsToAtom)
+    </a>
+</h3>
+<ul>
+<li>
+<p>
+<b>Definition</b>
+<br/>
+      Descriptor based on the number of bonds on the shortest path between two atoms.
+    </p>
+
+<p/>
+<p>
+<b>Classification</b>
+<br/>This descriptor is a <a href="http://qsar.sourceforge.net/dicts/qsar-descriptors-metadata/index.xhtml#topologicalDescriptor">Topological Descriptor</a>
+<br/>
+<b>Implementations</b>
+<br/>Search implementations on <a href="http://www.google.com/search?q=qsar-descriptors:bondsToAtom&amp;ie=UTF-8&amp;oe=UTF-8">
+    Google.com
+  </a>
+</p>
+</li>
+
+</ul>
+<p class="small">
+<i>
+Contributed by:
+.
+Created on: 2004-11-26.
+</i>
+</p>
+<h3>
+<a id="chi0C">Carbon connectivity index (order 0) (chi0C)
+    </a>
+</h3>
+<ul>
+<li>
+<p>
+<b>Definition</b>
+<br/>
+        Descriptor that calculates the carbon connectivity index (order 0).
+    </p>
+
+<p>
+<b>Description</b>
+<br/>
+      	While the atomic connectivity is calculated as the sum of 
+	<math xmlns="http://www.w3.org/1998/Math/MathML">
+<mrow>
+<mfrac>
+            <mi>1</mi>
+            <math xmlns="http://www.w3.org/1998/Math/MathML">
+<mrow>
+<msup>
+                <msub>
+
+                  <mi>d</mi>
+                  <mi>i</mi>
+                </msub>
+		<mi>0.5</mi>
+              </msup>
+</mrow>
+</math>
+          </mfrac>
+
+</mrow>
+</math>
+	over all heavy atoms i with degree greather than zero, carbon connectivity index 
+	takes into account only carbon atoms with degree greather than zero.
+    </p>
+<p>
+<b>Relations</b>
+<br/>
+<a href="http://qsar.sourceforge.net/dicts/qsar-descriptors-metadata/index.xhtml#isAModificationOf">Is a Modification Of</a>: <a href="#chi0">Connectivity index (order 0)</a>
+<br/>
+<b>Classification</b>
+<br/>This descriptor is a <a href="http://qsar.sourceforge.net/dicts/qsar-descriptors-metadata/index.xhtml#topologicalDescriptor">Topological Descriptor</a>
+
+<br/>
+<b>Implementations</b>
+<br/>Search implementations on <a href="http://www.google.com/search?q=qsar-descriptors:chi0C&amp;ie=UTF-8&amp;oe=UTF-8">
+    Google.com
+  </a>
+</p>
+</li>
+</ul>
+<p class="small">
+<i>
+Contributed by:
+.
+Created on: 2004-11-26.
+</i>
+</p>
+<h3>
+
+<a id="chi1C">Carbon connectivity index (order 1) (chi1C)
+    </a>
+</h3>
+<ul>
+<li>
+<p>
+<b>Definition</b>
+<br/>
+        Descriptor that calculates carbon connectivity index (order 1).
+    </p>
+<p>
+<b>Description</b>
+<br/>
+      	While the atomic connectivity is calculated as the sum of 
+	<math xmlns="http://www.w3.org/1998/Math/MathML">
+
+<mrow>
+<mfrac>
+            <mi>1</mi>
+            <math xmlns="http://www.w3.org/1998/Math/MathML">
+<mrow>
+<msup>
+		<math xmlns="http://www.w3.org/1998/Math/MathML">
+<mrow>
+<mo>(</mo>
+<math xmlns="http://www.w3.org/1998/Math/MathML">
+<mrow>
+<msub>
+
+                      <mi>d</mi>
+                      <mi>i</mi>
+                    </msub>
+</mrow>
+</math>
+<math xmlns="http://www.w3.org/1998/Math/MathML">
+<mrow>
+<msub>
+                      <mi>d</mi>
+                      <mi>j</mi>
+
+                    </msub>
+</mrow>
+</math>
+<mo>)</mo>
+</mrow>
+</math>
+		<mi>0.5</mi>
+              </msup>
+</mrow>
+</math>
+          </mfrac>
+
+</mrow>
+</math>
+	over all bonds between heavy atoms i and j, the carbon connectivity index 
+	takes into account only bonds between carbon atoms.
+    </p>
+<p>
+<b>Relations</b>
+<br/>
+<a href="http://qsar.sourceforge.net/dicts/qsar-descriptors-metadata/index.xhtml#isAModificationOf">Is a Modification Of</a>: <a href="#chi1">Connectivity index (order 1)</a>
+<br/>
+<b>Classification</b>
+<br/>This descriptor is a <a href="http://qsar.sourceforge.net/dicts/qsar-descriptors-metadata/index.xhtml#topologicalDescriptor">Topological Descriptor</a>
+
+<br/>
+<b>Implementations</b>
+<br/>Search implementations on <a href="http://www.google.com/search?q=qsar-descriptors:chi1C&amp;ie=UTF-8&amp;oe=UTF-8">
+    Google.com
+  </a>
+</p>
+</li>
+</ul>
+<p class="small">
+<i>
+Contributed by:
+.
+Created on: 2004-11-26.
+</i>
+</p>
+<h3>
+
+<a id="CPSA">Charged Partial Surface Area (CPSA)
+    </a>
+</h3>
+<ul>
+<li>
+<p>
+<b>Definition</b>
+<br/>
+        Descriptor that calculates 29 Charged Partial Surface Area (CPSA) descriptors.
+    </p>
+<p>
+<b>Description</b>
+<br/>
+        The CPSA's were developed by Stanton et al. 
+    [<a href="#bibtex:CPSA">CPSA</a>]
+   and
+		are related to the Polar Surface Area descriptors.
+ 		This implementation uses a numerical algorithm to obtain surface areas 
+        and obtains partial charges using the Gasteiger-Marsilli algorithm.
+    </p>
+
+<p>
+<b>Classification</b>
+<br/>This descriptor is a <a href="http://qsar.sourceforge.net/dicts/qsar-descriptors-metadata/index.xhtml#electronicDescriptor">Electronic Descriptor</a>
+<br/>
+<b>Implementations</b>
+<br/>Search implementations on <a href="http://www.google.com/search?q=qsar-descriptors:CPSA&amp;ie=UTF-8&amp;oe=UTF-8">
+    Google.com
+  </a>
+</p>
+</li>
+</ul>
+
+<p class="small">
+<i>
+Contributed by:
+.
+Created on: 2005-05-16.
+</i>
+</p>
+<h3>
+<a id="eccentricConnectivityIndex">Charged Partial Surface Area (eccentricConnectivityIndex)
+    </a>
+</h3>
+<ul>
+<li>
+<p>
+<b>Definition</b>
+<br/>
+        Descriptor that calculates the eccentric connectivity index for a 
+        hydrogen supressed molecular graph.
+    </p>
+
+<p>
+<b>Description</b>
+<br/>
+        Descriptor combining distance and adjacency information. This descriptor is 
+        described by Sharma et al. and has been shown 
+        to correlate well with a number of physical properties.
+    </p>
+<p>
+<b>Classification</b>
+<br/>This descriptor is a <a href="http://qsar.sourceforge.net/dicts/qsar-descriptors-metadata/index.xhtml#topologicalDescriptor">Topological Descriptor</a>
+<br/>
+<b>Implementations</b>
+<br/>Search implementations on <a href="http://www.google.com/search?q=qsar-descriptors:eccentricConnectivityIndex&amp;ie=UTF-8&amp;oe=UTF-8">
+
+    Google.com
+  </a>
+</p>
+</li>
+</ul>
+<p class="small">
+<i>
+Contributed by:
+.
+Created on: 2005-03-19.
+</i>
+</p>
+<h3>
+<a id="chi0">Connectivity index (order 0) (chi0)
+    </a>
+</h3>
+<ul>
+<li>
+
+<p>
+<b>Definition</b>
+<br/>
+        Descriptor that calculates atomic connectivity index (order 0).
+    </p>
+<p>
+<b>Description</b>
+<br/>
+      	Atomic connectivity is calculated as the sum of 
+	<math xmlns="http://www.w3.org/1998/Math/MathML">
+<mrow>
+<mfrac>
+            <mi>1</mi>
+
+            <math xmlns="http://www.w3.org/1998/Math/MathML">
+<mrow>
+<msup>
+                <msub>
+                  <mi>d</mi>
+                  <mi>i</mi>
+                </msub>
+		<mi>0.5</mi>
+
+              </msup>
+</mrow>
+</math>
+          </mfrac>
+</mrow>
+</math>
+	over all heavy atoms i with degree greather than zero.
+   </p>
+<p>
+<b>Relations</b>
+<br/>
+<a href="http://qsar.sourceforge.net/dicts/qsar-descriptors-metadata/index.xhtml#isModificatedAs">Is Modificated Into</a>: <a href="#chi0C">Carbon connectivity index (order 0)</a>
+
+<br/>
+<b>Classification</b>
+<br/>This descriptor is a <a href="http://qsar.sourceforge.net/dicts/qsar-descriptors-metadata/index.xhtml#topologicalDescriptor">Topological Descriptor</a>
+<br/>
+<b>Implementations</b>
+<br/>Search implementations on <a href="http://www.google.com/search?q=qsar-descriptors:chi0&amp;ie=UTF-8&amp;oe=UTF-8">
+    Google.com
+  </a>
+</p>
+</li>
+</ul>
+
+<p class="small">
+<i>
+Contributed by:
+.
+Created on: 2004-11-26.
+</i>
+</p>
+<h3>
+<a id="chi1">Connectivity index (order 1) (chi1)
+    </a>
+</h3>
+<ul>
+<li>
+<p>
+<b>Definition</b>
+<br/>
+        Descriptor that calculates atomic connectivity index (order 1).
+    </p>
+
+<p>
+<b>Description</b>
+<br/>
+      	Atomic connectivity is calculated as the sum of 
+	<math xmlns="http://www.w3.org/1998/Math/MathML">
+<mrow>
+<mfrac>
+            <mi>1</mi>
+            <math xmlns="http://www.w3.org/1998/Math/MathML">
+<mrow>
+<msup>
+		<math xmlns="http://www.w3.org/1998/Math/MathML">
+
+<mrow>
+<mo>(</mo>
+<math xmlns="http://www.w3.org/1998/Math/MathML">
+<mrow>
+<msub>
+                      <mi>d</mi>
+                      <mi>i</mi>
+                    </msub>
+</mrow>
+</math>
+<math xmlns="http://www.w3.org/1998/Math/MathML">
+
+<mrow>
+<msub>
+                      <mi>d</mi>
+                      <mi>j</mi>
+                    </msub>
+</mrow>
+</math>
+<mo>)</mo>
+</mrow>
+</math>
+		<mi>0.5</mi>
+
+              </msup>
+</mrow>
+</math>
+          </mfrac>
+</mrow>
+</math>
+	over all bonds between heavy atoms i and j.
+    </p>
+<p>
+<b>Relations</b>
+<br/>
+<a href="http://qsar.sourceforge.net/dicts/qsar-descriptors-metadata/index.xhtml#isModificatedAs">Is Modificated Into</a>: <a href="#chi1C">Carbon connectivity index (order 1)</a>
+
+<br/>
+<b>Classification</b>
+<br/>This descriptor is a <a href="http://qsar.sourceforge.net/dicts/qsar-descriptors-metadata/index.xhtml#topologicalDescriptor">Topological Descriptor</a>
+<br/>
+<b>Implementations</b>
+<br/>Search implementations on <a href="http://www.google.com/search?q=qsar-descriptors:chi1&amp;ie=UTF-8&amp;oe=UTF-8">
+    Google.com
+  </a>
+</p>
+</li>
+</ul>
+
+<p class="small">
+<i>
+Contributed by:
+.
+Created on: 2004-11-26.
+</i>
+</p>
+<h3>
+<a id="covalentRadius">Covalent Radius (covalentRadius)
+    </a>
+</h3>
+<ul>
+<li>
+<p>
+<b>Definition</b>
+<br/>
+      Descriptor that returns the covalent radius of a given atom.
+    </p>
+
+<p/>
+<p>
+<b>Classification</b>
+<br/>This descriptor is a <a href="http://qsar.sourceforge.net/dicts/qsar-descriptors-metadata/index.xhtml#molecularDescriptor">Molecular Descriptor</a>
+<br/>
+<b>Implementations</b>
+<br/>Search implementations on <a href="http://www.google.com/search?q=qsar-descriptors:covalentRadius&amp;ie=UTF-8&amp;oe=UTF-8">
+    Google.com
+  </a>
+</p>
+</li>
+
+</ul>
+<p class="small">
+<i>
+Contributed by:
+.
+Created on: 2006-05-08.
+</i>
+</p>
+<h3>
+<a id="distanceToAtom">Distance to Atom (distanceToAtom)
+    </a>
+</h3>
+<ul>
+<li>
+<p>
+<b>Definition</b>
+<br/>
+      Descriptor that calculates the 3D distance between two atoms.
+    </p>
+
+<p/>
+<p>
+<b>Classification</b>
+<br/>This descriptor is a <a href="http://qsar.sourceforge.net/dicts/qsar-descriptors-metadata/index.xhtml#geometricalDescriptor">Geometrical Descriptor</a>
+<br/>
+<b>Implementations</b>
+<br/>Search implementations on <a href="http://www.google.com/search?q=qsar-descriptors:distanceToAtom&amp;ie=UTF-8&amp;oe=UTF-8">
+    Google.com
+  </a>
+</p>
+</li>
+
+</ul>
+<p class="small">
+<i>
+Contributed by:
+.
+Created on: 2004-11-26.
+</i>
+</p>
+<h3>
+<a id="effectivePolarizability">Effective Polarizability (effectivePolarizability)
+    </a>
+</h3>
+<ul>
+<li>
+<p>
+<b>Definition</b>
+<br/>
+        Descriptor that calculates the effective polarizability of a given heavy atom.
+    </p>
+
+<p>
+<b>Description</b>
+<br/>
+      	Polarizabilities are assigned to the heavy atom by Polarizability class.
+    </p>
+<p>
+<b>Classification</b>
+<br/>This descriptor is a <a href="http://qsar.sourceforge.net/dicts/qsar-descriptors-metadata/index.xhtml#electronicDescriptor">Electronic Descriptor</a>
+<br/>
+<b>Implementations</b>
+<br/>Search implementations on <a href="http://www.google.com/search?q=qsar-descriptors:effectivePolarizability&amp;ie=UTF-8&amp;oe=UTF-8">
+
+    Google.com
+  </a>
+</p>
+</li>
+</ul>
+<p class="small">
+<i>
+Contributed by:
+, Egon Willighagen.
+Created on: 2004-11-26.
+</i>
+</p>
+<h3>
+<a id="atomCount">Element Count (atomCount)
+    </a>
+</h3>
+<ul>
+<li>
+
+<p>
+<b>Definition</b>
+<br/>
+      Descriptor based on the number of atoms of a certain element type.
+    </p>
+<p/>
+<p>
+<b>Classification</b>
+<br/>This descriptor is a <a href="http://qsar.sourceforge.net/dicts/qsar-descriptors-metadata/index.xhtml#constitutionalDescriptor">Constitutional Descriptor</a>
+<br/>
+<b>Implementations</b>
+
+<br/>Search implementations on <a href="http://www.google.com/search?q=qsar-descriptors:atomCount&amp;ie=UTF-8&amp;oe=UTF-8">
+    Google.com
+  </a>
+</p>
+</li>
+</ul>
+<p class="small">
+<i>
+Contributed by:
+.
+Created on: 2004-11-26.
+</i>
+</p>
+<h3>
+<a id="gravitationalIndex">Gravitational Index (gravitationalIndex)
+    </a>
+</h3>
+
+<ul>
+<li>
+<p>
+<b>Definition</b>
+<br/>
+      Descriptor characterizing the mass distribution of the molecule.
+    </p>
+<p>
+<b>Description</b>
+<br/>
+      This descriptor is described by Katritzky et al. 
+    [<a href="#bibtex:KAT96">KAT96</a>]
+  .
+    </p>
+
+<p>
+<b>Relations</b>
+<br/>
+<a href="http://qsar.sourceforge.net/dicts/qsar-descriptors-metadata/index.xhtml#isModificatedAs">Is Modificated Into</a>: <a href="#gravitationalIndex_SquareAndCubeRoots">Gravitational Index (Square and Cube Roots)</a>
+<br/>
+<b>Classification</b>
+<br/>This descriptor is a <a href="http://qsar.sourceforge.net/dicts/qsar-descriptors-metadata/index.xhtml#molecularDescriptor">Molecular Descriptor</a>
+<br/>This descriptor is a <a href="http://qsar.sourceforge.net/dicts/qsar-descriptors-metadata/index.xhtml#geometricalDescriptor">Geometrical Descriptor</a>
+
+<br/>
+<b>Implementations</b>
+<br/>Search implementations on <a href="http://www.google.com/search?q=qsar-descriptors:gravitationalIndex&amp;ie=UTF-8&amp;oe=UTF-8">
+    Google.com
+  </a>
+</p>
+</li>
+</ul>
+<p class="small">
+<i>
+Contributed by:
+, .
+Created on: 2004-11-24.
+</i>
+</p>
+<h3>
+
+<a id="gravitationalIndex_SquareAndCubeRoots">Gravitational Index (Square and Cube Roots) (gravitationalIndex_SquareAndCubeRoots)
+    </a>
+</h3>
+<ul>
+<li>
+<p>
+<b>Definition</b>
+<br/>
+      Descriptor characterizing the mass distribution of the molecule as the square
+      or cube root of the gravitational index.
+    </p>
+<p>
+<b>Description</b>
+<br/>
+      This descriptor is described by Wessel et al. 
+    [<a href="#bibtex:WES98">WES98</a>]
+  .
+    </p>
+
+<p>
+<b>Relations</b>
+<br/>
+<a href="http://qsar.sourceforge.net/dicts/qsar-descriptors-metadata/index.xhtml#isAModificationOf">Is a Modification Of</a>: <a href="#gravitationalIndex">Gravitational Index</a>
+<br/>
+<b>Classification</b>
+<br/>This descriptor is a <a href="http://qsar.sourceforge.net/dicts/qsar-descriptors-metadata/index.xhtml#geometricalDescriptor">Geometrical Descriptor</a>
+<br/>
+<b>Implementations</b>
+
+<br/>Search implementations on <a href="http://www.google.com/search?q=qsar-descriptors:gravitationalIndex_SquareAndCubeRoots&amp;ie=UTF-8&amp;oe=UTF-8">
+    Google.com
+  </a>
+</p>
+</li>
+</ul>
+<p class="small">
+<i>
+Contributed by:
+, .
+Created on: 2004-11-25.
+</i>
+</p>
+<h3>
+<a id="hBondacceptors">Hydrogen Bond Acceptors (hBondacceptors)
+    </a>
+</h3>
+
+<ul>
+<li>
+<p>
+<b>Definition</b>
+<br/>
+        Descriptor that calculates the number of hydrogen bond acceptors.
+    </p>
+<p>
+<b>Description</b>
+<br/>
+        As defined by Daylight website, 
+    [<a href="#bibtex:DAY01">DAY01</a>]
+  , a H-bond acceptor is a heteroatom with no positive charge, note that negatively 
+        charged oxygen or sulphur are included. Excluded are halogens, including F, 
+        heteroaromatic oxygen, sulphur and pyrrole N. Higher oxidation levels of N,P,S are excluded.
+        Note P(III) is currently included. Zeneca's work would imply that (O=S=O) shoud also be excluded.
+    </p>
+
+<p>
+<b>Classification</b>
+<br/>This descriptor is a <a href="http://qsar.sourceforge.net/dicts/qsar-descriptors-metadata/index.xhtml#electronicDescriptor">Electronic Descriptor</a>
+<br/>
+<b>Implementations</b>
+<br/>Search implementations on <a href="http://www.google.com/search?q=qsar-descriptors:hBondacceptors&amp;ie=UTF-8&amp;oe=UTF-8">
+    Google.com
+  </a>
+</p>
+</li>
+</ul>
+
+<p class="small">
+<i>
+Contributed by:
+, .
+Created on: 2004-11-26.
+</i>
+</p>
+<h3>
+<a id="hBondDonors">Hydrogen Bond Donors (hBondDonors)
+    </a>
+</h3>
+<ul>
+<li>
+<p>
+<b>Definition</b>
+<br/>
+        Descriptor that calculates the number of hydrogen bond donors.
+    </p>
+
+<p>
+<b>Description</b>
+<br/>
+        As defined by Daylight website, 
+    [<a href="#bibtex:DAY01">DAY01</a>]
+  , a H-bond acceptor
+	must have an N-H bond, an O-H bond, or a F-H bond
+    </p>
+<p>
+<b>Classification</b>
+<br/>This descriptor is a <a href="http://qsar.sourceforge.net/dicts/qsar-descriptors-metadata/index.xhtml#electronicDescriptor">Electronic Descriptor</a>
+<br/>
+<b>Implementations</b>
+
+<br/>Search implementations on <a href="http://www.google.com/search?q=qsar-descriptors:hBondDonors&amp;ie=UTF-8&amp;oe=UTF-8">
+    Google.com
+  </a>
+</p>
+</li>
+</ul>
+<p class="small">
+<i>
+Contributed by:
+.
+Created on: 2004-11-26.
+</i>
+</p>
+<h3>
+<a id="atomicHardness">Inductive atomic hardness (atomicHardness)
+    </a>
+</h3>
+
+<ul>
+<li>
+<p>
+<b>Definition</b>
+<br/>
+       This class calculates the atomic hardness of a given atom.
+    </p>
+<p>
+<b>Description</b>
+<br/>
+       Inductive atomic hardness of an atom in a polyatomic system can be defined 
+       as the resistance to a change of the atomic charge.
+       This descriptor is described by Cherkasov 
+    [<a href="#bibtex:CHER2003">CHER2003</a>]
+  .
+    </p>
+
+<p>
+<b>Classification</b>
+<br/>This descriptor is a <a href="http://qsar.sourceforge.net/dicts/qsar-descriptors-metadata/index.xhtml#electronicDescriptor">Electronic Descriptor</a>
+<br/>
+<b>Implementations</b>
+<br/>Search implementations on <a href="http://www.google.com/search?q=qsar-descriptors:atomicHardness&amp;ie=UTF-8&amp;oe=UTF-8">
+    Google.com
+  </a>
+</p>
+</li>
+</ul>
+
+<p class="small">
+<i>
+Contributed by:
+.
+Created on: 2005-04-21.
+</i>
+</p>
+<h3>
+<a id="atomicSoftness">Inductive atomic softness (atomicSoftness)
+    </a>
+</h3>
+<ul>
+<li>
+<p>
+<b>Definition</b>
+<br/>
+       This class calculates the atomic softness of a given atom.
+    </p>
+
+<p>
+<b>Description</b>
+<br/>
+       Inductive atomic softness of an atom in a polyatomic system can be defined 
+       as as charge delocalizing ability.
+       This descriptor is described by Cherkasov 
+    [<a href="#bibtex:CHER2003">CHER2003</a>]
+  .
+    </p>
+<p>
+<b>Classification</b>
+<br/>This descriptor is a <a href="http://qsar.sourceforge.net/dicts/qsar-descriptors-metadata/index.xhtml#electronicDescriptor">Electronic Descriptor</a>
+<br/>
+<b>Implementations</b>
+
+<br/>Search implementations on <a href="http://www.google.com/search?q=qsar-descriptors:atomicSoftness&amp;ie=UTF-8&amp;oe=UTF-8">
+    Google.com
+  </a>
+</p>
+</li>
+</ul>
+<p class="small">
+<i>
+Contributed by:
+.
+Created on: 2005-04-21.
+</i>
+</p>
+<h3>
+<a id="kierValues">Kier and Hall kappa molecular shape indices (kierValues)
+    </a>
+</h3>
+
+<ul>
+<li>
+<p>
+<b>Definition</b>
+<br/>
+        Descriptor that calculates Kier and Hall kappa molecular shape indices.
+    </p>
+<p>
+<b>Description</b>
+<br/>
+      	Kier and Hall kappa molecular shape indices compare the molecular graph with minimal and maximal molecular graphs.
+	First kappa shape index is given by
+	<math xmlns="http://www.w3.org/1998/Math/MathML">
+<mrow>
+
+<mfrac>
+            <math xmlns="http://www.w3.org/1998/Math/MathML">
+<mrow>
+<msup>
+                <math xmlns="http://www.w3.org/1998/Math/MathML">
+<mrow>
+<ci>n</ci>
+<mo>(</mo>
+<ci>n</ci>
+<mo>-</mo>
+<ci>1</ci>
+
+<mo>)</mo>
+</mrow>
+</math>
+                <ci>2</ci>
+              </msup>
+</mrow>
+</math>
+            <math xmlns="http://www.w3.org/1998/Math/MathML">
+<mrow>
+<msup>
+                <mi>m</mi>
+
+                <mi>2</mi>
+              </msup>
+</mrow>
+</math>
+          </mfrac>
+</mrow>
+</math>,
+	second kappa shape index is given by
+	<math xmlns="http://www.w3.org/1998/Math/MathML">
+<mrow>
+<mfrac>
+	    <math xmlns="http://www.w3.org/1998/Math/MathML">
+<mrow>
+
+<math xmlns="http://www.w3.org/1998/Math/MathML">
+<mrow>
+<mo>(</mo>
+<ci>n</ci>
+<mo>-</mo>
+<ci>1</ci>
+<mo>)</mo>
+</mrow>
+</math>
+<math xmlns="http://www.w3.org/1998/Math/MathML">
+<mrow>
+<msup>
+
+                  <math xmlns="http://www.w3.org/1998/Math/MathML">
+<mrow>
+<mo>(</mo>
+<ci>n</ci>
+<mo>-</mo>
+<ci>2</ci>
+<mo>)</mo>
+</mrow>
+</math>
+                  <mi>2</mi>
+
+                </msup>
+</mrow>
+</math>
+</mrow>
+</math>
+            <math xmlns="http://www.w3.org/1998/Math/MathML">
+<mrow>
+<msup>
+                <msub>
+                  <ci>p</ci>
+		  <ci>2</ci>
+
+                </msub>
+		<mi>2</mi>
+              </msup>
+</mrow>
+</math>
+          </mfrac>
+</mrow>
+</math>
+	and third kappa shape index is given by
+	<math xmlns="http://www.w3.org/1998/Math/MathML">
+<mrow>
+
+<mfrac>
+	    <math xmlns="http://www.w3.org/1998/Math/MathML">
+<mrow>
+<math xmlns="http://www.w3.org/1998/Math/MathML">
+<mrow>
+<mo>(</mo>
+<ci>n</ci>
+<mo>-</mo>
+<ci>1</ci>
+<mo>)</mo>
+</mrow>
+
+</math>
+<math xmlns="http://www.w3.org/1998/Math/MathML">
+<mrow>
+<msup>
+                  <math xmlns="http://www.w3.org/1998/Math/MathML">
+<mrow>
+<mo>(</mo>
+<ci>n</ci>
+<mo>-</mo>
+<ci>3</ci>
+<mo>)</mo>
+
+</mrow>
+</math>
+                  <mi>2</mi>
+                </msup>
+</mrow>
+</math>
+</mrow>
+</math>
+            <math xmlns="http://www.w3.org/1998/Math/MathML">
+<mrow>
+<msup>
+                <msub>
+
+                  <ci>p</ci>
+		  <ci>3</ci>
+                </msub>
+		<mi>2</mi>
+              </msup>
+</mrow>
+</math>
+          </mfrac>
+
+</mrow>
+</math>
+	for odd n and
+	<math xmlns="http://www.w3.org/1998/Math/MathML">
+<mrow>
+<mfrac>
+	    <math xmlns="http://www.w3.org/1998/Math/MathML">
+<mrow>
+<math xmlns="http://www.w3.org/1998/Math/MathML">
+<mrow>
+<mo>(</mo>
+<ci>n</ci>
+<mo>-</mo>
+
+<ci>3</ci>
+<mo>)</mo>
+</mrow>
+</math>
+<math xmlns="http://www.w3.org/1998/Math/MathML">
+<mrow>
+<msup>
+                  <math xmlns="http://www.w3.org/1998/Math/MathML">
+<mrow>
+<mo>(</mo>
+<ci>n</ci>
+<mo>-</mo>
+
+<ci>2</ci>
+<mo>)</mo>
+</mrow>
+</math>
+                  <mi>2</mi>
+                </msup>
+</mrow>
+</math>
+</mrow>
+</math>
+            <math xmlns="http://www.w3.org/1998/Math/MathML">
+
+<mrow>
+<msup>
+                <msub>
+                  <ci>p</ci>
+		  <ci>3</ci>
+                </msub>
+		<mi>2</mi>
+              </msup>
+
+</mrow>
+</math>
+          </mfrac>
+</mrow>
+</math>
+	for enev n, 
+	where n denotes the number of atoms in the hydrogen suppressed graph, m is the number of bonds in the hydrogen 
+	suppressed graph. Also, let p2 denote the number of paths of length 2 and let p3 denote the number of paths of length 3
+    </p>
+<p>
+<b>Classification</b>
+<br/>This descriptor is a <a href="http://qsar.sourceforge.net/dicts/qsar-descriptors-metadata/index.xhtml#topologicalDescriptor">Topological Descriptor</a>
+<br/>
+<b>Implementations</b>
+
+<br/>Search implementations on <a href="http://www.google.com/search?q=qsar-descriptors:kierValues&amp;ie=UTF-8&amp;oe=UTF-8">
+    Google.com
+  </a>
+</p>
+</li>
+</ul>
+<p class="small">
+<i>
+Contributed by:
+.
+Created on: 2004-11-26.
+</i>
+</p>
+<h3>
+<a id="largestAliphaticChain">Largest Aliphatic Chain (largestAliphaticChain)
+    </a>
+</h3>
+
+<ul>
+<li>
+<p>
+<b>Definition</b>
+<br/>
+        Descriptor that returns the number of atoms in the longest aliphatic chain.
+    </p>
+<p/>
+<p>
+<b>Classification</b>
+<br/>This descriptor is a <a href="http://qsar.sourceforge.net/dicts/qsar-descriptors-metadata/index.xhtml#topologicalDescriptor">Topological Descriptor</a>
+<br/>
+
+<b>Implementations</b>
+<br/>Search implementations on <a href="http://www.google.com/search?q=qsar-descriptors:largestAliphaticChain&amp;ie=UTF-8&amp;oe=UTF-8">
+    Google.com
+  </a>
+</p>
+</li>
+</ul>
+<p class="small">
+<i>
+Contributed by:
+.
+Created on: 2006-1-03.
+</i>
+</p>
+<h3>
+<a id="largestChain">Largest Chain (largestChain)
+    </a>
+
+</h3>
+<ul>
+<li>
+<p>
+<b>Definition</b>
+<br/>
+        Descriptor that returns the number of atoms in the largest chain.
+    </p>
+<p/>
+<p>
+<b>Classification</b>
+<br/>This descriptor is a <a href="http://qsar.sourceforge.net/dicts/qsar-descriptors-metadata/index.xhtml#topologicalDescriptor">Topological Descriptor</a>
+
+<br/>
+<b>Implementations</b>
+<br/>Search implementations on <a href="http://www.google.com/search?q=qsar-descriptors:largestChain&amp;ie=UTF-8&amp;oe=UTF-8">
+    Google.com
+  </a>
+</p>
+</li>
+</ul>
+<p class="small">
+<i>
+Contributed by:
+.
+Created on: 2006-1-03.
+</i>
+</p>
+<h3>
+
+<a id="largestPiSystem">Largest Pi System (largestPiSystem)
+    </a>
+</h3>
+<ul>
+<li>
+<p>
+<b>Definition</b>
+<br/>
+        Descriptor that returns the number of atoms in the largest pi system.
+    </p>
+<p/>
+<p>
+<b>Classification</b>
+<br/>This descriptor is a <a href="http://qsar.sourceforge.net/dicts/qsar-descriptors-metadata/index.xhtml#topologicalDescriptor">Topological Descriptor</a>
+
+<br/>
+<b>Implementations</b>
+<br/>Search implementations on <a href="http://www.google.com/search?q=qsar-descriptors:largestPiSystem&amp;ie=UTF-8&amp;oe=UTF-8">
+    Google.com
+  </a>
+</p>
+</li>
+</ul>
+<p class="small">
+<i>
+Contributed by:
+.
+Created on: 2006-1-03.
+</i>
+</p>
+<h3>
+
+<a id="lipinskifailures">Lipinski's Rule of Five (lipinskifailures)
+    </a>
+</h3>
+<ul>
+<li>
+<p>
+<b>Definition</b>
+<br/>
+      This Class contains a method that returns the number failures of the
+      Lipinski's Rule Of Five.
+    </p>
+<p>
+<b>Description</b>
+<br/>
+      The Rule of 5 got its name from the cutoff values for each of the four parameters that define the potential of
+      a drug candidate for good absorption: all of these values are close to five or a multiple of five.
+      The original definition, given by Christopher A. Lipinski, says that poor absorption (or permeation) is more likely when:
+      the molecule has more than 5 H-bond donors and more than 10 H-bond acceptors;
+      its molecular weight is over 500.
+      its LogP is over 5;
+    </p>
+
+<p>
+<b>Classification</b>
+<br/>This descriptor is a <a href="http://qsar.sourceforge.net/dicts/qsar-descriptors-metadata/index.xhtml#constitutionalDescriptor">Constitutional Descriptor</a>
+<br/>
+<b>Implementations</b>
+<br/>Search implementations on <a href="http://www.google.com/search?q=qsar-descriptors:lipinskifailures&amp;ie=UTF-8&amp;oe=UTF-8">
+    Google.com
+  </a>
+</p>
+</li>
+</ul>
+
+<p class="small">
+<i>
+Contributed by:
+, Egon Willighagen.
+Created on: 2005-01-27.
+</i>
+</p>
+<h3>
+<a id="weight">Molecular Weight (weight)
+    </a>
+</h3>
+<ul>
+<li>
+<p>
+<b>Definition</b>
+<br/>
+      Descriptor based on the weight of atoms of a certain element type.
+      If no element is specified, the returned value is the Molecular Weight
+    </p>
+
+<p/>
+<p>
+<b>Classification</b>
+<br/>This descriptor is a <a href="http://qsar.sourceforge.net/dicts/qsar-descriptors-metadata/index.xhtml#molecularDescriptor">Molecular Descriptor</a>
+<br/>
+<b>Implementations</b>
+<br/>Search implementations on <a href="http://www.google.com/search?q=qsar-descriptors:weight&amp;ie=UTF-8&amp;oe=UTF-8">
+    Google.com
+  </a>
+</p>
+</li>
+
+</ul>
+<p class="small">
+<i>
+Contributed by:
+, Egon Willighagen.
+Created on: 2005-01-27.
+</i>
+</p>
+<h3>
+<a id="momentOfInertia">Moments of Inertia (momentOfInertia)
+    </a>
+</h3>
+<ul>
+<li>
+<p>
+<b>Definition</b>
+<br/>
+        Descriptor that calculates the principal moments of inertia and ratios
+        of the principal moments. Als calculates the radius of gyration.
+    </p>
+
+<p/>
+<p>
+<b>Classification</b>
+<br/>This descriptor is a <a href="http://qsar.sourceforge.net/dicts/qsar-descriptors-metadata/index.xhtml#geometricalDescriptor">Geometrical Descriptor</a>
+<br/>
+<b>Implementations</b>
+<br/>Search implementations on <a href="http://www.google.com/search?q=qsar-descriptors:momentOfInertia&amp;ie=UTF-8&amp;oe=UTF-8">
+    Google.com
+  </a>
+</p>
+</li>
+
+</ul>
+<p class="small">
+<i>
+Contributed by:
+, Egon Willighagen.
+Created on: 2005-02-07.
+</i>
+</p>
+<h3>
+<a id="partialPiCharge">Partial Pi Charge (partialPiCharge)
+    </a>
+</h3>
+<ul>
+<li>
+<p>
+<b>Definition</b>
+<br/>
+        Descriptor that calculates pi partial charges in pi-bonded systems of an heavy atom.
+    </p>
+
+<p>
+<b>Description</b>
+<br/>
+        Calculation is based on Gasteiger H.Saller (PEPE) 
+    [<a href="#bibtex:SALLER">SALLER</a>]
+  .
+    </p>
+<p>
+<b>Classification</b>
+<br/>This descriptor is a <a href="http://qsar.sourceforge.net/dicts/qsar-descriptors-metadata/index.xhtml#electronicDescriptor">Electronic Descriptor</a>
+<br/>
+<b>Implementations</b>
+
+<br/>Search implementations on <a href="http://www.google.com/search?q=qsar-descriptors:partialPiCharge&amp;ie=UTF-8&amp;oe=UTF-8">
+    Google.com
+  </a>
+</p>
+</li>
+</ul>
+<p class="small">
+<i>
+Contributed by:
+.
+Created on: 2006-05-08.
+</i>
+</p>
+<h3>
+<a id="partialSigmaCharge">Partial Sigma Charge (partialSigmaCharge)
+    </a>
+</h3>
+
+<ul>
+<li>
+<p>
+<b>Definition</b>
+<br/>
+        Descriptor that calculates sigma partial 
+        charges in sigma-bonded systems (PEOE) of an heavy atom.
+    </p>
+<p>
+<b>Description</b>
+<br/>
+        Calculation is based on Gasteiger Marsili (PEOE) 
+    [<a href="#bibtex:MARSILI">MARSILI</a>]
+  .
+    </p>
+
+<p>
+<b>Classification</b>
+<br/>This descriptor is a <a href="http://qsar.sourceforge.net/dicts/qsar-descriptors-metadata/index.xhtml#electronicDescriptor">Electronic Descriptor</a>
+<br/>
+<b>Implementations</b>
+<br/>Search implementations on <a href="http://www.google.com/search?q=qsar-descriptors:partialSigmaCharge&amp;ie=UTF-8&amp;oe=UTF-8">
+    Google.com
+  </a>
+</p>
+</li>
+</ul>
+
+<p class="small">
+<i>
+Contributed by:
+.
+Created on: 2006-05-08.
+</i>
+</p>
+<h3>
+<a id="PartialTChargeMMFF94">Partial Total Charge (MMFF94) (PartialTChargeMMFF94)
+    </a>
+</h3>
+<ul>
+<li>
+<p>
+<b>Definition</b>
+<br/>
+        Descriptor that calculates total partial 
+        charges of an heavy atom.
+    </p>
+
+<p>
+<b>Description</b>
+<br/>
+        Calculation is based on MMFF94. 
+    </p>
+<p>
+<b>Classification</b>
+<br/>This descriptor is a <a href="http://qsar.sourceforge.net/dicts/qsar-descriptors-metadata/index.xhtml#electronicDescriptor">Electronic Descriptor</a>
+<br/>
+<b>Implementations</b>
+<br/>Search implementations on <a href="http://www.google.com/search?q=qsar-descriptors:PartialTChargeMMFF94&amp;ie=UTF-8&amp;oe=UTF-8">
+
+    Google.com
+  </a>
+</p>
+</li>
+</ul>
+<p class="small">
+<i>
+Contributed by:
+.
+Created on: 2006-05-08.
+</i>
+</p>
+<h3>
+<a id="PartialTChargePEOEDescriptor">Partial Total Charge (PEOE) (PartialTChargePEOEDescriptor)
+    </a>
+</h3>
+<ul>
+<li>
+
+<p>
+<b>Definition</b>
+<br/>
+        Descriptor that calculates total partial 
+        charges of an heavy atom.
+    </p>
+<p>
+<b>Description</b>
+<br/>
+        Calculation is based on Partial Equalization of Orbital Electronegativity method (PEOE) 
+        from Gasteiger. They are obtained by summation of the results of the calculations 
+        on sigma- and pi-charges. 
+    </p>
+<p>
+<b>Classification</b>
+
+<br/>This descriptor is a <a href="http://qsar.sourceforge.net/dicts/qsar-descriptors-metadata/index.xhtml#electronicDescriptor">Electronic Descriptor</a>
+<br/>
+<b>Implementations</b>
+<br/>Search implementations on <a href="http://www.google.com/search?q=qsar-descriptors:PartialTChargePEOEDescriptor&amp;ie=UTF-8&amp;oe=UTF-8">
+    Google.com
+  </a>
+</p>
+</li>
+</ul>
+<p class="small">
+<i>
+Contributed by:
+.
+Created on: 2006-05-08.
+
+</i>
+</p>
+<h3>
+<a id="period">Period of an atom (period)
+    </a>
+</h3>
+<ul>
+<li>
+<p>
+<b>Definition</b>
+<br/>
+        Descriptor that returns the period in the periodic table of an atom belonging to an atom container
+    </p>
+<p/>
+<p>
+
+<b>Classification</b>
+<br/>This descriptor is a <a href="http://qsar.sourceforge.net/dicts/qsar-descriptors-metadata/index.xhtml#constitutionalDescriptor">Constitutional Descriptor</a>
+<br/>
+<b>Implementations</b>
+<br/>Search implementations on <a href="http://www.google.com/search?q=qsar-descriptors:period&amp;ie=UTF-8&amp;oe=UTF-8">
+    Google.com
+  </a>
+</p>
+</li>
+</ul>
+<p class="small">
+
+<i>
+Contributed by:
+.
+Created on: 2005-02-07.
+</i>
+</p>
+<h3>
+<a id="petitjeanNumber">Petitjean Number (petitjeanNumber)
+    </a>
+</h3>
+<ul>
+<li>
+<p>
+<b>Definition</b>
+<br/>
+        Descriptor that calculates the Petitjean Number of a molecule.
+    </p>
+
+<p>
+<b>Description</b>
+<br/>
+        According to the Petitjean definition, the eccentricity of a vertex corresponds to the 
+	distance from that vertex to the most remote vertex in the graph. The distance 
+	is obtained from the distance matrix as the count of edges between the two vertices.
+	If <math xmlns="http://www.w3.org/1998/Math/MathML">
+<mrow>
+<msub>
+<mi>r</mi>
+<mi>i</mi>
+</msub>
+</mrow>
+</math>
+	is the largest matrix entry in row i of the distance matrix D, then the radius 
+	is defined as the smallest of the <math xmlns="http://www.w3.org/1998/Math/MathML">
+
+<mrow>
+<msub>
+<mi>r</mi>
+<mi>i</mi>
+</msub>
+</mrow>
+</math>. 
+	The graph diameter D is defined as the largest vertex eccentricity in the graph.
+	Petitjean Number is the value of 
+	<math xmlns="http://www.w3.org/1998/Math/MathML">
+<mrow>
+<mfrac>
+	    <math xmlns="http://www.w3.org/1998/Math/MathML">
+<mrow>
+<mo>(</mo>
+
+<ci>diameter</ci>
+<mo>-</mo>
+<ci>radius</ci>
+<mo>)</mo>
+</mrow>
+</math>
+            <ci>diameter</ci>
+          </mfrac>
+</mrow>
+</math>.
+    </p>
+
+<p>
+<b>Classification</b>
+<br/>This descriptor is a <a href="http://qsar.sourceforge.net/dicts/qsar-descriptors-metadata/index.xhtml#topologicalDescriptor">Topological Descriptor</a>
+<br/>
+<b>Implementations</b>
+<br/>Search implementations on <a href="http://www.google.com/search?q=qsar-descriptors:petitjeanNumber&amp;ie=UTF-8&amp;oe=UTF-8">
+    Google.com
+  </a>
+</p>
+</li>
+</ul>
+
+<p class="small">
+<i>
+Contributed by:
+.
+Created on: 2005-02-07.
+</i>
+</p>
+<h3>
+<a id="petitjeanShapeIndex">Petitjean Shape Indices (petitjeanShapeIndex)
+    </a>
+</h3>
+<ul>
+<li>
+<p>
+<b>Definition</b>
+<br/>
+        Descriptor that evaluates the Petitjean shape indices.
+    </p>
+
+<p>
+<b>Description</b>
+<br/>
+  		These original Petitjean number was described by Petitjean and considered 
+  		the molecular graph. This class also implements the geometric analog 
+  		of the topological shape index described by Bath et al.
+  	</p>
+<p>
+<b>Classification</b>
+<br/>This descriptor is a <a href="http://qsar.sourceforge.net/dicts/qsar-descriptors-metadata/index.xhtml#topologicalDescriptor">Topological Descriptor</a>
+<br/>
+<b>Implementations</b>
+<br/>Search implementations on <a href="http://www.google.com/search?q=qsar-descriptors:petitjeanShapeIndex&amp;ie=UTF-8&amp;oe=UTF-8">
+
+    Google.com
+  </a>
+</p>
+</li>
+</ul>
+<p class="small">
+<i>
+Contributed by:
+.
+Created on: 2006-01-14.
+</i>
+</p>
+<h3>
+<a id="piContact">Pi-contact of two atoms (piContact)
+    </a>
+</h3>
+<ul>
+<li>
+
+<p>
+<b>Definition</b>
+<br/>
+        Descriptor that check if two atoms have pi-contact (this is true when there is one and 
+	the same conjugated pi-system which contains both atoms, or directly linked neighboors of the atoms).
+    </p>
+<p/>
+<p>
+<b>Classification</b>
+<br/>This descriptor is a <a href="http://qsar.sourceforge.net/dicts/qsar-descriptors-metadata/index.xhtml#constitutionalDescriptor">Constitutional Descriptor</a>
+<br/>
+<b>Implementations</b>
+
+<br/>Search implementations on <a href="http://www.google.com/search?q=qsar-descriptors:piContact&amp;ie=UTF-8&amp;oe=UTF-8">
+    Google.com
+  </a>
+</p>
+</li>
+</ul>
+<p class="small">
+<i>
+Contributed by:
+.
+Created on: 2005-02-07.
+</i>
+</p>
+<h3>
+<a id="piElectronegativity">Pi Electronegativity (piElectronegativity)
+    </a>
+</h3>
+
+<ul>
+<li>
+<p>
+<b>Definition</b>
+<br/>
+        This Class contains a method that returns the pi electronegativity for a given atom.
+    </p>
+<p>
+<b>Description</b>
+<br/>
+        Pi electronegativity is given by
+	<math xmlns="http://www.w3.org/1998/Math/MathML">
+<mrow>
+
+<mi>X</mi>
+<mo>=</mo>
+<mi>a</mi>
+<mo>+</mo>
+<mi>b</mi>
+<mi>q</mi>
+<mo>+</mo>
+<mi>c</mi>
+<math xmlns="http://www.w3.org/1998/Math/MathML">
+
+<mrow>
+<mo>(</mo>
+<math xmlns="http://www.w3.org/1998/Math/MathML">
+<mrow>
+<msup>
+	        <mi>q</mi>
+	        <mi>2</mi>
+	      </msup>
+</mrow>
+</math>
+<mo>)</mo>
+
+</mrow>
+</math>
+</mrow>
+</math>,
+	where a, b and c are Gasteiger Marsili parameters, and q is the sigma charge.
+    </p>
+<p>
+<b>Classification</b>
+<br/>This descriptor is a <a href="http://qsar.sourceforge.net/dicts/qsar-descriptors-metadata/index.xhtml#electronicDescriptor">Electronic Descriptor</a>
+<br/>
+<b>Implementations</b>
+<br/>Search implementations on <a href="http://www.google.com/search?q=qsar-descriptors:piElectronegativity&amp;ie=UTF-8&amp;oe=UTF-8">
+    Google.com
+  </a>
+
+</p>
+</li>
+</ul>
+<p class="small">
+<i>
+Contributed by:
+.
+Created on: 2006-05-08.
+</i>
+</p>
+<h3>
+<a id="isProtonInAromaticSystem">Proton belonging to an aromatic system (isProtonInAromaticSystem)
+    </a>
+</h3>
+<ul>
+<li>
+<p>
+<b>Definition</b>
+
+<br/>
+      This Class contains a method that returns 1 if the protons is directly bonded to an aromatic system,
+      it returns 2 if the distance between aromatic system and proton is 2 bonds, 
+      and 0 for other positions.
+    </p>
+<p/>
+<p>
+<b>Classification</b>
+<br/>This descriptor is a <a href="http://qsar.sourceforge.net/dicts/qsar-descriptors-metadata/index.xhtml#constitutionalDescriptor">Constitutional Descriptor</a>
+<br/>
+<b>Implementations</b>
+<br/>Search implementations on <a href="http://www.google.com/search?q=qsar-descriptors:isProtonInAromaticSystem&amp;ie=UTF-8&amp;oe=UTF-8">
+    Google.com
+  </a>
+
+</p>
+</li>
+</ul>
+<p class="small">
+<i>
+Contributed by:
+.
+Created on: 2005-01-27.
+</i>
+</p>
+<h3>
+<a id="isProtonInConjugatedPiSystem">Proton belonging to a pi-system (isProtonInConjugatedPiSystem)
+    </a>
+</h3>
+<ul>
+<li>
+<p>
+<b>Definition</b>
+
+<br/>
+      This Class contains a method that returns true if the protons is directly bonded to a pi system.
+    </p>
+<p/>
+<p>
+<b>Classification</b>
+<br/>This descriptor is a <a href="http://qsar.sourceforge.net/dicts/qsar-descriptors-metadata/index.xhtml#constitutionalDescriptor">Constitutional Descriptor</a>
+<br/>
+<b>Implementations</b>
+<br/>Search implementations on <a href="http://www.google.com/search?q=qsar-descriptors:isProtonInConjugatedPiSystem&amp;ie=UTF-8&amp;oe=UTF-8">
+    Google.com
+  </a>
+
+</p>
+</li>
+</ul>
+<p class="small">
+<i>
+Contributed by:
+.
+Created on: 2005-01-27.
+</i>
+</p>
+<h3>
+<a id="protonPartialCharge">Proton Total Partial Charge (protonPartialCharge)
+    </a>
+</h3>
+<ul>
+<li>
+<p>
+<b>Definition</b>
+
+<br/>
+        Descriptor that calculates partial charges of an heavy atom and its protons.
+    </p>
+<p>
+<b>Description</b>
+<br/>
+        Calculation is based on Gasteiger Marsili (PEOE)
+    </p>
+<p>
+<b>Classification</b>
+<br/>This descriptor is a <a href="http://qsar.sourceforge.net/dicts/qsar-descriptors-metadata/index.xhtml#electronicDescriptor">Electronic Descriptor</a>
+
+<br/>
+<b>Implementations</b>
+<br/>Search implementations on <a href="http://www.google.com/search?q=qsar-descriptors:protonPartialCharge&amp;ie=UTF-8&amp;oe=UTF-8">
+    Google.com
+  </a>
+</p>
+</li>
+</ul>
+<p class="small">
+<i>
+Contributed by:
+.
+Created on: 2005-02-07.
+</i>
+</p>
+<h3>
+
+<a id="rdfProtonCalculatedValues">RDF Proton Descriptor (rdfProtonCalculatedValues)
+    </a>
+</h3>
+<ul>
+<li>
+<p>
+<b>Definition</b>
+<br/>
+      Calculation of RDF proton descriptor based on 
+    [<a href="#bibtex:GAST2002">GAST2002</a>]
+  .
+    </p>
+<p>
+<b>Description</b>
+
+<br/>
+      A given proton is represented by 5 different descriptors.
+      The first one has the form
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+<mrow>
+<apply>
+          <eq/>
+          <apply>
+            <msub>
+              <ci>g</ci>
+              <ci>H</ci>
+
+            </msub>
+            <ci>r</ci>
+          </apply>
+          <apply>
+            <sum/>
+            <math xmlns="http://www.w3.org/1998/Math/MathML">
+<mrow>
+<msub>
+                <ci>p</ci>
+
+                <ci>i</ci>
+              </msub>
+<msup>
+                <ci>e</ci>
+                <math xmlns="http://www.w3.org/1998/Math/MathML">
+<mrow>
+<mo>-</mo>
+<ci>B</ci>
+<msup>
+
+                    <math xmlns="http://www.w3.org/1998/Math/MathML">
+<mrow>
+<mo>(</mo>
+<ci>r</ci>
+<mo>-</mo>
+<msub>
+                        <ci>r</ci>
+                        <ci>i</ci>
+                      </msub>
+
+<mo>)</mo>
+</mrow>
+</math>
+                    <ci>2</ci>
+                  </msup>
+</mrow>
+</math>
+              </msup>
+</mrow>
+</math>
+          </apply>
+
+        </apply>
+</mrow>
+</math>
+      where i denotes an atom up to four not rotatable bonds away from the target proton, 
+      p is the partial atomic charge of the atom i, B is a smoothing parameter, 
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+<mrow>
+<msub>
+<mi>r</mi>
+<mi>i</mi>
+</msub>
+</mrow>
+</math> is the
+      3D distance between proton and atom i, and r is a running variable.
+      The second one is a topological form of the first one, where i is an atom up to the fifth sphere,
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+
+<mrow>
+<msub>
+<mi>p</mi>
+<mi>i</mi>
+</msub>
+</mrow>
+</math> is the
+      partial atomic charge of atom i, and <math xmlns="http://www.w3.org/1998/Math/MathML">
+<mrow>
+<msub>
+<mi>r</mi>
+<mi>i</mi>
+
+</msub>
+</mrow>
+</math>
+      is now the sum of bond length on the shortest path between the proton and atom i.
+      The third one has the form 
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+<mrow>
+<apply>
+          <eq/>
+          <apply>
+            <msub>
+              <ci>g</ci>
+
+              <ci>D</ci>
+            </msub>
+            <ci>r</ci>
+          </apply>
+          <apply>
+            <sum/>
+            <math xmlns="http://www.w3.org/1998/Math/MathML">
+<mrow>
+
+<mfrac>
+                <mi>1</mi>
+                <math xmlns="http://www.w3.org/1998/Math/MathML">
+<mrow>
+<msup>
+                    <msub>
+                      <mi>r</mi>
+                      <mi>D,i</mi>
+                    </msub>
+
+                    <mi>2</mi>
+                  </msup>
+</mrow>
+</math>
+              </mfrac>
+<msup>
+                <ci>e</ci>
+                <math xmlns="http://www.w3.org/1998/Math/MathML">
+<mrow>
+<mo>-</mo>
+
+<ci>B</ci>
+<msup>
+                    <math xmlns="http://www.w3.org/1998/Math/MathML">
+<mrow>
+<mo>(</mo>
+<ci>r</ci>
+<mo>-</mo>
+<msub>
+                        <ci>a</ci>
+                        <ci>D,i</ci>
+
+                      </msub>
+<mo>)</mo>
+</mrow>
+</math>
+                    <ci>2</ci>
+                  </msup>
+</mrow>
+</math>
+              </msup>
+</mrow>
+</math>
+
+          </apply>
+        </apply>
+</mrow>
+</math>
+      where i denotes a double bond up to the seventh sphere of nonrotatable bonds centered on the target proton, 
+      and <math xmlns="http://www.w3.org/1998/Math/MathML">
+<mrow>
+<msub>
+<mi>r</mi>
+<mi>D</mi>
+</msub>
+</mrow>
+
+</math> and
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+<mrow>
+<msub>
+<mi>a</mi>
+<mi>D</mi>
+</msub>
+</mrow>
+</math> are
+      geometric variables.
+      The fourth one has the form 
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+<mrow>
+<apply>
+          <eq/>
+
+          <apply>
+            <msub>
+              <ci>g</ci>
+              <ci>S</ci>
+            </msub>
+            <ci>r</ci>
+          </apply>
+
+          <apply>
+            <sum/>
+            <math xmlns="http://www.w3.org/1998/Math/MathML">
+<mrow>
+<mfrac>
+                <mi>1</mi>
+                <math xmlns="http://www.w3.org/1998/Math/MathML">
+<mrow>
+<msup>
+                    <msub>
+
+                      <mi>r</mi>
+                      <mi>S,i</mi>
+                    </msub>
+                    <mi>2</mi>
+                  </msup>
+</mrow>
+</math>
+              </mfrac>
+
+<msup>
+                <ci>e</ci>
+                <math xmlns="http://www.w3.org/1998/Math/MathML">
+<mrow>
+<mo>-</mo>
+<ci>B</ci>
+<msup>
+                    <math xmlns="http://www.w3.org/1998/Math/MathML">
+<mrow>
+<mo>(</mo>
+
+<ci>r</ci>
+<mo>-</mo>
+<msub>
+                        <ci>a</ci>
+                        <ci>S,i</ci>
+                      </msub>
+<mo>)</mo>
+</mrow>
+</math>
+
+                    <ci>2</ci>
+                  </msup>
+</mrow>
+</math>
+              </msup>
+</mrow>
+</math>
+          </apply>
+        </apply>
+</mrow>
+</math>
+
+      where i denotes a single bond up to the seventh sphere of nonrotatable bonds centered on the target proton, 
+      and <math xmlns="http://www.w3.org/1998/Math/MathML">
+<mrow>
+<msub>
+<mi>r</mi>
+<mi>S</mi>
+</msub>
+</mrow>
+</math> and
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+<mrow>
+<msub>
+<mi>a</mi>
+
+<mi>S</mi>
+</msub>
+</mrow>
+</math> are
+      geometric variables.
+      The last one has the form 
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+<mrow>
+<apply>
+          <eq/>
+          <apply>
+            <msub>
+              <ci>g</ci>
+
+              <ci>3</ci>
+            </msub>
+            <ci>r</ci>
+          </apply>
+          <apply>
+            <sum/>
+            <math xmlns="http://www.w3.org/1998/Math/MathML">
+<mrow>
+
+<msup>
+                <ci>e</ci>
+                <math xmlns="http://www.w3.org/1998/Math/MathML">
+<mrow>
+<mo>-</mo>
+<ci>B</ci>
+<msup>
+                    <math xmlns="http://www.w3.org/1998/Math/MathML">
+<mrow>
+<mo>(</mo>
+
+<ci>r</ci>
+<mo>-</mo>
+<msub>
+                        <ci>a</ci>
+                        <ci>3,i</ci>
+                      </msub>
+<mo>)</mo>
+</mrow>
+</math>
+
+                    <ci>2</ci>
+                  </msup>
+</mrow>
+</math>
+              </msup>
+</mrow>
+</math>
+          </apply>
+        </apply>
+</mrow>
+</math>
+
+      where i denotes an atom three nonrotatable bonds away from the target proton and belonging to a 
+      six-membered ring, and <math xmlns="http://www.w3.org/1998/Math/MathML">
+<mrow>
+<msub>
+<mi>a</mi>
+<mi>3</mi>
+</msub>
+</mrow>
+</math> is
+      a dihedral angle in radian units.
+      Each values is returned as atom property.
+    </p>
+<p>
+<b>Classification</b>
+
+<br/>This descriptor is a <a href="http://qsar.sourceforge.net/dicts/qsar-descriptors-metadata/index.xhtml#topologicalDescriptor">Topological Descriptor</a>
+<br/>This descriptor is a <a href="http://qsar.sourceforge.net/dicts/qsar-descriptors-metadata/index.xhtml#geometricalDescriptor">Geometrical Descriptor</a>
+<br/>This descriptor is a <a href="http://qsar.sourceforge.net/dicts/qsar-descriptors-metadata/index.xhtml#electronicDescriptor">Electronic Descriptor</a>
+<br/>
+<b>Implementations</b>
+<br/>Search implementations on <a href="http://www.google.com/search?q=qsar-descriptors:rdfProtonCalculatedValues&amp;ie=UTF-8&amp;oe=UTF-8">
+    Google.com
+  </a>
+
+</p>
+</li>
+</ul>
+<p class="small">
+<i>
+Contributed by:
+, .
+Created on: 2005-01-27.
+</i>
+</p>
+<h3>
+<a id="rotatableBondsCount">Rotatable Bonds Count (rotatableBondsCount)
+    </a>
+</h3>
+<ul>
+<li>
+<p>
+<b>Definition</b>
+
+<br/>
+        Descriptor that calculates the number of nonrotatable bonds on a molecule.
+    </p>
+<p>
+<b>Description</b>
+<br/>
+        The number of rotatable bonds is given by the SMARTS specified by Daylight on 
+    [<a href="#bibtex:DAY01">DAY01</a>]
+  .
+    </p>
+<p>
+<b>Classification</b>
+<br/>This descriptor is a <a href="http://qsar.sourceforge.net/dicts/qsar-descriptors-metadata/index.xhtml#molecularDescriptor">Molecular Descriptor</a>
+
+<br/>
+<b>Implementations</b>
+<br/>Search implementations on <a href="http://www.google.com/search?q=qsar-descriptors:rotatableBondsCount&amp;ie=UTF-8&amp;oe=UTF-8">
+    Google.com
+  </a>
+</p>
+</li>
+</ul>
+<p class="small">
+<i>
+Contributed by:
+.
+Created on: 2005-02-07.
+</i>
+</p>
+<h3>
+
+<a id="sigmaElectronegativity">Sigma Electronegativity (sigmaElectronegativity)
+    </a>
+</h3>
+<ul>
+<li>
+<p>
+<b>Definition</b>
+<br/>
+        This Class contains a method that returns the sigma electronegativity for a given atom.
+    </p>
+<p>
+<b>Description</b>
+<br/>
+        Sigma electronegativity is given by
+	<math xmlns="http://www.w3.org/1998/Math/MathML">
+
+<mrow>
+<mi>X</mi>
+<mo>=</mo>
+<mi>a</mi>
+<mo>+</mo>
+<mi>b</mi>
+<mi>q</mi>
+<mo>+</mo>
+<mi>c</mi>
+
+<math xmlns="http://www.w3.org/1998/Math/MathML">
+<mrow>
+<mo>(</mo>
+<math xmlns="http://www.w3.org/1998/Math/MathML">
+<mrow>
+<msup>
+	        <mi>q</mi>
+	        <mi>2</mi>
+	      </msup>
+</mrow>
+</math>
+
+<mo>)</mo>
+</mrow>
+</math>
+</mrow>
+</math>,
+	where a, b and c are Gasteiger Marsili parameters, and q is the sigma charge.
+    </p>
+<p>
+<b>Classification</b>
+<br/>This descriptor is a <a href="http://qsar.sourceforge.net/dicts/qsar-descriptors-metadata/index.xhtml#electronicDescriptor">Electronic Descriptor</a>
+<br/>
+<b>Implementations</b>
+<br/>Search implementations on <a href="http://www.google.com/search?q=qsar-descriptors:sigmaElectronegativity&amp;ie=UTF-8&amp;oe=UTF-8">
+
+    Google.com
+  </a>
+</p>
+</li>
+</ul>
+<p class="small">
+<i>
+Contributed by:
+.
+Created on: 2005-02-07.
+</i>
+</p>
+<h3>
+<a id="tpsa">Topological Polar Surface Area (tpsa)
+    </a>
+</h3>
+<ul>
+<li>
+
+<p>
+<b>Definition</b>
+<br/>
+      Calculation of topological polar surface area based on fragment 
+      contributions 
+    [<a href="#bibtex:ERTL2000">ERTL2000</a>]
+  .
+    </p>
+<p/>
+<p>
+<b>Classification</b>
+<br/>This descriptor is a <a href="http://qsar.sourceforge.net/dicts/qsar-descriptors-metadata/index.xhtml#topologicalDescriptor">Topological Descriptor</a>
+<br/>This descriptor is a <a href="http://qsar.sourceforge.net/dicts/qsar-descriptors-metadata/index.xhtml#electronicDescriptor">Electronic Descriptor</a>
+
+<br/>
+<b>Implementations</b>
+<br/>Search implementations on <a href="http://www.google.com/search?q=qsar-descriptors:tpsa&amp;ie=UTF-8&amp;oe=UTF-8">
+    Google.com
+  </a>
+</p>
+</li>
+</ul>
+<p class="small">
+<i>
+Contributed by:
+, .
+Created on: 2005-01-27.
+</i>
+</p>
+<h3>
+
+<a id="chi0vC">Valence carbon connectivity index (order 0) (chi0vC)
+    </a>
+</h3>
+<ul>
+<li>
+<p>
+<b>Definition</b>
+<br/>
+        Descriptor that calculates carbon valence connectivity index (order 0).
+    </p>
+<p>
+<b>Description</b>
+<br/>
+      	Let 
+	<math xmlns="http://www.w3.org/1998/Math/MathML">
+
+<mrow>
+<math xmlns="http://www.w3.org/1998/Math/MathML">
+<mrow>
+<msub>
+              <mi>v</mi>
+              <mi>i</mi>
+            </msub>
+</mrow>
+</math>
+<mo>=</mo>
+<math xmlns="http://www.w3.org/1998/Math/MathML">
+
+<mrow>
+<mfrac>
+	      <math xmlns="http://www.w3.org/1998/Math/MathML">
+<mrow>
+<mo>(</mo>
+<math xmlns="http://www.w3.org/1998/Math/MathML">
+<mrow>
+<msub>
+                    <mi>v</mi>
+                    <mi>i</mi>
+                  </msub>
+
+</mrow>
+</math>
+<mo>-</mo>
+<math xmlns="http://www.w3.org/1998/Math/MathML">
+<mrow>
+<msub>
+                    <mi>h</mi>
+                    <mi>i</mi>
+                  </msub>
+</mrow>
+</math>
+
+<mo>)</mo>
+</mrow>
+</math>
+              <math xmlns="http://www.w3.org/1998/Math/MathML">
+<mrow>
+<mo>(</mo>
+<math xmlns="http://www.w3.org/1998/Math/MathML">
+<mrow>
+<msub>
+                    <mi>z</mi>
+                    <mi>i</mi>
+
+                  </msub>
+</mrow>
+</math>
+<mo>-</mo>
+<math xmlns="http://www.w3.org/1998/Math/MathML">
+<mrow>
+<msub>
+                    <mi>h</mi>
+                    <mi>i</mi>
+                  </msub>
+
+</mrow>
+</math>
+<mo>-</mo>
+<mi>1</mi>
+<mo>)</mo>
+</mrow>
+</math>
+            </mfrac>
+</mrow>
+</math>
+</mrow>
+</math>,
+	where <math xmlns="http://www.w3.org/1998/Math/MathML">
+
+<mrow>
+<msub>
+<mi>p</mi>
+<mi>i</mi>
+</msub>
+</mrow>
+</math>
+	is the numbers of valence electrons of atom i, 
+      	<math xmlns="http://www.w3.org/1998/Math/MathML">
+<mrow>
+<msub>
+<mi>h</mi>
+<mi>i</mi>
+
+</msub>
+</mrow>
+</math>
+	is the number of hydrogens bonded to atom i, and <math xmlns="http://www.w3.org/1998/Math/MathML">
+<mrow>
+<msub>
+<mi>z</mi>
+<mi>i</mi>
+</msub>
+</mrow>
+</math>
+	is the atomic number of atom i.
+      	While the atomic valence connectivity is calculated as the sum of 
+	<math xmlns="http://www.w3.org/1998/Math/MathML">
+
+<mrow>
+<mfrac>
+            <mi>1</mi>
+            <math xmlns="http://www.w3.org/1998/Math/MathML">
+<mrow>
+<msup>
+		<math xmlns="http://www.w3.org/1998/Math/MathML">
+<mrow>
+<mo>(</mo>
+<math xmlns="http://www.w3.org/1998/Math/MathML">
+<mrow>
+<msub>
+
+                      <mi>v</mi>
+                      <mi>i</mi>
+                    </msub>
+</mrow>
+</math>
+<mo>)</mo>
+</mrow>
+</math>
+		<mi>0.5</mi>
+
+              </msup>
+</mrow>
+</math>
+          </mfrac>
+</mrow>
+</math>
+	over all heavy atoms i with 
+	<math xmlns="http://www.w3.org/1998/Math/MathML">
+<mrow>
+<msub>
+<mi>v</mi>
+<mi>i</mi>
+
+</msub>
+</mrow>
+</math> greather than 0,
+	the carbon valence connectivity index takes into account only carbon atoms with <math xmlns="http://www.w3.org/1998/Math/MathML">
+<mrow>
+<msub>
+<mi>v</mi>
+<mi>i</mi>
+</msub>
+</mrow>
+</math> greather than 0.
+    </p>
+<p>
+
+<b>Classification</b>
+<br/>This descriptor is a <a href="http://qsar.sourceforge.net/dicts/qsar-descriptors-metadata/index.xhtml#topologicalDescriptor">Topological Descriptor</a>
+<br/>
+<b>Implementations</b>
+<br/>Search implementations on <a href="http://www.google.com/search?q=qsar-descriptors:chi0vC&amp;ie=UTF-8&amp;oe=UTF-8">
+    Google.com
+  </a>
+</p>
+</li>
+</ul>
+<p class="small">
+
+<i>
+Contributed by:
+.
+Created on: 2004-11-26.
+</i>
+</p>
+<h3>
+<a id="chi1vC">Valence carbon connectivity index (order 1) (chi1vC)
+    </a>
+</h3>
+<ul>
+<li>
+<p>
+<b>Definition</b>
+<br/>
+        Descriptor that calculates carbon valence connectivity index (order 1).
+    </p>
+
+<p>
+<b>Description</b>
+<br/>
+      	Let 
+	<math xmlns="http://www.w3.org/1998/Math/MathML">
+<mrow>
+<math xmlns="http://www.w3.org/1998/Math/MathML">
+<mrow>
+<msub>
+              <mi>v</mi>
+              <mi>i</mi>
+
+            </msub>
+</mrow>
+</math>
+<mo>=</mo>
+<math xmlns="http://www.w3.org/1998/Math/MathML">
+<mrow>
+<mfrac>
+	      <math xmlns="http://www.w3.org/1998/Math/MathML">
+<mrow>
+<mo>(</mo>
+<math xmlns="http://www.w3.org/1998/Math/MathML">
+<mrow>
+<msub>
+
+                    <mi>v</mi>
+                    <mi>i</mi>
+                  </msub>
+</mrow>
+</math>
+<mo>-</mo>
+<math xmlns="http://www.w3.org/1998/Math/MathML">
+<mrow>
+<msub>
+                    <mi>h</mi>
+
+                    <mi>i</mi>
+                  </msub>
+</mrow>
+</math>
+<mo>)</mo>
+</mrow>
+</math>
+              <math xmlns="http://www.w3.org/1998/Math/MathML">
+<mrow>
+<mo>(</mo>
+<math xmlns="http://www.w3.org/1998/Math/MathML">
+
+<mrow>
+<msub>
+                    <mi>z</mi>
+                    <mi>i</mi>
+                  </msub>
+</mrow>
+</math>
+<mo>-</mo>
+<math xmlns="http://www.w3.org/1998/Math/MathML">
+<mrow>
+<msub>
+
+                    <mi>h</mi>
+                    <mi>i</mi>
+                  </msub>
+</mrow>
+</math>
+<mo>-</mo>
+<mi>1</mi>
+<mo>)</mo>
+</mrow>
+
+</math>
+            </mfrac>
+</mrow>
+</math>
+</mrow>
+</math>,
+	where <math xmlns="http://www.w3.org/1998/Math/MathML">
+<mrow>
+<msub>
+<mi>p</mi>
+<mi>i</mi>
+</msub>
+</mrow>
+</math>
+
+	is the numbers of valence electrons of atom i, 
+      	<math xmlns="http://www.w3.org/1998/Math/MathML">
+<mrow>
+<msub>
+<mi>h</mi>
+<mi>i</mi>
+</msub>
+</mrow>
+</math>
+	is the number of hydrogens bonded to atom i, and <math xmlns="http://www.w3.org/1998/Math/MathML">
+<mrow>
+<msub>
+
+<mi>z</mi>
+<mi>i</mi>
+</msub>
+</mrow>
+</math>
+	is the atomic number of atom i.
+      	While the valence connectivity is calculated as the sum of 
+	<math xmlns="http://www.w3.org/1998/Math/MathML">
+<mrow>
+<mfrac>
+            <mi>1</mi>
+            <math xmlns="http://www.w3.org/1998/Math/MathML">
+
+<mrow>
+<msup>
+		<math xmlns="http://www.w3.org/1998/Math/MathML">
+<mrow>
+<mo>(</mo>
+<math xmlns="http://www.w3.org/1998/Math/MathML">
+<mrow>
+<msub>
+                      <mi>v</mi>
+                      <mi>i</mi>
+                    </msub>
+
+</mrow>
+</math>
+<math xmlns="http://www.w3.org/1998/Math/MathML">
+<mrow>
+<msub>
+                      <mi>v</mi>
+                      <mi>j</mi>
+                    </msub>
+</mrow>
+</math>
+<mo>)</mo>
+
+</mrow>
+</math>
+		<mi>0.5</mi>
+              </msup>
+</mrow>
+</math>
+          </mfrac>
+</mrow>
+</math>
+	over all bonds between heavy atoms i and j, the carbon valence 
+	connectivity index takes into account only bonds between carbon atoms.
+    </p>
+<p>
+
+<b>Classification</b>
+<br/>This descriptor is a <a href="http://qsar.sourceforge.net/dicts/qsar-descriptors-metadata/index.xhtml#topologicalDescriptor">Topological Descriptor</a>
+<br/>
+<b>Implementations</b>
+<br/>Search implementations on <a href="http://www.google.com/search?q=qsar-descriptors:chi1vC&amp;ie=UTF-8&amp;oe=UTF-8">
+    Google.com
+  </a>
+</p>
+</li>
+</ul>
+<p class="small">
+
+<i>
+Contributed by:
+.
+Created on: 2004-11-26.
+</i>
+</p>
+<h3>
+<a id="chi0v">Valence connectivity index (order 0) (chi0v)
+    </a>
+</h3>
+<ul>
+<li>
+<p>
+<b>Definition</b>
+<br/>
+        Descriptor that calculates atomic valence connectivity index (order 0).
+    </p>
+
+<p>
+<b>Description</b>
+<br/>
+      	Let 
+	<math xmlns="http://www.w3.org/1998/Math/MathML">
+<mrow>
+<math xmlns="http://www.w3.org/1998/Math/MathML">
+<mrow>
+<msub>
+              <mi>v</mi>
+              <mi>i</mi>
+
+            </msub>
+</mrow>
+</math>
+<mo>=</mo>
+<math xmlns="http://www.w3.org/1998/Math/MathML">
+<mrow>
+<mfrac>
+	      <math xmlns="http://www.w3.org/1998/Math/MathML">
+<mrow>
+<mo>(</mo>
+<math xmlns="http://www.w3.org/1998/Math/MathML">
+<mrow>
+<msub>
+
+                    <mi>v</mi>
+                    <mi>i</mi>
+                  </msub>
+</mrow>
+</math>
+<mo>-</mo>
+<math xmlns="http://www.w3.org/1998/Math/MathML">
+<mrow>
+<msub>
+                    <mi>h</mi>
+
+                    <mi>i</mi>
+                  </msub>
+</mrow>
+</math>
+<mo>)</mo>
+</mrow>
+</math>
+              <math xmlns="http://www.w3.org/1998/Math/MathML">
+<mrow>
+<mo>(</mo>
+<math xmlns="http://www.w3.org/1998/Math/MathML">
+
+<mrow>
+<msub>
+                    <mi>z</mi>
+                    <mi>i</mi>
+                  </msub>
+</mrow>
+</math>
+<mo>-</mo>
+<math xmlns="http://www.w3.org/1998/Math/MathML">
+<mrow>
+<msub>
+
+                    <mi>h</mi>
+                    <mi>i</mi>
+                  </msub>
+</mrow>
+</math>
+<mo>-</mo>
+<mi>1</mi>
+<mo>)</mo>
+</mrow>
+
+</math>
+            </mfrac>
+</mrow>
+</math>
+</mrow>
+</math>,
+	where <math xmlns="http://www.w3.org/1998/Math/MathML">
+<mrow>
+<msub>
+<mi>p</mi>
+<mi>i</mi>
+</msub>
+</mrow>
+</math>
+
+	is the numbers of valence electrons of atom i, 
+      	<math xmlns="http://www.w3.org/1998/Math/MathML">
+<mrow>
+<msub>
+<mi>h</mi>
+<mi>i</mi>
+</msub>
+</mrow>
+</math>
+	is the number of hydrogens bonded to atom i, and <math xmlns="http://www.w3.org/1998/Math/MathML">
+<mrow>
+<msub>
+
+<mi>z</mi>
+<mi>i</mi>
+</msub>
+</mrow>
+</math>
+	is the atomic number of atom i.
+      	Valence connectivity is calculated as the sum of 
+	<math xmlns="http://www.w3.org/1998/Math/MathML">
+<mrow>
+<mfrac>
+            <mi>1</mi>
+            <math xmlns="http://www.w3.org/1998/Math/MathML">
+
+<mrow>
+<msup>
+		<math xmlns="http://www.w3.org/1998/Math/MathML">
+<mrow>
+<mo>(</mo>
+<math xmlns="http://www.w3.org/1998/Math/MathML">
+<mrow>
+<msub>
+                      <mi>v</mi>
+                      <mi>i</mi>
+                    </msub>
+
+</mrow>
+</math>
+<mo>)</mo>
+</mrow>
+</math>
+		<mi>0.5</mi>
+              </msup>
+</mrow>
+</math>
+          </mfrac>
+</mrow>
+</math>
+
+	over all heavy atoms i with 
+	<math xmlns="http://www.w3.org/1998/Math/MathML">
+<mrow>
+<msub>
+<mi>v</mi>
+<mi>i</mi>
+</msub>
+</mrow>
+</math> greather than 0.
+    </p>
+<p>
+<b>Classification</b>
+
+<br/>This descriptor is a <a href="http://qsar.sourceforge.net/dicts/qsar-descriptors-metadata/index.xhtml#topologicalDescriptor">Topological Descriptor</a>
+<br/>
+<b>Implementations</b>
+<br/>Search implementations on <a href="http://www.google.com/search?q=qsar-descriptors:chi0v&amp;ie=UTF-8&amp;oe=UTF-8">
+    Google.com
+  </a>
+</p>
+</li>
+</ul>
+<p class="small">
+<i>
+Contributed by:
+.
+Created on: 2004-11-26.
+
+</i>
+</p>
+<h3>
+<a id="chi0v">Valence connectivity index (order 1) (chi0v)
+    </a>
+</h3>
+<ul>
+<li>
+<p>
+<b>Definition</b>
+<br/>
+        Descriptor that calculates atomic valence connectivity index (order 1).
+    </p>
+<p>
+<b>Description</b>
+
+<br/>
+      	Let 
+	<math xmlns="http://www.w3.org/1998/Math/MathML">
+<mrow>
+<math xmlns="http://www.w3.org/1998/Math/MathML">
+<mrow>
+<msub>
+              <mi>v</mi>
+              <mi>i</mi>
+            </msub>
+</mrow>
+
+</math>
+<mo>=</mo>
+<math xmlns="http://www.w3.org/1998/Math/MathML">
+<mrow>
+<mfrac>
+	      <math xmlns="http://www.w3.org/1998/Math/MathML">
+<mrow>
+<mo>(</mo>
+<math xmlns="http://www.w3.org/1998/Math/MathML">
+<mrow>
+<msub>
+                    <mi>v</mi>
+
+                    <mi>i</mi>
+                  </msub>
+</mrow>
+</math>
+<mo>-</mo>
+<math xmlns="http://www.w3.org/1998/Math/MathML">
+<mrow>
+<msub>
+                    <mi>h</mi>
+                    <mi>i</mi>
+
+                  </msub>
+</mrow>
+</math>
+<mo>)</mo>
+</mrow>
+</math>
+              <math xmlns="http://www.w3.org/1998/Math/MathML">
+<mrow>
+<mo>(</mo>
+<math xmlns="http://www.w3.org/1998/Math/MathML">
+<mrow>
+<msub>
+                    <mi>z</mi>
+
+                    <mi>i</mi>
+                  </msub>
+</mrow>
+</math>
+<mo>-</mo>
+<math xmlns="http://www.w3.org/1998/Math/MathML">
+<mrow>
+<msub>
+                    <mi>h</mi>
+                    <mi>i</mi>
+
+                  </msub>
+</mrow>
+</math>
+<mo>-</mo>
+<mi>1</mi>
+<mo>)</mo>
+</mrow>
+</math>
+            </mfrac>
+</mrow>
+</math>
+</mrow>
+
+</math>,
+	where <math xmlns="http://www.w3.org/1998/Math/MathML">
+<mrow>
+<msub>
+<mi>p</mi>
+<mi>i</mi>
+</msub>
+</mrow>
+</math>
+	is the numbers of valence electrons of atom i, 
+      	<math xmlns="http://www.w3.org/1998/Math/MathML">
+<mrow>
+<msub>
+<mi>h</mi>
+
+<mi>i</mi>
+</msub>
+</mrow>
+</math>
+	is the number of hydrogens bonded to atom i, and <math xmlns="http://www.w3.org/1998/Math/MathML">
+<mrow>
+<msub>
+<mi>z</mi>
+<mi>i</mi>
+</msub>
+</mrow>
+</math>
+
+	is the atomic number of atom i.
+      	Valence connectivity is calculated as the sum of 
+	<math xmlns="http://www.w3.org/1998/Math/MathML">
+<mrow>
+<mfrac>
+            <mi>1</mi>
+            <math xmlns="http://www.w3.org/1998/Math/MathML">
+<mrow>
+<msup>
+		<math xmlns="http://www.w3.org/1998/Math/MathML">
+<mrow>
+<mo>(</mo>
+
+<math xmlns="http://www.w3.org/1998/Math/MathML">
+<mrow>
+<msub>
+                      <mi>v</mi>
+                      <mi>i</mi>
+                    </msub>
+</mrow>
+</math>
+<math xmlns="http://www.w3.org/1998/Math/MathML">
+<mrow>
+<msub>
+                      <mi>v</mi>
+
+                      <mi>j</mi>
+                    </msub>
+</mrow>
+</math>
+<mo>)</mo>
+</mrow>
+</math>
+		<mi>0.5</mi>
+              </msup>
+</mrow>
+
+</math>
+          </mfrac>
+</mrow>
+</math>
+	over all bonds between heavy atoms i and j.
+    </p>
+<p>
+<b>Classification</b>
+<br/>This descriptor is a <a href="http://qsar.sourceforge.net/dicts/qsar-descriptors-metadata/index.xhtml#topologicalDescriptor">Topological Descriptor</a>
+<br/>
+<b>Implementations</b>
+
+<br/>Search implementations on <a href="http://www.google.com/search?q=qsar-descriptors:chi0v&amp;ie=UTF-8&amp;oe=UTF-8">
+    Google.com
+  </a>
+</p>
+</li>
+</ul>
+<p class="small">
+<i>
+Contributed by:
+.
+Created on: 2004-11-26.
+</i>
+</p>
+<h3>
+<a id="vdwradius">Van der Waals Radius (vdwradius)
+    </a>
+</h3>
+
+<ul>
+<li>
+<p>
+<b>Definition</b>
+<br/>
+      Descriptor that returns the VdW radius of a given atom.
+    </p>
+<p/>
+<p>
+<b>Classification</b>
+<br/>This descriptor is a <a href="http://qsar.sourceforge.net/dicts/qsar-descriptors-metadata/index.xhtml#molecularDescriptor">Molecular Descriptor</a>
+<br/>
+
+<b>Implementations</b>
+<br/>Search implementations on <a href="http://www.google.com/search?q=qsar-descriptors:vdwradius&amp;ie=UTF-8&amp;oe=UTF-8">
+    Google.com
+  </a>
+</p>
+</li>
+</ul>
+<p class="small">
+<i>
+Contributed by:
+.
+Created on: 2005-01-27.
+</i>
+</p>
+<h3>
+<a id="vAdjMa">Vertex adjacency information magnitude (vAdjMa)
+    </a>
+
+</h3>
+<ul>
+<li>
+<p>
+<b>Definition</b>
+<br/>
+        Descriptor that calculates the vertex adjacency information of a molecule.
+    </p>
+<p>
+<b>Description</b>
+<br/>
+      	The values is given by 
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+
+<mrow>
+<mn>1</mn>
+<mo>+</mo>
+<mo>log</mo>
+<mn>2</mn>
+<mo>*</mo>
+<mn>m</mn>
+</mrow>
+</math>,
+        where m is the number of heavy-heavy bonds. 
+	    If m is zero, then zero is returned.
+    </p>
+<p>
+
+<b>Classification</b>
+<br/>This descriptor is a <a href="http://qsar.sourceforge.net/dicts/qsar-descriptors-metadata/index.xhtml#topologicalDescriptor">Topological Descriptor</a>
+<br/>
+<b>Implementations</b>
+<br/>Search implementations on <a href="http://www.google.com/search?q=qsar-descriptors:vAdjMa&amp;ie=UTF-8&amp;oe=UTF-8">
+    Google.com
+  </a>
+</p>
+</li>
+</ul>
+<p class="small">
+
+<i>
+Contributed by:
+, Egon Willighagen.
+Created on: 2004-11-26.
+</i>
+</p>
+<h3>
+<a id="weightedPath">Weighted Path (weightedPath)
+    </a>
+</h3>
+<ul>
+<li>
+<p>
+<b>Definition</b>
+<br/>
+        Descriptor that evaluates the weighted path descriptors.
+    </p>
+
+<p>
+<b>Description</b>
+<br/>
+  		 These decsriptors were described  by Randic and characterize molecular 
+  		 branching. Five descriptors are calculated, based on the implementation 
+  		 in the ADAPT software package.
+  	</p>
+<p>
+<b>Classification</b>
+<br/>This descriptor is a <a href="http://qsar.sourceforge.net/dicts/qsar-descriptors-metadata/index.xhtml#topologicalDescriptor">Topological Descriptor</a>
+<br/>
+<b>Implementations</b>
+<br/>Search implementations on <a href="http://www.google.com/search?q=qsar-descriptors:weightedPath&amp;ie=UTF-8&amp;oe=UTF-8">
+
+    Google.com
+  </a>
+</p>
+</li>
+</ul>
+<p class="small">
+<i>
+Contributed by:
+.
+Created on: 2006-01-15.
+</i>
+</p>
+<h3>
+<a id="WHIM">WHIM (WHIM)
+    </a>
+</h3>
+<ul>
+<li>
+
+<p>
+<b>Definition</b>
+<br/>
+      Holistic descriptors described by Todeschini et al 
+    [<a href="#bibtex:TOD98">TOD98</a>]
+  .
+    </p>
+<p/>
+<p>
+<b>Classification</b>
+<br/>This descriptor is a <a href="http://qsar.sourceforge.net/dicts/qsar-descriptors-metadata/index.xhtml#molecularDescriptor">Molecular Descriptor</a>
+<br/>
+
+<b>Implementations</b>
+<br/>Search implementations on <a href="http://www.google.com/search?q=qsar-descriptors:WHIM&amp;ie=UTF-8&amp;oe=UTF-8">
+    Google.com
+  </a>
+</p>
+</li>
+</ul>
+<p class="small">
+<i>
+Contributed by:
+, .
+Created on: 2005-01-27.
+</i>
+</p>
+<h3>
+<a id="wienerNumbers">Wiener Numbers (wienerNumbers)
+    </a>
+
+</h3>
+<ul>
+<li>
+<p>
+<b>Definition</b>
+<br/>
+      This class calculates Wiener path number and Wiener polarity number.
+    </p>
+<p>
+<b>Description</b>
+<br/>
+      Wiener path number: half the sum of all the distance matrix entries.
+      Wiener polarity number: half the sum of all the distance matrix entries with a value of 3.
+    </p>
+
+<p>
+<b>Classification</b>
+<br/>This descriptor is a <a href="http://qsar.sourceforge.net/dicts/qsar-descriptors-metadata/index.xhtml#topologicalDescriptor">Topological Descriptor</a>
+<br/>
+<b>Implementations</b>
+<br/>Search implementations on <a href="http://www.google.com/search?q=qsar-descriptors:wienerNumbers&amp;ie=UTF-8&amp;oe=UTF-8">
+    Google.com
+  </a>
+</p>
+</li>
+</ul>
+
+<p class="small">
+<i>
+Contributed by:
+.
+Created on: 2005-01-27.
+</i>
+</p>
+<h3>
+<a id="xlogP">XLogP (xlogP)
+    </a>
+</h3>
+<ul>
+<li>
+<p>
+<b>Definition</b>
+<br/>
+      Prediction of logP based on the atom-type method called XLogP. 
+    </p>
+
+<p>
+<b>Description</b>
+<br/>
+      For a description of the methodology see 
+    [<a href="#bibtex:WANG97">WANG97</a>]
+  .
+    </p>
+<p>
+<b>Classification</b>
+<br/>This descriptor is a <a href="http://qsar.sourceforge.net/dicts/qsar-descriptors-metadata/index.xhtml#constitutionalDescriptor">Constitutional Descriptor</a>
+<br/>
+<b>Implementations</b>
+
+<br/>Search implementations on <a href="http://www.google.com/search?q=qsar-descriptors:xlogP&amp;ie=UTF-8&amp;oe=UTF-8">
+    Google.com
+  </a>
+</p>
+</li>
+</ul>
+<p class="small">
+<i>
+Contributed by:
+, .
+Created on: 2005-01-27.
+</i>
+</p>
+<h3>
+<a id="zagrebIndex">Zagreb Index (zagrebIndex)
+    </a>
+</h3>
+
+<ul>
+<li>
+<p>
+<b>Definition</b>
+<br/>
+      The sum of the squared atom degrees of all heavy atoms.
+    </p>
+<p/>
+<p>
+<b>Classification</b>
+<br/>This descriptor is a <a href="http://qsar.sourceforge.net/dicts/qsar-descriptors-metadata/index.xhtml#topologicalDescriptor">Topological Descriptor</a>
+<br/>
+
+<b>Implementations</b>
+<br/>Search implementations on <a href="http://www.google.com/search?q=qsar-descriptors:zagrebIndex&amp;ie=UTF-8&amp;oe=UTF-8">
+    Google.com
+  </a>
+</p>
+</li>
+</ul>
+<p class="small">
+<i>
+Contributed by:
+, Egon Willighagen.
+Created on: 2004-11-26.
+</i>
+</p>
+<h2>
+<a name="Bibliography">Bibliography</a>
+
+</h2>
+<p>
+<a id="bibtex:CHER2003">
+      [CHER2003]
+    </a>Cherkasov, A.. <i xmlns:bibxml="http://bibtexml.sf.net/">Inductive Electronegativity Scale. Iterative Calculation of Inductive Partial Charges</i>,
+	<i xmlns:bibxml="http://bibtexml.sf.net/">J. Chem. Inf. Comput. Sci.</i>. 	
+	     vol. 43.
+	<b xmlns:bibxml="http://bibtexml.sf.net/">2003</b>,
+	
+	     pp. 2039-2047.
+	<a href="http://dx.doi.org/10.1021/ci034147w" xmlns:bibxml="http://bibtexml.sf.net/">10.1021/ci034147w</a>
+<br/>
+<a id="bibtex:CPSA">
+      [CPSA]
+    </a>Ertl, P., Rohde, B., and Selzer, P.. <i xmlns:bibxml="http://bibtexml.sf.net/">Fast Calculation of Molecular Polar Surface Area as a Sum of Fragment-Based
+                            Contributions and Its Applications to the Prediction of Drug Transport Properties</i>,
+	<i xmlns:bibxml="http://bibtexml.sf.net/">J. Med. Chem.</i>. 	
+	     vol. 43.
+	<b xmlns:bibxml="http://bibtexml.sf.net/">200</b>,
+	
+	     pp. 3714-3717.
+	<br/>
+
+<a id="bibtex:DAY01">
+      [DAY01]
+    </a>Daylight. <i xmlns:bibxml="http://bibtexml.sf.net/">SMILES on-line tutorial</i>,
+	<a href="http://www.daylight.com/dayhtml_tutorials/languages/smarts/smarts_examples.html" xmlns:bibxml="http://bibtexml.sf.net/">http://www.daylight.com/dayhtml_tutorials/languages/smarts/smarts_examples.html</a>.
+	<br/>
+<a id="bibtex:ERTL2000">
+      [ERTL2000]
+    </a>Ertl, P. and Rohde, B. and Selzer, P.. <i xmlns:bibxml="http://bibtexml.sf.net/">Fast Calculation of Molecular Polar Surface Area as a Sum of 
+                 Fragment-Based Contributions and Its Application to the Prediction of 
+                 Drug Transport Properties</i>,
+	<i xmlns:bibxml="http://bibtexml.sf.net/">J. Med. Chem.</i>. 43
+		(20).
+	<b xmlns:bibxml="http://bibtexml.sf.net/">2000</b>,
+	
+	     pp. 3714-3717.
+	<a href="http://dx.doi.org/10.1021/jm000942e" xmlns:bibxml="http://bibtexml.sf.net/">10.1021/jm000942e</a>
+
+<br/>
+<a id="bibtex:GAST2002">
+      [GAST2002]
+    </a>Aires-de-Sousa, J. and Hemmer, M.C. and Gasteiger, J.. <i xmlns:bibxml="http://bibtexml.sf.net/">Prediction of 1H NMR Chemical Shifts Using Neural Networks</i>,
+	<i xmlns:bibxml="http://bibtexml.sf.net/">Anal. Chem.</i>. 74
+		(1).
+	<b xmlns:bibxml="http://bibtexml.sf.net/">2002</b>,
+	
+	     pp. 80-90.
+	<a href="http://dx.doi.org/10.1021/ac010737m" xmlns:bibxml="http://bibtexml.sf.net/">10.1021/ac010737m</a>
+<br/>
+<a id="bibtex:KAT96">
+      [KAT96]
+    </a>Katritzky, A.R. and Mu, L. and Lobanov, V.S. and Karelson, M.. <i xmlns:bibxml="http://bibtexml.sf.net/">Correlation of Boiling Points With Molecular Structure. 1. A Training Set of 298 Diverse Organics and a Test Set of 9 Simple Inorganics</i>,
+	<i xmlns:bibxml="http://bibtexml.sf.net/">J. Phys. Chem.</i>. 	
+	     vol. 100.
+	<b xmlns:bibxml="http://bibtexml.sf.net/">1996</b>,
+	
+	     pp. 10400-10407.
+	<br/>
+
+<a id="bibtex:MARSILI">
+      [MARSILI]
+    </a>Gasteiger, J. and Marsili, M.. <i xmlns:bibxml="http://bibtexml.sf.net/">Iterative Partial Equalization of Orbital 
+              					Electronegativity- A Rapid Access to Atomic Charges</i>,
+	<i xmlns:bibxml="http://bibtexml.sf.net/">Tetrahedron</i>. 	
+	     vol. 36.
+	<b xmlns:bibxml="http://bibtexml.sf.net/">1980</b>,
+	
+	     pp. 3219-3228.
+	<br/>
+<a id="bibtex:MATHML">
+      [MATHML]
+    </a>
+<i xmlns:bibxml="http://bibtexml.sf.net/">W3C Math Home</i>,
+	<a href="http://www.w3.org/Math/" xmlns:bibxml="http://bibtexml.sf.net/">http://www.w3.org/Math/</a>.
+	<br/>
+
+<a id="bibtex:Mozilla">
+      [Mozilla]
+    </a>
+<i xmlns:bibxml="http://bibtexml.sf.net/">Mozilla - Home of the FireFox browser</i>,
+	<a href="http://www.mozilla.org/" xmlns:bibxml="http://bibtexml.sf.net/">http://www.mozilla.org/</a>.
+	<br/>
+<a id="bibtex:PEA99">
+      [PEA99]
+    </a>Pearlman, R.S. and Smith, K.M.. <i xmlns:bibxml="http://bibtexml.sf.net/"> Metric Validation and the Receptor-Relevant Subspace Concept</i>,
+	<i xmlns:bibxml="http://bibtexml.sf.net/">J. Chem. Inf. Comput. Sci.</i>. 39
+		(1).
+	<b xmlns:bibxml="http://bibtexml.sf.net/">1999</b>,
+	
+	     pp. 28-35.
+	<br/>
+
+<a id="bibtex:SALLER">
+      [SALLER]
+    </a> Gasteiger, J. and  Saller, H.. <i xmlns:bibxml="http://bibtexml.sf.net/">Berechnung der Ladungsverteilung in konjugierten Systemen durch eine Quantifizierung des Mesomeriekonzeptes</i>,
+	<i xmlns:bibxml="http://bibtexml.sf.net/"> Angew. Chem.</i>. 	
+	     vol. 97.
+	<b xmlns:bibxml="http://bibtexml.sf.net/">1985</b>,
+	
+	     pp. 699-701.
+	<br/>
+<a id="bibtex:TOD98">
+      [TOD98]
+    </a>Todeschini, R. and Gramatica, P.. <i xmlns:bibxml="http://bibtexml.sf.net/">New 3D Molecular Descriptors: The WHIM theory and QAR Applications</i>,
+	<i xmlns:bibxml="http://bibtexml.sf.net/">Persepectives in Drug Discovery and Design</i>. <b xmlns:bibxml="http://bibtexml.sf.net/">1998</b>,
+	
+	     pp. 355-380.
+	<br/>
+
+<a id="bibtex:WANG97">
+      [WANG97]
+    </a>Wang, R., Fu, Y., and Lai, L.. <i xmlns:bibxml="http://bibtexml.sf.net/">A New Atom-Additive Method for Calculating Partition Coefficients</i>,
+	<i xmlns:bibxml="http://bibtexml.sf.net/">Journal of Chemical Information and Computer
+                  Sciences</i>. 	
+	     vol. 37.
+	<b xmlns:bibxml="http://bibtexml.sf.net/">1997</b>,
+	
+	     pp. 615-621.
+	<br/>
+<a id="bibtex:WES98">
+      [WES98]
+    </a>Wessel, M.D. and Jurs, P.C. and Tolan, J.W. and Muskal, S.M.
+                . <i xmlns:bibxml="http://bibtexml.sf.net/">Prediction of Human Intestinal Absorption of Drug Compounds
+                From Molecular Structure</i>,
+	<i xmlns:bibxml="http://bibtexml.sf.net/">Journal of Chemical Information and Computer
+                  Sciences</i>. 	
+	     vol. 38.
+	<b xmlns:bibxml="http://bibtexml.sf.net/">1998</b>,
+	
+	     pp. 726-735.
+	<br/>
+
+</p>
+<h2>
+<a name="FinalNotes">Final Notes</a>
+</h2>
+<p>
+  This dictionary 
+  [$Revision: 170 $]
+  was last modified by 
+  [$Author: egonw $]
+  on
+  [$Date: 2005-10-22 14:42:40 +0200 (Sa, 22 Okt 2005) $].
+  The XML source can be found in
+  <a href="http://cvs.sourceforge.net/viewcvs.py/qsar/qsar-dicts/qsar-descriptors.xml?view=markup">
+    CVS
+  </a>
+</p>
+<p>
+  Additions to this dictionary can be send to the 
+  <a href="http://sourceforge.net/mail/?group_id=107219">QSAR project developers list (qsar-devel)</a>.
+  If you find an error on this page, please post a bug report then on
+  <a href="http://sourceforge.net/tracker/?group_id=107219&amp;atid=647049">this page</a>.
+  In <i>Category</i> you can select the dictionary which contains the error.
+
+</p>
+<p>
+
+
+
+</BODY>
+</HTML>
