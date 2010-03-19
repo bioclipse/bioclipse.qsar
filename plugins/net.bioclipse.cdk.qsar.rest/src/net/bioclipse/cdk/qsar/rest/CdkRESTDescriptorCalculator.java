@@ -229,7 +229,9 @@ public class CdkRESTDescriptorCalculator implements IDescriptorCalculator {
     	smiles=smiles.replace("#", "%23");
     	smiles=smiles.replace("@", "%40");
     	smiles=smiles.replace(":", "%3A");
-    
+    	smiles=smiles.replace("+", "%2B");
+    	smiles=smiles.replace("=", "%3D");
+
     	return smiles;
     }
 
