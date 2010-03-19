@@ -1383,6 +1383,7 @@ public class QsarManager implements IQsarManager{
                                          QsarType qsarmodel, 
                                          EditingDomain editingDomain, 
                                          Map<IFile, Object> resourcePropertyMap, 
+                                         boolean pickLargestFragment, 
                                          final IProgressMonitor monitor) 
                                          throws IOException, 
                                          BioclipseException, 
@@ -1455,6 +1456,21 @@ public class QsarManager implements IQsarManager{
                 if (cdk.has3d( mol ))
                     structure.setHas3d( true );
 
+                //If we should pick largest fragment, do so now
+                if (pickLargestFragment){
+                	logger.debug("Selecting largest fragment if not connected.");
+                	List<IAtomContainer> containers = cdk.partition(mol);
+                	if (containers.size()>1){
+                		IAtomContainer largest=null;
+                		for (IAtomContainer ac : containers){
+                			if (largest==null)
+                				largest=ac;
+                			else if (ac.getAtomCount() > largest.getAtomCount())
+                				largest=ac;
+                		}
+                	}
+                }
+                
                 if (mol.getName()!=null && mol.getName().length()>0){
                     if (existsStructureIDInModel(qsarmodel, mol.getName())){
                         //Use a generated structureID
