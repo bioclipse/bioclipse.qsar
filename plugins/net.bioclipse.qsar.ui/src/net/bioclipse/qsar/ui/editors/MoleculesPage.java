@@ -259,7 +259,7 @@ public class MoleculesPage extends FormPage implements IEditingDomainProvider,
 
                         //Add resources to model and molecules folder is necessary
                         try{
-                            addResources(filemap, monitor);
+                            addResources(filemap, false, false, monitor);
 //                            addResources(resources.toArray(new IResource[0]), monitor);
                         }catch (final UnsupportedOperationException e){
                             Display.getDefault().syncExec(new Runnable(){
@@ -410,140 +410,6 @@ public class MoleculesPage extends FormPage implements IEditingDomainProvider,
     }
 
 
-    /**
-     * Add resources to QSAR model. First check if contains molecules. 
-     * Next copy the resource into the project/molecules folder if not already
-     * there.
-     * @param filemap
-     * @param monitor
-     * @return
-     */
-//    protected void addResources(final IResource[] resources, final IProgressMonitor monitor) {
-    protected void addResources(final Map<IFile, PropertyEntry> filemap, final IProgressMonitor monitor) {
-
-        monitor.beginTask( "Adding resources", IProgressMonitor.UNKNOWN );
-        
-        //Set up input with propertyobject, not wrapper class since that is 
-        //local to this plugin. This is the one we will send to QSARManager 
-        //for adding in the end
-        Map<IFile, Object> molprops=new HashMap<IFile, Object>();
-
-        //Existing model and structures
-        QsarType qsarModel = ((QsarEditor)getEditor()).getQsarModel();
-        StructurelistType structList = qsarModel.getStructurelist();
-        
-        //Copy files to project if needed, hence we need a new map
-        //Take one file at a time
-        for (IFile file: filemap.keySet()){
-
-            //Get property entry and extract AC property object
-            PropertyEntry propEntry = filemap.get( file );
-            Object propobj=null;
-            if (propEntry!=null)
-                propobj=propEntry.getPropObject();
-
-            boolean skipFile=false;
-
-            //Check if this file is already in model
-            for (ResourceType existingRes : structList.getResources()){
-                if (existingRes.getName().equals(file.getName())){
-                    throw new UnsupportedOperationException(
-                                           "File: " + file.getName() 
-                                         + " already exists in QSAR analysis.");
-                }
-            }
-
-            try {
-                //Verify this is a file with at least one molecule
-                int x=cdk.getNoMolecules( file.getFullPath().toOSString());
-                if (x>0){
-
-                    //If resource is in another project,
-                    //copy it to molecules folder as use that copy
-                    if (file.getProject()!=activeProject){
-                        IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
-                        IPath projectPath = activeProject.getFullPath(),
-                        molFolderPath = projectPath.append("molecules"),
-                        destinationPath=molFolderPath.append(file.getName());
-
-                        
-                        final IFile newfile=root.getFile(destinationPath);
-                        
-                        if (newfile.exists()){
-                            final String filename=file.getName();
-
-                            ConfirmRunnable cr=new ConfirmRunnable(
-                               getSite().getShell(),
-                               "Overwrite file?", 
-                               "File " + filename + "exists in QSAR project, " +
-                               "folder 'molecules'. " +
-                               "Would you like to replace it?");
-
-                            Display.getDefault().syncExec(cr);
-
-                            if (!cr.getAnswer()) skipFile=true;
-
-                            else{
-                                try {
-                                    newfile.setContents(file.getContents(), 
-                                                        true, true, monitor);
-                                } catch (CoreException e) {
-                                    e.printStackTrace();
-                                }
-                            }
-
-
-
-                        }else{
-                            //Copy it
-                            file.copy(destinationPath, true, monitor);
-                        }
-
-                        file=root.getFile(destinationPath);
-                    }
-
-
-                    if (!skipFile){
-                        molprops.put( file,  propobj);
-                    }
-                }
-            } catch (final Exception e) {
-                Display.getDefault().syncExec(new Runnable(){
-                    public void run() {
-                        if (e.getMessage()!=null)
-                            showError("Could not add molecule file. " +
-                            		"\n\nReason: " + e.getMessage());
-                        else
-                            showError("Could not add molecule file.");
-                    }
-                });
-            }
-        }
-        
-        if (monitor.isCanceled()){
-            logger.debug("Adding files was cencelled.");
-            return;
-        }
-
-        //Ok, add these resources to QsarModel using manager
-        try {
-//            qsar.addResourcesToQsarModel( qsarModel, editingDomain, resourcesToAdd, monitor );
-            qsar.addResourcesAndResponsesToQsarModel( qsarModel, editingDomain, 
-                                                      molprops, monitor );
-            
-        } catch ( IOException e ) {
-            logger.error(e.getStackTrace());
-            showError( e.getMessage() );
-        } catch ( BioclipseException e ) {
-            logger.error(e.getStackTrace());
-            showError( e.getMessage() );
-        } catch ( CoreException e ) {
-            logger.error(e.getStackTrace());
-            showError( e.getMessage() );
-        }
-
-    }
-
 
     private void populateMolsViewerFromModel() {
 
@@ -658,10 +524,10 @@ public class MoleculesPage extends FormPage implements IEditingDomainProvider,
         molViewer.getTable().addFocusListener(new FocusListener(){
 
             public void focusGained(FocusEvent e) {
-                molViewer.setSelection(null);
             }
 
             public void focusLost(FocusEvent e) {
+				((QsarEditor)getEditor()).getSelectionProvider().setSelectionProviderDelegate(molViewer);
             }
         });
 
@@ -705,8 +571,6 @@ public class MoleculesPage extends FormPage implements IEditingDomainProvider,
 
         makeActions();
         hookContextMenu();
-
-//        getSite().setSelectionProvider( molViewer );
 
     }
 
@@ -919,8 +783,6 @@ public class MoleculesPage extends FormPage implements IEditingDomainProvider,
         GridData gd = new GridData(GridData.FILL_BOTH);
         preSection.setLayoutData(gd);        
 
-        //Post selections to Eclipse
-        //          getSite().setSelectionProvider(queryViewer);
 
     }
 
@@ -1031,6 +893,11 @@ public class MoleculesPage extends FormPage implements IEditingDomainProvider,
 
         //Here we have map of IFile > Property to add
         final Map<IFile, PropertyEntry> selprops = wizard.getSelectedProperties();
+        final boolean omitErrorMols=wizard.isOmitErrormols();
+        final boolean pickLargestFragment=wizard.isPickLargestFragment();
+        
+        logger.debug("Options: Omit Mols with Errors: " + omitErrorMols 
+        		+ " - Pick largest fragment: " + pickLargestFragment);
 
 //        System.out.println("We should add: ");
 //        for (IFile file : selprops.keySet()){
@@ -1046,7 +913,7 @@ public class MoleculesPage extends FormPage implements IEditingDomainProvider,
             @Override
             public IStatus runInWorkspace( IProgressMonitor monitor )
                                                           throws CoreException {
-                addResources(selprops, monitor);
+                addResources(selprops, omitErrorMols, pickLargestFragment, monitor);
 
                 Runnable r=new Runnable(){public void run() {
                     molViewer.refresh();}
@@ -1060,6 +927,151 @@ public class MoleculesPage extends FormPage implements IEditingDomainProvider,
         job.setUser( true );
         job.schedule();
         
+    }
+
+    /**
+     * Add resources to QSAR model. First check if contains molecules. 
+     * Next copy the resource into the project/molecules folder if not already
+     * there.
+     * @param filemap
+     * @param monitor
+     * @return
+     */
+//    protected void addResources(final IResource[] resources, final IProgressMonitor monitor) {
+    protected void addResources(final Map<IFile, PropertyEntry> filemap, final boolean omitErrorMols, final boolean pickLargestFragment, final IProgressMonitor monitor) {
+
+        monitor.beginTask( "Adding resources", IProgressMonitor.UNKNOWN );
+        
+        //Set up input with propertyobject, not wrapper class since that is 
+        //local to this plugin. This is the one we will send to QSARManager 
+        //for adding in the end
+        Map<IFile, Object> molprops=new HashMap<IFile, Object>();
+
+        //Existing model and structures
+        QsarType qsarModel = ((QsarEditor)getEditor()).getQsarModel();
+        StructurelistType structList = qsarModel.getStructurelist();
+        
+        //Copy files to project if needed, hence we need a new map
+        //Take one file at a time
+        for (IFile file: filemap.keySet()){
+
+            //Get property entry and extract AC property object
+            PropertyEntry propEntry = filemap.get( file );
+            Object propobj=null;
+            if (propEntry!=null)
+                propobj=propEntry.getPropObject();
+
+            boolean skipFile=false;
+
+            //Check if this file is already in model
+            for (ResourceType existingRes : structList.getResources()){
+                if (existingRes.getName().equals(file.getName())){
+                    throw new UnsupportedOperationException(
+                                           "File: " + file.getName() 
+                                         + " already exists in QSAR analysis.");
+                }
+            }
+
+            try {
+                //Verify this is a file with at least one molecule
+                int x=cdk.getNoMolecules( file.getFullPath().toOSString());
+                if (x>0){
+
+                    //If resource is in another project,
+                    //copy it to molecules folder as use that copy
+                    if (file.getProject()!=activeProject){
+                        IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
+                        IPath projectPath = activeProject.getFullPath(),
+                        molFolderPath = projectPath.append("molecules"),
+                        destinationPath=molFolderPath.append(file.getName());
+
+                        
+                        final IFile newfile=root.getFile(destinationPath);
+                        
+                        if (newfile.exists()){
+                            final String filename=file.getName();
+
+                            ConfirmRunnable cr=new ConfirmRunnable(
+                               getSite().getShell(),
+                               "Overwrite file?", 
+                               "File " + filename + "exists in QSAR project, " +
+                               "folder 'molecules'. " +
+                               "Would you like to replace it?");
+
+                            Display.getDefault().syncExec(cr);
+
+                            if (!cr.getAnswer()) skipFile=true;
+
+                            else{
+                                try {
+                                    newfile.setContents(file.getContents(), 
+                                                        true, true, monitor);
+                                } catch (CoreException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+
+
+
+                        }else{
+                            //Copy it
+                            file.copy(destinationPath, true, monitor);
+                        }
+
+                        file=root.getFile(destinationPath);
+                    }
+
+
+                    if (!skipFile){
+                        molprops.put( file,  propobj);
+                    }
+                }
+            } catch (final Exception e) {
+                Display.getDefault().syncExec(new Runnable(){
+                    public void run() {
+                        if (e.getMessage()!=null)
+                            showError("Could not add molecule file. " +
+                            		"\n\nReason: " + e.getMessage());
+                        else
+                            showError("Could not add molecule file.");
+                    }
+                });
+            }
+        }
+        
+        if (monitor.isCanceled()){
+            logger.debug("Adding files was cencelled.");
+            return;
+        }
+
+        //Ok, add these resources to QsarModel using manager
+        try {
+//            qsar.addResourcesToQsarModel( qsarModel, editingDomain, resourcesToAdd, monitor );
+            qsar.addResourcesAndResponsesToQsarModel( qsarModel, editingDomain, 
+                                                      molprops, pickLargestFragment, monitor );
+            
+            //If true, we should now filter out structure entries with errors
+            if (omitErrorMols){
+            	logger.debug("Filtering out molecules with errors");
+            	for (IFile file : molprops.keySet()){
+            		//Identify resource in model
+            		for (ResourceType res : qsarModel.getStructurelist().getResources()){
+            			if (res.getFile().equals(file.getFullPath().toString()))
+            				qsar.removeStructuresWithErrors(qsarModel, editingDomain, res);
+            		}
+            	}
+            }
+        } catch ( IOException e ) {
+            logger.error(e.getStackTrace());
+            showError( e.getMessage() );
+        } catch ( BioclipseException e ) {
+            logger.error(e.getStackTrace());
+            showError( e.getMessage() );
+        } catch ( CoreException e ) {
+            logger.error(e.getStackTrace());
+            showError( e.getMessage() );
+        }
+
     }
 
 
@@ -1144,4 +1156,5 @@ public class MoleculesPage extends FormPage implements IEditingDomainProvider,
 
     }
 
+    
 }

@@ -175,6 +175,7 @@ public interface IQsarManager extends IBioclipseManager{
                                               QsarType qsarmodel,
                                               EditingDomain editingDomain,
                                               Map<IFile, Object> resourcesToAdd,
+                                              boolean omitErrorMols, 
                                               IProgressMonitor monitor )
                                               throws IOException,
                                               BioclipseException,

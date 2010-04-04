@@ -133,7 +133,9 @@ public class NewQSARProjectWizard extends Wizard implements INewWizard {
         monitor.beginTask("Creating QSAR project",50);
         try
         {
-
+        	
+        	logger.debug("Creating project: " + fFirstPage.getProjectName() + " at " + fFirstPage.getLocationPath());
+        	
             //Get WS root
             IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
             monitor.subTask("Creating directories");

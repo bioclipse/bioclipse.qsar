@@ -23,8 +23,11 @@ import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.model.WorkbenchContentProvider;
 import org.eclipse.ui.model.WorkbenchLabelProvider;
@@ -40,8 +43,18 @@ public class SelectMoleculesPage extends WizardPage implements ISelectionChanged
     private TreeViewer viewer;
     private AddMoleculeFilesWizard wizard;
     private ArrayList<IFile> selectedFiles;
+	private boolean omitErrormols;
+	private boolean pickLargestFragment;
 
-    protected SelectMoleculesPage(String pageName) {
+	public boolean isPickLargestFragment() {
+		return pickLargestFragment;
+	}
+
+    public boolean isOmitErrormols() {
+		return omitErrormols;
+	}
+
+	protected SelectMoleculesPage(String pageName) {
         super( pageName );
     }
 
@@ -66,6 +79,37 @@ public class SelectMoleculesPage extends WizardPage implements ISelectionChanged
         viewer.getControl().setLayoutData(data);
         viewer.addSelectionChangedListener( this );
         
+        Button chkPickLargestFragment=new Button( comp, SWT.CHECK );
+        chkPickLargestFragment.setText( "If multiple fragments, pcik largest" );
+        GridData gd = new GridData(GridData.BEGINNING);
+        chkPickLargestFragment.setLayoutData( gd );
+        chkPickLargestFragment.addSelectionListener(new SelectionListener() {
+			
+			public void widgetSelected(SelectionEvent e) {
+				pickLargestFragment=((Button)e.getSource()).getSelection();
+			}
+			public void widgetDefaultSelected(SelectionEvent e) {
+			}
+		});
+        chkPickLargestFragment.setSelection( true );
+        pickLargestFragment=true;
+        
+        
+        Button chkOmitErrorMols=new Button( comp, SWT.CHECK );
+        chkOmitErrorMols.setText( "Omit structures with errors" );
+        GridData gd2 = new GridData(GridData.BEGINNING);
+        chkOmitErrorMols.setLayoutData( gd2 );
+        chkOmitErrorMols.addSelectionListener(new SelectionListener() {
+			
+			public void widgetSelected(SelectionEvent e) {
+				omitErrormols=((Button)e.getSource()).getSelection();
+			}
+			public void widgetDefaultSelected(SelectionEvent e) {
+			}
+		});
+        chkOmitErrorMols.setSelection( true );
+        omitErrormols=true;
+
         setControl( comp );
     }
       

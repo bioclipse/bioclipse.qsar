@@ -15,6 +15,7 @@
 		  <topic label="Source Page" href="html/editor/sourcePage.html" />
 	  </topic>
 	  <topic label="Descriptor ontology" href="html/bodo.html" />
+	  <topic label="Available descriptors" href="html/descriptors.html" />
 	  <topic label="Preferences" href="html/prefs.html" />
 	  <topic label="Scripting QSAR" href="html/scripting.html" />
 	  <topic label="QSAR-ML" href="html/qsar-ml.html" />

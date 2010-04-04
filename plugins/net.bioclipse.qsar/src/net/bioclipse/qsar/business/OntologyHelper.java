@@ -115,18 +115,31 @@ public class OntologyHelper {
                 "PREFIX dc: <http://purl.org/dc/elements/1.1/> " +
                 "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> " +
                 "SELECT ?s ?label ?date ?definition WHERE { " +
+
+// FIXME: Why does not the below work? See bug 1933.
+// "SELECT ?s ?label ?date ?definition ?description WHERE { " +
+
                 "  ?s ?p <" + identifier + ">;" +
                 "     qsar:definition ?definition; " +
+//                "     qsar:description ?description; " +
                 "     dc:date ?date; " +
                 "     rdfs:label ?label." +
                 "}";
             IStringMatrix descriptors = rdf.sparql(owl, sparql);
             if (descriptors != null) {
-                for (int j=1; j<descriptors.getRowCount(); j++) {
-                    String descriptorID = descriptors.get(j, "s");
-                    String label = descriptors.get(j, "label");
-                    String date = descriptors.get(j, "date");
-                    String definition = descriptors.get(j, "definition");
+                for (int j=0; j<descriptors.size(); j++) {
+                    List<String> descriptor = descriptors.get(j);
+                    String descriptorID = descriptor.get(0);
+                    String label = descriptor.get(1);
+                    String date = descriptor.get(2);
+                    String definition = descriptor.get(3).trim();
+//                    String description = descriptor.get(4).trim();
+                    
+                    if (definition.indexOf("^^")>0)
+                    	definition=definition.substring(0,definition.indexOf("^^"));
+//                    if (description.indexOf("^^")>0)
+//                    	description=description.substring(0,description.indexOf("^^"));
+//                    logger.debug("  " + descriptorID + " = " + label + "\n");
                     
                     //Remove the starting qsar:
                     descriptorID=descriptorID.substring( 5 );
@@ -136,6 +149,7 @@ public class OntologyHelper {
                     desc.addCategory(dcat);
                     desc.setDate(date);
                     desc.setDefinition( definition);
+//                    desc.setDescription(description);
                     
                     dcat.addDescriptor(desc);
                     

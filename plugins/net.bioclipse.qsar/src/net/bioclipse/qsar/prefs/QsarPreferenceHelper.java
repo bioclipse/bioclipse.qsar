@@ -85,6 +85,13 @@ public class QsarPreferenceHelper {
             }
         }
         if (providerNames.size()>0){
+        	int ix = providerNames.indexOf("Chemistry Development Kit");
+        	if (ix>0){
+        		//put this first
+        		String cache=providerNames.get(0);
+        		providerNames.set(0, "Chemistry Development Kit");
+        		providerNames.set(ix, cache);
+        	}
             String[] providersAsArray=providerNames.toArray(new String[0]);
             return createQsarPreferenceStringFromItems(
                                                        providersAsArray);

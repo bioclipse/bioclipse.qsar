@@ -36,6 +36,15 @@ public class AddMoleculeFilesWizard extends Wizard{
     private Map<IFile, PropertyEntry> selectedProperties;
     private List<IResource> blacklist;
     
+	public boolean isPickLargestFragment() {
+		return selectMolPage.isPickLargestFragment();
+	}
+
+    public boolean isOmitErrormols() {
+		return selectMolPage.isOmitErrormols();
+	}
+
+    
     public List<IResource> getBlacklist() {
         return blacklist;
     }
