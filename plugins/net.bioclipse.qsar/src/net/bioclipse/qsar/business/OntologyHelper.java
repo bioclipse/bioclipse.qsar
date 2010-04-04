@@ -127,12 +127,11 @@ public class OntologyHelper {
                 "}";
             IStringMatrix descriptors = rdf.sparql(owl, sparql);
             if (descriptors != null) {
-                for (int j=0; j<descriptors.size(); j++) {
-                    List<String> descriptor = descriptors.get(j);
-                    String descriptorID = descriptor.get(0);
-                    String label = descriptor.get(1);
-                    String date = descriptor.get(2);
-                    String definition = descriptor.get(3).trim();
+                for (int j=1; j<descriptors.getRowCount(); j++) {
+                    String descriptorID = descriptors.get(j, "s");
+                    String label = descriptors.get(j, "label");
+                    String date = descriptors.get(j, "date");
+                    String definition = descriptors.get(j, "definition");
 //                    String description = descriptor.get(4).trim();
                     
                     if (definition.indexOf("^^")>0)

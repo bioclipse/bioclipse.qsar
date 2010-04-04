@@ -320,7 +320,8 @@ public class NewQSARProjectFromChEMBLWizard extends Wizard implements INewWizard
             
             QsarAdapterFactory factory=new QsarAdapterFactory();
             EditingDomain editingDomain=new AdapterFactoryEditingDomain(factory, new BasicCommandStack());
-            qsar.addResourcesAndResponsesToQsarModel( qsarmodel, editingDomain, resourcePropertyMap, monitor );
+            //Omit mols with errors
+            qsar.addResourcesAndResponsesToQsarModel( qsarmodel, editingDomain, resourcePropertyMap, true, monitor );
 
             //Save qsar file.
             QSARFileUtils.saveModelToFile( qsarmodel, qsarFile );
