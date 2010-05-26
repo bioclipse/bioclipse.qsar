@@ -38,7 +38,6 @@ Require-Bundle: net.bioclipse.core,
  net.bioclipse.chemoinformatics,
  net.bioclipse.scripting,
  org.eclipse.help,
- net.bioclipse.chembl;bundle-version="2.3.0",
  net.bioclipse.rdf;bundle-version="2.2.0"
 Bundle-ActivationPolicy: lazy
 Import-Package: org.apache.log4j

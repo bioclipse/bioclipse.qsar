@@ -82,16 +82,6 @@
    	   <description>New QSAR Wizard</description>
 	   <selection class="org.eclipse.core.resources.IResource"/>
 	</wizard>
- 	<wizard
-	   id = "net.bioclipse.qsar.ui.wizards.NewQSARProjectFromChEMBLWizard"
-	   name = "New QSAR project from ChEMBL"
-	   project="true"
-	   class="net.bioclipse.qsar.ui.wizards.NewQSARProjectFromChEMBLWizard"
-	   category="net.bioclipse.categories.qsar"
-	   icon="icons/descriptor.png">
-   	   <description>New QSAR from ChEMBL Wizard</description>
-	   <selection class="org.eclipse.core.resources.IResource"/>
-	</wizard>
 </extension>
    
    <extension point="org.eclipse.ui.preferencePages">

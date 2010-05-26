@@ -26,7 +26,6 @@ import java.util.StringTokenizer;
 
 import net.bioclipse.cdk.business.ICDKManager;
 import net.bioclipse.cdk.domain.ICDKMolecule;
-import net.bioclipse.chembl.business.IChEMBLManager;
 import net.bioclipse.core.business.BioclipseException;
 import net.bioclipse.core.domain.IMolecule;
 import net.bioclipse.core.util.LogUtils;
@@ -59,8 +58,6 @@ import net.bioclipse.qsar.init.Activator;
 import net.bioclipse.qsar.prefs.QSARPreferenceInitializer;
 import net.bioclipse.qsar.prefs.QsarPreferenceHelper;
 import net.bioclipse.qsar.util.QsarAdapterFactory;
-import net.bioclipse.ui.business.IUIManager;
-import net.bioclipse.ui.business.UIManager;
 
 import org.apache.log4j.Logger;
 import org.eclipse.core.resources.IFile;
@@ -68,10 +65,7 @@ import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
-import org.eclipse.core.runtime.OperationCanceledException;
 import org.eclipse.core.runtime.SubProgressMonitor;
-import org.eclipse.core.runtime.preferences.DefaultScope;
-import org.eclipse.core.runtime.preferences.IEclipsePreferences;
 import org.eclipse.emf.common.command.BasicCommandStack;
 import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.common.command.CompoundCommand;
