@@ -16,7 +16,7 @@ Require-Bundle: org.eclipse.ui,
  net.bioclipse.cml,
  org.openscience.cdk.interfaces
 Bundle-ActivationPolicy: lazy
-Import-Package: nu.xom,
+Import-Package: nu.xom;version="1.1.0",
  org.apache.log4j,
  org.xmlcml.cml.attribute,
  org.xmlcml.cml.attribute.main,
