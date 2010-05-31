@@ -2,7 +2,7 @@
 <feature
       id="net.bioclipse.qsar_feature"
       label="QSAR Feature"
-      version="2.2.1.v20100319"
+      version="2.4.0.RC1"
       provider-name="The Bioclipse Project"
       plugin="net.bioclipse.qsar.ui">
 
