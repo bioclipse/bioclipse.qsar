@@ -24,9 +24,12 @@ import java.util.Map;
 import org.apache.log4j.Logger;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.OperationCanceledException;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.smiles.SmilesGenerator;
 
 import net.bioclipse.cdk.business.Activator;
 import net.bioclipse.cdk.business.ICDKManager;
+import net.bioclipse.cdk.domain.ICDKMolecule;
 import net.bioclipse.core.business.BioclipseException;
 import net.bioclipse.core.domain.IMolecule;
 import net.bioclipse.core.util.LogUtils;
@@ -96,7 +99,16 @@ public class CdkRESTDescriptorCalculator implements IDescriptorCalculator {
             try {
                 
                 //We need the SMILES for the REST descriptors
-                String smiles=cdk.calculateSMILES( mol );
+            	ICDKMolecule cdkMol = cdk.asCDKMolecule(mol);
+            	IAtomContainer atomContainer = cdkMol.getAtomContainer();
+            	SmilesGenerator generator = new SmilesGenerator(true);
+            	org.openscience.cdk.interfaces.IMolecule molecule;
+            	if (atomContainer instanceof org.openscience.cdk.interfaces.IMolecule) {
+            	molecule = (org.openscience.cdk.interfaces.IMolecule)atomContainer;
+            	} else {
+            	molecule = atomContainer.getBuilder().newMolecule(atomContainer);
+            	}	
+            	String smiles = generator.createSMILES(molecule);
                 
                 List<IDescriptorResult> retlist=
                                              new ArrayList<IDescriptorResult>();

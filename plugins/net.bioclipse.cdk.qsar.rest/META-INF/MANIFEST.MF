@@ -7,11 +7,13 @@ Bundle-Activator: net.bioclipse.cdk.qsar.rest.Activator
 Bundle-Vendor: The Bioclipse Team
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
- net.bioclipse.cdk.business;bundle-version="2.0.0",
- net.bioclipse.core;bundle-version="2.0.0",
- net.bioclipse.qsar;bundle-version="1.0.0",
- net.bioclipse.ui;bundle-version="2.0.0",
- net.bioclipse.xom;bundle-version="1.1.0"
+ net.bioclipse.cdk.business,
+ net.bioclipse.core,
+ net.bioclipse.qsar,
+ net.bioclipse.ui,
+ net.bioclipse.xom,
+ org.openscience.cdk.smiles,
+ org.openscience.cdk.interfaces
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Bundle-ActivationPolicy: lazy
 Import-Package: org.apache.log4j
