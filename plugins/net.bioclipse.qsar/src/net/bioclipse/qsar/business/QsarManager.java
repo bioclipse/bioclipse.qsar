@@ -60,6 +60,7 @@ import net.bioclipse.qsar.prefs.QsarPreferenceHelper;
 import net.bioclipse.qsar.util.QsarAdapterFactory;
 import net.bioclipse.rdf.business.IRDFManager;
 import net.bioclipse.rdf.business.IRDFStore;
+import net.bioclipse.rdf.model.IStringMatrix;
 
 import org.apache.log4j.Logger;
 import org.eclipse.core.resources.IFile;
@@ -2037,10 +2038,10 @@ public class QsarManager implements IQsarManager{
         try {
             IRDFManager rdf =
                 net.bioclipse.rdf.Activator.getDefault().getJavaManager();
-            IRDFStore owl = rdf.createStore();
+            IRDFStore owl = rdf.createInMemoryStore();
             rdf.importFromStream(owl, url.openStream(), format);
 
-            List<List<String>> cats = rdf.sparql(owl,
+            IStringMatrix cats = rdf.sparql(owl,
                 "PREFIX qsar: <http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#> " +
                 "SELECT ?desc WHERE { " +
                 "  { ?desc a qsar:Descriptor . } " +
@@ -2050,7 +2051,7 @@ public class QsarManager implements IQsarManager{
             );
 
             // if there is no definition found ...
-            if (cats.size() == 0) return false;
+            if (cats.getRowCount() == 0) return false;
         } catch (Exception exception) {
             // any exception means the file is not OK
             logger.error("Invalid descriptor file: " + exception);
