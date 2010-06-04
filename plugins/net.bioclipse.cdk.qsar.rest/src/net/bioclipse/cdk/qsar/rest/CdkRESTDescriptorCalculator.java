@@ -106,7 +106,10 @@ public class CdkRESTDescriptorCalculator implements IDescriptorCalculator {
             	if (atomContainer instanceof org.openscience.cdk.interfaces.IMolecule) {
             	molecule = (org.openscience.cdk.interfaces.IMolecule)atomContainer;
             	} else {
-            	molecule = atomContainer.getBuilder().newMolecule(atomContainer);
+            		molecule = atomContainer.getBuilder().newInstance(
+            			org.openscience.cdk.interfaces.IMolecule.class,
+            			atomContainer
+            		);
             	}	
             	String smiles = generator.createSMILES(molecule);
                 
