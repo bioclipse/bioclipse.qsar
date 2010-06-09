@@ -193,9 +193,9 @@ public class CDKDescriptorCalculator implements IDescriptorCalculator {
         IAtomContainer container=cdkmol.getAtomContainer();
 
         //Make sure e have a Molecule, otherwise create it
-        if (!(container instanceof IMolecule)) container =
-        	container.getBuilder().newInstance(
-        		org.openscience.cdk.interfaces.IMolecule.class, container);
+        if (!(container instanceof org.openscience.cdk.interfaces.IMolecule))
+            container = container.getBuilder().newInstance(
+                     org.openscience.cdk.interfaces.IMolecule.class, container);
 
         //Store results here
         List<IDescriptorResult> results = new ArrayList<IDescriptorResult>();
