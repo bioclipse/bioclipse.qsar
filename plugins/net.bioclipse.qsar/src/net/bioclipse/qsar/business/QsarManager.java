@@ -1579,9 +1579,9 @@ public class QsarManager implements IQsarManager{
                     );
                     structure.setInchi( inchistr );
                 } catch ( Exception e ) {
-                    structure.getProblem().add( "Could not generate inchi: " + e.getMessage());
-                    res.setContainsErrors( true );
-                    logger.error("Could not generate inchi for mol " + 
+//                    structure.getProblem().add( "Could not generate inchi: " + e.getMessage());
+//                    res.setContainsErrors( true );
+                    logger.debug("Could not generate inchi for mol " + 
                                  molindex + " in file " + file.getName());
                 }
 
