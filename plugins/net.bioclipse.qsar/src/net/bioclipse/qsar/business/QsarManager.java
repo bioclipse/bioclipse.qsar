@@ -1469,16 +1469,25 @@ public class QsarManager implements IQsarManager{
 
                 //If we should pick largest fragment, do so now
                 if (pickLargestFragment){
-                	logger.debug("Selecting largest fragment if not connected.");
                 	List<IAtomContainer> containers = cdk.partition(mol);
                 	if (containers.size()>1){
+                    	logger.debug("Molecule contains " + mol.getAtomContainer().getAtomCount() + " and is not connected. Picking largest fragment.");
                 		IAtomContainer largest=null;
                 		for (IAtomContainer ac : containers){
                 			if (largest==null)
                 				largest=ac;
-                			else if (ac.getAtomCount() > largest.getAtomCount())
-                				largest=ac;
+                			else if (ac.getAtomCount() > largest.getAtomCount()){
+                				//remove atoms and bonds from AC from largest
+                				mol.getAtomContainer().remove(largest);
+                				logger.debug("  Removed " + largest.getAtomCount() + " atoms and " + largest.getBondCount() + " bonds from AC");
+                			}
+                			else{
+                				//remove atoms and bonds from AC from ac
+                				mol.getAtomContainer().remove(ac);
+                				logger.debug("  Removed " + ac.getAtomCount() + " atoms and " + ac.getBondCount() + " bonds from AC");
+                			}
                 		}
+                    	logger.debug("Molecule has " + mol.getAtomContainer().getAtomCount() + " atoms after fragment removal.");
                 	}
                 }
                 
