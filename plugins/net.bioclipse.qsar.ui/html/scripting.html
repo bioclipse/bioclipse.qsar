@@ -1,0 +1,107 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
+	<TITLE>Bioclipse QSAR - Scripting</TITLE>
+  <link rel="stylesheet" href="../../PRODUCT_PLUGIN/narrow_book.css" type="text/css">
+</HEAD>
+<BODY LANG="en-US" DIR="LTR">
+<h1>Bioclipse QSAR - Scripting</h1>
+
+Use the command <b>help qsar</b> to get a list of available scripting commands. Below are some examples.
+
+<p>
+<h2>List available descriptors</h2>
+<br>
+<b> > qsar.listDescriptors()</b>
+<pre>
+ bondsToAtom - Bonds to Atom []
+ atomDegree - Atomic Degree []
+ vAdjMa - Vertex adjacency information magnitude [CDK]
+ chiCluster - Chi Cluster Indices [CDK]
+ carbonTypes - Carbon Types [CDK]
+ ...
+</pre>
+
+
+<p>
+<h2>List available descriptors with an available implementation</h2>
+<br>
+<b> > qsar.listDescriptors(true)</b>
+<pre>
+ vAdjMa - Vertex adjacency information magnitude [CDK]
+ chiCluster - Chi Cluster Indices [CDK]
+ carbonTypes - Carbon Types [CDK]
+ ...
+</pre>
+
+
+
+<p>
+<h2>Show implementations for a desciptor</h2>
+<br>
+<b> > qsar.show("bondCount")</b>
+<pre>
+Provider: CDK
+Description: Number of bonds of a certain bond order.
+  Parameter: Name='order', default value='', Description: Bond order to count.
+Possible values: are 's'=single, 'd'=double, 't'=triple, 'q'=quadruple and
+''=all
+--
+Provider: CDK REST
+Description: Number of bonds of a certain bond order.
+  Parameter: Name='order', default value='', Description: Bond order to count.
+Possible values: are 's'=single, 'd'=double, 't'=triple, 'q'=quadruple and
+''=all
+----
+Name='NumberOfBonds',  Provider='JOELib'
+Description: Number of Bonds.
+</pre>
+
+<p>
+<h2> Calculate descriptors </h2>
+Use default implementation:<br>
+<b> > qsar.calculate(cdk.fromSMILES("CCC"), "bondCount")</b><br>
+<pre>
+ Descriptor=bondCount [order=]; provider=CDK; nB=2.0
+</pre>
+
+<p>
+Use specific implementation:<br>
+<b> > qsar.calculate(cdk.fromSMILES("CCC"), "bondCount", "CDK REST")</b><br>
+<pre>
+ Descriptor=bondCount [order=]; provider=CDK REST; nB=2.0
+</pre>
+
+
+<p>
+<h2> Calculate list of descriptors for a list of molecules: </h2>
+<pre>
+//Set up list of descriptors
+dlist = java.util.ArrayList();
+d1="http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#hBondDonors";
+d2="bpol";
+dlist.add(d1);
+dlist.add(d2);
+
+//Set up list of molecules
+mols = java.util.ArrayList();
+mols.add(cdk.fromSMILES("C(=O)N(Cc1ccco1)C(c1cc2ccccc2cc1)C(=O)NCc1ccccc1"));
+mols.add(cdk.fromSMILES("C(=O)(CNC(=O)OC(C)(C)C)N(Cc1oc(C(F)(F)F)cc1)C(c1ccccc1)C(=O)NCc1ccccc1"));
+mols.add(cdk.fromSMILES("C(=O)(C=CC)N(CCCCCCC)C(c1cc2c(cccc2)c2ccccc12)C(=O)NC(C)(C)C"));
+
+//Some debug output
+js.print("\nWe have " + mols.size() +" mols and " + dlist.size() + " descriptors.\n\n");
+
+//Do descriptor calculation
+res=qsar.calculate(mols,dlist);
+
+//Display results
+res.toMatrix();
+</pre>
+
+<p>
+See <a href="http://gist.github.com/95189">gist 95189</a>.
+
+</BODY>
+</HTML>

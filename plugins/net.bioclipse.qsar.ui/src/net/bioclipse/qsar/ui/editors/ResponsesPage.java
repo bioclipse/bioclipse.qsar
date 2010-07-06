@@ -292,7 +292,7 @@ public class ResponsesPage extends FormPage implements IEditingDomainProvider, I
                 QsarType qsarModel = ((QsarEditor)getEditor()).getQsarModel();
                 ResponseunitType resp = qsarModel.getResponseunit().get( ix );
                 
-                if (response.getUnit().equals( resp.getId() )){
+                if (response.getUnit()!=null && response.getUnit().equals( resp.getId() )){
                     //Same selected, nothing to store
                     return;
                 }

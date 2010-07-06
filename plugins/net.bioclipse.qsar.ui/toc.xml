@@ -19,7 +19,7 @@
 	  <topic label="Preferences" href="html/prefs.html" />
 	  <topic label="Scripting QSAR" href="html/scripting.html" />
 	  <topic label="QSAR-ML" href="html/qsar-ml.html" />
-	  <topic label="Exporting" href="html/export.html" />
+	  <topic label="Import and Export" href="html/export.html" />
 
   </topic>
 </toc>

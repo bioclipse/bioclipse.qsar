@@ -84,7 +84,10 @@ public class DescriptorResult implements IDescriptorResult{
 	    }
 	    ret=ret + "; provider=" + provider +"; ";	    
 	    for (int i=0; i< labels.length;i++){
-	        ret=ret+labels[i] + "=" + values[i];
+	        ret=ret+labels[i] + "=" + values[i]+", ";
+	    }
+	    if (ret.length()>3){
+	        ret=ret.substring( 0, ret.length()-2 );
 	    }
 
 	    return ret;

@@ -80,7 +80,7 @@ public class SelectMoleculesPage extends WizardPage implements ISelectionChanged
         viewer.addSelectionChangedListener( this );
         
         Button chkPickLargestFragment=new Button( comp, SWT.CHECK );
-        chkPickLargestFragment.setText( "If multiple fragments, pcik largest" );
+        chkPickLargestFragment.setText( "If multiple fragments, pick largest" );
         GridData gd = new GridData(GridData.BEGINNING);
         chkPickLargestFragment.setLayoutData( gd );
         chkPickLargestFragment.addSelectionListener(new SelectionListener() {
