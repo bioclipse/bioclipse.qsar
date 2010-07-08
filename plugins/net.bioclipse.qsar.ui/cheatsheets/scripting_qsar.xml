@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cheatsheet
+      title="Scripting Bioclipse-QSAR">
+   <intro>
+      <description>
+         This tutorial demonstrates how to access the Bioclipse-QSAR functionality from the Bioclipse Scripting Language.
+      </description>
+   </intro>
+
+   <item
+         title="Step 1: List available descriptors">
+      <description>
+
+		Descriptors in Bioclipse are identified with the Blue Obelisk Descriptor Ontology.
+		To list available descriptors, use the command:<br/><br/>
+		
+         <b>qsar.listDescriptors()</b><br/><br/>
+
+      </description>
+      
+        <action
+			pluginId="net.bioclipse.scripting.ui"
+			class="net.bioclipse.scripting.ui.actions.ScriptAction"
+			param1="qsar.listDescriptors()"/>
+      
+   </item>
+   
+      <item
+         title="Step 2: Calculating single properties">
+      <description>
+         
+         To calculate a single descriptor, use the following command:<br/><br/>
+         
+         <b>qsar.calculate(IMolecule, descriptorID)</b><br/><br/>
+
+		Example commands:<br/>
+		<b>mol=cdk.fromSMILES("OC(COC=1C=CC=CC=1CC=C)CNC(C)C")</b><br/>
+		<b>qsar.calculate(mol, "hBondDonors")</b><br/>
+         
+      </description>
+      
+        <action
+			pluginId="net.bioclipse.scripting.ui"
+			class="net.bioclipse.scripting.ui.actions.ScriptAction"
+			param1="mol=cdk.fromSMILES(&quot;OC(COC=1C=CC=CC=1CC=C)CNC(C)C&quot;)"
+			param2="qsar.calculate(mol, &quot;hBondDonors&quot;)"
+			/>
+      
+   </item>
+   
+   <item
+         title="Step 3: Calculating multiple properties">
+      <description>
+         
+         To calculate a list of descriptors for a list of molecules, use the following command:<br/><br/>
+         
+         <b>qsar.calculate(molecules, descriptors)</b><br/><br/>
+
+		The gist 95189 shows a script to demonstrate this.
+         
+      </description>
+      
+       <action
+			pluginId="net.bioclipse.scripting.ui"
+			class="net.bioclipse.scripting.ui.actions.ScriptAction"
+			param1="res=gist.download(95189,&quot;/Virtual/qsar-multi.js&quot;); ui.open(res); js.executeFile(res)"/>
+      
+   </item>
+
+   
+</cheatsheet>

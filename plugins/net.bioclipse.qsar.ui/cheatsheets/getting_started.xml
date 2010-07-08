@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cheatsheet
+      title="Calculating CDK Properties">
+   <intro>
+      <description>
+         This tutorial gives a brief introduction for working with the Bioclipse-QSAR functionality in Bioclipse.
+      </description>
+   </intro>
+
+   <item
+         title="Step 1: Creating a QSAR Project">
+      <description>
+
+			Go to menu <b>File > New... > Other</b> and create a new QSAR Project.
+         
+      </description>
+      <command
+            required="false"
+            serialization="org.eclipse.ui.newWizard(newWizardId=net.bioclipse.qsar.wizards.NewQSARRProjectWizard)"/>
+   </item>
+   
+      <item
+         title="Step 2: Using the QSAR editor">
+      <description>
+
+			Double-clicking on the file qsar.xml in the Navigator opens the QSAR Editor. 
+			This editor allows for the setup of daaset in a novel file format called QSAR-ML.<br/><br/>
+
+			The tabs at the bottom of the editor allows for specifying data and metadata for the 
+			qsar dataset.<br/><br/>
+			
+			The tab <b>Information</b> allows for adding metadata about the dataset.<br/><br/>
+
+			The tab <b>Molecules</b> contains a list of molecules in the analysis. 
+			You can Drag and drop files here from any project and they will be copied into the project.<br/><br/>
+
+			The tab <b>Descriptors</b> contains a list of descriptors in the analysis. 
+			Select in the left view and click the <b>Add</b> button. Some descriptors 
+			require/offer parameters that can be set in the lower right view.<br/><br/>
+
+			The tab <b>Responses</b> allows for adding response variables to the structures.<br/><br/>
+
+			The tab <b>Sources</b> displays the QSAR-ML source.<br/><br/>
+
+			Note that the dataset is built in the background when you save, 
+			if you have at least one structure and one descriptor chosen. The results are cached 
+			so it will not be calculated again if already calculated. 
+			The calculated values are saved in the QSAR-ML but also in a comma-separated 
+			file called <b>dataset.csv</b>.  <br/><br/>
+         
+      </description>
+      
+   </item>
+
+      <item
+         title="Step 3: Open dataset in Matrix Editor">
+      <description>
+		Double-click the dataset.csv to open it in the Matrix Editor.
+      </description>
+   </item>
+   
+   
+</cheatsheet>
