@@ -136,12 +136,29 @@
 
    <extension
          point="org.eclipse.ui.cheatsheets.cheatSheetContent">
+         <category
+               id="net.bioclipse.qsar.cheatsheet.category"
+               name="QSAR">
+         </category>
       <cheatsheet
-            category="net.bioclipse.chemoinformatics.cheatsheet.category"
+            category="net.bioclipse.qsar.cheatsheet.category"
             composite="false"
-            contentFile="cheatsheets/calcprops.xml"
-            id="net.bioclipse.qsar.ui.calcpropscdk"
-            name="Calculate properties with CDK scripts"/>
+            contentFile="cheatsheets/getting_started.xml"
+            id="net.bioclipse.qsar.cheatsheet.gettingstarted"
+            name="Getting started with Bioclipse-QSAR"/>
+      <cheatsheet
+            category="net.bioclipse.qsar.cheatsheet.category"
+            composite="false"
+            contentFile="cheatsheets/scripting_qsar.xml"
+            id="net.bioclipse.qsar.cheatsheet.scriptingqsar"
+            name="Scripting Bioclipse-QSAR"/>
+      <cheatsheet
+            category="net.bioclipse.qsar.cheatsheet.category"
+            composite="false"
+            contentFile="cheatsheets/qsar-r.xml"
+            id="net.bioclipse.qsar.cheatsheet.qsar_r"
+            name="Accessing QSAR data from R"/>
+            
    </extension>
    <extension
          point="org.eclipse.ui.perspectives">
