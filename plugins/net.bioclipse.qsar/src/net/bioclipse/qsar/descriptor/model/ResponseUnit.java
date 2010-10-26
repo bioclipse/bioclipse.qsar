@@ -10,7 +10,7 @@
  ******************************************************************************/
 package net.bioclipse.qsar.descriptor.model;
 
-import net.bioclipse.core.domain.BioObject;
+import net.bioclipse.core.api.domain.BioObject;
 
 /**
  * 

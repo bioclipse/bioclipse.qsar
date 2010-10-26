@@ -17,7 +17,7 @@ import java.util.Map;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 
-import net.bioclipse.core.domain.IMolecule;
+import net.bioclipse.core.api.domain.IMolecule;
 import net.bioclipse.qsar.DescriptorType;
 import net.bioclipse.qsar.descriptor.DescriptorResult;
 import net.bioclipse.qsar.descriptor.IDescriptorCalculator;

@@ -13,7 +13,8 @@ Require-Bundle: org.eclipse.ui,
  net.bioclipse.ui,
  org.openscience.cdk.core,
  org.openscience.cdk.smiles,
- org.openscience.cdk.interfaces
+ org.openscience.cdk.interfaces,
+ net.bioclipse.core.api;bundle-version="1.0.0"
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Bundle-ActivationPolicy: lazy
 Import-Package: nu.xom;version="1.1.0",

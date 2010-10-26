@@ -12,7 +12,7 @@ package net.bioclipse.qsar.descriptor.model;
 
 import java.util.List;
 
-import net.bioclipse.core.business.BioclipseException;
+import net.bioclipse.core.api.BioclipseException;
 import net.bioclipse.qsar.business.IQsarManager;
 import net.bioclipse.qsar.init.Activator;
 

@@ -26,8 +26,8 @@ import java.util.StringTokenizer;
 
 import net.bioclipse.cdk.business.ICDKManager;
 import net.bioclipse.cdk.domain.ICDKMolecule;
-import net.bioclipse.core.business.BioclipseException;
-import net.bioclipse.core.domain.IMolecule;
+import net.bioclipse.core.api.BioclipseException;
+import net.bioclipse.core.api.domain.IMolecule;
 import net.bioclipse.core.util.LogUtils;
 import net.bioclipse.qsar.DescriptorType;
 import net.bioclipse.qsar.DescriptorlistType;
@@ -1583,7 +1583,7 @@ public class QsarManager implements IQsarManager{
                 //Calculate and add inchi to structure
                 try {
                     String inchistr = mol.getInChI(
-                                             net.bioclipse.core.domain.IMolecule
+                                             net.bioclipse.core.api.domain.IMolecule
                                              .Property.USE_CALCULATED
                     );
                     structure.setInchi( inchistr );

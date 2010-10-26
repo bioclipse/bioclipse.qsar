@@ -23,7 +23,7 @@ import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.NullProgressMonitor;
 
-import net.bioclipse.core.domain.IMolecule;
+import net.bioclipse.core.api.domain.IMolecule;
 import net.bioclipse.qsar.DescriptorresultType;
 import net.bioclipse.qsar.DescriptorvalueType;
 import net.bioclipse.qsar.QsarType;

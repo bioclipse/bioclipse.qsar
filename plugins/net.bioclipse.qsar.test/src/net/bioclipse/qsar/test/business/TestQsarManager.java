@@ -17,9 +17,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import net.bioclipse.core.business.BioclipseException;
-import net.bioclipse.core.domain.IMolecule;
-import net.bioclipse.core.domain.SMILESMolecule;
+import net.bioclipse.core.api.BioclipseException;
+import net.bioclipse.core.api.domain.IMolecule;
+import net.bioclipse.core.api.domain.SMILESMolecule;
 import net.bioclipse.qsar.DescriptorType;
 import net.bioclipse.qsar.QSARConstants;
 import net.bioclipse.qsar.QsarFactory;

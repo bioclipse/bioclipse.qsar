@@ -38,7 +38,8 @@ Require-Bundle: net.bioclipse.core,
  net.bioclipse.chemoinformatics,
  net.bioclipse.scripting,
  org.eclipse.help,
- net.bioclipse.rdf
+ net.bioclipse.rdf,
+ net.bioclipse.core.api;bundle-version="1.0.0"
 Bundle-ActivationPolicy: lazy
 Import-Package: org.apache.log4j
 Export-Package: net.bioclipse.qsar.ui,
