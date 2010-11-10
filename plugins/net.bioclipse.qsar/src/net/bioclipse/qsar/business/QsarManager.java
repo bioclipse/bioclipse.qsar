@@ -160,7 +160,8 @@ public class QsarManager implements IQsarManager{
 
         //Create new list of providers
         List<DescriptorProvider> providers=QsarHelper.readProvidersAndDescriptorImplsfromEP();
-
+        QsarHelper.addProvidersAndDescriptorsFromDiscovery(providers);
+        
         //Here we can see what providers impl does not have an entry in BODO
         checkProvidersAgainstOntology(providers);
         

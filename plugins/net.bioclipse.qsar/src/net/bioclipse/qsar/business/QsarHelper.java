@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.bioclipse.core.business.BioclipseException;
+import net.bioclipse.core.util.LogUtils;
 import net.bioclipse.qsar.QSARConstants;
 import net.bioclipse.qsar.descriptor.IDescriptorCalculator;
 import net.bioclipse.qsar.descriptor.model.DescriptorImpl;
@@ -23,6 +24,8 @@ import net.bioclipse.qsar.descriptor.model.DescriptorModel;
 import net.bioclipse.qsar.descriptor.model.DescriptorParameter;
 import net.bioclipse.qsar.descriptor.model.DescriptorProvider;
 import net.bioclipse.qsar.descriptor.model.ResponseUnit;
+import net.bioclipse.qsar.discovery.IDiscoveryService;
+import net.bioclipse.qsar.init.Activator;
 import net.bioclipse.qsar.prefs.QsarPreferenceHelper;
 
 import org.apache.log4j.Logger;
@@ -36,273 +39,345 @@ import org.eclipse.core.runtime.Platform;
 
 public class QsarHelper {
 
-    private static final Logger logger = Logger.getLogger(QsarHelper.class);
-
-
-    /**
-     * Read all descriptor providers and their implementations from EP.
-     */
-    public static List<DescriptorProvider> readProvidersAndDescriptorImplsfromEP() {
-
-        List<DescriptorProvider> provlist=new ArrayList<DescriptorProvider>();
-
-        //Initialize implementations via extension points
-        IExtensionRegistry registry = Platform.getExtensionRegistry();
-
-        if ( registry == null )
-            throw new RuntimeException("Registry is null, no services can " +
-            "be read. Workbench not started?");
-        // it likely means that the Eclipse workbench has not
-        // started, for example when running tests
-
-        /*
-         * service objects
-         */
-        IExtensionPoint serviceObjectExtensionPoint = registry
-        .getExtensionPoint(QSARConstants.DESCRIPTOR_EXTENSION_POINT);
-
-        IExtension[] serviceObjectExtensions
-        = serviceObjectExtensionPoint.getExtensions();
-
-
-        for(IExtension extension : serviceObjectExtensions) {
-            for( IConfigurationElement element
-                    : extension.getConfigurationElements() ) {
-
-                if (element.getName().equals(QSARConstants.PROVIDER_ELEMENT_NAME)){
-
-                    try {
-                        String pid=element.getAttribute("id");
-                        String pname=element.getAttribute("name");
-
-                        DescriptorProvider provider=new DescriptorProvider(pid, pname);
-                        String picon=element.getAttribute("icon");
-                        provider.setIcon_path(picon);
-
-                        String pshortname=element.getAttribute("shortName");
-                        provider.setShortName(pshortname);
-
-                        String pvendor=element.getAttribute("vendor");
-                        provider.setVendor(pvendor);
-
-                        String pvers=element.getAttribute("version");
-                        provider.setVersion(pvers);
-
-                        String pns=element.getAttribute("namespace");
-                        provider.setNamespace(pns);
-
-                        IDescriptorCalculator calculator;
-                        calculator = (IDescriptorCalculator) 
-                        element.createExecutableExtension("calculator");
-                        provider.setCalculator(calculator);
-
-                        String cml=element.getAttribute("acceptsCml");
-                        if (cml!=null){
-                            if (cml.equalsIgnoreCase("true")){
-                                provider.setAcceptsCml(true);
-                            }
-                            else{
-                                //If not explicitly true, then false
-                                provider.setAcceptsCml(false);
-                            }
-                        }
-
-                        String molfile=element.getAttribute("acceptsMolfile");
-                        if (molfile!=null){
-                            if (molfile.equalsIgnoreCase("true")){
-                                provider.setAcceptsMolfile(true);
-                            }
-                            else{
-                                //If not explicitly true, then false
-                                provider.setAcceptsMolfile(false);
-                            }
-                        }
-
-                        String smiles=element.getAttribute("acceptsSmiles");
-                        if (smiles!=null){
-                            if (smiles.equalsIgnoreCase("true")){
-                                provider.setAcceptsSmiles(true);
-                            }
-                            else{
-                                //If not explicitly true, then false
-                                provider.setAcceptsSmiles(false);
-                            }
-                        }
-
-                        //Get descriptor children
-                        provider.setDescriptorImpls(new ArrayList<DescriptorImpl>());
-                        for( IConfigurationElement providerChild
-                                : element.getChildren(QSARConstants.DESCRIMPL_ELEMENT_NAME) ) {
-
-                            String did=providerChild.getAttribute("id");
-                            String dname=providerChild.getAttribute("name");
+	private static final Logger logger = Logger.getLogger(QsarHelper.class);
+
+
+	/**
+	 * Read all descriptor providers and their implementations from EP.
+	 */
+	public static List<DescriptorProvider> readProvidersAndDescriptorImplsfromEP() {
+
+		List<DescriptorProvider> provlist=new ArrayList<DescriptorProvider>();
+
+		//Initialize implementations via extension points
+		IExtensionRegistry registry = Platform.getExtensionRegistry();
+
+		if ( registry == null )
+			throw new RuntimeException("Registry is null, no services can " +
+			"be read. Workbench not started?");
+		// it likely means that the Eclipse workbench has not
+		// started, for example when running tests
+
+		/*
+		 * service objects
+		 */
+		IExtensionPoint serviceObjectExtensionPoint = registry
+		.getExtensionPoint(QSARConstants.DESCRIPTOR_EXTENSION_POINT);
+
+		IExtension[] serviceObjectExtensions
+		= serviceObjectExtensionPoint.getExtensions();
+
+
+		for(IExtension extension : serviceObjectExtensions) {
+			for( IConfigurationElement element
+					: extension.getConfigurationElements() ) {
+
+				if (element.getName().equals(QSARConstants.PROVIDER_ELEMENT_NAME)){
+
+					try {
+						String pid=element.getAttribute("id");
+						String pname=element.getAttribute("name");
+
+						DescriptorProvider provider=new DescriptorProvider(pid, pname);
+						String picon=element.getAttribute("icon");
+						provider.setIcon_path(picon);
+
+						String pshortname=element.getAttribute("shortName");
+						provider.setShortName(pshortname);
+
+						String pvendor=element.getAttribute("vendor");
+						provider.setVendor(pvendor);
+
+						String pvers=element.getAttribute("version");
+						provider.setVersion(pvers);
+
+						String pns=element.getAttribute("namespace");
+						provider.setNamespace(pns);
+
+						IDescriptorCalculator calculator;
+						calculator = (IDescriptorCalculator) 
+						element.createExecutableExtension("calculator");
+						provider.setCalculator(calculator);
+
+						String cml=element.getAttribute("acceptsCml");
+						if (cml!=null){
+							if (cml.equalsIgnoreCase("true")){
+								provider.setAcceptsCml(true);
+							}
+							else{
+								//If not explicitly true, then false
+								provider.setAcceptsCml(false);
+							}
+						}
+
+						String molfile=element.getAttribute("acceptsMolfile");
+						if (molfile!=null){
+							if (molfile.equalsIgnoreCase("true")){
+								provider.setAcceptsMolfile(true);
+							}
+							else{
+								//If not explicitly true, then false
+								provider.setAcceptsMolfile(false);
+							}
+						}
+
+						String smiles=element.getAttribute("acceptsSmiles");
+						if (smiles!=null){
+							if (smiles.equalsIgnoreCase("true")){
+								provider.setAcceptsSmiles(true);
+							}
+							else{
+								//If not explicitly true, then false
+								provider.setAcceptsSmiles(false);
+							}
+						}
 
-                            DescriptorImpl descImpl=new DescriptorImpl(did, dname);
-                            String dicon=providerChild.getAttribute("icon");
-                            descImpl.setIcon_path(dicon);
+						//Get descriptor children
+						provider.setDescriptorImpls(new ArrayList<DescriptorImpl>());
+						for( IConfigurationElement providerChild
+								: element.getChildren(QSARConstants.DESCRIMPL_ELEMENT_NAME) ) {
 
-                            String ddef=providerChild.getAttribute("definition");
-                            descImpl.setDefinition(ddef);
-                            
-                            String ddesc=providerChild.getAttribute("description");
-                            descImpl.setDescription(ddesc);
+							String did=providerChild.getAttribute("id");
+							String dname=providerChild.getAttribute("name");
 
-                            String dns=element.getAttribute("namespace");
-                            descImpl.setNamespace(dns);
+							DescriptorImpl descImpl=new DescriptorImpl(did, dname);
+							String dicon=providerChild.getAttribute("icon");
+							descImpl.setIcon_path(dicon);
 
+							String ddef=providerChild.getAttribute("definition");
+							descImpl.setDefinition(ddef);
 
-                            String req3d=providerChild.getAttribute("requires3D");
-                            if (req3d!=null){
-                                if (req3d.equalsIgnoreCase("true")){
-                                    descImpl.setRequires3D(true);
-                                }
-                                else{
-                                    //If not explicitly true, then false
-                                    descImpl.setRequires3D(false);
-                                }
-                            }
+							String ddesc=providerChild.getAttribute("description");
+							descImpl.setDescription(ddesc);
 
-                            //                        String dcat=providerChild.getAttribute("category");
-                            //                        DescriptorCategory foundcat=null;
-                            //                        for (DescriptorCategory cat : getFullCategories()){
-                            //                          if (cat.getId().equals(dcat)){
-                            //                            foundcat=cat;
-                            //                          }
-                            //                        }
-                            //                        if (foundcat!=null){
-                            //                          desc.setCategory(foundcat);
-                            //                        }else {
-                            //                          logger.error("Descriptor category: " + dcat + 
-                            //                          " for the descriptor: " + did + "could not be found");
-                            //                        }
+							String dns=element.getAttribute("namespace");
+							descImpl.setNamespace(dns);
 
-                            //Get descriptor children=parameters
-                            List<DescriptorParameter> pparams=new ArrayList<DescriptorParameter>();
-                            for( IConfigurationElement param
-                                    : providerChild.getChildren(QSARConstants.PARAMETER_ELEMENT_NAME) ) {
 
-                                String pakey=param.getAttribute("key");
-                                String padef=param.getAttribute("defaultvalue");
-                                DescriptorParameter dparam=new DescriptorParameter(pakey, padef);
+							String req3d=providerChild.getAttribute("requires3D");
+							if (req3d!=null){
+								if (req3d.equalsIgnoreCase("true")){
+									descImpl.setRequires3D(true);
+								}
+								else{
+									//If not explicitly true, then false
+									descImpl.setRequires3D(false);
+								}
+							}
 
-                                String padescr=param.getAttribute("description");
-                                dparam.setDescription(padescr);
-                                
-                                for( IConfigurationElement listedvalue
-                                        : param.getChildren(QSARConstants.PARAMETER_LISTED_VALUES) ) {
+							//                        String dcat=providerChild.getAttribute("category");
+							//                        DescriptorCategory foundcat=null;
+							//                        for (DescriptorCategory cat : getFullCategories()){
+							//                          if (cat.getId().equals(dcat)){
+							//                            foundcat=cat;
+							//                          }
+							//                        }
+							//                        if (foundcat!=null){
+							//                          desc.setCategory(foundcat);
+							//                        }else {
+							//                          logger.error("Descriptor category: " + dcat + 
+							//                          " for the descriptor: " + did + "could not be found");
+							//                        }
 
-                                    String val=listedvalue.getAttribute( "value" );
-                                    dparam.addListedValue(val);
-                                }
+							//Get descriptor children=parameters
+							List<DescriptorParameter> pparams=new ArrayList<DescriptorParameter>();
+							for( IConfigurationElement param
+									: providerChild.getChildren(QSARConstants.PARAMETER_ELEMENT_NAME) ) {
 
-                                pparams.add(dparam);
-                            }
-                            if (pparams.size()>0)
-                                descImpl.setParameters(pparams);
+								String pakey=param.getAttribute("key");
+								String padef=param.getAttribute("defaultvalue");
+								DescriptorParameter dparam=new DescriptorParameter(pakey, padef);
 
+								String padescr=param.getAttribute("description");
+								dparam.setDescription(padescr);
 
+								for( IConfigurationElement listedvalue
+										: param.getChildren(QSARConstants.PARAMETER_LISTED_VALUES) ) {
 
-                            //Add parent provider to descriptor
-                            descImpl.setProvider(provider);
+									String val=listedvalue.getAttribute( "value" );
+									dparam.addListedValue(val);
+								}
 
-                            provider.getDescriptorImpls().add(descImpl);
-                            logger.debug("  Added descriptor impl: " + dname + " for provider: " + pshortname);
+								pparams.add(dparam);
+							}
+							if (pparams.size()>0)
+								descImpl.setParameters(pparams);
 
-                        }
 
-                        provlist.add(provider);
-                        logger.debug("Finished adding descriptor provider: " + pname);
 
-                    } catch (CoreException e) {
-                        logger.error("Could not initialize EP. Reason: " + e.getMessage());
-                        e.printStackTrace();
-                    }
+							//Add parent provider to descriptor
+							descImpl.setProvider(provider);
 
+							provider.getDescriptorImpls().add(descImpl);
+							logger.debug("  Added descriptor impl: " + dname + " for provider: " + pshortname);
 
+						}
 
-                }
+						provlist.add(provider);
+						logger.debug("Finished adding descriptor provider: " + pname);
 
-            }
-        }
+					} catch (CoreException e) {
+						logger.error("Could not initialize EP. Reason: " + e.getMessage());
+						e.printStackTrace();
+					}
 
-        return provlist;
-    }
 
 
-    public static List<ResponseUnit> readUnitsFromEPAndPreferences() {
+				}
 
-        List<ResponseUnit> responses=new ArrayList<ResponseUnit>();
+			}
+		}
 
-        //Initialize implementations via extension points
-        IExtensionRegistry registry = Platform.getExtensionRegistry();
+		return provlist;
+	}
 
-        if ( registry == null )
-            throw new RuntimeException("Registry is null, no services can " +
-            "be read. Workbench not started?");
-        // it likely means that the Eclipse workbench has not
-        // started, for example when running tests
 
-        /*
-         * service objects
-         */
-        IExtensionPoint serviceObjectExtensionPoint = registry
-        .getExtensionPoint(QSARConstants.RESPONSEUNITS_EXTENSION_POINT);
+	public static List<ResponseUnit> readUnitsFromEPAndPreferences() {
 
-        IExtension[] serviceObjectExtensions
-        = serviceObjectExtensionPoint.getExtensions();
+		List<ResponseUnit> responses=new ArrayList<ResponseUnit>();
 
+		//Initialize implementations via extension points
+		IExtensionRegistry registry = Platform.getExtensionRegistry();
 
-        for(IExtension extension : serviceObjectExtensions) {
-            for( IConfigurationElement element
-                    : extension.getConfigurationElements() ) {
+		if ( registry == null )
+			throw new RuntimeException("Registry is null, no services can " +
+			"be read. Workbench not started?");
+		// it likely means that the Eclipse workbench has not
+		// started, for example when running tests
 
-                if (element.getName().equals(QSARConstants.RESPONSEUNITS_ELEMENT_NAME)){
+		/*
+		 * service objects
+		 */
+		IExtensionPoint serviceObjectExtensionPoint = registry
+		.getExtensionPoint(QSARConstants.RESPONSEUNITS_EXTENSION_POINT);
 
-                    //The required values
-                    String pid=element.getAttribute("id");
-                    String pname=element.getAttribute("name");
+		IExtension[] serviceObjectExtensions
+		= serviceObjectExtensionPoint.getExtensions();
 
-                    ResponseUnit unit=new ResponseUnit(pid, pname);
 
-                    String pshortname=element.getAttribute("shortname");
-                    unit.setShortname(pshortname);
+		for(IExtension extension : serviceObjectExtensions) {
+			for( IConfigurationElement element
+					: extension.getConfigurationElements() ) {
 
-                    String purl=element.getAttribute("url");
-                    unit.setUrl( purl);
+				if (element.getName().equals(QSARConstants.RESPONSEUNITS_ELEMENT_NAME)){
 
-                    String pdesc=element.getAttribute("description");
-                    unit.setDescription( pdesc);
+					//The required values
+					String pid=element.getAttribute("id");
+					String pname=element.getAttribute("name");
 
-                    responses.add(unit);
-                    logger.debug("Added response unit: " + unit);
+					ResponseUnit unit=new ResponseUnit(pid, pname);
 
-                }
+					String pshortname=element.getAttribute("shortname");
+					unit.setShortname(pshortname);
 
-            }
-        }
-        
-        //Ok, move on to preferences
-        responses.addAll( QsarPreferenceHelper.getAvailableUnitsFromPrefs() );
-        
+					String purl=element.getAttribute("url");
+					unit.setUrl( purl);
 
-        return responses;
-    }
+					String pdesc=element.getAttribute("description");
+					unit.setDescription( pdesc);
 
+					responses.add(unit);
+					logger.debug("Added response unit: " + unit);
 
-    public static void addDescriptorDefinitionsFromFiles( DescriptorModel model ) {
+				}
 
-        //Get files
-        List<URL> urls=QsarPreferenceHelper.getAvailableDescriptorDefinitionFilesFromPrefs();
+			}
+		}
 
-        for (URL url : urls){
-            try {
-                model = OntologyHelper.addDescriptorHierarchy(model, url);
-            } catch ( Exception e ) {
-                logger.error("Error adding descriptors from url: " + url 
-                             + ". Reason: " + e.getMessage());
-            }
-        }
-        
-    }
+		//Ok, move on to preferences
+		responses.addAll( QsarPreferenceHelper.getAvailableUnitsFromPrefs() );
+
+
+		return responses;
+	}
+
+
+	public static void addDescriptorDefinitionsFromFiles( DescriptorModel model ) {
+
+		//Get files
+		List<URL> urls=QsarPreferenceHelper.getAvailableDescriptorDefinitionFilesFromPrefs();
+
+		for (URL url : urls){
+			try {
+				model = OntologyHelper.addDescriptorHierarchy(model, url);
+			} catch ( Exception e ) {
+				logger.error("Error adding descriptors from url: " + url 
+						+ ". Reason: " + e.getMessage());
+			}
+		}
+
+	}
+
+
+	public static void addProvidersAndDescriptorsFromDiscovery(
+			List<DescriptorProvider> providers) {
+
+		logger.debug("Performing service discovery for descriptor providers " +
+		"and descriptor implementations...");
+
+		List<IDiscoveryService > discoveryServices = 
+			new ArrayList<IDiscoveryService>();
+
+		
+		//Initialize discovery services via extension points
+		IExtensionRegistry registry = Platform.getExtensionRegistry();
+
+		if ( registry == null )
+			throw new RuntimeException("Registry is null, no services can " +
+			"be read. Workbench not started?");
+		// it likely means that the Eclipse workbench has not
+		// started, for example when running tests
+
+		/*
+		 * service objects
+		 */
+		IExtensionPoint serviceObjectExtensionPoint = registry
+		.getExtensionPoint(QSARConstants.DESCRIPTOR_EXTENSION_POINT);
+
+		IExtension[] serviceObjectExtensions
+		= serviceObjectExtensionPoint.getExtensions();
+
+
+		for(IExtension extension : serviceObjectExtensions) {
+			for( IConfigurationElement element
+					: extension.getConfigurationElements() ) {
+
+				if (element.getName().equals(QSARConstants.DISCOVERY_EP)){
+
+					try {
+						IDiscoveryService ds = 
+							(IDiscoveryService) element.
+							createExecutableExtension("discoveryimpl");
+						
+						discoveryServices.add(ds);
+
+					} catch (CoreException e) {
+						LogUtils.handleException(e, logger, Activator.PLUGIN_ID);
+					}
+
+				}
+			}
+		}
+		
+		logger.debug("From EPs, got " + discoveryServices.size() + 
+				" discovery services.");
+		
+		//Ok, we have now a list of services which can discover providers.
+		//Let them now discover providers
+		for (IDiscoveryService ds : discoveryServices){
+
+			logger.debug("Discovering providers for: " + ds.getName() + "...");
+			List<DescriptorProvider> ls = ds.discoverProvidersAndImpls();
+			if (ls != null && ls.size()>0){
+				logger.debug(ls.size() + " providers detected for: " + ds.getName());
+
+				providers.addAll(ls);
+			}else{
+				logger.error("No providers detected for: " + ds.getName());
+			}
+			
+		}
+
+	}
 
 }

@@ -31,6 +31,7 @@ Export-Package: net.bioclipse.qsar,
  net.bioclipse.qsar.business,
  net.bioclipse.qsar.descriptor,
  net.bioclipse.qsar.descriptor.model,
+ net.bioclipse.qsar.discovery,
  net.bioclipse.qsar.init,
  net.bioclipse.qsar.prefs
 Import-Package: org.apache.log4j

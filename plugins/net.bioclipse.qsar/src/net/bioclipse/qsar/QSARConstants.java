@@ -40,5 +40,7 @@ public interface QSARConstants {
   public static final String MISSING_VALUE_STRING = "NaN";
   public static final String QSAR_UNITS_PREFERENCE = "QsarUnits";
 
+  public static final Object DISCOVERY_EP = "discovery";
+
 
 }
