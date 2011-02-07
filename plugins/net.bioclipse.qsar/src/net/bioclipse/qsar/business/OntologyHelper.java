@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.bioclipse.core.business.BioclipseException;
+import net.bioclipse.core.domain.IStringMatrix;
 import net.bioclipse.qsar.QSARConstants;
 import net.bioclipse.qsar.descriptor.model.Descriptor;
 import net.bioclipse.qsar.descriptor.model.DescriptorCategory;
@@ -23,7 +24,6 @@ import net.bioclipse.qsar.descriptor.model.DescriptorModel;
 import net.bioclipse.rdf.Activator;
 import net.bioclipse.rdf.business.IRDFManager;
 import net.bioclipse.rdf.business.IRDFStore;
-import net.bioclipse.rdf.model.IStringMatrix;
 
 import org.apache.log4j.Logger;
 import org.eclipse.core.runtime.CoreException;

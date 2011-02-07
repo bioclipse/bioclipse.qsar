@@ -28,6 +28,7 @@ import net.bioclipse.cdk.business.ICDKManager;
 import net.bioclipse.cdk.domain.ICDKMolecule;
 import net.bioclipse.core.business.BioclipseException;
 import net.bioclipse.core.domain.IMolecule;
+import net.bioclipse.core.domain.IStringMatrix;
 import net.bioclipse.core.util.LogUtils;
 import net.bioclipse.qsar.DescriptorType;
 import net.bioclipse.qsar.DescriptorlistType;
@@ -60,7 +61,6 @@ import net.bioclipse.qsar.prefs.QsarPreferenceHelper;
 import net.bioclipse.qsar.util.QsarAdapterFactory;
 import net.bioclipse.rdf.business.IRDFManager;
 import net.bioclipse.rdf.business.IRDFStore;
-import net.bioclipse.rdf.model.IStringMatrix;
 
 import org.apache.log4j.Logger;
 import org.eclipse.core.resources.IFile;
