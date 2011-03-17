@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: QSAR model
 Bundle-SymbolicName: net.bioclipse.qsar.model;singleton:=true
-Bundle-Version: 2.4.0.20100709
+Bundle-Version: 2.5.0.qualifier
 Bundle-ClassPath: .
 Bundle-Vendor: The Bioclipse Team
 Bundle-Localization: plugin
