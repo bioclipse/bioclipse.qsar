@@ -102,6 +102,10 @@ public interface IQsarManager extends IBioclipseManager{
     @Recorded
     @PublishedMethod(methodSummary = "Get a list of descriptor IDs" )
     public List<String> getDescriptorIDs();
+    @Recorded
+    @PublishedMethod(params="String hasImpl: require an implementation", 
+    		methodSummary = "Get a list of descriptor IDs" )
+	public List<String> getDescriptorIDs(boolean hasImpl);
     
     public List<Descriptor> getFullDescriptors();
 
