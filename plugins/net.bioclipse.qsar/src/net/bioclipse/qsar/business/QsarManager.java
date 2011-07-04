@@ -763,8 +763,13 @@ public class QsarManager implements IQsarManager{
     public IDescriptorResult calculate(IMolecule mol, String descriptor) throws BioclipseException{
         
         //Create a new instance of a descriptorimpl
-        DescriptorImpl dimpl = getPreferredImpl( 
+    	DescriptorImpl dimpl = getPreferredImpl(getRealOntologyID( descriptor ));
+        if (dimpl==null)
+        	throw new BioclipseException("No implementation found for descriptor: " + descriptor);
+        
+        dimpl = getPreferredImpl( 
                                  getRealOntologyID( descriptor )).newInstance();
+
         parseDescriptorParameters(dimpl,descriptor);
         logger.debug("Chosen provider: " + dimpl.getProvider().getShortName() 
                      + " for descriptor: " + toShortOntologyForm( descriptor ));
