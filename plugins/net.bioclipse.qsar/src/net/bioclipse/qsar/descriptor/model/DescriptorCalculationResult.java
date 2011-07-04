@@ -10,31 +10,23 @@
  ******************************************************************************/
 package net.bioclipse.qsar.descriptor.model;
 
-import java.io.BufferedInputStream;
-import java.io.ByteArrayInputStream;
-import java.io.InputStream;
-import java.text.DecimalFormat;
-import java.text.DecimalFormatSymbols;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import org.eclipse.core.resources.IFile;
-import org.eclipse.core.runtime.CoreException;
-import org.eclipse.core.runtime.NullProgressMonitor;
+import org.apache.log4j.Logger;
 
+import net.bioclipse.cdk.business.Activator;
+import net.bioclipse.cdk.business.ICDKManager;
+import net.bioclipse.cdk.domain.ICDKMolecule;
+import net.bioclipse.core.business.BioclipseException;
 import net.bioclipse.core.domain.IMolecule;
-import net.bioclipse.qsar.DescriptorresultType;
-import net.bioclipse.qsar.DescriptorvalueType;
-import net.bioclipse.qsar.QsarType;
-import net.bioclipse.qsar.ResourceType;
-import net.bioclipse.qsar.ResponseType;
-import net.bioclipse.qsar.StructureType;
 import net.bioclipse.qsar.descriptor.IDescriptorResult;
 
 
 public class DescriptorCalculationResult {
     
+    private static final Logger logger = Logger.getLogger(DescriptorCalculationResult.class);
+
     public static final String ROW_SEPARATOR="\t";
 
     private Map<IMolecule, List<IDescriptorResult>> resultMap;
@@ -72,17 +64,22 @@ public class DescriptorCalculationResult {
 
         return res;
     }
-    
+
     public String toMatrix() {
+    	return toMatrix(null);
+    }
+
+    public String toMatrix(String responseProperty) {
 
         //===============================
         //Set up row and column labels + compute size of dataset
         //===============================
 
         StringBuffer complete=new StringBuffer();
+        ICDKManager cdk = Activator.getDefault().getJavaCDKManager();
 
         //Set up column row
-        String row= ROW_SEPARATOR + ROW_SEPARATOR + ROW_SEPARATOR;
+        String row= ROW_SEPARATOR;// + ROW_SEPARATOR + ROW_SEPARATOR;
         IMolecule fmol = (IMolecule) resultMap.keySet().toArray()[0];
 
         //Loop over all descriptors
@@ -91,6 +88,10 @@ public class DescriptorCalculationResult {
                 row=row + label + ROW_SEPARATOR;
             }
         }
+        if (null!=responseProperty)
+            row=row+responseProperty;
+        
+
         row=row+"\n";
         complete.append( row );
 
@@ -105,6 +106,16 @@ public class DescriptorCalculationResult {
                     row=row + val + ROW_SEPARATOR;
                 }
             }
+            if (null!=responseProperty){
+            	ICDKMolecule cdkmol;
+				try {
+					cdkmol = cdk.asCDKMolecule(mol);
+	                row=row+cdkmol.getProperty(responseProperty, IMolecule.Property.USE_CACHED);
+				} catch (BioclipseException e) {
+					logger.error("Could not get property " + responseProperty + " from molecule: " + mol);
+				}
+            }
+
             row=row+"\n";
             complete.append( row );
         }
