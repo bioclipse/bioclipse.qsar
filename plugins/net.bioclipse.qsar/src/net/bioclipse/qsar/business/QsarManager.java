@@ -30,6 +30,7 @@ import net.bioclipse.core.business.BioclipseException;
 import net.bioclipse.core.domain.IMolecule;
 import net.bioclipse.core.domain.IStringMatrix;
 import net.bioclipse.core.util.LogUtils;
+import net.bioclipse.dataset.model.Dataset;
 import net.bioclipse.qsar.DescriptorType;
 import net.bioclipse.qsar.DescriptorlistType;
 import net.bioclipse.qsar.DescriptorproviderType;
@@ -45,8 +46,10 @@ import net.bioclipse.qsar.ResponsesListType;
 import net.bioclipse.qsar.ResponseunitType;
 import net.bioclipse.qsar.StructureType;
 import net.bioclipse.qsar.StructurelistType;
+import net.bioclipse.qsar.descriptor.DescriptorResult;
 import net.bioclipse.qsar.descriptor.IDescriptorCalculator;
 import net.bioclipse.qsar.descriptor.IDescriptorResult;
+import net.bioclipse.qsar.descriptor.QsarDataset;
 import net.bioclipse.qsar.descriptor.model.Descriptor;
 import net.bioclipse.qsar.descriptor.model.DescriptorCalculationResult;
 import net.bioclipse.qsar.descriptor.model.DescriptorCategory;
@@ -802,7 +805,7 @@ public class QsarManager implements IQsarManager{
 	 * @throws BioclipseException 
 	 * @throws BioclipseException 
 	 */
-	public DescriptorCalculationResult calculate(List<IMolecule> mols, List<String> descriptors) throws BioclipseException{
+	public Dataset calculate(List<IMolecule> mols, List<String> descriptors) throws BioclipseException{
 
 		//Just propagate with provider as null
 		return calculate( mols, descriptors, null );
@@ -815,7 +818,7 @@ public class QsarManager implements IQsarManager{
 	 * @throws BioclipseException 
 	 * @throws BioclipseException 
 	 */
-	public DescriptorCalculationResult calculate(List<IMolecule> mols, List<String> descriptors, String provider) throws BioclipseException{
+	public Dataset calculate(List<IMolecule> mols, List<String> descriptors, String provider) throws BioclipseException{
 
 		Map<IMolecule, List<DescriptorImpl>> calculationMap=new HashMap<IMolecule, List<DescriptorImpl>>();
 
@@ -853,7 +856,7 @@ public class QsarManager implements IQsarManager{
 	 * @return
 	 * @throws BioclipseException 
 	 */
-	private DescriptorCalculationResult calculate(
+	private QsarDataset calculate(
 			Map<IMolecule, List<DescriptorImpl>> calculationMap ) throws BioclipseException {
 
 		Map<IMolecule, List<DescriptorType>> molDescMap=new HashMap<IMolecule, List<DescriptorType>>();
@@ -882,23 +885,13 @@ public class QsarManager implements IQsarManager{
 		}
 
 		//Do QSAR calculation
-		Map<IMolecule, List<IDescriptorResult>> res = doCalculation( molDescMap, new NullProgressMonitor() );
+		Map<IMolecule, List<IDescriptorResult>> resultMap = doCalculation( molDescMap, new NullProgressMonitor() );
 
-		DescriptorCalculationResult dcalres=new DescriptorCalculationResult(res);
+//		DescriptorCalculationResult dcalres=new DescriptorCalculationResult(resultMap);
 
 
-		//Debug out
-		logger.debug("==== RESULTS ====");
-		for (IMolecule mol : res.keySet()){
-			logger.debug("Molecule: " + mol);
-			List<IDescriptorResult> lst = res.get( mol );
-			for (IDescriptorResult dres : lst){
-				logger.debug( "  - " + dres );
-			}
-
-		}
-
-		return dcalres;
+		
+		return new QsarDataset(resultMap);
 	}
 
 
@@ -990,10 +983,10 @@ public class QsarManager implements IQsarManager{
 		List<DescriptorImpl> impls = new ArrayList<DescriptorImpl>();
 		impls.add( impl );
 		calculationMap.put( mol, impls );
-		DescriptorCalculationResult res =  calculate( calculationMap );
 
 		//We know we want only one result for one mol
-		List<IDescriptorResult> results = res.getResultMap().get( mol );
+		List<IDescriptorResult> results = calculate( calculationMap ).getQsarResults().get(mol);
+
 		return results.get( 0 );
 	}
 

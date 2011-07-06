@@ -22,6 +22,7 @@ import net.bioclipse.core.PublishedMethod;
 import net.bioclipse.core.Recorded;
 import net.bioclipse.core.business.BioclipseException;
 import net.bioclipse.core.domain.IMolecule;
+import net.bioclipse.dataset.model.Dataset;
 import net.bioclipse.managers.business.IBioclipseManager;
 import net.bioclipse.qsar.DescriptorType;
 import net.bioclipse.qsar.QsarType;
@@ -224,7 +225,7 @@ public interface IQsarManager extends IBioclipseManager{
                      		"list of molecules " +
                         "using the default provider.")
     @Recorded
-    DescriptorCalculationResult calculate( List<IMolecule> mols,
+    Dataset calculate( List<IMolecule> mols,
                                             List<String> descriptors )
                                                       throws BioclipseException;
 
@@ -234,7 +235,7 @@ public interface IQsarManager extends IBioclipseManager{
                                      "list of molecules " +
                                      "using the selected provider.")
     @Recorded
-    DescriptorCalculationResult calculate( List<IMolecule> mols,
+    Dataset calculate( List<IMolecule> mols,
                                             List<String> descriptors,
                                             String provider )
                                                       throws BioclipseException;
