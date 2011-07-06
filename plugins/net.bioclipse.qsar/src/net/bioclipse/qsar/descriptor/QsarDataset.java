@@ -8,8 +8,8 @@ import net.bioclipse.cdk.business.Activator;
 import net.bioclipse.cdk.business.ICDKManager;
 import net.bioclipse.cdk.domain.ICDKMolecule;
 import net.bioclipse.core.business.BioclipseException;
+import net.bioclipse.core.domain.Dataset;
 import net.bioclipse.core.domain.IMolecule;
-import net.bioclipse.dataset.model.Dataset;
 
 public class QsarDataset extends Dataset{
 
