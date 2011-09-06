@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feature
       id="net.bioclipse.qsar_site"
-      label="Qsar_site"
-      version="1.0.0.qualifier">
+      label="QSAR Update Site"
+      version="2.5.0.qualifier">
 
    <description url="http://www.example.com/description">
       [Enter Feature Description here.]
