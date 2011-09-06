@@ -10,10 +10,14 @@ Require-Bundle: org.eclipse.ui,
  net.bioclipse.core,
  net.bioclipse.qsar.model;bundle-version="1.0.0",
  net.bioclipse.qsar.model.edit;bundle-version="1.0.0",
- net.bioclipse.qsar.ui;bundle-version="2.0.0"
+ net.bioclipse.qsar.ui;bundle-version="2.0.0",
+ net.bioclipse.core.tests;bundle-version="2.5.0"
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
-Import-Package: org.apache.log4j, org.junit
+Import-Package: org.apache.log4j,
+ org.junit,
+ org.junit.runner,
+ org.junit.runners
 Export-Package: net.bioclipse.qsar.test,
  net.bioclipse.qsar.test.business
 Bundle-ClassPath: .
