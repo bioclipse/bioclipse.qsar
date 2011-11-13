@@ -33,6 +33,7 @@ import net.bioclipse.core.business.BioclipseException;
 import net.bioclipse.core.domain.IMolecule;
 import net.bioclipse.core.domain.SMILESMolecule;
 import net.bioclipse.core.tests.AbstractManagerTest;
+import net.bioclipse.managers.business.IBioclipseManager;
 import net.bioclipse.qsar.DescriptorType;
 import net.bioclipse.qsar.QSARConstants;
 import net.bioclipse.qsar.QsarFactory;
@@ -54,6 +55,10 @@ public abstract class AbstractQsarManagerPluginTest
 extends AbstractManagerTest {
 
     protected static IQsarManager qsar;
+
+    public Class<? extends IBioclipseManager> getManagerInterface() {
+    	return IQsarManager.class;
+    }
 
     @Test
     public void testQsarManager() {
