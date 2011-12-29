@@ -64,7 +64,7 @@ public class DescriptorResult implements IDescriptorResult{
 	
 	@Override
     public String toString() {
-	    
+	    if (errorMessage!=null) return "ERROR: " + errorMessage;
 	    if (labels==null || labels.length<=0) return "null";
 	    IQsarManager qsar=Activator.getDefault().getJavaQsarManager();
 	    

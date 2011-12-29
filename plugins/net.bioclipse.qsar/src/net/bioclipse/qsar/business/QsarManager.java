@@ -27,7 +27,7 @@ import java.util.StringTokenizer;
 import net.bioclipse.cdk.business.ICDKManager;
 import net.bioclipse.cdk.domain.ICDKMolecule;
 import net.bioclipse.core.business.BioclipseException;
-import net.bioclipse.core.domain.Dataset;
+import net.bioclipse.core.domain.DenseDataset;
 import net.bioclipse.core.domain.IMolecule;
 import net.bioclipse.core.domain.IStringMatrix;
 import net.bioclipse.core.util.LogUtils;
@@ -805,7 +805,7 @@ public class QsarManager implements IQsarManager{
 	 * @throws BioclipseException 
 	 * @throws BioclipseException 
 	 */
-	public Dataset calculate(List<IMolecule> mols, List<String> descriptors) throws BioclipseException{
+	public DenseDataset calculate(List<IMolecule> mols, List<String> descriptors) throws BioclipseException{
 
 		//Just propagate with provider as null
 		return calculate( mols, descriptors, null );
@@ -818,7 +818,7 @@ public class QsarManager implements IQsarManager{
 	 * @throws BioclipseException 
 	 * @throws BioclipseException 
 	 */
-	public Dataset calculate(List<IMolecule> mols, List<String> descriptors, String provider) throws BioclipseException{
+	public DenseDataset calculate(List<IMolecule> mols, List<String> descriptors, String provider) throws BioclipseException{
 
 		Map<IMolecule, List<DescriptorImpl>> calculationMap=new HashMap<IMolecule, List<DescriptorImpl>>();
 
@@ -889,7 +889,16 @@ public class QsarManager implements IQsarManager{
 
 //		DescriptorCalculationResult dcalres=new DescriptorCalculationResult(resultMap);
 
-
+		//Some sanity checks, if all results fail then throw exception.
+		for (IMolecule mol : resultMap.keySet()){
+			for (IDescriptorResult dres : resultMap.get(mol)){
+				if (dres.getErrorMessage()!=null){
+					System.out.println("Errors exist in descriptor result: " + dres);
+					throw new BioclipseException("Error in descriptor generation for molecule: " + mol);
+					//TODO: we could also simply remove this molecule if we would like to
+				}
+			}
+		}
 		
 		return new QsarDataset(resultMap);
 	}

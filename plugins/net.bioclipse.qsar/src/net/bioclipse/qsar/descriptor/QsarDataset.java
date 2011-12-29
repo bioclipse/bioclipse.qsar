@@ -8,10 +8,10 @@ import net.bioclipse.cdk.business.Activator;
 import net.bioclipse.cdk.business.ICDKManager;
 import net.bioclipse.cdk.domain.ICDKMolecule;
 import net.bioclipse.core.business.BioclipseException;
-import net.bioclipse.core.domain.Dataset;
+import net.bioclipse.core.domain.DenseDataset;
 import net.bioclipse.core.domain.IMolecule;
 
-public class QsarDataset extends Dataset{
+public class QsarDataset extends DenseDataset{
 
 	Map<IMolecule, List<IDescriptorResult>> qsarResults;
 
@@ -32,6 +32,10 @@ public class QsarDataset extends Dataset{
 		//Loop over all descriptors in get first mol (all are same)
 		IMolecule fmol = (IMolecule) resultMap.keySet().toArray()[0];
 		for (IDescriptorResult dres : resultMap.get( fmol )){
+			if (dres.getErrorMessage()!=null){
+				System.out.println("Errors exist in descriptor result: " + dres);
+				continue;
+			}
 			for (String label : dres.getLabels()){
 				colHeaders.add(label);
 			}
@@ -47,6 +51,10 @@ public class QsarDataset extends Dataset{
 			rowHeaders.add("Molecule-" + mol);
 			List<IDescriptorResult> lst = resultMap.get( mol );
 			for (IDescriptorResult dres : lst){
+				if (dres.getErrorMessage()!=null){
+					System.out.println("Errors exist in descriptor result: " + dres);
+					continue;
+				}
 				for (Float value : dres.getValues()){
 					rowValues.add(value);
 				}
