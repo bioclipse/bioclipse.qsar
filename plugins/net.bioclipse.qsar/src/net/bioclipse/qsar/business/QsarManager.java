@@ -893,8 +893,8 @@ public class QsarManager implements IQsarManager{
 		for (IMolecule mol : resultMap.keySet()){
 			for (IDescriptorResult dres : resultMap.get(mol)){
 				if (dres.getErrorMessage()!=null){
-					System.out.println("Errors exist in descriptor result: " + dres);
-					throw new BioclipseException("Error in descriptor generation for molecule: " + mol);
+					logger.warn("Errors exist in descriptor result: " + dres);
+//					throw new BioclipseException("Error in descriptor generation for molecule: " + mol);
 					//TODO: we could also simply remove this molecule if we would like to
 				}
 			}
