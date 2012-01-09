@@ -24,6 +24,7 @@ import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
 import org.openscience.cdk.atomtype.CDKAtomTypeMatcher;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.exception.NoSuchAtomException;
+import org.openscience.cdk.geometry.GeometryTools;
 import org.openscience.cdk.graph.SpanningTree;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -188,7 +189,7 @@ public class CDKDescriptorCalculator implements IDescriptorCalculator {
     private List<IDescriptorResult> doCalculate(ICDKMolecule cdkmol, 
                                                 List<DescriptorType> descriptorTypes, 
                                                 IProgressMonitor monitor)  throws OperationCanceledException{
-
+    	
         //Get atomcontainer from IMolecule
         IAtomContainer container=cdkmol.getAtomContainer();
 
@@ -196,14 +197,14 @@ public class CDKDescriptorCalculator implements IDescriptorCalculator {
         if (!(container instanceof org.openscience.cdk.interfaces.IMolecule))
             container = container.getBuilder().newInstance(
                      org.openscience.cdk.interfaces.IMolecule.class, container);
-
+        
         //Store results here
         List<IDescriptorResult> results = new ArrayList<IDescriptorResult>();
 
         //Preprocess atomcontainer. Return null if all is well, else String with error
         //========================
         String atomcontainerError=doCDKPreprocessing(container);
-
+        
         //Loop over all descriptors
         //=========================
         for (DescriptorType descType : descriptorTypes){
@@ -339,6 +340,7 @@ public class CDKDescriptorCalculator implements IDescriptorCalculator {
                 String[] resultLabels = null;
 //                logger.debug("# result values: " + resultVals.length);
 
+                
                 //Calculate descriptor
                 try {
                     DescriptorValue value = ((IMolecularDescriptor) cdkDescriptor).calculate(container);
@@ -416,7 +418,6 @@ public class CDKDescriptorCalculator implements IDescriptorCalculator {
      */
     private String doCDKPreprocessing(IAtomContainer container) {
 
-
         //Add hydrogens
         try {
 
@@ -432,7 +433,7 @@ public class CDKDescriptorCalculator implements IDescriptorCalculator {
 
             CDKHydrogenAdder hAdder = CDKHydrogenAdder.getInstance(container.getBuilder());
             hAdder.addImplicitHydrogens(container);
-            AtomContainerManipulator.convertImplicitToExplicitHydrogens(container);
+//            AtomContainerManipulator.convertImplicitToExplicitHydrogens(container);
         } catch (Exception e1) {
             String emsg="Error addding hydrogens : " + e1.getMessage();
             logger.error(emsg);
