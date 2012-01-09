@@ -15,6 +15,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -579,6 +580,7 @@ extends AbstractManagerTest {
   		descs.add(descriptorID);
   		descs.add(descriptorID2);
 
+  		/*
   		DescriptorCalculationResult calres = qsar.calculate(mols, descs);
   		Map<? extends IMolecule, List<IDescriptorResult>> res = calres.getResultMap();
   		assertNotNull(res);
@@ -635,7 +637,10 @@ extends AbstractManagerTest {
   		assertEquals(new Float(15.2456), dres1.getValues()[0]);
   		assertEquals(new Float(47.01), dres1.getValues()[1]);
   		assertEquals(new Float(-6.44), dres1.getValues()[2]);
-  		
+  		*/
+
+  		//TODO
+		fail("Test needs to be updated for new API");
 
   	}
   	
