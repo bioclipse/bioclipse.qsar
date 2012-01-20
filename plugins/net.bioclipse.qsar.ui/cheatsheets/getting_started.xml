@@ -11,7 +11,7 @@
          title="Step 1: Creating a QSAR Project">
       <description>
 
-			Go to menu <b>File > New... > Other</b> and create a new QSAR Project.
+			Go to menu <b>File > New... > QSAR</b> and create a new QSAR Project.
          
       </description>
       <command
@@ -24,10 +24,10 @@
       <description>
 
 			Double-clicking on the file qsar.xml in the Navigator opens the QSAR Editor. 
-			This editor allows for the setup of daaset in a novel file format called QSAR-ML.<br/><br/>
+			This editor allows for the setup of dataset in a novel file format called QSAR-ML.<br/><br/>
 
 			The tabs at the bottom of the editor allows for specifying data and metadata for the 
-			qsar dataset.<br/><br/>
+			QSAR dataset.<br/><br/>
 			
 			The tab <b>Information</b> allows for adding metadata about the dataset.<br/><br/>
 
