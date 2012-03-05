@@ -23,7 +23,7 @@
          title="Step 2: Using the QSAR editor">
       <description>
 
-			Double-clicking on the file qsar.xml in the Navigator opens the QSAR Editor. 
+			Double-clicking on the file qsar.xml in your QSAR project-folder in the Navigator opens the QSAR Editor. 
 			This editor allows for the setup of dataset in a novel file format called QSAR-ML.<br/><br/>
 
 			The tabs at the bottom of the editor allows for specifying data and metadata for the 
