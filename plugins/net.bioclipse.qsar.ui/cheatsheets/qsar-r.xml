@@ -25,7 +25,7 @@
 
 		Loading the dataset into R can be achieved by entering, in the R Console:<br/><br/>
 			         
-		<b>dataset=read.delim(file="myQsarProject/dataset.csv", sep=",", header=TRUE, row.names=1, na.strings="NaN")</b>
+		<b>dataset &lt;- read.delim(file="myQsarProject/dataset.csv", sep=",", header=TRUE, row.names=1, na.strings="NaN")</b>
          
       </description>
       
@@ -37,7 +37,7 @@
       
       		Here is a simple example to demonstrate how the read file can be analyzed in R:<br/><br/>
 
-			<b>datasat=as.matrix(dataset)</b><br/><br/>
+			<b>dataset &lt;- as.matrix(dataset)</b><br/><br/>
 			<b>mod &lt;- lm(dataset[,1] ~ dataset[,2:ncol(dataset)], na.action=na.omit)</b><br/><br/>			
 			<b>plot(mod)</b><br/><br/>
          
