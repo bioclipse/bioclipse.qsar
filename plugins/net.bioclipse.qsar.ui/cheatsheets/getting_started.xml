@@ -42,9 +42,8 @@
 
 			The tab <b>Sources</b> displays the QSAR-ML source.<br/><br/>
 
-			Note that the dataset is built in the background when you save, 
-			if you have at least one structure and one descriptor chosen. The results are cached 
-			so it will not be calculated again if already calculated. 
+			Saving the file and then pressing the build-button, the gear with a green triangle in the bottom right corner, will calculate the values.
+			 The results are cached so it will not be calculated again if already calculated. 
 			The calculated values are saved in the QSAR-ML but also in a comma-separated 
 			file called <b>dataset.csv</b>.  <br/><br/>
          
