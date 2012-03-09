@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <cheatsheet
-      title="Accessing QSAR data from R">
-   <intro>
+      title="Using QSAR data in R<intro>
       <description>
          This tutorial demonstrates how to use R to analyze QSAR. Note that R is experimental and must be installed from the experimental update site before following this tutorial.
       </description>
