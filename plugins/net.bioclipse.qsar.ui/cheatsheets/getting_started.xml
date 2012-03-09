@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <cheatsheet
-      title="Calculating CDK Properties">
+      title="Getting started with Bioclipse-QSAR">
    <intro>
       <description>
          This tutorial gives a brief introduction for working with the Bioclipse-QSAR functionality in Bioclipse.
@@ -11,7 +11,7 @@
          title="Step 1: Creating a QSAR Project">
       <description>
 
-			Go to menu <b>File > New... > Other</b> and create a new QSAR Project.
+			Go to menu <b>File > New... > QSAR</b> and create a new QSAR Project.
          
       </description>
       <command
@@ -23,11 +23,11 @@
          title="Step 2: Using the QSAR editor">
       <description>
 
-			Double-clicking on the file qsar.xml in the Navigator opens the QSAR Editor. 
-			This editor allows for the setup of daaset in a novel file format called QSAR-ML.<br/><br/>
+			Double-clicking on the file qsar.xml in your QSAR project-folder in the Navigator opens the QSAR Editor. 
+			This editor allows for the setup of dataset in a novel file format called QSAR-ML.<br/><br/>
 
 			The tabs at the bottom of the editor allows for specifying data and metadata for the 
-			qsar dataset.<br/><br/>
+			QSAR dataset.<br/><br/>
 			
 			The tab <b>Information</b> allows for adding metadata about the dataset.<br/><br/>
 
@@ -42,9 +42,8 @@
 
 			The tab <b>Sources</b> displays the QSAR-ML source.<br/><br/>
 
-			Note that the dataset is built in the background when you save, 
-			if you have at least one structure and one descriptor chosen. The results are cached 
-			so it will not be calculated again if already calculated. 
+			Saving the file and then pressing the build-button, the gear with a green triangle in the bottom right corner, will calculate the values.
+			 The results are cached so it will not be calculated again if already calculated. 
 			The calculated values are saved in the QSAR-ML but also in a comma-separated 
 			file called <b>dataset.csv</b>.  <br/><br/>
          
