@@ -10,8 +10,8 @@
          <item
          title="Step 1: Open the R Console">
       <description>
-			If you have R installed, you can access it directly from Bioclipse via the R-console. 
-			Reveal the R-console from the menu <b>Window > Show View > Other</b> and select <b>R Console</b> 
+			If you have R installed, then installing the Bioclipse-R Intergration feature let you  access R directly from Bioclipse via the R-console. 
+			Reveal the R-console from the menu <b>Window > Show View > Other</b> and select <b>R Console</b>. 
       </description>
       <command
             required="false"
