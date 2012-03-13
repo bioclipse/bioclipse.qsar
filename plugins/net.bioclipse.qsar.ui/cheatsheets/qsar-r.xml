@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <cheatsheet
-      title="Accessing QSAR data from R">
-   <intro>
+      title="Using QSAR data in R<intro>
       <description>
          This tutorial demonstrates how to use R to analyze QSAR. Note that R is experimental and must be installed from the experimental update site before following this tutorial.
       </description>
@@ -10,8 +9,8 @@
          <item
          title="Step 1: Open the R Console">
       <description>
-			If you have R installed, you can access it directly from Bioclipse via the R-console. 
-			Reveal the R-console from the menu <b>Window > Show View > Other</b> and select <b>R Console</b> 
+			If you have R installed, then installing the Bioclipse-R Intergration feature let you  access R directly from Bioclipse via the R-console. 
+			Reveal the R-console from the menu <b>Window > Show View > Other</b> and select <b>R Console</b>. 
       </description>
       <command
             required="false"
@@ -25,7 +24,7 @@
 
 		Loading the dataset into R can be achieved by entering, in the R Console:<br/><br/>
 			         
-		<b>dataset=read.delim(file="myQsarProject/dataset.csv", sep=",", header=TRUE, row.names=1, na.strings="NaN")</b>
+		<b>dataset &lt;- read.delim(file="myQsarProject/dataset.csv", sep=",", header=TRUE, row.names=1, na.strings="NaN")</b>
          
       </description>
       
@@ -37,7 +36,7 @@
       
       		Here is a simple example to demonstrate how the read file can be analyzed in R:<br/><br/>
 
-			<b>datasat=as.matrix(dataset)</b><br/><br/>
+			<b>dataset &lt;- as.matrix(dataset)</b><br/><br/>
 			<b>mod &lt;- lm(dataset[,1] ~ dataset[,2:ncol(dataset)], na.action=na.omit)</b><br/><br/>			
 			<b>plot(mod)</b><br/><br/>
          

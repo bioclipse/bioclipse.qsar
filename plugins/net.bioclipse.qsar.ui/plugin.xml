@@ -157,7 +157,7 @@
             composite="false"
             contentFile="cheatsheets/qsar-r.xml"
             id="net.bioclipse.qsar.cheatsheet.qsar_r"
-            name="Accessing QSAR data from R"/>
+            name="Using QSAR data in R"/>
             
    </extension>
    <extension
