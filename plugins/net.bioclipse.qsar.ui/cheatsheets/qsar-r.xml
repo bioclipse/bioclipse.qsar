@@ -1,48 +1,66 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<cheatsheet
-      title="Using QSAR data in R<intro>
-      <description>
-         This tutorial demonstrates how to use R to analyze QSAR. Note that R is experimental and must be installed from the experimental update site before following this tutorial.
-      </description>
-   </intro>
+<cheatsheet 
+    title="Using QSAR data in R">
+	<intro>
+		<description>
+			This tutorial demonstrates how to use R to analyze QSAR. Note that R is
+			experimental and must be installed from the experimental update site
+			before following this tutorial.
+		</description>
+	</intro>
 
-         <item
-         title="Step 1: Open the R Console">
-      <description>
-			If you have R installed, then installing the Bioclipse-R Intergration feature let you  access R directly from Bioclipse via the R-console. 
-			Reveal the R-console from the menu <b>Window > Show View > Other</b> and select <b>R Console</b>. 
-      </description>
-      <command
-            required="false"
-            serialization="org.eclipse.ui.views.showView(org.eclipse.ui.views.showView.viewId=net.bioclipse.r.ui.views.RConsoleView)"/>
-      
-   </item>
+	<item title="Step 1: Open the R Console">
+		<description>
+			If you have R installed, then installing the Bioclipse-R Intergration
+			feature let you access R directly from Bioclipse via the R-console.
+			Reveal the R-console from the menu
+			<b>Window > Show View > Other</b>
+			and select
+			<b>R Console</b>
+			.
+		</description>
+		<command required="false"
+			serialization="org.eclipse.ui.views.showView(org.eclipse.ui.views.showView.viewId=net.bioclipse.r.ui.views.RConsoleView)" />
 
-  <item
-         title="Step 2: Load the dataset into R">
-      <description>
+	</item>
 
-		Loading the dataset into R can be achieved by entering, in the R Console:<br/><br/>
-			         
-		<b>dataset &lt;- read.delim(file="myQsarProject/dataset.csv", sep=",", header=TRUE, row.names=1, na.strings="NaN")</b>
-         
-      </description>
-      
-   </item>
+	<item title="Step 2: Load the dataset into R">
+		<description>
 
-  <item
-         title="Step 3: Use R to analyze dataset">
-      <description>
-      
-      		Here is a simple example to demonstrate how the read file can be analyzed in R:<br/><br/>
+			Loading the dataset into R can be achieved by entering, in the R
+			Console:
+			<br />
+			<br />
 
-			<b>dataset &lt;- as.matrix(dataset)</b><br/><br/>
-			<b>mod &lt;- lm(dataset[,1] ~ dataset[,2:ncol(dataset)], na.action=na.omit)</b><br/><br/>			
-			<b>plot(mod)</b><br/><br/>
-         
-      </description>
-      
-   </item>
-   
-   
+			<b>dataset &lt;- read.delim(file="myQsarProject/dataset.csv",
+				sep=",", header=TRUE, row.names=1, na.strings="NaN")</b>
+
+		</description>
+
+	</item>
+
+	<item title="Step 3: Use R to analyze dataset">
+		<description>
+
+			Here is a simple example to demonstrate how the read file can be
+			analyzed in R:
+			<br />
+			<br />
+
+			<b>dataset &lt;- as.matrix(dataset)</b>
+			<br />
+			<br />
+			<b>mod &lt;- lm(dataset[,1] ~ dataset[,2:ncol(dataset)],
+				na.action=na.omit)</b>
+			<br />
+			<br />
+			<b>plot(mod)</b>
+			<br />
+			<br />
+
+		</description>
+
+	</item>
+
+
 </cheatsheet>
