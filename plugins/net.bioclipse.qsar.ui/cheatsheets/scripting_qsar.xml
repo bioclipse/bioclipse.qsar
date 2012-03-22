@@ -57,14 +57,14 @@
          <b>qsar.calculate(molecules, descriptors)</b><br/><br/>
 
 		The gist 95189 shows a script to demonstrate this. To run it; just save it as a JavaScript, 
-		e.g. as &qt;qsar-multi.js&qt;. Then open the file and run it.
+		e.g. as &quot;qsar-multi.js&quot;. Then open the file and run it.
          
       </description>
       
        <action
 			pluginId="net.bioclipse.scripting.ui"
 			class="net.bioclipse.scripting.ui.actions.ScriptAction"
-			param1="ui.open(gist.download(95189))"/>
+			param1="ui.openFiles(gist.download(95189))"/>
       
    </item>
 
