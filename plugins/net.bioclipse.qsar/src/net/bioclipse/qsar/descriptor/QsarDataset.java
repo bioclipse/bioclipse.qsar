@@ -32,10 +32,6 @@ public class QsarDataset extends DenseDataset{
 		//Loop over all descriptors in get first mol (all are same)
 		IMolecule fmol = (IMolecule) resultMap.keySet().toArray()[0];
 		for (IDescriptorResult dres : resultMap.get( fmol )){
-			if (dres.getErrorMessage()!=null){
-				System.out.println("Errors exist in descriptor result: " + dres);
-				continue;
-			}
 			for (String label : dres.getLabels()){
 				colHeaders.add(label);
 			}
@@ -51,10 +47,6 @@ public class QsarDataset extends DenseDataset{
 			rowHeaders.add("Molecule-" + mol);
 			List<IDescriptorResult> lst = resultMap.get( mol );
 			for (IDescriptorResult dres : lst){
-				if (dres.getErrorMessage()!=null){
-					System.out.println("Errors exist in descriptor result: " + dres);
-					continue;
-				}
 				for (Float value : dres.getValues()){
 					rowValues.add(value);
 				}
