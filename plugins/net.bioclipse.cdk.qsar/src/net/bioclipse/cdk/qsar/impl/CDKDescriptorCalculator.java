@@ -11,6 +11,7 @@
 package net.bioclipse.cdk.qsar.impl;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -337,8 +338,9 @@ public class CDKDescriptorCalculator implements IDescriptorCalculator {
                 Float[] resultVals = new Float[cdkDescriptor.getDescriptorResultType().
                                                length() > 0 ? cdkDescriptor.getDescriptorResultType().
                                                        length() : 1];
-                String[] resultLabels = null;
-//                logger.debug("# result values: " + resultVals.length);
+                String[] resultLabels = cdkDescriptor.getDescriptorNames();
+//              logger.debug("# result values: " + resultVals.length);
+              logger.debug("Result labels: " + Arrays.toString(resultLabels));
 
                 
                 //Calculate descriptor
