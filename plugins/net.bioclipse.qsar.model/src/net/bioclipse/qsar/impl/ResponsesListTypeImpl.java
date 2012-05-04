@@ -43,125 +43,125 @@ import org.eclipse.emf.ecore.util.InternalEList;
  */
 public class ResponsesListTypeImpl extends EObjectImpl implements ResponsesListType {
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public static final String copyright = " Copyright (c) 2009 Ola Spjuth\n All rights reserved. This program and the accompanying materials\n are made available under the terms of the Eclipse Public License v1.0\n which accompanies this distribution, and is available at\n http://www.eclipse.org/legal/epl-v10.html\n";
 
     /**
-     * The cached value of the '{@link #getResponse() <em>Response</em>}' containment reference list.
-     * <!-- begin-user-doc -->
+	 * The cached value of the '{@link #getResponse() <em>Response</em>}' containment reference list.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see #getResponse()
-     * @generated
-     * @ordered
-     */
+	 * @see #getResponse()
+	 * @generated
+	 * @ordered
+	 */
     protected EList<ResponseType> response;
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     protected ResponsesListTypeImpl() {
-        super();
-    }
+		super();
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     protected EClass eStaticClass() {
-        return QsarPackage.Literals.RESPONSES_LIST_TYPE;
-    }
+		return QsarPackage.Literals.RESPONSES_LIST_TYPE;
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public EList<ResponseType> getResponse() {
-        if (response == null) {
-            response = new EObjectContainmentEList<ResponseType>(ResponseType.class, this, QsarPackage.RESPONSES_LIST_TYPE__RESPONSE);
-        }
-        return response;
-    }
+		if (response == null) {
+			response = new EObjectContainmentEList<ResponseType>(ResponseType.class, this, QsarPackage.RESPONSES_LIST_TYPE__RESPONSE);
+		}
+		return response;
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
-        switch (featureID) {
-            case QsarPackage.RESPONSES_LIST_TYPE__RESPONSE:
-                return ((InternalEList<?>)getResponse()).basicRemove(otherEnd, msgs);
-        }
-        return super.eInverseRemove(otherEnd, featureID, msgs);
-    }
+		switch (featureID) {
+			case QsarPackage.RESPONSES_LIST_TYPE__RESPONSE:
+				return ((InternalEList<?>)getResponse()).basicRemove(otherEnd, msgs);
+		}
+		return super.eInverseRemove(otherEnd, featureID, msgs);
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     public Object eGet(int featureID, boolean resolve, boolean coreType) {
-        switch (featureID) {
-            case QsarPackage.RESPONSES_LIST_TYPE__RESPONSE:
-                return getResponse();
-        }
-        return super.eGet(featureID, resolve, coreType);
-    }
+		switch (featureID) {
+			case QsarPackage.RESPONSES_LIST_TYPE__RESPONSE:
+				return getResponse();
+		}
+		return super.eGet(featureID, resolve, coreType);
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @SuppressWarnings("unchecked")
     @Override
     public void eSet(int featureID, Object newValue) {
-        switch (featureID) {
-            case QsarPackage.RESPONSES_LIST_TYPE__RESPONSE:
-                getResponse().clear();
-                getResponse().addAll((Collection<? extends ResponseType>)newValue);
-                return;
-        }
-        super.eSet(featureID, newValue);
-    }
+		switch (featureID) {
+			case QsarPackage.RESPONSES_LIST_TYPE__RESPONSE:
+				getResponse().clear();
+				getResponse().addAll((Collection<? extends ResponseType>)newValue);
+				return;
+		}
+		super.eSet(featureID, newValue);
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     public void eUnset(int featureID) {
-        switch (featureID) {
-            case QsarPackage.RESPONSES_LIST_TYPE__RESPONSE:
-                getResponse().clear();
-                return;
-        }
-        super.eUnset(featureID);
-    }
+		switch (featureID) {
+			case QsarPackage.RESPONSES_LIST_TYPE__RESPONSE:
+				getResponse().clear();
+				return;
+		}
+		super.eUnset(featureID);
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     public boolean eIsSet(int featureID) {
-        switch (featureID) {
-            case QsarPackage.RESPONSES_LIST_TYPE__RESPONSE:
-                return response != null && !response.isEmpty();
-        }
-        return super.eIsSet(featureID);
-    }
+		switch (featureID) {
+			case QsarPackage.RESPONSES_LIST_TYPE__RESPONSE:
+				return response != null && !response.isEmpty();
+		}
+		return super.eIsSet(featureID);
+	}
 
 } //ResponsesListTypeImpl

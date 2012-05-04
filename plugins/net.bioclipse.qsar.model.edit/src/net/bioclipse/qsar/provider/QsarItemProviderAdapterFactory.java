@@ -42,581 +42,581 @@ import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
  */
 public class QsarItemProviderAdapterFactory extends QsarAdapterFactory implements ComposeableAdapterFactory, IChangeNotifier, IDisposable {
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public static final String copyright = " Copyright (c) 2009 Ola Spjuth\n All rights reserved. This program and the accompanying materials\n are made available under the terms of the Eclipse Public License v1.0\n which accompanies this distribution, and is available at\n http://www.eclipse.org/legal/epl-v10.html\n";
 
     /**
-     * This keeps track of the root adapter factory that delegates to this adapter factory.
-     * <!-- begin-user-doc -->
+	 * This keeps track of the root adapter factory that delegates to this adapter factory.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     protected ComposedAdapterFactory parentAdapterFactory;
 
     /**
-     * This is used to implement {@link org.eclipse.emf.edit.provider.IChangeNotifier}.
-     * <!-- begin-user-doc -->
+	 * This is used to implement {@link org.eclipse.emf.edit.provider.IChangeNotifier}.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     protected IChangeNotifier changeNotifier = new ChangeNotifier();
 
     /**
-     * This keeps track of all the supported types checked by {@link #isFactoryForType isFactoryForType}.
-     * <!-- begin-user-doc -->
+	 * This keeps track of all the supported types checked by {@link #isFactoryForType isFactoryForType}.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     protected Collection<Object> supportedTypes = new ArrayList<Object>();
 
     /**
-     * This constructs an instance.
-     * <!-- begin-user-doc -->
+	 * This constructs an instance.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public QsarItemProviderAdapterFactory() {
-        supportedTypes.add(IEditingDomainItemProvider.class);
-        supportedTypes.add(IStructuredItemContentProvider.class);
-        supportedTypes.add(ITreeItemContentProvider.class);
-        supportedTypes.add(IItemLabelProvider.class);
-        supportedTypes.add(IItemPropertySource.class);
-    }
+		supportedTypes.add(IEditingDomainItemProvider.class);
+		supportedTypes.add(IStructuredItemContentProvider.class);
+		supportedTypes.add(ITreeItemContentProvider.class);
+		supportedTypes.add(IItemLabelProvider.class);
+		supportedTypes.add(IItemPropertySource.class);
+	}
 
     /**
-     * This keeps track of the one adapter used for all {@link net.bioclipse.qsar.DescriptorlistType} instances.
-     * <!-- begin-user-doc -->
+	 * This keeps track of the one adapter used for all {@link net.bioclipse.qsar.DescriptorlistType} instances.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     protected DescriptorlistTypeItemProvider descriptorlistTypeItemProvider;
 
     /**
-     * This creates an adapter for a {@link net.bioclipse.qsar.DescriptorlistType}.
-     * <!-- begin-user-doc -->
+	 * This creates an adapter for a {@link net.bioclipse.qsar.DescriptorlistType}.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     public Adapter createDescriptorlistTypeAdapter() {
-        if (descriptorlistTypeItemProvider == null) {
-            descriptorlistTypeItemProvider = new DescriptorlistTypeItemProvider(this);
-        }
+		if (descriptorlistTypeItemProvider == null) {
+			descriptorlistTypeItemProvider = new DescriptorlistTypeItemProvider(this);
+		}
 
-        return descriptorlistTypeItemProvider;
-    }
+		return descriptorlistTypeItemProvider;
+	}
 
     /**
-     * This keeps track of the one adapter used for all {@link net.bioclipse.qsar.DescriptorproviderType} instances.
-     * <!-- begin-user-doc -->
+	 * This keeps track of the one adapter used for all {@link net.bioclipse.qsar.DescriptorproviderType} instances.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     protected DescriptorproviderTypeItemProvider descriptorproviderTypeItemProvider;
 
     /**
-     * This creates an adapter for a {@link net.bioclipse.qsar.DescriptorproviderType}.
-     * <!-- begin-user-doc -->
+	 * This creates an adapter for a {@link net.bioclipse.qsar.DescriptorproviderType}.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     public Adapter createDescriptorproviderTypeAdapter() {
-        if (descriptorproviderTypeItemProvider == null) {
-            descriptorproviderTypeItemProvider = new DescriptorproviderTypeItemProvider(this);
-        }
+		if (descriptorproviderTypeItemProvider == null) {
+			descriptorproviderTypeItemProvider = new DescriptorproviderTypeItemProvider(this);
+		}
 
-        return descriptorproviderTypeItemProvider;
-    }
+		return descriptorproviderTypeItemProvider;
+	}
 
     /**
-     * This keeps track of the one adapter used for all {@link net.bioclipse.qsar.DescriptorresultlistsType} instances.
-     * <!-- begin-user-doc -->
+	 * This keeps track of the one adapter used for all {@link net.bioclipse.qsar.DescriptorresultlistsType} instances.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     protected DescriptorresultlistsTypeItemProvider descriptorresultlistsTypeItemProvider;
 
     /**
-     * This creates an adapter for a {@link net.bioclipse.qsar.DescriptorresultlistsType}.
-     * <!-- begin-user-doc -->
+	 * This creates an adapter for a {@link net.bioclipse.qsar.DescriptorresultlistsType}.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     public Adapter createDescriptorresultlistsTypeAdapter() {
-        if (descriptorresultlistsTypeItemProvider == null) {
-            descriptorresultlistsTypeItemProvider = new DescriptorresultlistsTypeItemProvider(this);
-        }
+		if (descriptorresultlistsTypeItemProvider == null) {
+			descriptorresultlistsTypeItemProvider = new DescriptorresultlistsTypeItemProvider(this);
+		}
 
-        return descriptorresultlistsTypeItemProvider;
-    }
+		return descriptorresultlistsTypeItemProvider;
+	}
 
     /**
-     * This keeps track of the one adapter used for all {@link net.bioclipse.qsar.DescriptorresultType} instances.
-     * <!-- begin-user-doc -->
+	 * This keeps track of the one adapter used for all {@link net.bioclipse.qsar.DescriptorresultType} instances.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     protected DescriptorresultTypeItemProvider descriptorresultTypeItemProvider;
 
     /**
-     * This creates an adapter for a {@link net.bioclipse.qsar.DescriptorresultType}.
-     * <!-- begin-user-doc -->
+	 * This creates an adapter for a {@link net.bioclipse.qsar.DescriptorresultType}.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     public Adapter createDescriptorresultTypeAdapter() {
-        if (descriptorresultTypeItemProvider == null) {
-            descriptorresultTypeItemProvider = new DescriptorresultTypeItemProvider(this);
-        }
+		if (descriptorresultTypeItemProvider == null) {
+			descriptorresultTypeItemProvider = new DescriptorresultTypeItemProvider(this);
+		}
 
-        return descriptorresultTypeItemProvider;
-    }
+		return descriptorresultTypeItemProvider;
+	}
 
     /**
-     * This keeps track of the one adapter used for all {@link net.bioclipse.qsar.DescriptorType} instances.
-     * <!-- begin-user-doc -->
+	 * This keeps track of the one adapter used for all {@link net.bioclipse.qsar.DescriptorType} instances.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     protected DescriptorTypeItemProvider descriptorTypeItemProvider;
 
     /**
-     * This creates an adapter for a {@link net.bioclipse.qsar.DescriptorType}.
-     * <!-- begin-user-doc -->
+	 * This creates an adapter for a {@link net.bioclipse.qsar.DescriptorType}.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     public Adapter createDescriptorTypeAdapter() {
-        if (descriptorTypeItemProvider == null) {
-            descriptorTypeItemProvider = new DescriptorTypeItemProvider(this);
-        }
+		if (descriptorTypeItemProvider == null) {
+			descriptorTypeItemProvider = new DescriptorTypeItemProvider(this);
+		}
 
-        return descriptorTypeItemProvider;
-    }
+		return descriptorTypeItemProvider;
+	}
 
     /**
-     * This keeps track of the one adapter used for all {@link net.bioclipse.qsar.DescriptorvalueType} instances.
-     * <!-- begin-user-doc -->
+	 * This keeps track of the one adapter used for all {@link net.bioclipse.qsar.DescriptorvalueType} instances.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     protected DescriptorvalueTypeItemProvider descriptorvalueTypeItemProvider;
 
     /**
-     * This creates an adapter for a {@link net.bioclipse.qsar.DescriptorvalueType}.
-     * <!-- begin-user-doc -->
+	 * This creates an adapter for a {@link net.bioclipse.qsar.DescriptorvalueType}.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     public Adapter createDescriptorvalueTypeAdapter() {
-        if (descriptorvalueTypeItemProvider == null) {
-            descriptorvalueTypeItemProvider = new DescriptorvalueTypeItemProvider(this);
-        }
+		if (descriptorvalueTypeItemProvider == null) {
+			descriptorvalueTypeItemProvider = new DescriptorvalueTypeItemProvider(this);
+		}
 
-        return descriptorvalueTypeItemProvider;
-    }
+		return descriptorvalueTypeItemProvider;
+	}
 
     /**
-     * This keeps track of the one adapter used for all {@link net.bioclipse.qsar.DocumentRoot} instances.
-     * <!-- begin-user-doc -->
+	 * This keeps track of the one adapter used for all {@link net.bioclipse.qsar.DocumentRoot} instances.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     protected DocumentRootItemProvider documentRootItemProvider;
 
     /**
-     * This creates an adapter for a {@link net.bioclipse.qsar.DocumentRoot}.
-     * <!-- begin-user-doc -->
+	 * This creates an adapter for a {@link net.bioclipse.qsar.DocumentRoot}.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     public Adapter createDocumentRootAdapter() {
-        if (documentRootItemProvider == null) {
-            documentRootItemProvider = new DocumentRootItemProvider(this);
-        }
+		if (documentRootItemProvider == null) {
+			documentRootItemProvider = new DocumentRootItemProvider(this);
+		}
 
-        return documentRootItemProvider;
-    }
+		return documentRootItemProvider;
+	}
 
     /**
-     * This keeps track of the one adapter used for all {@link net.bioclipse.qsar.MetadataType} instances.
-     * <!-- begin-user-doc -->
+	 * This keeps track of the one adapter used for all {@link net.bioclipse.qsar.MetadataType} instances.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     protected MetadataTypeItemProvider metadataTypeItemProvider;
 
     /**
-     * This creates an adapter for a {@link net.bioclipse.qsar.MetadataType}.
-     * <!-- begin-user-doc -->
+	 * This creates an adapter for a {@link net.bioclipse.qsar.MetadataType}.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     public Adapter createMetadataTypeAdapter() {
-        if (metadataTypeItemProvider == null) {
-            metadataTypeItemProvider = new MetadataTypeItemProvider(this);
-        }
+		if (metadataTypeItemProvider == null) {
+			metadataTypeItemProvider = new MetadataTypeItemProvider(this);
+		}
 
-        return metadataTypeItemProvider;
-    }
+		return metadataTypeItemProvider;
+	}
 
     /**
-     * This keeps track of the one adapter used for all {@link net.bioclipse.qsar.ParameterType} instances.
-     * <!-- begin-user-doc -->
+	 * This keeps track of the one adapter used for all {@link net.bioclipse.qsar.ParameterType} instances.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     protected ParameterTypeItemProvider parameterTypeItemProvider;
 
     /**
-     * This creates an adapter for a {@link net.bioclipse.qsar.ParameterType}.
-     * <!-- begin-user-doc -->
+	 * This creates an adapter for a {@link net.bioclipse.qsar.ParameterType}.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     public Adapter createParameterTypeAdapter() {
-        if (parameterTypeItemProvider == null) {
-            parameterTypeItemProvider = new ParameterTypeItemProvider(this);
-        }
+		if (parameterTypeItemProvider == null) {
+			parameterTypeItemProvider = new ParameterTypeItemProvider(this);
+		}
 
-        return parameterTypeItemProvider;
-    }
+		return parameterTypeItemProvider;
+	}
 
     /**
-     * This keeps track of the one adapter used for all {@link net.bioclipse.qsar.PreprocessingStepType} instances.
-     * <!-- begin-user-doc -->
+	 * This keeps track of the one adapter used for all {@link net.bioclipse.qsar.PreprocessingStepType} instances.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     protected PreprocessingStepTypeItemProvider preprocessingStepTypeItemProvider;
 
     /**
-     * This creates an adapter for a {@link net.bioclipse.qsar.PreprocessingStepType}.
-     * <!-- begin-user-doc -->
+	 * This creates an adapter for a {@link net.bioclipse.qsar.PreprocessingStepType}.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     public Adapter createPreprocessingStepTypeAdapter() {
-        if (preprocessingStepTypeItemProvider == null) {
-            preprocessingStepTypeItemProvider = new PreprocessingStepTypeItemProvider(this);
-        }
+		if (preprocessingStepTypeItemProvider == null) {
+			preprocessingStepTypeItemProvider = new PreprocessingStepTypeItemProvider(this);
+		}
 
-        return preprocessingStepTypeItemProvider;
-    }
+		return preprocessingStepTypeItemProvider;
+	}
 
     /**
-     * This keeps track of the one adapter used for all {@link net.bioclipse.qsar.PreprocessingType} instances.
-     * <!-- begin-user-doc -->
+	 * This keeps track of the one adapter used for all {@link net.bioclipse.qsar.PreprocessingType} instances.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     protected PreprocessingTypeItemProvider preprocessingTypeItemProvider;
 
     /**
-     * This creates an adapter for a {@link net.bioclipse.qsar.PreprocessingType}.
-     * <!-- begin-user-doc -->
+	 * This creates an adapter for a {@link net.bioclipse.qsar.PreprocessingType}.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     public Adapter createPreprocessingTypeAdapter() {
-        if (preprocessingTypeItemProvider == null) {
-            preprocessingTypeItemProvider = new PreprocessingTypeItemProvider(this);
-        }
+		if (preprocessingTypeItemProvider == null) {
+			preprocessingTypeItemProvider = new PreprocessingTypeItemProvider(this);
+		}
 
-        return preprocessingTypeItemProvider;
-    }
+		return preprocessingTypeItemProvider;
+	}
 
     /**
-     * This keeps track of the one adapter used for all {@link net.bioclipse.qsar.QsarType} instances.
-     * <!-- begin-user-doc -->
+	 * This keeps track of the one adapter used for all {@link net.bioclipse.qsar.QsarType} instances.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     protected QsarTypeItemProvider qsarTypeItemProvider;
 
     /**
-     * This creates an adapter for a {@link net.bioclipse.qsar.QsarType}.
-     * <!-- begin-user-doc -->
+	 * This creates an adapter for a {@link net.bioclipse.qsar.QsarType}.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     public Adapter createQsarTypeAdapter() {
-        if (qsarTypeItemProvider == null) {
-            qsarTypeItemProvider = new QsarTypeItemProvider(this);
-        }
+		if (qsarTypeItemProvider == null) {
+			qsarTypeItemProvider = new QsarTypeItemProvider(this);
+		}
 
-        return qsarTypeItemProvider;
-    }
+		return qsarTypeItemProvider;
+	}
 
     /**
-     * This keeps track of the one adapter used for all {@link net.bioclipse.qsar.ResourceType} instances.
-     * <!-- begin-user-doc -->
+	 * This keeps track of the one adapter used for all {@link net.bioclipse.qsar.ResourceType} instances.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     protected ResourceTypeItemProvider resourceTypeItemProvider;
 
     /**
-     * This creates an adapter for a {@link net.bioclipse.qsar.ResourceType}.
-     * <!-- begin-user-doc -->
+	 * This creates an adapter for a {@link net.bioclipse.qsar.ResourceType}.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     public Adapter createResourceTypeAdapter() {
-        if (resourceTypeItemProvider == null) {
-            resourceTypeItemProvider = new ResourceTypeItemProvider(this);
-        }
+		if (resourceTypeItemProvider == null) {
+			resourceTypeItemProvider = new ResourceTypeItemProvider(this);
+		}
 
-        return resourceTypeItemProvider;
-    }
+		return resourceTypeItemProvider;
+	}
 
     /**
-     * This keeps track of the one adapter used for all {@link net.bioclipse.qsar.ResponsesListType} instances.
-     * <!-- begin-user-doc -->
+	 * This keeps track of the one adapter used for all {@link net.bioclipse.qsar.ResponsesListType} instances.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     protected ResponsesListTypeItemProvider responsesListTypeItemProvider;
 
     /**
-     * This creates an adapter for a {@link net.bioclipse.qsar.ResponsesListType}.
-     * <!-- begin-user-doc -->
+	 * This creates an adapter for a {@link net.bioclipse.qsar.ResponsesListType}.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     public Adapter createResponsesListTypeAdapter() {
-        if (responsesListTypeItemProvider == null) {
-            responsesListTypeItemProvider = new ResponsesListTypeItemProvider(this);
-        }
+		if (responsesListTypeItemProvider == null) {
+			responsesListTypeItemProvider = new ResponsesListTypeItemProvider(this);
+		}
 
-        return responsesListTypeItemProvider;
-    }
+		return responsesListTypeItemProvider;
+	}
 
     /**
-     * This keeps track of the one adapter used for all {@link net.bioclipse.qsar.ResponseType} instances.
-     * <!-- begin-user-doc -->
+	 * This keeps track of the one adapter used for all {@link net.bioclipse.qsar.ResponseType} instances.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     protected ResponseTypeItemProvider responseTypeItemProvider;
 
     /**
-     * This creates an adapter for a {@link net.bioclipse.qsar.ResponseType}.
-     * <!-- begin-user-doc -->
+	 * This creates an adapter for a {@link net.bioclipse.qsar.ResponseType}.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     public Adapter createResponseTypeAdapter() {
-        if (responseTypeItemProvider == null) {
-            responseTypeItemProvider = new ResponseTypeItemProvider(this);
-        }
+		if (responseTypeItemProvider == null) {
+			responseTypeItemProvider = new ResponseTypeItemProvider(this);
+		}
 
-        return responseTypeItemProvider;
-    }
+		return responseTypeItemProvider;
+	}
 
     /**
-     * This keeps track of the one adapter used for all {@link net.bioclipse.qsar.ResponseunitType} instances.
-     * <!-- begin-user-doc -->
+	 * This keeps track of the one adapter used for all {@link net.bioclipse.qsar.ResponseunitType} instances.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     protected ResponseunitTypeItemProvider responseunitTypeItemProvider;
 
     /**
-     * This creates an adapter for a {@link net.bioclipse.qsar.ResponseunitType}.
-     * <!-- begin-user-doc -->
+	 * This creates an adapter for a {@link net.bioclipse.qsar.ResponseunitType}.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     public Adapter createResponseunitTypeAdapter() {
-        if (responseunitTypeItemProvider == null) {
-            responseunitTypeItemProvider = new ResponseunitTypeItemProvider(this);
-        }
+		if (responseunitTypeItemProvider == null) {
+			responseunitTypeItemProvider = new ResponseunitTypeItemProvider(this);
+		}
 
-        return responseunitTypeItemProvider;
-    }
+		return responseunitTypeItemProvider;
+	}
 
     /**
-     * This keeps track of the one adapter used for all {@link net.bioclipse.qsar.StructurelistType} instances.
-     * <!-- begin-user-doc -->
+	 * This keeps track of the one adapter used for all {@link net.bioclipse.qsar.StructurelistType} instances.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     protected StructurelistTypeItemProvider structurelistTypeItemProvider;
 
     /**
-     * This creates an adapter for a {@link net.bioclipse.qsar.StructurelistType}.
-     * <!-- begin-user-doc -->
+	 * This creates an adapter for a {@link net.bioclipse.qsar.StructurelistType}.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     public Adapter createStructurelistTypeAdapter() {
-        if (structurelistTypeItemProvider == null) {
-            structurelistTypeItemProvider = new StructurelistTypeItemProvider(this);
-        }
+		if (structurelistTypeItemProvider == null) {
+			structurelistTypeItemProvider = new StructurelistTypeItemProvider(this);
+		}
 
-        return structurelistTypeItemProvider;
-    }
+		return structurelistTypeItemProvider;
+	}
 
     /**
-     * This keeps track of the one adapter used for all {@link net.bioclipse.qsar.StructureType} instances.
-     * <!-- begin-user-doc -->
+	 * This keeps track of the one adapter used for all {@link net.bioclipse.qsar.StructureType} instances.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     protected StructureTypeItemProvider structureTypeItemProvider;
 
     /**
-     * This creates an adapter for a {@link net.bioclipse.qsar.StructureType}.
-     * <!-- begin-user-doc -->
+	 * This creates an adapter for a {@link net.bioclipse.qsar.StructureType}.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     public Adapter createStructureTypeAdapter() {
-        if (structureTypeItemProvider == null) {
-            structureTypeItemProvider = new StructureTypeItemProvider(this);
-        }
+		if (structureTypeItemProvider == null) {
+			structureTypeItemProvider = new StructureTypeItemProvider(this);
+		}
 
-        return structureTypeItemProvider;
-    }
+		return structureTypeItemProvider;
+	}
 
     /**
-     * This returns the root adapter factory that contains this factory.
-     * <!-- begin-user-doc -->
+	 * This returns the root adapter factory that contains this factory.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public ComposeableAdapterFactory getRootAdapterFactory() {
-        return parentAdapterFactory == null ? this : parentAdapterFactory.getRootAdapterFactory();
-    }
+		return parentAdapterFactory == null ? this : parentAdapterFactory.getRootAdapterFactory();
+	}
 
     /**
-     * This sets the composed adapter factory that contains this factory.
-     * <!-- begin-user-doc -->
+	 * This sets the composed adapter factory that contains this factory.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public void setParentAdapterFactory(ComposedAdapterFactory parentAdapterFactory) {
-        this.parentAdapterFactory = parentAdapterFactory;
-    }
+		this.parentAdapterFactory = parentAdapterFactory;
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     public boolean isFactoryForType(Object type) {
-        return supportedTypes.contains(type) || super.isFactoryForType(type);
-    }
+		return supportedTypes.contains(type) || super.isFactoryForType(type);
+	}
 
     /**
-     * This implementation substitutes the factory itself as the key for the adapter.
-     * <!-- begin-user-doc -->
+	 * This implementation substitutes the factory itself as the key for the adapter.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     public Adapter adapt(Notifier notifier, Object type) {
-        return super.adapt(notifier, this);
-    }
+		return super.adapt(notifier, this);
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     public Object adapt(Object object, Object type) {
-        if (isFactoryForType(type)) {
-            Object adapter = super.adapt(object, type);
-            if (!(type instanceof Class<?>) || (((Class<?>)type).isInstance(adapter))) {
-                return adapter;
-            }
-        }
+		if (isFactoryForType(type)) {
+			Object adapter = super.adapt(object, type);
+			if (!(type instanceof Class<?>) || (((Class<?>)type).isInstance(adapter))) {
+				return adapter;
+			}
+		}
 
-        return null;
-    }
+		return null;
+	}
 
     /**
-     * This adds a listener.
-     * <!-- begin-user-doc -->
+	 * This adds a listener.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public void addListener(INotifyChangedListener notifyChangedListener) {
-        changeNotifier.addListener(notifyChangedListener);
-    }
+		changeNotifier.addListener(notifyChangedListener);
+	}
 
     /**
-     * This removes a listener.
-     * <!-- begin-user-doc -->
+	 * This removes a listener.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public void removeListener(INotifyChangedListener notifyChangedListener) {
-        changeNotifier.removeListener(notifyChangedListener);
-    }
+		changeNotifier.removeListener(notifyChangedListener);
+	}
 
     /**
-     * This delegates to {@link #changeNotifier} and to {@link #parentAdapterFactory}.
-     * <!-- begin-user-doc -->
+	 * This delegates to {@link #changeNotifier} and to {@link #parentAdapterFactory}.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public void fireNotifyChanged(Notification notification) {
-        changeNotifier.fireNotifyChanged(notification);
+		changeNotifier.fireNotifyChanged(notification);
 
-        if (parentAdapterFactory != null) {
-            parentAdapterFactory.fireNotifyChanged(notification);
-        }
-    }
+		if (parentAdapterFactory != null) {
+			parentAdapterFactory.fireNotifyChanged(notification);
+		}
+	}
 
     /**
-     * This disposes all of the item providers created by this factory. 
-     * <!-- begin-user-doc -->
+	 * This disposes all of the item providers created by this factory. 
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public void dispose() {
-        if (descriptorlistTypeItemProvider != null) descriptorlistTypeItemProvider.dispose();
-        if (descriptorproviderTypeItemProvider != null) descriptorproviderTypeItemProvider.dispose();
-        if (descriptorresultlistsTypeItemProvider != null) descriptorresultlistsTypeItemProvider.dispose();
-        if (descriptorresultTypeItemProvider != null) descriptorresultTypeItemProvider.dispose();
-        if (descriptorTypeItemProvider != null) descriptorTypeItemProvider.dispose();
-        if (descriptorvalueTypeItemProvider != null) descriptorvalueTypeItemProvider.dispose();
-        if (documentRootItemProvider != null) documentRootItemProvider.dispose();
-        if (metadataTypeItemProvider != null) metadataTypeItemProvider.dispose();
-        if (parameterTypeItemProvider != null) parameterTypeItemProvider.dispose();
-        if (preprocessingStepTypeItemProvider != null) preprocessingStepTypeItemProvider.dispose();
-        if (preprocessingTypeItemProvider != null) preprocessingTypeItemProvider.dispose();
-        if (qsarTypeItemProvider != null) qsarTypeItemProvider.dispose();
-        if (resourceTypeItemProvider != null) resourceTypeItemProvider.dispose();
-        if (responsesListTypeItemProvider != null) responsesListTypeItemProvider.dispose();
-        if (responseTypeItemProvider != null) responseTypeItemProvider.dispose();
-        if (responseunitTypeItemProvider != null) responseunitTypeItemProvider.dispose();
-        if (structurelistTypeItemProvider != null) structurelistTypeItemProvider.dispose();
-        if (structureTypeItemProvider != null) structureTypeItemProvider.dispose();
-    }
+		if (descriptorlistTypeItemProvider != null) descriptorlistTypeItemProvider.dispose();
+		if (descriptorproviderTypeItemProvider != null) descriptorproviderTypeItemProvider.dispose();
+		if (descriptorresultlistsTypeItemProvider != null) descriptorresultlistsTypeItemProvider.dispose();
+		if (descriptorresultTypeItemProvider != null) descriptorresultTypeItemProvider.dispose();
+		if (descriptorTypeItemProvider != null) descriptorTypeItemProvider.dispose();
+		if (descriptorvalueTypeItemProvider != null) descriptorvalueTypeItemProvider.dispose();
+		if (documentRootItemProvider != null) documentRootItemProvider.dispose();
+		if (metadataTypeItemProvider != null) metadataTypeItemProvider.dispose();
+		if (parameterTypeItemProvider != null) parameterTypeItemProvider.dispose();
+		if (preprocessingStepTypeItemProvider != null) preprocessingStepTypeItemProvider.dispose();
+		if (preprocessingTypeItemProvider != null) preprocessingTypeItemProvider.dispose();
+		if (qsarTypeItemProvider != null) qsarTypeItemProvider.dispose();
+		if (resourceTypeItemProvider != null) resourceTypeItemProvider.dispose();
+		if (responsesListTypeItemProvider != null) responsesListTypeItemProvider.dispose();
+		if (responseTypeItemProvider != null) responseTypeItemProvider.dispose();
+		if (responseunitTypeItemProvider != null) responseunitTypeItemProvider.dispose();
+		if (structurelistTypeItemProvider != null) structurelistTypeItemProvider.dispose();
+		if (structureTypeItemProvider != null) structureTypeItemProvider.dispose();
+	}
 
 }

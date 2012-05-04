@@ -43,125 +43,125 @@ import org.eclipse.emf.ecore.util.InternalEList;
  */
 public class DescriptorresultlistsTypeImpl extends EObjectImpl implements DescriptorresultlistsType {
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public static final String copyright = " Copyright (c) 2009 Ola Spjuth\n All rights reserved. This program and the accompanying materials\n are made available under the terms of the Eclipse Public License v1.0\n which accompanies this distribution, and is available at\n http://www.eclipse.org/legal/epl-v10.html\n";
 
     /**
-     * The cached value of the '{@link #getDescriptorresult() <em>Descriptorresult</em>}' containment reference list.
-     * <!-- begin-user-doc -->
+	 * The cached value of the '{@link #getDescriptorresult() <em>Descriptorresult</em>}' containment reference list.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see #getDescriptorresult()
-     * @generated
-     * @ordered
-     */
+	 * @see #getDescriptorresult()
+	 * @generated
+	 * @ordered
+	 */
     protected EList<DescriptorresultType> descriptorresult;
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     protected DescriptorresultlistsTypeImpl() {
-        super();
-    }
+		super();
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     protected EClass eStaticClass() {
-        return QsarPackage.Literals.DESCRIPTORRESULTLISTS_TYPE;
-    }
+		return QsarPackage.Literals.DESCRIPTORRESULTLISTS_TYPE;
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public EList<DescriptorresultType> getDescriptorresult() {
-        if (descriptorresult == null) {
-            descriptorresult = new EObjectContainmentEList<DescriptorresultType>(DescriptorresultType.class, this, QsarPackage.DESCRIPTORRESULTLISTS_TYPE__DESCRIPTORRESULT);
-        }
-        return descriptorresult;
-    }
+		if (descriptorresult == null) {
+			descriptorresult = new EObjectContainmentEList<DescriptorresultType>(DescriptorresultType.class, this, QsarPackage.DESCRIPTORRESULTLISTS_TYPE__DESCRIPTORRESULT);
+		}
+		return descriptorresult;
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
-        switch (featureID) {
-            case QsarPackage.DESCRIPTORRESULTLISTS_TYPE__DESCRIPTORRESULT:
-                return ((InternalEList<?>)getDescriptorresult()).basicRemove(otherEnd, msgs);
-        }
-        return super.eInverseRemove(otherEnd, featureID, msgs);
-    }
+		switch (featureID) {
+			case QsarPackage.DESCRIPTORRESULTLISTS_TYPE__DESCRIPTORRESULT:
+				return ((InternalEList<?>)getDescriptorresult()).basicRemove(otherEnd, msgs);
+		}
+		return super.eInverseRemove(otherEnd, featureID, msgs);
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     public Object eGet(int featureID, boolean resolve, boolean coreType) {
-        switch (featureID) {
-            case QsarPackage.DESCRIPTORRESULTLISTS_TYPE__DESCRIPTORRESULT:
-                return getDescriptorresult();
-        }
-        return super.eGet(featureID, resolve, coreType);
-    }
+		switch (featureID) {
+			case QsarPackage.DESCRIPTORRESULTLISTS_TYPE__DESCRIPTORRESULT:
+				return getDescriptorresult();
+		}
+		return super.eGet(featureID, resolve, coreType);
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @SuppressWarnings("unchecked")
     @Override
     public void eSet(int featureID, Object newValue) {
-        switch (featureID) {
-            case QsarPackage.DESCRIPTORRESULTLISTS_TYPE__DESCRIPTORRESULT:
-                getDescriptorresult().clear();
-                getDescriptorresult().addAll((Collection<? extends DescriptorresultType>)newValue);
-                return;
-        }
-        super.eSet(featureID, newValue);
-    }
+		switch (featureID) {
+			case QsarPackage.DESCRIPTORRESULTLISTS_TYPE__DESCRIPTORRESULT:
+				getDescriptorresult().clear();
+				getDescriptorresult().addAll((Collection<? extends DescriptorresultType>)newValue);
+				return;
+		}
+		super.eSet(featureID, newValue);
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     public void eUnset(int featureID) {
-        switch (featureID) {
-            case QsarPackage.DESCRIPTORRESULTLISTS_TYPE__DESCRIPTORRESULT:
-                getDescriptorresult().clear();
-                return;
-        }
-        super.eUnset(featureID);
-    }
+		switch (featureID) {
+			case QsarPackage.DESCRIPTORRESULTLISTS_TYPE__DESCRIPTORRESULT:
+				getDescriptorresult().clear();
+				return;
+		}
+		super.eUnset(featureID);
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     public boolean eIsSet(int featureID) {
-        switch (featureID) {
-            case QsarPackage.DESCRIPTORRESULTLISTS_TYPE__DESCRIPTORRESULT:
-                return descriptorresult != null && !descriptorresult.isEmpty();
-        }
-        return super.eIsSet(featureID);
-    }
+		switch (featureID) {
+			case QsarPackage.DESCRIPTORRESULTLISTS_TYPE__DESCRIPTORRESULT:
+				return descriptorresult != null && !descriptorresult.isEmpty();
+		}
+		return super.eIsSet(featureID);
+	}
 
 } //DescriptorresultlistsTypeImpl

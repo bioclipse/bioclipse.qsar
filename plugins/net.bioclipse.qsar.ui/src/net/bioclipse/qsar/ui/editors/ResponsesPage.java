@@ -36,13 +36,16 @@ import net.bioclipse.qsar.ResponseunitType;
 import net.bioclipse.qsar.StructureType;
 import net.bioclipse.qsar.business.IQsarManager;
 import net.bioclipse.qsar.descriptor.model.ResponseUnit;
+import net.bioclipse.qsar.ui.QsarHelper;
 import net.bioclipse.qsar.ui.dialogs.ImportResultsDialog;
 
 import org.apache.log4j.Logger;
+import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.common.command.CompoundCommand;
 import org.eclipse.emf.common.ui.viewer.IViewerProvider;
+import org.eclipse.emf.databinding.edit.EMFEditObservables;
 import org.eclipse.emf.edit.command.SetCommand;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.domain.IEditingDomainProvider;
@@ -51,6 +54,7 @@ import org.eclipse.jface.action.IMenuListener;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.action.Separator;
+import org.eclipse.jface.databinding.swt.SWTObservables;
 import org.eclipse.jface.dialogs.IPageChangedListener;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.dialogs.PageChangedEvent;
@@ -72,14 +76,21 @@ import org.eclipse.jface.window.Window;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.KeyEvent;
 import org.eclipse.swt.events.KeyListener;
+import org.eclipse.swt.events.ModifyEvent;
+import org.eclipse.swt.events.ModifyListener;
+import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.FileDialog;
+import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.Table;
+import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.IWorkbenchActionConstants;
 import org.eclipse.ui.dialogs.ListDialog;
 import org.eclipse.ui.forms.IManagedForm;
@@ -136,6 +147,8 @@ public class ResponsesPage extends FormPage implements IEditingDomainProvider, I
     @Override
     protected void createFormContent(IManagedForm managedForm) {
 
+        final QsarType qsarModel = ((QsarEditor)getEditor()).getQsarModel();
+
         ScrolledForm form = managedForm.getForm();
         FormToolkit toolkit = managedForm.getToolkit();
         form.setText("QSAR responses");
@@ -147,11 +160,90 @@ public class ResponsesPage extends FormPage implements IEditingDomainProvider, I
         GridLayout layout = new GridLayout();
         layout.numColumns=2;
         form.getBody().setLayout(layout);
+        
+        //Response Label
+        Label lblResponseLabel = toolkit.createLabel( form.getBody(), "Response label:", SWT.NONE);
+        GridData gd22 = new GridData(GridData.HORIZONTAL_ALIGN_BEGINNING);
+        lblResponseLabel.setLayoutData(gd22);
 
+        final Text txtResponseLabel = toolkit.createText(form.getBody(), "", SWT.MULTI|SWT.WRAP);
+        GridData gd23 = new GridData();
+        txtResponseLabel.setLayoutData(gd23);
+        gd23.widthHint=200;
+        gd23.heightHint=16;
+//        txtResponseLabel.addModifyListener(new ModifyListener() {
+//			
+//			public void modifyText(ModifyEvent e) {
+//                Command cmd=new SetCommand(editingDomain,qsarModel.getMetadata(),
+//                		QsarPackage.Literals.METADATA_TYPE__RESPONSE_LABEL,
+//                        txtResponseLabel.getText());
+//                editingDomain.getCommandStack().execute(cmd);
+//                responsesViewer.refresh();
+//				
+//			}
+//		});
+        
+        
+        DataBindingContext bindingContext = new DataBindingContext();
+        bindingContext.bindValue(SWTObservables.observeText(txtResponseLabel, SWT.Modify), 
+                EMFEditObservables.observeValue(editingDomain,
+                qsarModel.getMetadata(),
+                QsarPackage.Literals.METADATA_TYPE__RESPONSE_LABEL),
+                null, null);
+        
+        //Response placement
+        Label lblPlaceResponse = toolkit.createLabel( form.getBody(), "Response label placement in CSV:", SWT.NONE);
+        GridData gd222 = new GridData(GridData.HORIZONTAL_ALIGN_BEGINNING);
+        lblPlaceResponse.setLayoutData(gd222);
+        
+        Combo cboPlaceResponse = new Combo( form.getBody(), SWT.NONE);
+        GridData gd232 = new GridData();
+        txtResponseLabel.setLayoutData(gd232);
+        gd232.widthHint=200;
+        gd232.heightHint=16;
+        cboPlaceResponse.add("first");
+        cboPlaceResponse.add("last");
+        cboPlaceResponse.select(0);
+        
+        bindingContext.bindValue(SWTObservables.observeText(cboPlaceResponse), 
+                EMFEditObservables.observeValue(editingDomain,
+                qsarModel.getMetadata(),
+                QsarPackage.Literals.METADATA_TYPE__RESPONSE_PLACEMENT),
+                null, null);
+
+        
+//        cboPlaceResponse.addSelectionListener( new SelectionListener(){
+//
+//            public void widgetDefaultSelected( SelectionEvent e ) {
+//            }
+//
+//            public void widgetSelected( SelectionEvent e ) {
+//                Combo cbo=(Combo) e.getSource();
+//                if (cbo.getSelectionIndex()==0){
+//
+//                	qsarModel.get
+//                    
+//                    Command cmd=new SetCommand(editingDomain,response,
+//                                               QsarPackage.Literals.RESPONSE_TYPE__VALUE,
+//                                               String.valueOf(value));
+//                    editingDomain.getCommandStack().execute(cmd);
+//                    responsesViewer.refresh();
+//
+//                    
+//                }
+//                else{
+//                    //OFF
+//                    QsarHelper.setAutoBuild( project, false );
+//                }
+//            }
+//        });
+        
+        
         responsesViewer = new TableViewer(form.getBody(), SWT.BORDER
                                           | SWT.FULL_SELECTION );
         responsesTable=responsesViewer.getTable();
         GridData gd=new GridData(GridData.FILL_BOTH);
+        gd.horizontalSpan=2;
 //        gd.widthHint=400;
         responsesTable.setLayoutData( gd );
 
@@ -352,7 +444,6 @@ public class ResponsesPage extends FormPage implements IEditingDomainProvider, I
 
         //Populate selected descriptors from the read qsar model 
         //		populateResponsesViewerFromModel();
-        QsarType qsarModel = ((QsarEditor)getEditor()).getQsarModel();
         ResponsesListType responsesList = qsarModel.getResponselist();
 
         if (responsesList.eContents()!=null){

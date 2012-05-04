@@ -43,125 +43,125 @@ import org.eclipse.emf.ecore.util.InternalEList;
  */
 public class DescriptorlistTypeImpl extends EObjectImpl implements DescriptorlistType {
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public static final String copyright = " Copyright (c) 2009 Ola Spjuth\n All rights reserved. This program and the accompanying materials\n are made available under the terms of the Eclipse Public License v1.0\n which accompanies this distribution, and is available at\n http://www.eclipse.org/legal/epl-v10.html\n";
 
     /**
-     * The cached value of the '{@link #getDescriptors() <em>Descriptors</em>}' containment reference list.
-     * <!-- begin-user-doc -->
+	 * The cached value of the '{@link #getDescriptors() <em>Descriptors</em>}' containment reference list.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see #getDescriptors()
-     * @generated
-     * @ordered
-     */
+	 * @see #getDescriptors()
+	 * @generated
+	 * @ordered
+	 */
     protected EList<DescriptorType> descriptors;
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     protected DescriptorlistTypeImpl() {
-        super();
-    }
+		super();
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     protected EClass eStaticClass() {
-        return QsarPackage.Literals.DESCRIPTORLIST_TYPE;
-    }
+		return QsarPackage.Literals.DESCRIPTORLIST_TYPE;
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public EList<DescriptorType> getDescriptors() {
-        if (descriptors == null) {
-            descriptors = new EObjectContainmentEList<DescriptorType>(DescriptorType.class, this, QsarPackage.DESCRIPTORLIST_TYPE__DESCRIPTORS);
-        }
-        return descriptors;
-    }
+		if (descriptors == null) {
+			descriptors = new EObjectContainmentEList<DescriptorType>(DescriptorType.class, this, QsarPackage.DESCRIPTORLIST_TYPE__DESCRIPTORS);
+		}
+		return descriptors;
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
-        switch (featureID) {
-            case QsarPackage.DESCRIPTORLIST_TYPE__DESCRIPTORS:
-                return ((InternalEList<?>)getDescriptors()).basicRemove(otherEnd, msgs);
-        }
-        return super.eInverseRemove(otherEnd, featureID, msgs);
-    }
+		switch (featureID) {
+			case QsarPackage.DESCRIPTORLIST_TYPE__DESCRIPTORS:
+				return ((InternalEList<?>)getDescriptors()).basicRemove(otherEnd, msgs);
+		}
+		return super.eInverseRemove(otherEnd, featureID, msgs);
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     public Object eGet(int featureID, boolean resolve, boolean coreType) {
-        switch (featureID) {
-            case QsarPackage.DESCRIPTORLIST_TYPE__DESCRIPTORS:
-                return getDescriptors();
-        }
-        return super.eGet(featureID, resolve, coreType);
-    }
+		switch (featureID) {
+			case QsarPackage.DESCRIPTORLIST_TYPE__DESCRIPTORS:
+				return getDescriptors();
+		}
+		return super.eGet(featureID, resolve, coreType);
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @SuppressWarnings("unchecked")
     @Override
     public void eSet(int featureID, Object newValue) {
-        switch (featureID) {
-            case QsarPackage.DESCRIPTORLIST_TYPE__DESCRIPTORS:
-                getDescriptors().clear();
-                getDescriptors().addAll((Collection<? extends DescriptorType>)newValue);
-                return;
-        }
-        super.eSet(featureID, newValue);
-    }
+		switch (featureID) {
+			case QsarPackage.DESCRIPTORLIST_TYPE__DESCRIPTORS:
+				getDescriptors().clear();
+				getDescriptors().addAll((Collection<? extends DescriptorType>)newValue);
+				return;
+		}
+		super.eSet(featureID, newValue);
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     public void eUnset(int featureID) {
-        switch (featureID) {
-            case QsarPackage.DESCRIPTORLIST_TYPE__DESCRIPTORS:
-                getDescriptors().clear();
-                return;
-        }
-        super.eUnset(featureID);
-    }
+		switch (featureID) {
+			case QsarPackage.DESCRIPTORLIST_TYPE__DESCRIPTORS:
+				getDescriptors().clear();
+				return;
+		}
+		super.eUnset(featureID);
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     public boolean eIsSet(int featureID) {
-        switch (featureID) {
-            case QsarPackage.DESCRIPTORLIST_TYPE__DESCRIPTORS:
-                return descriptors != null && !descriptors.isEmpty();
-        }
-        return super.eIsSet(featureID);
-    }
+		switch (featureID) {
+			case QsarPackage.DESCRIPTORLIST_TYPE__DESCRIPTORS:
+				return descriptors != null && !descriptors.isEmpty();
+		}
+		return super.eIsSet(featureID);
+	}
 
 } //DescriptorlistTypeImpl
