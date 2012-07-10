@@ -1274,6 +1274,22 @@ public class QsarManager implements IQsarManager{
 			}
 
 		}
+		
+		//Sanitize results, e.g. replace Infinity with NA
+		for (IMolecule mol : allResults.keySet()){
+			List<IDescriptorResult> lres = allResults.get(mol);
+			for (IDescriptorResult dr : lres){
+				Float[] values = dr.getValues();
+				for (int i=0; i< values.length; i++){
+					Float value = values[i];
+					System.out.println(value);
+					if (value.isInfinite()){
+						values[i]=Float.NaN;
+						dr.setValues(values);
+					}
+				}
+			}
+		}
 
 		return allResults;
 
