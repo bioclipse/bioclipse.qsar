@@ -1282,7 +1282,6 @@ public class QsarManager implements IQsarManager{
 				Float[] values = dr.getValues();
 				for (int i=0; i< values.length; i++){
 					Float value = values[i];
-					System.out.println(value);
 					if (value.isInfinite()){
 						values[i]=Float.NaN;
 						dr.setValues(values);
