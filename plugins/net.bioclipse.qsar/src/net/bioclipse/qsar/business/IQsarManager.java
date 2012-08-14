@@ -109,7 +109,7 @@ public interface IQsarManager extends IBioclipseManager{
     @PublishedMethod(methodSummary = "Get a list of descriptor IDs" )
     public List<String> getDescriptorIDs();
     @Recorded
-    @PublishedMethod(params="String hasImpl", 
+    @PublishedMethod(params="boolean hasImpl", 
     		methodSummary = "Get a list of descriptor IDs" )
 	public List<String> getDescriptorIDs(boolean hasImpl);
     
