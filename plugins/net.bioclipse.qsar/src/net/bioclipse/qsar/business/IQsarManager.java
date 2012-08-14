@@ -69,7 +69,8 @@ public interface IQsarManager extends IBioclipseManager{
 
 
     @PublishedMethod( methodSummary = "Returns the ID's of " +
-    		"available descriptors for a provider" )
+    		"available descriptors for a provider",
+    	params="String providerID")
     public List<String> getDescriptorImplsByProvider(String providerID) 
     throws BioclipseException;
     public List<DescriptorImpl> getFullDescriptorImpls(
