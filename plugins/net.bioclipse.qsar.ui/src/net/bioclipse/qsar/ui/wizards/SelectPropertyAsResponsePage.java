@@ -67,8 +67,9 @@ public class SelectPropertyAsResponsePage extends WizardPage {
 
         //Set up page
         setTitle( "Select response property" );
-        setDescription( "Select a property of the file to use as response. " +
-        		"This step is optional." );
+        setDescription( "Select a property of the file to use as a response" +
+        		            " by right clicking it and selecting \"Select as" +
+        		            " response property\". This step is optional." );
         setImageDescriptor( Activator.getImageDescriptor( "wizban/wiz_imp_mol.gif" ) );
 
         Composite comp = new Composite(parent, SWT.NONE);
