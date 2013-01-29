@@ -28,38 +28,38 @@ import org.eclipse.emf.ecore.xmi.util.XMLProcessor;
  */
 public class QsarXMLProcessor extends XMLProcessor {
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public static final String copyright = " Copyright (c) 2009 Ola Spjuth\n All rights reserved. This program and the accompanying materials\n are made available under the terms of the Eclipse Public License v1.0\n which accompanies this distribution, and is available at\n http://www.eclipse.org/legal/epl-v10.html\n";
 
 
     /**
-     * Public constructor to instantiate the helper.
-     * <!-- begin-user-doc -->
+	 * Public constructor to instantiate the helper.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public QsarXMLProcessor() {
-        super((EPackage.Registry.INSTANCE));
-        QsarPackage.eINSTANCE.eClass();
-    }
+		super((EPackage.Registry.INSTANCE));
+		QsarPackage.eINSTANCE.eClass();
+	}
     
     /**
-     * Register for "*" and "xml" file extensions the QsarResourceFactoryImpl factory.
-     * <!-- begin-user-doc -->
+	 * Register for "*" and "xml" file extensions the QsarResourceFactoryImpl factory.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     protected Map<String, Resource.Factory> getRegistrations() {
-        if (registrations == null) {
-            super.getRegistrations();
-            registrations.put(XML_EXTENSION, new QsarResourceFactoryImpl());
-            registrations.put(STAR_EXTENSION, new QsarResourceFactoryImpl());
-        }
-        return registrations;
-    }
+		if (registrations == null) {
+			super.getRegistrations();
+			registrations.put(XML_EXTENSION, new QsarResourceFactoryImpl());
+			registrations.put(STAR_EXTENSION, new QsarResourceFactoryImpl());
+		}
+		return registrations;
+	}
 
 } //QsarXMLProcessor

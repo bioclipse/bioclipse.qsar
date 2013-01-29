@@ -24,84 +24,84 @@ import org.eclipse.emf.common.util.ResourceLocator;
  */
 public final class QsarmodelEditPlugin extends EMFPlugin {
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public static final String copyright = " Copyright (c) 2009 Ola Spjuth\n All rights reserved. This program and the accompanying materials\n are made available under the terms of the Eclipse Public License v1.0\n which accompanies this distribution, and is available at\n http://www.eclipse.org/legal/epl-v10.html\n";
 
     /**
-     * Keep track of the singleton.
-     * <!-- begin-user-doc -->
+	 * Keep track of the singleton.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public static final QsarmodelEditPlugin INSTANCE = new QsarmodelEditPlugin();
 
     /**
-     * Keep track of the singleton.
-     * <!-- begin-user-doc -->
+	 * Keep track of the singleton.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     private static Implementation plugin;
 
     /**
-     * Create the instance.
-     * <!-- begin-user-doc -->
+	 * Create the instance.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public QsarmodelEditPlugin() {
-        super
-          (new ResourceLocator [] {
-             BibtexmlHandwrittenEditPlugin.INSTANCE,
-           });
-    }
+		super
+		  (new ResourceLocator [] {
+		     BibtexmlHandwrittenEditPlugin.INSTANCE,
+		   });
+	}
 
     /**
-     * Returns the singleton instance of the Eclipse plugin.
-     * <!-- begin-user-doc -->
+	 * Returns the singleton instance of the Eclipse plugin.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the singleton instance.
-     * @generated
-     */
+	 * @return the singleton instance.
+	 * @generated
+	 */
     @Override
     public ResourceLocator getPluginResourceLocator() {
-        return plugin;
-    }
+		return plugin;
+	}
 
     /**
-     * Returns the singleton instance of the Eclipse plugin.
-     * <!-- begin-user-doc -->
+	 * Returns the singleton instance of the Eclipse plugin.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the singleton instance.
-     * @generated
-     */
+	 * @return the singleton instance.
+	 * @generated
+	 */
     public static Implementation getPlugin() {
-        return plugin;
-    }
+		return plugin;
+	}
 
     /**
-     * The actual implementation of the Eclipse <b>Plugin</b>.
-     * <!-- begin-user-doc -->
+	 * The actual implementation of the Eclipse <b>Plugin</b>.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public static class Implementation extends EclipsePlugin {
         /**
-         * Creates an instance.
-         * <!-- begin-user-doc -->
+		 * Creates an instance.
+		 * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
-         * @generated
-         */
+		 * @generated
+		 */
         public Implementation() {
-            super();
+			super();
 
-            // Remember the static instance.
-            //
-            plugin = this;
-        }
+			// Remember the static instance.
+			//
+			plugin = this;
+		}
     }
 
 }

@@ -189,6 +189,10 @@
 		<attribute name="URL" type="string"></attribute>
 		<attribute name="license" type="string"></attribute>
 		<attribute name="description" type="string"></attribute>
+		
+		<attribute name="responseLabel" type="string" default=""/>
+		<attribute name="responsePlacement" type="string" default="first"/>
+		
 	</complexType>
 
 

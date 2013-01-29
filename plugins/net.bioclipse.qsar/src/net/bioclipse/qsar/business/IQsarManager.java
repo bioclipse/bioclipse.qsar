@@ -69,7 +69,8 @@ public interface IQsarManager extends IBioclipseManager{
 
 
     @PublishedMethod( methodSummary = "Returns the ID's of " +
-    		"available descriptors for a provider" )
+    		"available descriptors for a provider",
+    	params="String providerID")
     public List<String> getDescriptorImplsByProvider(String providerID) 
     throws BioclipseException;
     public List<DescriptorImpl> getFullDescriptorImpls(
@@ -77,17 +78,21 @@ public interface IQsarManager extends IBioclipseManager{
 
 
     @PublishedMethod( methodSummary = "Returns the descriptor " +
-    		"category class by ID" )
+    		"category class by ID",
+    	params="String categoryID")
     public DescriptorCategory getCategoryByID(String categoryID);
 
     @PublishedMethod( methodSummary = "Returns the descriptor " +
-    		"provider class by ID" )
+    		"provider class by ID",
+       	params="String providerID")
     public DescriptorProvider getProviderByID(String providerID);
 
-    @PublishedMethod( methodSummary = "Returns a descriptor class by ID" )
+    @PublishedMethod( methodSummary = "Returns a descriptor class by ID",
+    	params="String descriptorImplID")
     public DescriptorImpl getDescriptorImplByID(String descriptorImplID);
 
-    @PublishedMethod( methodSummary = "Returns a descriptor class by ID" )
+    @PublishedMethod( methodSummary = "Returns a descriptor class by ID",
+    	params="String descriptorID")
     boolean existsDescriptorImpl(String descriptorID);
 
     /**
@@ -104,7 +109,7 @@ public interface IQsarManager extends IBioclipseManager{
     @PublishedMethod(methodSummary = "Get a list of descriptor IDs" )
     public List<String> getDescriptorIDs();
     @Recorded
-    @PublishedMethod(params="String hasImpl: require an implementation", 
+    @PublishedMethod(params="boolean hasImpl", 
     		methodSummary = "Get a list of descriptor IDs" )
 	public List<String> getDescriptorIDs(boolean hasImpl);
     
@@ -205,14 +210,14 @@ public interface IQsarManager extends IBioclipseManager{
     @Recorded
     String listDescriptors( boolean hasImpl );
 
-    @PublishedMethod(params="IMolecule mol, String descriptor",
+    @PublishedMethod(params="IMolecule mol, String ontologyID",
                      methodSummary = "Calculate a descriptor for a molecule " +
                      		"with the default implementation.")
     @Recorded
     IDescriptorResult calculate( IMolecule mol, String ontologyID )
                                                       throws BioclipseException;
 
-    @PublishedMethod(params="IMolecule mol, String descriptor, String provider",
+    @PublishedMethod(params="IMolecule mol, String ontologyID, String providerID",
                      methodSummary = "Calculate a descriptor for a molecule " +
                         "using the default provider.")
     @Recorded

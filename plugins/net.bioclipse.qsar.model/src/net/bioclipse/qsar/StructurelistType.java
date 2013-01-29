@@ -32,27 +32,27 @@ import org.eclipse.emf.ecore.EObject;
  */
 public interface StructurelistType extends EObject {
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     String copyright = " Copyright (c) 2009 Ola Spjuth\n All rights reserved. This program and the accompanying materials\n are made available under the terms of the Eclipse Public License v1.0\n which accompanies this distribution, and is available at\n http://www.eclipse.org/legal/epl-v10.html\n";
 
     /**
-     * Returns the value of the '<em><b>Resources</b></em>' containment reference list.
-     * The list contents are of type {@link net.bioclipse.qsar.ResourceType}.
-     * <!-- begin-user-doc -->
+	 * Returns the value of the '<em><b>Resources</b></em>' containment reference list.
+	 * The list contents are of type {@link net.bioclipse.qsar.ResourceType}.
+	 * <!-- begin-user-doc -->
      * <p>
      * If the meaning of the '<em>Resources</em>' containment reference list isn't clear,
      * there really should be more of a description here...
      * </p>
      * <!-- end-user-doc -->
-     * @return the value of the '<em>Resources</em>' containment reference list.
-     * @see net.bioclipse.qsar.QsarPackage#getStructurelistType_Resources()
-     * @model containment="true"
-     *        extendedMetaData="kind='element' name='resources' namespace='##targetNamespace'"
-     * @generated
-     */
+	 * @return the value of the '<em>Resources</em>' containment reference list.
+	 * @see net.bioclipse.qsar.QsarPackage#getStructurelistType_Resources()
+	 * @model containment="true"
+	 *        extendedMetaData="kind='element' name='resources' namespace='##targetNamespace'"
+	 * @generated
+	 */
     EList<ResourceType> getResources();
 
 } // StructurelistType

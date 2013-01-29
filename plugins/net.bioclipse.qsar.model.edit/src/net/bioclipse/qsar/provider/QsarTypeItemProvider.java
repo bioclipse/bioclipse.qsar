@@ -49,183 +49,183 @@ public class QsarTypeItemProvider
         IItemLabelProvider,
         IItemPropertySource {
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public static final String copyright = " Copyright (c) 2009 Ola Spjuth\n All rights reserved. This program and the accompanying materials\n are made available under the terms of the Eclipse Public License v1.0\n which accompanies this distribution, and is available at\n http://www.eclipse.org/legal/epl-v10.html\n";
 
     /**
-     * This constructs an instance from a factory and a notifier.
-     * <!-- begin-user-doc -->
+	 * This constructs an instance from a factory and a notifier.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public QsarTypeItemProvider(AdapterFactory adapterFactory) {
-        super(adapterFactory);
-    }
+		super(adapterFactory);
+	}
 
     /**
-     * This returns the property descriptors for the adapted class.
-     * <!-- begin-user-doc -->
+	 * This returns the property descriptors for the adapted class.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     public List<IItemPropertyDescriptor> getPropertyDescriptors(Object object) {
-        if (itemPropertyDescriptors == null) {
-            super.getPropertyDescriptors(object);
+		if (itemPropertyDescriptors == null) {
+			super.getPropertyDescriptors(object);
 
-        }
-        return itemPropertyDescriptors;
-    }
+		}
+		return itemPropertyDescriptors;
+	}
 
     /**
-     * This specifies how to implement {@link #getChildren} and is used to deduce an appropriate feature for an
-     * {@link org.eclipse.emf.edit.command.AddCommand}, {@link org.eclipse.emf.edit.command.RemoveCommand} or
-     * {@link org.eclipse.emf.edit.command.MoveCommand} in {@link #createCommand}.
-     * <!-- begin-user-doc -->
+	 * This specifies how to implement {@link #getChildren} and is used to deduce an appropriate feature for an
+	 * {@link org.eclipse.emf.edit.command.AddCommand}, {@link org.eclipse.emf.edit.command.RemoveCommand} or
+	 * {@link org.eclipse.emf.edit.command.MoveCommand} in {@link #createCommand}.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     public Collection<? extends EStructuralFeature> getChildrenFeatures(Object object) {
-        if (childrenFeatures == null) {
-            super.getChildrenFeatures(object);
-            childrenFeatures.add(QsarPackage.Literals.QSAR_TYPE__STRUCTURELIST);
-            childrenFeatures.add(QsarPackage.Literals.QSAR_TYPE__DESCRIPTORLIST);
-            childrenFeatures.add(QsarPackage.Literals.QSAR_TYPE__DESCRIPTORPROVIDERS);
-            childrenFeatures.add(QsarPackage.Literals.QSAR_TYPE__PREPROCESSING);
-            childrenFeatures.add(QsarPackage.Literals.QSAR_TYPE__RESPONSELIST);
-            childrenFeatures.add(QsarPackage.Literals.QSAR_TYPE__RESPONSEUNIT);
-            childrenFeatures.add(QsarPackage.Literals.QSAR_TYPE__METADATA);
-            childrenFeatures.add(QsarPackage.Literals.QSAR_TYPE__DESCRIPTORRESULTLIST);
-        }
-        return childrenFeatures;
-    }
+		if (childrenFeatures == null) {
+			super.getChildrenFeatures(object);
+			childrenFeatures.add(QsarPackage.Literals.QSAR_TYPE__STRUCTURELIST);
+			childrenFeatures.add(QsarPackage.Literals.QSAR_TYPE__DESCRIPTORLIST);
+			childrenFeatures.add(QsarPackage.Literals.QSAR_TYPE__DESCRIPTORPROVIDERS);
+			childrenFeatures.add(QsarPackage.Literals.QSAR_TYPE__PREPROCESSING);
+			childrenFeatures.add(QsarPackage.Literals.QSAR_TYPE__RESPONSELIST);
+			childrenFeatures.add(QsarPackage.Literals.QSAR_TYPE__RESPONSEUNIT);
+			childrenFeatures.add(QsarPackage.Literals.QSAR_TYPE__METADATA);
+			childrenFeatures.add(QsarPackage.Literals.QSAR_TYPE__DESCRIPTORRESULTLIST);
+		}
+		return childrenFeatures;
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     protected EStructuralFeature getChildFeature(Object object, Object child) {
-        // Check the type of the specified child object and return the proper feature to use for
-        // adding (see {@link AddCommand}) it as a child.
+		// Check the type of the specified child object and return the proper feature to use for
+		// adding (see {@link AddCommand}) it as a child.
 
-        return super.getChildFeature(object, child);
-    }
+		return super.getChildFeature(object, child);
+	}
 
     /**
-     * This returns QsarType.gif.
-     * <!-- begin-user-doc -->
+	 * This returns QsarType.gif.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     public Object getImage(Object object) {
-        return overlayImage(object, getResourceLocator().getImage("full/obj16/QsarType"));
-    }
+		return overlayImage(object, getResourceLocator().getImage("full/obj16/QsarType"));
+	}
 
     /**
-     * This returns the label text for the adapted class.
-     * <!-- begin-user-doc -->
+	 * This returns the label text for the adapted class.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     public String getText(Object object) {
-        return getString("_UI_QsarType_type");
-    }
+		return getString("_UI_QsarType_type");
+	}
 
     /**
-     * This handles model notifications by calling {@link #updateChildren} to update any cached
-     * children and by creating a viewer notification, which it passes to {@link #fireNotifyChanged}.
-     * <!-- begin-user-doc -->
+	 * This handles model notifications by calling {@link #updateChildren} to update any cached
+	 * children and by creating a viewer notification, which it passes to {@link #fireNotifyChanged}.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     public void notifyChanged(Notification notification) {
-        updateChildren(notification);
+		updateChildren(notification);
 
-        switch (notification.getFeatureID(QsarType.class)) {
-            case QsarPackage.QSAR_TYPE__STRUCTURELIST:
-            case QsarPackage.QSAR_TYPE__DESCRIPTORLIST:
-            case QsarPackage.QSAR_TYPE__DESCRIPTORPROVIDERS:
-            case QsarPackage.QSAR_TYPE__PREPROCESSING:
-            case QsarPackage.QSAR_TYPE__RESPONSELIST:
-            case QsarPackage.QSAR_TYPE__RESPONSEUNIT:
-            case QsarPackage.QSAR_TYPE__METADATA:
-            case QsarPackage.QSAR_TYPE__DESCRIPTORRESULTLIST:
-                fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
-                return;
-        }
-        super.notifyChanged(notification);
-    }
+		switch (notification.getFeatureID(QsarType.class)) {
+			case QsarPackage.QSAR_TYPE__STRUCTURELIST:
+			case QsarPackage.QSAR_TYPE__DESCRIPTORLIST:
+			case QsarPackage.QSAR_TYPE__DESCRIPTORPROVIDERS:
+			case QsarPackage.QSAR_TYPE__PREPROCESSING:
+			case QsarPackage.QSAR_TYPE__RESPONSELIST:
+			case QsarPackage.QSAR_TYPE__RESPONSEUNIT:
+			case QsarPackage.QSAR_TYPE__METADATA:
+			case QsarPackage.QSAR_TYPE__DESCRIPTORRESULTLIST:
+				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
+				return;
+		}
+		super.notifyChanged(notification);
+	}
 
     /**
-     * This adds {@link org.eclipse.emf.edit.command.CommandParameter}s describing the children
-     * that can be created under this object.
-     * <!-- begin-user-doc -->
+	 * This adds {@link org.eclipse.emf.edit.command.CommandParameter}s describing the children
+	 * that can be created under this object.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     protected void collectNewChildDescriptors(Collection<Object> newChildDescriptors, Object object) {
-        super.collectNewChildDescriptors(newChildDescriptors, object);
+		super.collectNewChildDescriptors(newChildDescriptors, object);
 
-        newChildDescriptors.add
-            (createChildParameter
-                (QsarPackage.Literals.QSAR_TYPE__STRUCTURELIST,
-                 QsarFactory.eINSTANCE.createStructurelistType()));
+		newChildDescriptors.add
+			(createChildParameter
+				(QsarPackage.Literals.QSAR_TYPE__STRUCTURELIST,
+				 QsarFactory.eINSTANCE.createStructurelistType()));
 
-        newChildDescriptors.add
-            (createChildParameter
-                (QsarPackage.Literals.QSAR_TYPE__DESCRIPTORLIST,
-                 QsarFactory.eINSTANCE.createDescriptorlistType()));
+		newChildDescriptors.add
+			(createChildParameter
+				(QsarPackage.Literals.QSAR_TYPE__DESCRIPTORLIST,
+				 QsarFactory.eINSTANCE.createDescriptorlistType()));
 
-        newChildDescriptors.add
-            (createChildParameter
-                (QsarPackage.Literals.QSAR_TYPE__DESCRIPTORPROVIDERS,
-                 QsarFactory.eINSTANCE.createDescriptorproviderType()));
+		newChildDescriptors.add
+			(createChildParameter
+				(QsarPackage.Literals.QSAR_TYPE__DESCRIPTORPROVIDERS,
+				 QsarFactory.eINSTANCE.createDescriptorproviderType()));
 
-        newChildDescriptors.add
-            (createChildParameter
-                (QsarPackage.Literals.QSAR_TYPE__PREPROCESSING,
-                 QsarFactory.eINSTANCE.createPreprocessingType()));
+		newChildDescriptors.add
+			(createChildParameter
+				(QsarPackage.Literals.QSAR_TYPE__PREPROCESSING,
+				 QsarFactory.eINSTANCE.createPreprocessingType()));
 
-        newChildDescriptors.add
-            (createChildParameter
-                (QsarPackage.Literals.QSAR_TYPE__RESPONSELIST,
-                 QsarFactory.eINSTANCE.createResponsesListType()));
+		newChildDescriptors.add
+			(createChildParameter
+				(QsarPackage.Literals.QSAR_TYPE__RESPONSELIST,
+				 QsarFactory.eINSTANCE.createResponsesListType()));
 
-        newChildDescriptors.add
-            (createChildParameter
-                (QsarPackage.Literals.QSAR_TYPE__RESPONSEUNIT,
-                 QsarFactory.eINSTANCE.createResponseunitType()));
+		newChildDescriptors.add
+			(createChildParameter
+				(QsarPackage.Literals.QSAR_TYPE__RESPONSEUNIT,
+				 QsarFactory.eINSTANCE.createResponseunitType()));
 
-        newChildDescriptors.add
-            (createChildParameter
-                (QsarPackage.Literals.QSAR_TYPE__METADATA,
-                 QsarFactory.eINSTANCE.createMetadataType()));
+		newChildDescriptors.add
+			(createChildParameter
+				(QsarPackage.Literals.QSAR_TYPE__METADATA,
+				 QsarFactory.eINSTANCE.createMetadataType()));
 
-        newChildDescriptors.add
-            (createChildParameter
-                (QsarPackage.Literals.QSAR_TYPE__DESCRIPTORRESULTLIST,
-                 QsarFactory.eINSTANCE.createDescriptorresultlistsType()));
-    }
+		newChildDescriptors.add
+			(createChildParameter
+				(QsarPackage.Literals.QSAR_TYPE__DESCRIPTORRESULTLIST,
+				 QsarFactory.eINSTANCE.createDescriptorresultlistsType()));
+	}
 
     /**
-     * Return the resource locator for this item provider's resources.
-     * <!-- begin-user-doc -->
+	 * Return the resource locator for this item provider's resources.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     public ResourceLocator getResourceLocator() {
-        return QsarmodelEditPlugin.INSTANCE;
-    }
+		return QsarmodelEditPlugin.INSTANCE;
+	}
 
 }

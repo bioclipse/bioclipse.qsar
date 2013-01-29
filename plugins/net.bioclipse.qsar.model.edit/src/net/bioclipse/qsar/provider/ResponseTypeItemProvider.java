@@ -48,173 +48,173 @@ public class ResponseTypeItemProvider
         IItemLabelProvider,
         IItemPropertySource {
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public static final String copyright = " Copyright (c) 2009 Ola Spjuth\n All rights reserved. This program and the accompanying materials\n are made available under the terms of the Eclipse Public License v1.0\n which accompanies this distribution, and is available at\n http://www.eclipse.org/legal/epl-v10.html\n";
 
     /**
-     * This constructs an instance from a factory and a notifier.
-     * <!-- begin-user-doc -->
+	 * This constructs an instance from a factory and a notifier.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public ResponseTypeItemProvider(AdapterFactory adapterFactory) {
-        super(adapterFactory);
-    }
+		super(adapterFactory);
+	}
 
     /**
-     * This returns the property descriptors for the adapted class.
-     * <!-- begin-user-doc -->
+	 * This returns the property descriptors for the adapted class.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     public List<IItemPropertyDescriptor> getPropertyDescriptors(Object object) {
-        if (itemPropertyDescriptors == null) {
-            super.getPropertyDescriptors(object);
+		if (itemPropertyDescriptors == null) {
+			super.getPropertyDescriptors(object);
 
-            addValuePropertyDescriptor(object);
-            addStructureIDPropertyDescriptor(object);
-            addUnitPropertyDescriptor(object);
-        }
-        return itemPropertyDescriptors;
-    }
+			addValuePropertyDescriptor(object);
+			addStructureIDPropertyDescriptor(object);
+			addUnitPropertyDescriptor(object);
+		}
+		return itemPropertyDescriptors;
+	}
 
     /**
-     * This adds a property descriptor for the Value feature.
-     * <!-- begin-user-doc -->
+	 * This adds a property descriptor for the Value feature.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     protected void addValuePropertyDescriptor(Object object) {
-        itemPropertyDescriptors.add
-            (createItemPropertyDescriptor
-                (((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-                 getResourceLocator(),
-                 getString("_UI_ResponseType_value_feature"),
-                 getString("_UI_PropertyDescriptor_description", "_UI_ResponseType_value_feature", "_UI_ResponseType_type"),
-                 QsarPackage.Literals.RESPONSE_TYPE__VALUE,
-                 true,
-                 false,
-                 false,
-                 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
-                 null,
-                 null));
-    }
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				 getResourceLocator(),
+				 getString("_UI_ResponseType_value_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_ResponseType_value_feature", "_UI_ResponseType_type"),
+				 QsarPackage.Literals.RESPONSE_TYPE__VALUE,
+				 true,
+				 false,
+				 false,
+				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+				 null,
+				 null));
+	}
 
     /**
-     * This adds a property descriptor for the Structure ID feature.
-     * <!-- begin-user-doc -->
+	 * This adds a property descriptor for the Structure ID feature.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     protected void addStructureIDPropertyDescriptor(Object object) {
-        itemPropertyDescriptors.add
-            (createItemPropertyDescriptor
-                (((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-                 getResourceLocator(),
-                 getString("_UI_ResponseType_structureID_feature"),
-                 getString("_UI_PropertyDescriptor_description", "_UI_ResponseType_structureID_feature", "_UI_ResponseType_type"),
-                 QsarPackage.Literals.RESPONSE_TYPE__STRUCTURE_ID,
-                 true,
-                 false,
-                 false,
-                 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
-                 null,
-                 null));
-    }
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				 getResourceLocator(),
+				 getString("_UI_ResponseType_structureID_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_ResponseType_structureID_feature", "_UI_ResponseType_type"),
+				 QsarPackage.Literals.RESPONSE_TYPE__STRUCTURE_ID,
+				 true,
+				 false,
+				 false,
+				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+				 null,
+				 null));
+	}
 
     /**
-     * This adds a property descriptor for the Unit feature.
-     * <!-- begin-user-doc -->
+	 * This adds a property descriptor for the Unit feature.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     protected void addUnitPropertyDescriptor(Object object) {
-        itemPropertyDescriptors.add
-            (createItemPropertyDescriptor
-                (((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-                 getResourceLocator(),
-                 getString("_UI_ResponseType_unit_feature"),
-                 getString("_UI_PropertyDescriptor_description", "_UI_ResponseType_unit_feature", "_UI_ResponseType_type"),
-                 QsarPackage.Literals.RESPONSE_TYPE__UNIT,
-                 true,
-                 false,
-                 false,
-                 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
-                 null,
-                 null));
-    }
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				 getResourceLocator(),
+				 getString("_UI_ResponseType_unit_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_ResponseType_unit_feature", "_UI_ResponseType_type"),
+				 QsarPackage.Literals.RESPONSE_TYPE__UNIT,
+				 true,
+				 false,
+				 false,
+				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+				 null,
+				 null));
+	}
 
     /**
-     * This returns ResponseType.gif.
-     * <!-- begin-user-doc -->
+	 * This returns ResponseType.gif.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     public Object getImage(Object object) {
-        return overlayImage(object, getResourceLocator().getImage("full/obj16/ResponseType"));
-    }
+		return overlayImage(object, getResourceLocator().getImage("full/obj16/ResponseType"));
+	}
 
     /**
-     * This returns the label text for the adapted class.
-     * <!-- begin-user-doc -->
+	 * This returns the label text for the adapted class.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     public String getText(Object object) {
-        String label = ((ResponseType)object).getValue();
-        return label == null || label.length() == 0 ?
-            getString("_UI_ResponseType_type") :
-            getString("_UI_ResponseType_type") + " " + label;
-    }
+		String label = ((ResponseType)object).getValue();
+		return label == null || label.length() == 0 ?
+			getString("_UI_ResponseType_type") :
+			getString("_UI_ResponseType_type") + " " + label;
+	}
 
     /**
-     * This handles model notifications by calling {@link #updateChildren} to update any cached
-     * children and by creating a viewer notification, which it passes to {@link #fireNotifyChanged}.
-     * <!-- begin-user-doc -->
+	 * This handles model notifications by calling {@link #updateChildren} to update any cached
+	 * children and by creating a viewer notification, which it passes to {@link #fireNotifyChanged}.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     public void notifyChanged(Notification notification) {
-        updateChildren(notification);
+		updateChildren(notification);
 
-        switch (notification.getFeatureID(ResponseType.class)) {
-            case QsarPackage.RESPONSE_TYPE__VALUE:
-            case QsarPackage.RESPONSE_TYPE__STRUCTURE_ID:
-            case QsarPackage.RESPONSE_TYPE__UNIT:
-                fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
-                return;
-        }
-        super.notifyChanged(notification);
-    }
+		switch (notification.getFeatureID(ResponseType.class)) {
+			case QsarPackage.RESPONSE_TYPE__VALUE:
+			case QsarPackage.RESPONSE_TYPE__STRUCTURE_ID:
+			case QsarPackage.RESPONSE_TYPE__UNIT:
+				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
+				return;
+		}
+		super.notifyChanged(notification);
+	}
 
     /**
-     * This adds {@link org.eclipse.emf.edit.command.CommandParameter}s describing the children
-     * that can be created under this object.
-     * <!-- begin-user-doc -->
+	 * This adds {@link org.eclipse.emf.edit.command.CommandParameter}s describing the children
+	 * that can be created under this object.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     protected void collectNewChildDescriptors(Collection<Object> newChildDescriptors, Object object) {
-        super.collectNewChildDescriptors(newChildDescriptors, object);
-    }
+		super.collectNewChildDescriptors(newChildDescriptors, object);
+	}
 
     /**
-     * Return the resource locator for this item provider's resources.
-     * <!-- begin-user-doc -->
+	 * Return the resource locator for this item provider's resources.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     public ResourceLocator getResourceLocator() {
-        return QsarmodelEditPlugin.INSTANCE;
-    }
+		return QsarmodelEditPlugin.INSTANCE;
+	}
 
 }

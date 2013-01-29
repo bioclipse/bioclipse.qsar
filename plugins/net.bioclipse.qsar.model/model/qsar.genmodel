@@ -55,6 +55,8 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute qsar.ecore#//MetadataType/datasetname"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute qsar.ecore#//MetadataType/description"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute qsar.ecore#//MetadataType/license"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute qsar.ecore#//MetadataType/responseLabel"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute qsar.ecore#//MetadataType/responsePlacement"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute qsar.ecore#//MetadataType/uRL"/>
     </genClasses>
     <genClasses ecoreClass="qsar.ecore#//ParameterType">

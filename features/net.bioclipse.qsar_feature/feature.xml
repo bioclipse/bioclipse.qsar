@@ -1,14 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feature
       id="net.bioclipse.qsar_feature"
-      label="QSAR Feature"
-      version="2.5.0.qualifier"
-      provider-name="The Bioclipse Project"
+      label="Bioclipse-QSAR"
+      version="2.6.0.vqualifier"
+      provider-name="bioclipse.net"
       plugin="net.bioclipse.qsar.ui">
 
    <description>
-      QSAR (Quantitative Structure-Activity Relationship) functionality
-for Bioclipse.
+      QSAR (Quantitative Structure-Activity Relationship) functionality for Bioclipse, includes descriptor calculation with the Chemistry Development Kit (CDK) and creating QSAR datasets in CSV and QSAR-ML (Spjuth et al. 2010).
    </description>
 
    <copyright>
@@ -29,8 +28,8 @@ is available at http://www.eclipse.org/legal/epl-v10.html
    </license>
 
    <requires>
-      <import feature="net.bioclipse.rdf_feature" version="2.4.0" match="greaterOrEqual"/>
-      <import feature="net.bioclipse.chemoinformatics_feature" version="2.4.0" match="greaterOrEqual"/>
+      <import feature="net.bioclipse.rdf_feature" version="2.5.0" match="greaterOrEqual"/>
+      <import feature="net.bioclipse.chemoinformatics_feature" version="2.5.0" match="greaterOrEqual"/>
    </requires>
 
    <plugin

@@ -43,125 +43,125 @@ import org.eclipse.emf.ecore.util.InternalEList;
  */
 public class StructurelistTypeImpl extends EObjectImpl implements StructurelistType {
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public static final String copyright = " Copyright (c) 2009 Ola Spjuth\n All rights reserved. This program and the accompanying materials\n are made available under the terms of the Eclipse Public License v1.0\n which accompanies this distribution, and is available at\n http://www.eclipse.org/legal/epl-v10.html\n";
 
     /**
-     * The cached value of the '{@link #getResources() <em>Resources</em>}' containment reference list.
-     * <!-- begin-user-doc -->
+	 * The cached value of the '{@link #getResources() <em>Resources</em>}' containment reference list.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see #getResources()
-     * @generated
-     * @ordered
-     */
+	 * @see #getResources()
+	 * @generated
+	 * @ordered
+	 */
     protected EList<ResourceType> resources;
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     protected StructurelistTypeImpl() {
-        super();
-    }
+		super();
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     protected EClass eStaticClass() {
-        return QsarPackage.Literals.STRUCTURELIST_TYPE;
-    }
+		return QsarPackage.Literals.STRUCTURELIST_TYPE;
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public EList<ResourceType> getResources() {
-        if (resources == null) {
-            resources = new EObjectContainmentEList<ResourceType>(ResourceType.class, this, QsarPackage.STRUCTURELIST_TYPE__RESOURCES);
-        }
-        return resources;
-    }
+		if (resources == null) {
+			resources = new EObjectContainmentEList<ResourceType>(ResourceType.class, this, QsarPackage.STRUCTURELIST_TYPE__RESOURCES);
+		}
+		return resources;
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
-        switch (featureID) {
-            case QsarPackage.STRUCTURELIST_TYPE__RESOURCES:
-                return ((InternalEList<?>)getResources()).basicRemove(otherEnd, msgs);
-        }
-        return super.eInverseRemove(otherEnd, featureID, msgs);
-    }
+		switch (featureID) {
+			case QsarPackage.STRUCTURELIST_TYPE__RESOURCES:
+				return ((InternalEList<?>)getResources()).basicRemove(otherEnd, msgs);
+		}
+		return super.eInverseRemove(otherEnd, featureID, msgs);
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     public Object eGet(int featureID, boolean resolve, boolean coreType) {
-        switch (featureID) {
-            case QsarPackage.STRUCTURELIST_TYPE__RESOURCES:
-                return getResources();
-        }
-        return super.eGet(featureID, resolve, coreType);
-    }
+		switch (featureID) {
+			case QsarPackage.STRUCTURELIST_TYPE__RESOURCES:
+				return getResources();
+		}
+		return super.eGet(featureID, resolve, coreType);
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @SuppressWarnings("unchecked")
     @Override
     public void eSet(int featureID, Object newValue) {
-        switch (featureID) {
-            case QsarPackage.STRUCTURELIST_TYPE__RESOURCES:
-                getResources().clear();
-                getResources().addAll((Collection<? extends ResourceType>)newValue);
-                return;
-        }
-        super.eSet(featureID, newValue);
-    }
+		switch (featureID) {
+			case QsarPackage.STRUCTURELIST_TYPE__RESOURCES:
+				getResources().clear();
+				getResources().addAll((Collection<? extends ResourceType>)newValue);
+				return;
+		}
+		super.eSet(featureID, newValue);
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     public void eUnset(int featureID) {
-        switch (featureID) {
-            case QsarPackage.STRUCTURELIST_TYPE__RESOURCES:
-                getResources().clear();
-                return;
-        }
-        super.eUnset(featureID);
-    }
+		switch (featureID) {
+			case QsarPackage.STRUCTURELIST_TYPE__RESOURCES:
+				getResources().clear();
+				return;
+		}
+		super.eUnset(featureID);
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     public boolean eIsSet(int featureID) {
-        switch (featureID) {
-            case QsarPackage.STRUCTURELIST_TYPE__RESOURCES:
-                return resources != null && !resources.isEmpty();
-        }
-        return super.eIsSet(featureID);
-    }
+		switch (featureID) {
+			case QsarPackage.STRUCTURELIST_TYPE__RESOURCES:
+				return resources != null && !resources.isEmpty();
+		}
+		return super.eIsSet(featureID);
+	}
 
 } //StructurelistTypeImpl

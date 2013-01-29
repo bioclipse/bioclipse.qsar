@@ -24,6 +24,7 @@ import net.bioclipse.cdk.business.ICDKManager;
 import net.bioclipse.cdk.domain.ICDKMolecule;
 import net.bioclipse.core.MockIFile;
 import net.bioclipse.core.business.BioclipseException;
+import net.bioclipse.core.domain.DenseDataset;
 import net.bioclipse.core.domain.IMolecule;
 import net.bioclipse.core.domain.SMILESMolecule;
 import net.bioclipse.qsar.DescriptorType;
@@ -335,69 +336,24 @@ public class TestCDKQsar {
         descs.add(bpolID);
         descs.add(xlogpID);
 
-        DescriptorCalculationResult calres = qsar.calculate(mols, descs, CDK_SHORT_NAME);
-        
-        Map<IMolecule, List<IDescriptorResult>> res = calres.getResultMap();
-        
-        assertNotNull(res);
+//        DescriptorCalculationResult calres = qsar.calculate(mols, descs, CDK_SHORT_NAME);
+        DenseDataset calres = qsar.calculate(mols, descs, CDK_SHORT_NAME);
 
-        List<IDescriptorResult> res1=res.get(mol1);
-        List<IDescriptorResult> res2=res.get(mol2);
+        assertEquals("bpol", calres.getColHeaders().get(0));
+        assertEquals(new Float(31.659382), calres.getValues().get(0));
 
-        assertEquals(2, res1.size());
-        assertEquals(2, res2.size());
+//        assertEquals("bpol", dres1.getLabels()[0]);
+//        assertEquals(new Float(31.659382), dres1.getValues()[0]);
+//        assertEquals("XLogP", dres11.getLabels()[0]);
+//        assertEquals(new Float(0.184), dres11.getValues()[0]);
+//
+//        assertEquals("bpol", dres2.getLabels()[0]);
+//        assertEquals(new Float(41.70466), dres2.getValues()[0]);
+//        assertEquals("XLogP", dres22.getLabels()[0]);
+//        assertEquals(new Float(6.749), dres22.getValues()[0]);
 
-        IDescriptorResult dres1=res1.get(0);
-        IDescriptorResult dres11=res1.get(1);
-        IDescriptorResult dres2=res2.get(0);
-        IDescriptorResult dres22=res2.get(1);
-
-        assertNull(dres1.getErrorMessage());
-        assertNull(dres11.getErrorMessage());
-        assertNull(dres2.getErrorMessage());
-        assertNull(dres22.getErrorMessage());
-
-        System.out.println("Mol: " +
-        		mol1.toSMILES() + 
-                           " ; Desc: " + dres1.getDescriptor().getOntologyid() +": ");
-        for (int i=0; i<dres1.getValues().length;i++){
-            System.out.println("    " + dres1.getLabels()[i] 
-                                                          + "=" + dres1.getValues()[i] ); 
-        }
-
-        System.out.println("Mol: " +
-                           mol1.toSMILES() + 
-                           " ; Desc: " + dres11.getDescriptor().getOntologyid() +": ");
-        for (int i=0; i<dres11.getValues().length;i++){
-            System.out.println("    " + dres11.getLabels()[i] 
-                                                           + "=" + dres11.getValues()[i] ); 
-        }
-
-        System.out.println("Mol: " +
-                           mol2.toSMILES() + 
-                           " ; Desc: " + dres2.getDescriptor().getOntologyid() +": ");
-        for (int i=0; i<dres2.getValues().length;i++){
-            System.out.println("    " + dres2.getLabels()[i] 
-                                                          + "=" + dres2.getValues()[i] ); 
-        }
-
-        System.out.println("Mol: " +
-                           mol2.toSMILES() + 
-                           " ; Desc: " + dres22.getDescriptor().getOntologyid() +": ");
-        for (int i=0; i<dres22.getValues().length;i++){
-            System.out.println("    " + dres22.getLabels()[i] 
-                                                           + "=" + dres22.getValues()[i] ); 
-        }
-
-        assertEquals("bpol", dres1.getLabels()[0]);
-        assertEquals(new Float(31.659382), dres1.getValues()[0]);
-        assertEquals("XLogP", dres11.getLabels()[0]);
-        assertEquals(new Float(0.184), dres11.getValues()[0]);
-
-        assertEquals("bpol", dres2.getLabels()[0]);
-        assertEquals(new Float(41.70466), dres2.getValues()[0]);
-        assertEquals("XLogP", dres22.getLabels()[0]);
-        assertEquals(new Float(6.749), dres22.getValues()[0]);
+		//TODO
+		fail("Test needs to be updated for new API");
 
     }
 

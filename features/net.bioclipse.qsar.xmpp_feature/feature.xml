@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feature
       id="net.bioclipse.qsar.xmpp_feature"
-      label="CDK QSAR XMPP"
-      version="2.5.0.qualifier"
-      provider-name="The Bioclipse Team"
+      label="XMPP QSAR descriptors"
+      version="2.6.0.vqualifier"
+      provider-name="bioclipse.net"
       plugin="net.bioclipse.cdk.qsar.xmpp">
 
-   <description url="">
-      Descriptors provides as XMPP Cloud services.
+   <description>
+      QSAR descriptors calculated using XMPP Cloud services (Wagener et al. 2009, Spjuth et al. 2010).
    </description>
 
    <copyright>

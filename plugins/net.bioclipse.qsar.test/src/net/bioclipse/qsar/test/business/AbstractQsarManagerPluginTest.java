@@ -15,6 +15,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -33,6 +34,7 @@ import net.bioclipse.core.business.BioclipseException;
 import net.bioclipse.core.domain.IMolecule;
 import net.bioclipse.core.domain.SMILESMolecule;
 import net.bioclipse.core.tests.AbstractManagerTest;
+import net.bioclipse.managers.business.IBioclipseManager;
 import net.bioclipse.qsar.DescriptorType;
 import net.bioclipse.qsar.QSARConstants;
 import net.bioclipse.qsar.QsarFactory;
@@ -54,6 +56,10 @@ public abstract class AbstractQsarManagerPluginTest
 extends AbstractManagerTest {
 
     protected static IQsarManager qsar;
+
+    public Class<? extends IBioclipseManager> getManagerInterface() {
+    	return IQsarManager.class;
+    }
 
     @Test
     public void testQsarManager() {
@@ -574,6 +580,7 @@ extends AbstractManagerTest {
   		descs.add(descriptorID);
   		descs.add(descriptorID2);
 
+  		/*
   		DescriptorCalculationResult calres = qsar.calculate(mols, descs);
   		Map<? extends IMolecule, List<IDescriptorResult>> res = calres.getResultMap();
   		assertNotNull(res);
@@ -630,7 +637,10 @@ extends AbstractManagerTest {
   		assertEquals(new Float(15.2456), dres1.getValues()[0]);
   		assertEquals(new Float(47.01), dres1.getValues()[1]);
   		assertEquals(new Float(-6.44), dres1.getValues()[2]);
-  		
+  		*/
+
+  		//TODO
+		fail("Test needs to be updated for new API");
 
   	}
   	

@@ -39,356 +39,356 @@ import org.eclipse.emf.ecore.impl.EObjectImpl;
  */
 public class ResponseunitTypeImpl extends EObjectImpl implements ResponseunitType {
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public static final String copyright = " Copyright (c) 2009 Ola Spjuth\n All rights reserved. This program and the accompanying materials\n are made available under the terms of the Eclipse Public License v1.0\n which accompanies this distribution, and is available at\n http://www.eclipse.org/legal/epl-v10.html\n";
 
     /**
-     * The default value of the '{@link #getDescription() <em>Description</em>}' attribute.
-     * <!-- begin-user-doc -->
+	 * The default value of the '{@link #getDescription() <em>Description</em>}' attribute.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see #getDescription()
-     * @generated
-     * @ordered
-     */
+	 * @see #getDescription()
+	 * @generated
+	 * @ordered
+	 */
     protected static final String DESCRIPTION_EDEFAULT = null;
 
     /**
-     * The cached value of the '{@link #getDescription() <em>Description</em>}' attribute.
-     * <!-- begin-user-doc -->
+	 * The cached value of the '{@link #getDescription() <em>Description</em>}' attribute.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see #getDescription()
-     * @generated
-     * @ordered
-     */
+	 * @see #getDescription()
+	 * @generated
+	 * @ordered
+	 */
     protected String description = DESCRIPTION_EDEFAULT;
 
     /**
-     * The default value of the '{@link #getId() <em>Id</em>}' attribute.
-     * <!-- begin-user-doc -->
+	 * The default value of the '{@link #getId() <em>Id</em>}' attribute.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see #getId()
-     * @generated
-     * @ordered
-     */
+	 * @see #getId()
+	 * @generated
+	 * @ordered
+	 */
     protected static final String ID_EDEFAULT = null;
 
     /**
-     * The cached value of the '{@link #getId() <em>Id</em>}' attribute.
-     * <!-- begin-user-doc -->
+	 * The cached value of the '{@link #getId() <em>Id</em>}' attribute.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see #getId()
-     * @generated
-     * @ordered
-     */
+	 * @see #getId()
+	 * @generated
+	 * @ordered
+	 */
     protected String id = ID_EDEFAULT;
 
     /**
-     * The default value of the '{@link #getName() <em>Name</em>}' attribute.
-     * <!-- begin-user-doc -->
+	 * The default value of the '{@link #getName() <em>Name</em>}' attribute.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see #getName()
-     * @generated
-     * @ordered
-     */
+	 * @see #getName()
+	 * @generated
+	 * @ordered
+	 */
     protected static final String NAME_EDEFAULT = null;
 
     /**
-     * The cached value of the '{@link #getName() <em>Name</em>}' attribute.
-     * <!-- begin-user-doc -->
+	 * The cached value of the '{@link #getName() <em>Name</em>}' attribute.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see #getName()
-     * @generated
-     * @ordered
-     */
+	 * @see #getName()
+	 * @generated
+	 * @ordered
+	 */
     protected String name = NAME_EDEFAULT;
 
     /**
-     * The default value of the '{@link #getShortname() <em>Shortname</em>}' attribute.
-     * <!-- begin-user-doc -->
+	 * The default value of the '{@link #getShortname() <em>Shortname</em>}' attribute.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see #getShortname()
-     * @generated
-     * @ordered
-     */
+	 * @see #getShortname()
+	 * @generated
+	 * @ordered
+	 */
     protected static final String SHORTNAME_EDEFAULT = null;
 
     /**
-     * The cached value of the '{@link #getShortname() <em>Shortname</em>}' attribute.
-     * <!-- begin-user-doc -->
+	 * The cached value of the '{@link #getShortname() <em>Shortname</em>}' attribute.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see #getShortname()
-     * @generated
-     * @ordered
-     */
+	 * @see #getShortname()
+	 * @generated
+	 * @ordered
+	 */
     protected String shortname = SHORTNAME_EDEFAULT;
 
     /**
-     * The default value of the '{@link #getURL() <em>URL</em>}' attribute.
-     * <!-- begin-user-doc -->
+	 * The default value of the '{@link #getURL() <em>URL</em>}' attribute.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see #getURL()
-     * @generated
-     * @ordered
-     */
+	 * @see #getURL()
+	 * @generated
+	 * @ordered
+	 */
     protected static final String URL_EDEFAULT = null;
 
     /**
-     * The cached value of the '{@link #getURL() <em>URL</em>}' attribute.
-     * <!-- begin-user-doc -->
+	 * The cached value of the '{@link #getURL() <em>URL</em>}' attribute.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see #getURL()
-     * @generated
-     * @ordered
-     */
+	 * @see #getURL()
+	 * @generated
+	 * @ordered
+	 */
     protected String uRL = URL_EDEFAULT;
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     protected ResponseunitTypeImpl() {
-        super();
-    }
+		super();
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     protected EClass eStaticClass() {
-        return QsarPackage.Literals.RESPONSEUNIT_TYPE;
-    }
+		return QsarPackage.Literals.RESPONSEUNIT_TYPE;
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public String getDescription() {
-        return description;
-    }
+		return description;
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public void setDescription(String newDescription) {
-        String oldDescription = description;
-        description = newDescription;
-        if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, QsarPackage.RESPONSEUNIT_TYPE__DESCRIPTION, oldDescription, description));
-    }
+		String oldDescription = description;
+		description = newDescription;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, QsarPackage.RESPONSEUNIT_TYPE__DESCRIPTION, oldDescription, description));
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public String getId() {
-        return id;
-    }
+		return id;
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public void setId(String newId) {
-        String oldId = id;
-        id = newId;
-        if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, QsarPackage.RESPONSEUNIT_TYPE__ID, oldId, id));
-    }
+		String oldId = id;
+		id = newId;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, QsarPackage.RESPONSEUNIT_TYPE__ID, oldId, id));
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public String getName() {
-        return name;
-    }
+		return name;
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public void setName(String newName) {
-        String oldName = name;
-        name = newName;
-        if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, QsarPackage.RESPONSEUNIT_TYPE__NAME, oldName, name));
-    }
+		String oldName = name;
+		name = newName;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, QsarPackage.RESPONSEUNIT_TYPE__NAME, oldName, name));
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public String getShortname() {
-        return shortname;
-    }
+		return shortname;
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public void setShortname(String newShortname) {
-        String oldShortname = shortname;
-        shortname = newShortname;
-        if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, QsarPackage.RESPONSEUNIT_TYPE__SHORTNAME, oldShortname, shortname));
-    }
+		String oldShortname = shortname;
+		shortname = newShortname;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, QsarPackage.RESPONSEUNIT_TYPE__SHORTNAME, oldShortname, shortname));
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public String getURL() {
-        return uRL;
-    }
+		return uRL;
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public void setURL(String newURL) {
-        String oldURL = uRL;
-        uRL = newURL;
-        if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, QsarPackage.RESPONSEUNIT_TYPE__URL, oldURL, uRL));
-    }
+		String oldURL = uRL;
+		uRL = newURL;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, QsarPackage.RESPONSEUNIT_TYPE__URL, oldURL, uRL));
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     public Object eGet(int featureID, boolean resolve, boolean coreType) {
-        switch (featureID) {
-            case QsarPackage.RESPONSEUNIT_TYPE__DESCRIPTION:
-                return getDescription();
-            case QsarPackage.RESPONSEUNIT_TYPE__ID:
-                return getId();
-            case QsarPackage.RESPONSEUNIT_TYPE__NAME:
-                return getName();
-            case QsarPackage.RESPONSEUNIT_TYPE__SHORTNAME:
-                return getShortname();
-            case QsarPackage.RESPONSEUNIT_TYPE__URL:
-                return getURL();
-        }
-        return super.eGet(featureID, resolve, coreType);
-    }
+		switch (featureID) {
+			case QsarPackage.RESPONSEUNIT_TYPE__DESCRIPTION:
+				return getDescription();
+			case QsarPackage.RESPONSEUNIT_TYPE__ID:
+				return getId();
+			case QsarPackage.RESPONSEUNIT_TYPE__NAME:
+				return getName();
+			case QsarPackage.RESPONSEUNIT_TYPE__SHORTNAME:
+				return getShortname();
+			case QsarPackage.RESPONSEUNIT_TYPE__URL:
+				return getURL();
+		}
+		return super.eGet(featureID, resolve, coreType);
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     public void eSet(int featureID, Object newValue) {
-        switch (featureID) {
-            case QsarPackage.RESPONSEUNIT_TYPE__DESCRIPTION:
-                setDescription((String)newValue);
-                return;
-            case QsarPackage.RESPONSEUNIT_TYPE__ID:
-                setId((String)newValue);
-                return;
-            case QsarPackage.RESPONSEUNIT_TYPE__NAME:
-                setName((String)newValue);
-                return;
-            case QsarPackage.RESPONSEUNIT_TYPE__SHORTNAME:
-                setShortname((String)newValue);
-                return;
-            case QsarPackage.RESPONSEUNIT_TYPE__URL:
-                setURL((String)newValue);
-                return;
-        }
-        super.eSet(featureID, newValue);
-    }
+		switch (featureID) {
+			case QsarPackage.RESPONSEUNIT_TYPE__DESCRIPTION:
+				setDescription((String)newValue);
+				return;
+			case QsarPackage.RESPONSEUNIT_TYPE__ID:
+				setId((String)newValue);
+				return;
+			case QsarPackage.RESPONSEUNIT_TYPE__NAME:
+				setName((String)newValue);
+				return;
+			case QsarPackage.RESPONSEUNIT_TYPE__SHORTNAME:
+				setShortname((String)newValue);
+				return;
+			case QsarPackage.RESPONSEUNIT_TYPE__URL:
+				setURL((String)newValue);
+				return;
+		}
+		super.eSet(featureID, newValue);
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     public void eUnset(int featureID) {
-        switch (featureID) {
-            case QsarPackage.RESPONSEUNIT_TYPE__DESCRIPTION:
-                setDescription(DESCRIPTION_EDEFAULT);
-                return;
-            case QsarPackage.RESPONSEUNIT_TYPE__ID:
-                setId(ID_EDEFAULT);
-                return;
-            case QsarPackage.RESPONSEUNIT_TYPE__NAME:
-                setName(NAME_EDEFAULT);
-                return;
-            case QsarPackage.RESPONSEUNIT_TYPE__SHORTNAME:
-                setShortname(SHORTNAME_EDEFAULT);
-                return;
-            case QsarPackage.RESPONSEUNIT_TYPE__URL:
-                setURL(URL_EDEFAULT);
-                return;
-        }
-        super.eUnset(featureID);
-    }
+		switch (featureID) {
+			case QsarPackage.RESPONSEUNIT_TYPE__DESCRIPTION:
+				setDescription(DESCRIPTION_EDEFAULT);
+				return;
+			case QsarPackage.RESPONSEUNIT_TYPE__ID:
+				setId(ID_EDEFAULT);
+				return;
+			case QsarPackage.RESPONSEUNIT_TYPE__NAME:
+				setName(NAME_EDEFAULT);
+				return;
+			case QsarPackage.RESPONSEUNIT_TYPE__SHORTNAME:
+				setShortname(SHORTNAME_EDEFAULT);
+				return;
+			case QsarPackage.RESPONSEUNIT_TYPE__URL:
+				setURL(URL_EDEFAULT);
+				return;
+		}
+		super.eUnset(featureID);
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     public boolean eIsSet(int featureID) {
-        switch (featureID) {
-            case QsarPackage.RESPONSEUNIT_TYPE__DESCRIPTION:
-                return DESCRIPTION_EDEFAULT == null ? description != null : !DESCRIPTION_EDEFAULT.equals(description);
-            case QsarPackage.RESPONSEUNIT_TYPE__ID:
-                return ID_EDEFAULT == null ? id != null : !ID_EDEFAULT.equals(id);
-            case QsarPackage.RESPONSEUNIT_TYPE__NAME:
-                return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
-            case QsarPackage.RESPONSEUNIT_TYPE__SHORTNAME:
-                return SHORTNAME_EDEFAULT == null ? shortname != null : !SHORTNAME_EDEFAULT.equals(shortname);
-            case QsarPackage.RESPONSEUNIT_TYPE__URL:
-                return URL_EDEFAULT == null ? uRL != null : !URL_EDEFAULT.equals(uRL);
-        }
-        return super.eIsSet(featureID);
-    }
+		switch (featureID) {
+			case QsarPackage.RESPONSEUNIT_TYPE__DESCRIPTION:
+				return DESCRIPTION_EDEFAULT == null ? description != null : !DESCRIPTION_EDEFAULT.equals(description);
+			case QsarPackage.RESPONSEUNIT_TYPE__ID:
+				return ID_EDEFAULT == null ? id != null : !ID_EDEFAULT.equals(id);
+			case QsarPackage.RESPONSEUNIT_TYPE__NAME:
+				return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
+			case QsarPackage.RESPONSEUNIT_TYPE__SHORTNAME:
+				return SHORTNAME_EDEFAULT == null ? shortname != null : !SHORTNAME_EDEFAULT.equals(shortname);
+			case QsarPackage.RESPONSEUNIT_TYPE__URL:
+				return URL_EDEFAULT == null ? uRL != null : !URL_EDEFAULT.equals(uRL);
+		}
+		return super.eIsSet(featureID);
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     public String toString() {
-        if (eIsProxy()) return super.toString();
+		if (eIsProxy()) return super.toString();
 
-        StringBuffer result = new StringBuffer(super.toString());
-        result.append(" (description: ");
-        result.append(description);
-        result.append(", id: ");
-        result.append(id);
-        result.append(", name: ");
-        result.append(name);
-        result.append(", shortname: ");
-        result.append(shortname);
-        result.append(", uRL: ");
-        result.append(uRL);
-        result.append(')');
-        return result.toString();
-    }
+		StringBuffer result = new StringBuffer(super.toString());
+		result.append(" (description: ");
+		result.append(description);
+		result.append(", id: ");
+		result.append(id);
+		result.append(", name: ");
+		result.append(name);
+		result.append(", shortname: ");
+		result.append(shortname);
+		result.append(", uRL: ");
+		result.append(uRL);
+		result.append(')');
+		return result.toString();
+	}
 
 } //ResponseunitTypeImpl
