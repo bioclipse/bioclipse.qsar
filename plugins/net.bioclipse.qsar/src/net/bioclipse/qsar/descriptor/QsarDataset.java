@@ -1,6 +1,7 @@
 package net.bioclipse.qsar.descriptor;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -98,8 +99,60 @@ public class QsarDataset extends DenseDataset{
 
 		}
 	}
-
-
-
+	
+	/**
+	 * Returns at <code>String</code> that simulates a matrix in its appearance
+	 * when printed in e.g. the JavaScript console. I.e. the values is separated 
+	 * with a comma and a tab on each row. If it has headers those are also 
+	 * printed, the column headers are separated with a tab and the row
+	 * headers are printed in front of the values of its row.
+	 * 
+	 * @return The dataSet as a matrix.
+	 */
+	public String toMatrix() {
+        StringBuffer matrix = new StringBuffer();
+        
+        int rhLen = 0;
+        if (!rowHeaders.isEmpty()) {            
+            for (String header:rowHeaders) {
+                if (header.length()>rhLen)
+                    rhLen = header.length();
+            }
+            for (int i=0;i<rhLen;i++)
+                matrix.append( '\u0020' );
+            
+            matrix.append( '\t' );
+        }
+        
+        if (!colHeaders.isEmpty()) {
+            for(String header:colHeaders) {
+                matrix.append( header );                
+                matrix.append( '\t' );
+            }
+            matrix.replace( matrix.length()-1, matrix.length(), "\n" );
+        }
+        
+        Iterator<String> rowHeaderItr = rowHeaders.iterator();
+        String header = "";
+        for (List<Float> row:values) {
+            if (rowHeaderItr.hasNext()) {
+                header = rowHeaderItr.next();
+                matrix.append( header );
+                if (header.length()<rhLen) {
+                    for (int i=header.length();i<rhLen;i++)
+                        matrix.append( '\u0020' );
+                }
+                matrix.append( '\t' );
+            }
+            for (Float value:row) {
+                matrix.append( value );
+                matrix.append( '\u002C' );
+                matrix.append( '\t' );
+            }
+            matrix.replace( matrix.length()-2, matrix.length(), "\n" );
+        }
+        
+        return matrix.toString();
+    }
 
 }
