@@ -40,6 +40,7 @@ import org.openscience.cdk.qsar.result.DoubleArrayResult;
 import org.openscience.cdk.qsar.result.DoubleResult;
 import org.openscience.cdk.qsar.result.IntegerArrayResult;
 import org.openscience.cdk.qsar.result.IntegerResult;
+import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.tools.CDKHydrogenAdder;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import org.openscience.cdk.tools.manipulator.AtomTypeManipulator;
@@ -139,7 +140,7 @@ public class CDKDescriptorCalculator implements IDescriptorCalculator {
             descriptors.add("org.openscience.cdk.qsar.descriptors.molecular.APolDescriptor");
             descriptors.add("org.openscience.cdk.qsar.descriptors.molecular.ALOGPDescriptor");
 
-            engine  = new DescriptorEngine(descriptors);
+            engine  = new DescriptorEngine(descriptors,SilentChemObjectBuilder.getInstance());
             engine.getDescriptorInstances();
         }
     }
@@ -194,11 +195,6 @@ public class CDKDescriptorCalculator implements IDescriptorCalculator {
         //Get atomcontainer from IMolecule
         IAtomContainer container=cdkmol.getAtomContainer();
 
-        //Make sure e have a Molecule, otherwise create it
-        if (!(container instanceof org.openscience.cdk.interfaces.IMolecule))
-            container = container.getBuilder().newInstance(
-                     org.openscience.cdk.interfaces.IMolecule.class, container);
-        
         //Store results here
         List<IDescriptorResult> results = new ArrayList<IDescriptorResult>();
 
