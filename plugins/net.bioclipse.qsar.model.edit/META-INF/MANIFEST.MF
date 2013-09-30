@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Qsar Edit
 Bundle-SymbolicName: net.bioclipse.qsar.model.edit;singleton:=true
-Bundle-Version: 2.6.0.vqualifier
+Bundle-Version: 2.6.1.qualifier
 Bundle-ClassPath: .
 Bundle-Activator: net.bioclipse.qsar.provider.QsarmodelEditPlugin$Implementation
 Bundle-Vendor: The Bioclipse Team
