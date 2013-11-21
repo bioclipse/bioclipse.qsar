@@ -21,6 +21,7 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.OperationCanceledException;
 import org.eclipse.emf.common.util.EList;
 import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.IImplementationSpecification;
 import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
 import org.openscience.cdk.atomtype.CDKAtomTypeMatcher;
 import org.openscience.cdk.exception.CDKException;
@@ -140,8 +141,13 @@ public class CDKDescriptorCalculator implements IDescriptorCalculator {
             descriptors.add("org.openscience.cdk.qsar.descriptors.molecular.APolDescriptor");
             descriptors.add("org.openscience.cdk.qsar.descriptors.molecular.ALOGPDescriptor");
 
-            engine  = new DescriptorEngine(descriptors,SilentChemObjectBuilder.getInstance());
-            engine.getDescriptorInstances();
+            engine = new DescriptorEngine(descriptors,SilentChemObjectBuilder.getInstance());
+
+            List<IDescriptor> instances = engine.instantiateDescriptors( descriptors );
+            List<IImplementationSpecification> specs = engine.initializeSpecifications( instances );
+            engine.setDescriptorInstances( instances );
+            engine.setDescriptorSpecifications( specs );
+
         }
     }
 
