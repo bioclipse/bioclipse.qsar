@@ -625,7 +625,6 @@ public class ResponsesPage extends FormPage implements IEditingDomainProvider, I
             try {
                 r = new BufferedReader(new FileReader(filepath));
                 String line=r.readLine();
-                int linenr=1;
                 while(line!=null){
                     
                     StringTokenizer tk=new StringTokenizer(line);

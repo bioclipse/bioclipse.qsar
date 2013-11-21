@@ -1058,9 +1058,9 @@ public class QsarEditor extends FormEditor implements IEditingDomainProvider,
      * <!-- end-user-doc -->
      * @generated
      */
-    @SuppressWarnings("unchecked")
     @Override
-    public Object getAdapter(Class key) {
+    public Object getAdapter( @SuppressWarnings("rawtypes")
+    Class key ) {
 //    	System.out.println(key);
     	if (key.equals(IContextProvider.class)) {
     		return new DescriptorContextProvider();
@@ -1221,7 +1221,7 @@ public class QsarEditor extends FormEditor implements IEditingDomainProvider,
                 //
                 Object selectedElement = selectedElements.next();
                 
-                if ( selectedElement instanceof IEditorPart );
+                if ( selectedElement instanceof IEditorPart ) {
                 IEditorPart page = (IEditorPart) selectedElement;
                 if (editorPages.get( page )!=null)
                     setActivePage( editorPages.get( page ) );
@@ -1247,6 +1247,7 @@ public class QsarEditor extends FormEditor implements IEditingDomainProvider,
 //                        currentViewerPane.setTitle(selectedElement);
 //                    }
 //                }
+                }
             }
         }
     }

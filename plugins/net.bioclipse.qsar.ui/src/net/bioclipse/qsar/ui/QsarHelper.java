@@ -34,7 +34,7 @@ public class QsarHelper {
     public static void setChangedInPreference( DescriptorType desc, IProject project, boolean newValue ) {
 
 
-        IEclipsePreferences node = new InstanceScope().getNode(net.bioclipse.qsar.ui.Activator.PLUGIN_ID);
+        IEclipsePreferences node = InstanceScope.INSTANCE.getNode(net.bioclipse.qsar.ui.Activator.PLUGIN_ID);
         node.putBoolean( project.getName()+"_"+desc.getId(), newValue);
         try {
             node.flush();
@@ -45,7 +45,7 @@ public class QsarHelper {
 
     public static void setChangedInPreference( StructureType structure, IProject project, boolean newValue) {
 
-        IEclipsePreferences node = new InstanceScope().getNode(net.bioclipse.qsar.ui.Activator.PLUGIN_ID);
+        IEclipsePreferences node = InstanceScope.INSTANCE.getNode(net.bioclipse.qsar.ui.Activator.PLUGIN_ID);
         node.putBoolean( project.getName()+"_"+structure.getId(), newValue);
         try {
             node.flush();
@@ -63,7 +63,7 @@ public class QsarHelper {
      */
     public static void setAutoBuild( IProject project, boolean newValue) {
 
-        IEclipsePreferences node = new InstanceScope().getNode(net.bioclipse.qsar.ui.Activator.PLUGIN_ID);
+        IEclipsePreferences node = InstanceScope.INSTANCE.getNode(net.bioclipse.qsar.ui.Activator.PLUGIN_ID);
         node.putBoolean( project.getName()+"_autobuild", newValue);
         try {
             node.flush();
@@ -78,7 +78,7 @@ public class QsarHelper {
      * @return
      */
     public static boolean isAutoBuild( IProject project) {
-        IEclipsePreferences node = new InstanceScope().getNode(net.bioclipse.qsar.ui.Activator.PLUGIN_ID);
+        IEclipsePreferences node = InstanceScope.INSTANCE.getNode(net.bioclipse.qsar.ui.Activator.PLUGIN_ID);
         return node.getBoolean( project.getName()+"_autobuild", false);
     }
 
@@ -88,7 +88,7 @@ public class QsarHelper {
      * @return
      */
     public static boolean isDirtyInPreference( DescriptorType desc, IProject project) {
-        IEclipsePreferences node = new InstanceScope().getNode(net.bioclipse.qsar.ui.Activator.PLUGIN_ID);
+        IEclipsePreferences node = InstanceScope.INSTANCE.getNode(net.bioclipse.qsar.ui.Activator.PLUGIN_ID);
         //        System.out.println(" READ PREFERENCE: " + project.getName()+"_"+desc.getId() +" = " + node.getBoolean( project.getName()+"_"+desc.getId(), true));
         return node.getBoolean( project.getName()+"_"+desc.getId(), true);
     }
@@ -98,7 +98,7 @@ public class QsarHelper {
      * @return
      */
     public static boolean isDirtyInPreference( StructureType structure, IProject project) {
-        IEclipsePreferences node = new InstanceScope().getNode(net.bioclipse.qsar.ui.Activator.PLUGIN_ID);
+        IEclipsePreferences node = InstanceScope.INSTANCE.getNode(net.bioclipse.qsar.ui.Activator.PLUGIN_ID);
         //        System.out.println(" READ PREFERENCE: " + project.getName()+"_"+structure.getId() +" = " + node.getBoolean( project.getName()+"_"+structure.getId(), true));
         return node.getBoolean( project.getName()+"_"+structure.getId(), true);
     }
@@ -107,7 +107,7 @@ public class QsarHelper {
     public static void updateTransientProperties( QsarType qsarModel, IProject project) {
 
         //If exists in prefs, add them
-        IEclipsePreferences node = new InstanceScope().getNode(net.bioclipse.qsar.ui.Activator.PLUGIN_ID);
+        IEclipsePreferences node = InstanceScope.INSTANCE.getNode(net.bioclipse.qsar.ui.Activator.PLUGIN_ID);
 
         ICDKManager cdk=Activator.getDefault().getJavaCDKManager();
 
@@ -164,7 +164,7 @@ public class QsarHelper {
     public static void setBuildStatus( IProject project, String status ) {
 
         //If exists in prefs, add them
-        IEclipsePreferences node = new InstanceScope().getNode(net.bioclipse.qsar.ui.Activator.PLUGIN_ID);
+        IEclipsePreferences node = InstanceScope.INSTANCE.getNode(net.bioclipse.qsar.ui.Activator.PLUGIN_ID);
         node.put( project.getName()+"_status", status);
 
     }
@@ -172,7 +172,7 @@ public class QsarHelper {
     public static String getBuildStatus(IProject project) {
 
         //If exists in prefs, add them
-        IEclipsePreferences node = new InstanceScope().getNode(net.bioclipse.qsar.ui.Activator.PLUGIN_ID);
+        IEclipsePreferences node = InstanceScope.INSTANCE.getNode(net.bioclipse.qsar.ui.Activator.PLUGIN_ID);
         return node.get( project.getName()+"_status", "UNKNOWN");
 
     }
@@ -180,7 +180,7 @@ public class QsarHelper {
     public static void setBuildTime( IProject project, String time ) {
 
         //If exists in prefs, add them
-        IEclipsePreferences node = new InstanceScope().getNode(net.bioclipse.qsar.ui.Activator.PLUGIN_ID);
+        IEclipsePreferences node = InstanceScope.INSTANCE.getNode(net.bioclipse.qsar.ui.Activator.PLUGIN_ID);
         node.put( project.getName()+"_time", time);
         
     }
@@ -188,14 +188,14 @@ public class QsarHelper {
     public static String getBuildTime( IProject project) {
 
         //If exists in prefs, add them
-        IEclipsePreferences node = new InstanceScope().getNode(net.bioclipse.qsar.ui.Activator.PLUGIN_ID);
+        IEclipsePreferences node = InstanceScope.INSTANCE.getNode(net.bioclipse.qsar.ui.Activator.PLUGIN_ID);
         return node.get( project.getName()+"_time", "N/A");
         
     }
 
     public static void setAllDirty( QsarType qsarModel, IProject project ) {
 
-        IEclipsePreferences node = new InstanceScope().getNode(net.bioclipse.qsar.ui.Activator.PLUGIN_ID);
+        IEclipsePreferences node = InstanceScope.INSTANCE.getNode(net.bioclipse.qsar.ui.Activator.PLUGIN_ID);
 
         //Set all structures to dirty
         for (ResourceType res : qsarModel.getStructurelist().getResources()){
