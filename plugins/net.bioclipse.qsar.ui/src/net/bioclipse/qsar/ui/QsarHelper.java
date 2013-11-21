@@ -10,31 +10,20 @@
  ******************************************************************************/
 package net.bioclipse.qsar.ui;
 
-import java.io.IOException;
 import java.util.List;
 
 import net.bioclipse.cdk.business.Activator;
 import net.bioclipse.cdk.business.ICDKManager;
 import net.bioclipse.cdk.domain.ICDKMolecule;
-import net.bioclipse.core.business.BioclipseException;
 import net.bioclipse.qsar.DescriptorType;
-import net.bioclipse.qsar.QsarFactory;
-import net.bioclipse.qsar.QsarPackage;
 import net.bioclipse.qsar.QsarType;
 import net.bioclipse.qsar.ResourceType;
 import net.bioclipse.qsar.StructureType;
-import net.bioclipse.qsar.business.QsarManager;
 
 import org.apache.log4j.Logger;
 import org.eclipse.core.resources.IProject;
-import org.eclipse.core.runtime.CoreException;
-import org.eclipse.core.runtime.Platform;
-import org.eclipse.core.runtime.preferences.DefaultScope;
 import org.eclipse.core.runtime.preferences.IEclipsePreferences;
-import org.eclipse.core.runtime.preferences.IPreferencesService;
 import org.eclipse.core.runtime.preferences.InstanceScope;
-import org.eclipse.emf.common.command.Command;
-import org.eclipse.emf.edit.command.AddCommand;
 import org.osgi.service.prefs.BackingStoreException;
 
 

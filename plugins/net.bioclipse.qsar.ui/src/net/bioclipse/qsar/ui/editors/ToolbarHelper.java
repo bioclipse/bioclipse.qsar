@@ -10,9 +10,7 @@
  ******************************************************************************/
 package net.bioclipse.qsar.ui.editors;
 
-import net.bioclipse.qsar.QsarType;
 import net.bioclipse.qsar.ui.QsarHelper;
-import net.bioclipse.qsar.ui.builder.QSARBuilder;
 
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IncrementalProjectBuilder;
@@ -22,14 +20,10 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Status;
-import org.eclipse.core.runtime.jobs.ISchedulingRule;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.dialogs.MessageDialog;
-import org.eclipse.swt.widgets.Display;
-import org.eclipse.ui.forms.editor.FormEditor;
 import org.eclipse.ui.forms.widgets.ScrolledForm;
-import org.eclipse.ui.progress.UIJob;
 
 public class ToolbarHelper {
 

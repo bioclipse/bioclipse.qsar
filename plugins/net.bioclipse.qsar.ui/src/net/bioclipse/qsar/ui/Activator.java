@@ -10,9 +10,6 @@
  *******************************************************************************/
 package net.bioclipse.qsar.ui;
 
-import net.bioclipse.qsar.descriptor.model.DescriptorModel;
-import net.bioclipse.ui.BioclipseActivator;
-
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
@@ -20,7 +17,6 @@ import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.forms.FormColors;
-import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 

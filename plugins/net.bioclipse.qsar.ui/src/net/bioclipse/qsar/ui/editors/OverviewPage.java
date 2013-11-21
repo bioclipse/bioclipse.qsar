@@ -18,7 +18,6 @@ import net.bioclipse.qsar.QsarType;
 import net.bioclipse.qsar.ResourceType;
 import net.bioclipse.qsar.ResponseType;
 import net.bioclipse.qsar.ui.QsarHelper;
-import net.bioclipse.qsar.ui.wizards.AddMoleculeFilesWizard;
 import net.bioclipse.qsar.ui.wizards.ExportQsarWizard;
 
 import org.apache.log4j.Logger;

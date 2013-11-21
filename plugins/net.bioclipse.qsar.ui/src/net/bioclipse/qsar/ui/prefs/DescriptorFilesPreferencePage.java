@@ -16,7 +16,6 @@ import java.net.URL;
 
 import net.bioclipse.core.util.LogUtils;
 import net.bioclipse.qsar.QSARConstants;
-import net.bioclipse.qsar.business.QsarManager;
 import net.bioclipse.qsar.init.Activator;
 import net.bioclipse.qsar.prefs.QsarPreferenceHelper;
 

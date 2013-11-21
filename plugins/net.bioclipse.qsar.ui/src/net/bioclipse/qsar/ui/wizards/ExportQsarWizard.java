@@ -10,7 +10,6 @@
  ******************************************************************************/
 package net.bioclipse.qsar.ui.wizards;
 
-import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
@@ -23,18 +22,13 @@ import org.eclipse.core.resources.IProjectNature;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IStatus;
-import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.wizard.IWizardPage;
 import org.eclipse.jface.wizard.Wizard;
 import org.eclipse.ui.IExportWizard;
 import org.eclipse.ui.IWorkbench;
-import org.eclipse.ui.dialogs.WizardExportResourcesPage;
 import org.eclipse.ui.internal.wizards.datatransfer.ArchiveFileExportOperation;
-import org.eclipse.ui.internal.wizards.datatransfer.DataTransferMessages;
-import org.eclipse.ui.internal.wizards.datatransfer.WizardFileSystemResourceExportPage1;
-import org.eclipse.ui.internal.wizards.datatransfer.ZipFileExporter;
 
 @SuppressWarnings("restriction")
 public class ExportQsarWizard extends Wizard implements IExportWizard {

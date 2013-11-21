@@ -12,7 +12,6 @@ package net.bioclipse.qsar.ui.prefs;
 
 import net.bioclipse.qsar.QSARConstants;
 import net.bioclipse.qsar.init.Activator;
-import net.bioclipse.qsar.prefs.QSARPreferenceInitializer;
 import net.bioclipse.qsar.prefs.QsarPreferenceHelper;
 
 import org.eclipse.jface.preference.FieldEditorPreferencePage;

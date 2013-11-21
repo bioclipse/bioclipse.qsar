@@ -13,8 +13,6 @@ package net.bioclipse.qsar.ui.wizards;
 import java.util.List;
 import java.util.Map;
 
-import net.bioclipse.qsar.ui.Activator;
-
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.jface.wizard.IWizardPage;
