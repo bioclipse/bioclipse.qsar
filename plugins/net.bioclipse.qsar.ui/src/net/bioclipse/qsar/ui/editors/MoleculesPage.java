@@ -994,7 +994,7 @@ public class MoleculesPage extends FormPage implements IEditingDomainProvider,
                             ConfirmRunnable cr=new ConfirmRunnable(
                                getSite().getShell(),
                                "Overwrite file?", 
-                               "File " + filename + "exists in QSAR project, " +
+                               "File " + filename + " already exists in QSAR project, " +
                                "folder 'molecules'. " +
                                "Would you like to replace it?");
 
