@@ -682,7 +682,7 @@ public class OverviewPage extends FormPage implements IEditingDomainProvider, IP
             }
         });
         molSection.setText("Information");
-        molSection.setDescription("Metadata about the datase");
+        molSection.setDescription("Metadata about the dataset");
 
         Composite sectionClient = toolkit.createComposite(molSection);
         sectionClient.setLayout(new GridLayout(3,false));
