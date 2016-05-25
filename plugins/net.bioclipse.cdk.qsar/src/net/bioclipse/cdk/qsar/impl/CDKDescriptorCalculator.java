@@ -16,17 +16,31 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import net.bioclipse.cdk.business.Activator;
+import net.bioclipse.cdk.business.ICDKManager;
+import net.bioclipse.cdk.domain.ICDKMolecule;
+import net.bioclipse.core.business.BioclipseException;
+import net.bioclipse.core.domain.IMolecule;
+import net.bioclipse.core.util.LogUtils;
+import net.bioclipse.qsar.DescriptorType;
+import net.bioclipse.qsar.ParameterType;
+import net.bioclipse.qsar.business.IQsarManager;
+import net.bioclipse.qsar.descriptor.DescriptorResult;
+import net.bioclipse.qsar.descriptor.IDescriptorCalculator;
+import net.bioclipse.qsar.descriptor.IDescriptorResult;
+
 import org.apache.log4j.Logger;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.OperationCanceledException;
 import org.eclipse.emf.common.util.EList;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.IImplementationSpecification;
-import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
+import org.openscience.cdk.aromaticity.Aromaticity;
+import org.openscience.cdk.aromaticity.ElectronDonation;
 import org.openscience.cdk.atomtype.CDKAtomTypeMatcher;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.exception.NoSuchAtomException;
-import org.openscience.cdk.geometry.GeometryTools;
+import org.openscience.cdk.graph.Cycles;
 import org.openscience.cdk.graph.SpanningTree;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -45,19 +59,6 @@ import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.tools.CDKHydrogenAdder;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import org.openscience.cdk.tools.manipulator.AtomTypeManipulator;
-
-import net.bioclipse.cdk.business.Activator;
-import net.bioclipse.cdk.business.ICDKManager;
-import net.bioclipse.cdk.domain.ICDKMolecule;
-import net.bioclipse.core.business.BioclipseException;
-import net.bioclipse.core.domain.IMolecule;
-import net.bioclipse.core.util.LogUtils;
-import net.bioclipse.qsar.DescriptorType;
-import net.bioclipse.qsar.ParameterType;
-import net.bioclipse.qsar.business.IQsarManager;
-import net.bioclipse.qsar.descriptor.DescriptorResult;
-import net.bioclipse.qsar.descriptor.IDescriptorCalculator;
-import net.bioclipse.qsar.descriptor.IDescriptorResult;
 
 public class CDKDescriptorCalculator implements IDescriptorCalculator {
 
@@ -462,7 +463,8 @@ public class CDKDescriptorCalculator implements IDescriptorCalculator {
         //Percieve atom types and aromaticity
         try {
             AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(container);
-            CDKHueckelAromaticityDetector.detectAromaticity(container);
+            Aromaticity aromaticity = new Aromaticity( ElectronDonation.cdk(), Cycles.cdkAromaticSet() );
+            aromaticity.apply( container );
         } catch (CDKException e) {
             String emsg="Could not percieve atom types or aromaticity: " + e.getMessage();
             logger.error(emsg);
