@@ -18,9 +18,6 @@ Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.ui.views,
  org.eclipse.core.resources,
  net.bioclipse.qsar.model,
- org.openscience.cdk.interfaces,
- org.openscience.cdk.atomtype,
- org.openscience.cdk.standard,
  net.bioclipse.rdf,
  org.springframework.bundle.spring.aop,
  org.springframework.osgi.aopalliance.osgi,
@@ -34,5 +31,8 @@ Export-Package: net.bioclipse.qsar,
  net.bioclipse.qsar.discovery,
  net.bioclipse.qsar.init,
  net.bioclipse.qsar.prefs
-Import-Package: org.apache.log4j
+Import-Package: org.apache.log4j,
+ org.openscience.cdk.atomtype;version="1.5.13",
+ org.openscience.cdk.exception;version="1.5.13",
+ org.openscience.cdk.interfaces;version="1.5.13"
 Bundle-Activator: net.bioclipse.qsar.init.Activator
