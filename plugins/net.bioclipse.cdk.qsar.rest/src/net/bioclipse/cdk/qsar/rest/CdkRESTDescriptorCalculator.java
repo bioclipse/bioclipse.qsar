@@ -24,6 +24,7 @@ import java.util.Map;
 import org.apache.log4j.Logger;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.OperationCanceledException;
+import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.smiles.SmilesGenerator;
 
@@ -101,16 +102,25 @@ public class CdkRESTDescriptorCalculator implements IDescriptorCalculator {
                 //We need the SMILES for the REST descriptors
             	ICDKMolecule cdkMol = cdk.asCDKMolecule(mol);
             	IAtomContainer atomContainer = cdkMol.getAtomContainer();
-            	SmilesGenerator generator = new SmilesGenerator(true);
+                // TODO Whitch generator to use see:
+                // https://github.com/cdk/cdk/wiki/1.5.4-Release-Notes#smipar
+                SmilesGenerator generator = SmilesGenerator.generic();
                 IAtomContainer molecule = atomContainer;
-            	String smiles = generator.createSMILES(molecule);
+                String smiles = null;
+                try {
+                    smiles = generator.create( molecule );
+                } catch ( CDKException ex ) {
+                    logger.error( "Could not generate SMILES for mol: " + mol
+                                  + ". Returning ERROR for all descriptors for this mol.", ex );
+                }
                 
+                if ( smiles == null || smiles.equals( "" ) ) {
+                    logger.error( "Could not generate SMILES for mol: " + mol
+                                  + ". Returning ERROR for all descriptors for this mol." );
+                }
                 List<IDescriptorResult> retlist=
                                              new ArrayList<IDescriptorResult>();
 
-            	if (smiles==null || smiles.equals("")){
-            		logger.error("Could not generate SMILES for mol: " + mol + ". Returning ERROR for all descriptors for this mol.");
-            	}
 
                 for (DescriptorType desc : moldesc.get( mol )){
 
