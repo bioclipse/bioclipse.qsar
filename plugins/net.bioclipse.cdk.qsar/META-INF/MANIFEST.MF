@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: CDK Qsar
 Bundle-SymbolicName: net.bioclipse.cdk.qsar;singleton:=true
-Bundle-Version: 2.6.1.qualifier
+Bundle-Version: 2.6.2.qualifier
 Bundle-Activator: net.bioclipse.cdk.qsar.Activator
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
@@ -16,7 +16,8 @@ Require-Bundle: org.eclipse.ui,
  org.openscience.cdk.standard,
  org.openscience.cdk.qsar,
  org.openscience.cdk.qsarmolecular,
- org.openscience.cdk.valencycheck
+ org.openscience.cdk.valencycheck,
+ org.openscience.cdk.silent
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Import-Package: org.apache.log4j

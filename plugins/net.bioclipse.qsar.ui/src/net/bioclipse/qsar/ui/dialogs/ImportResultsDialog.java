@@ -10,8 +10,6 @@
  ******************************************************************************/
 package net.bioclipse.qsar.ui.dialogs;
 
-import net.bioclipse.qsar.ui.Activator;
-
 import org.eclipse.jface.dialogs.TitleAreaDialog;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;

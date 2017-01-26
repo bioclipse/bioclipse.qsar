@@ -13,13 +13,11 @@ package net.bioclipse.qsar.ui.wizards;
 
 import java.io.File;
 
-import org.eclipse.core.resources.IResource;
 import org.eclipse.jface.wizard.IWizardPage;
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
@@ -28,9 +26,6 @@ import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Layout;
 import org.eclipse.swt.widgets.Text;
-import org.eclipse.ui.dialogs.SaveAsDialog;
-import org.eclipse.ui.internal.ide.dialogs.FileFolderSelectionDialog;
-import org.eclipse.ui.internal.wizards.datatransfer.DataTransferMessages;
 
 
 public class ExportQsarWizardFilePage extends WizardPage implements IWizardPage {
