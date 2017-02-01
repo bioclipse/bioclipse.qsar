@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: CDK Qsar
 Bundle-SymbolicName: net.bioclipse.cdk.qsar;singleton:=true
-Bundle-Version: 2.6.2.qualifier
+Bundle-Version: 2.7.0.qualifier
 Bundle-Activator: net.bioclipse.cdk.qsar.Activator
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
@@ -10,15 +10,19 @@ Require-Bundle: org.eclipse.ui,
  net.bioclipse.core,
  net.bioclipse.qsar,
  net.bioclipse.ui,
- org.eclipse.core.resources,
- org.openscience.cdk.interfaces,
- org.openscience.cdk.core,
- org.openscience.cdk.standard,
- org.openscience.cdk.qsar,
- org.openscience.cdk.qsarmolecular,
- org.openscience.cdk.valencycheck,
- org.openscience.cdk.silent
+ org.eclipse.core.resources
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
-Import-Package: org.apache.log4j
+Import-Package: org.apache.log4j,
+ org.openscience.cdk;version="1.5.13",
+ org.openscience.cdk.aromaticity;version="1.5.13",
+ org.openscience.cdk.atomtype;version="1.5.13",
+ org.openscience.cdk.exception;version="1.5.13",
+ org.openscience.cdk.graph;version="1.5.13",
+ org.openscience.cdk.interfaces;version="1.5.13",
+ org.openscience.cdk.qsar;version="1.5.13",
+ org.openscience.cdk.qsar.result;version="1.5.13",
+ org.openscience.cdk.silent;version="1.5.13",
+ org.openscience.cdk.tools;version="1.5.13",
+ org.openscience.cdk.tools.manipulator;version="1.5.13"
 Bundle-Vendor: The Bioclipse Team
