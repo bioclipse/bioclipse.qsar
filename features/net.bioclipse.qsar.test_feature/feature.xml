@@ -2,7 +2,7 @@
 <feature
       id="net.bioclipse.qsar.test_feature"
       label="QSAR Test Feature"
-      version="2.6.0.vqualifier"
+      version="2.7.0.qualifier"
       provider-name="The Bioclipse Project"
       plugin="net.bioclipse.qsar.test">
 
